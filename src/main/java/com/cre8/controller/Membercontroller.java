@@ -1,17 +1,9 @@
 package com.cre8.controller;
 
-import javax.servlet.http.HttpServlet;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cre8.dto.Address;
 import com.cre8.dto.Att;
 import com.cre8.dto.Cart;
 import com.cre8.dto.Mem;
@@ -30,7 +24,7 @@ import com.cre8.dto.Thumbnail;
 import com.cre8.service.MemberServiceImp;
 
 @Controller
-@RequestMapping("/mem/*")
+@RequestMapping("/mem/")
 public class Membercontroller{
        
 	@Autowired
@@ -61,18 +55,18 @@ public class Membercontroller{
 			break;
 		case "pwfail" :
 			
-			sess.setAttribute("err", "비밀번호를 확인해주세요");
+			model.addAttribute("err", "비밀번호를 확인해주세요");
 			viewPage = "/member/login";
 			break;
 			
 		case "no_member" :
 			
-			sess.setAttribute("err", "회원을 확인해주세요");
+			model.addAttribute("err", "회원을 확인해주세요");
 			viewPage = "/member/login";
 			break;
 			
 		default :
-			sess.setAttribute("err", "회원을 확인해주세요");
+			model.addAttribute("err", "회원을 확인해주세요");
 			viewPage = "/member/login";
 			
 		}
@@ -98,203 +92,192 @@ public class Membercontroller{
 		
 		member.insert(mem);
 		
-		return "/member/memreg";
+		return "/mem/loginpage";
 	}
 	
-	
-/*
-		} else if(cmd.equals("loginout")) {
-			sess.invalidate();
-			
-			resp.sendRedirect(req.getContextPath() + "/index.jsp");
-			
-		} else if(cmd.equals("memreg")) {
-			goView(req, resp, "/member/memreg.jsp");
-			
-		} else if(cmd.equals("memregform")) {
-			
-			member.insert(req);
-			
-			goView(req, resp, "/mem/loginpage");
-			
-		} else if(cmd.equals("mypage")) {
-		 	String sess_id = (String)sess.getAttribute("sess_id");
-			
-		 	Mem mempage = member.mypage(sess_id);
-		 	if(mempage.getAtt().getAttName() == null ) {
-		 		Att att = new Att();
-		 		Thumbnail thumb = new Thumbnail();
-		 		mempage.setAtt(att);
-		 		mempage.getAtt().setAttThumb(thumb);
-		 		mempage.getAtt().getAttThumb().setFileName("profile.png");
-		 	}
-		 	req.setAttribute("page", mempage);
-			
-		 	
-		 	goView(req, resp, "/member/mypage.jsp");
-			
-		} else if(cmd.equals("meminfo")) {
-			
-		 	String sess_id = (String)sess.getAttribute("sess_id");
-		 	Mem info = member.meminfo(sess_id);
-		 	req.setAttribute("info", info);
-			goView(req, resp, "/member/meminfo.jsp");
-			
-		} else if(cmd.equals("infoinsert")) {
-			
-		 	member.infoinsert(req);
-		 	
-		 	String sess_id = (String)sess.getAttribute("sess_id");
-
-		 	Mem info = member.meminfo(sess_id);
-		 	req.setAttribute("info", info);
-
-			goView(req, resp, "/member/meminfo.jsp");
-			
-		} else if(cmd.equals("buyHistory")) {
-			
-		 	String sess_id = (String)sess.getAttribute("sess_id");
-		 	List<Pro> buy = member.membuylist(sess_id);
-		 	
-		 	req.setAttribute("buy", buy);
-
-
-			Map<String, List<Cart>> auc = member.memauclist(sess_id);
-
-		 	
-		 	List<Cart> cart = auc.get("END");
-			List<Cart> car2 = auc.get("ING");
-			
-			
-			
-			if(cart != null) {
-				req.setAttribute("cart", cart);
-			}
-			if(car2 != null) {
-				req.setAttribute("car2", car2);
-			}
-			
-			
-			Map<String, List<Ship>> ship = member.ordercheck(sess_id);
-			List<Ship> order = ship.get("order");
-			List<Ship> detail = ship.get("detail");
-			
-			if(order != null) {
-				req.setAttribute("order", order);
-			}
-			if(detail != null) {
-				req.setAttribute("detail", detail);
-			}
-			
-			List<Pro> stat = member.buystat(sess_id);
-			req.setAttribute("stat", stat);
-			
-			goView(req, resp, "/member/buyHistory.jsp");
-
-		} else if(cmd.equals("mainpage")) {
-			goView(req, resp, "/index.jsp");
-
-		} else if(cmd.equals("findpw")) {
-			String lostid = req.getParameter("findid");
-			String lostemail = req.getParameter("e-mail");
-			Map<String, String> findpw = member.findPw(lostid, lostemail);
-			
-			
-			switch(findpw.get("find")) {
-			case "ok" :
-				
-				req.setAttribute("lostpw", "?��?��?��?�� 비�?번호?��"+findpw.get("lostpw")+"?��?��?��.");
-				
-				break;
-				
-			case "pwfail" :
-				
-				req.setAttribute("lostpw", "주소�? ?��?��?��주세?��");
-				
-				break;
-				
-			case "no_member" :
-				
-				req.setAttribute("lostpw", "?��?��?��보�?? ?��?��?��주세?��");
-				
-				break;
-				
-			case "null" :
-				
-				req.setAttribute("lostpw", "?��?��?��보�?? ?��?��?��주세?��");
-				
-				break;
-				
-			default :
-				
-				req.setAttribute("lostpw", "?��?��?��보�?? ?��?��?��주세?��");
-
-			}
-			goView(req, resp, "/member/login.jsp");
-			
-		} else if(cmd.equals("findId")) {
-
-			String lostid = req.getParameter("idemail");
-			Map<String, String> findid = member.findId(lostid);
-			
-			
-			switch(findid.get("find")) {
-			case "ok" :
-				
-				req.setAttribute("lostid", "?��?��?��?�� ?��?��?��?��"+findid.get("lostid")+"?��?��?��.");
-				
-				break;
-				
-			case "pwfail" :
-				
-				req.setAttribute("lostid", "?��?��?��보�?? ?��?��?��주세?��");
-				
-				break;
-				
-			case "no_member" :
-				
-				req.setAttribute("lostid", "?��?��?��보�?? ?��?��?��주세?��");
-				
-				break;
-				
-			default :
-				
-				req.setAttribute("lostid", "?��?��?��보�?? ?��?��?��주세?��");
-
-			}
-			goView(req, resp, "/member/login.jsp");
-
-			
-		} else if(cmd.equals("changepw")) {
-			
-			String sess_id = (String)sess.getAttribute("sess_id");
-			String find_id = req.getParameter("find_id");
-			String now_pw = req.getParameter("n_password");
-			String new_pw = req.getParameter("c_password");
-			
-			if(find_id.equals(sess_id)) {
-			
-				Map<String, String> find = member.changePw(new_pw, find_id, now_pw);
-				req.setAttribute("change", find.get("change"));
-				
-			goView(req, resp, "/mem/mypage");
-			
-			
-			} else {
-				req.setAttribute("change", "no_member");
-			
-				goView(req, resp, "/mem/mypage");
-			
-			}
-			
-		} else if(cmd.equals("idCheck")) {
-			String id = req.getParameter("id");
-			int rs = member.idcheck(id);
-			PrintWriter out = resp.getWriter();
-			out.print(rs);
+	@GetMapping("mypage")
+	public String mypage(HttpSession sess, Mem mem, 
+						 Att att, Thumbnail thumb,
+						 Model model) {
+		String sess_id = (String)sess.getAttribute("sess_id");
+		
+		mem = member.mypage(sess_id);
+		
+		if(mem.getAtt().getAttName() == null) {
+			mem.setAtt(att);
+			mem.getAtt().setAttThumb(thumb);
+			mem.getAtt().getAttThumb().setFileName("profile.png");
 		}
 		
+		model.addAttribute("page", mem);
+		
+		return "/member/mypage";
 	}
-*/	
+
+	@GetMapping("meminfo")
+	public String info(Model model, HttpSession sess, Mem mem) {
+		String sess_id = (String)sess.getAttribute("sess_id");
+		mem = member.meminfo(sess_id);
+		model.addAttribute("info",mem);
+		
+		return "/member/meminfo";
+	}
+	
+	@PostMapping("infoinsert")
+	public String infoinsert(Mem mem, Address add,
+							HttpServletRequest req,
+							Model model) {
+		mem.setAddressSet(add);
+		
+		member.infoinsert(mem, req);
+		
+		return "/mem/meminfo";
+	}
+	
+	@GetMapping("buyHistory")
+	public String buyHistory(HttpSession sess, List<Pro> pro,
+							Model model,
+							Map<String, List<Cart>> auc,
+							Map<String, List<Ship>> ship){
+		String sess_id = (String)sess.getAttribute("sess_id");
+
+		pro = member.membuylist(sess_id);
+		
+		model.addAttribute("buy", pro);
+		
+		auc = member.memauclist(sess_id);
+		List<Cart> cart = auc.get("END");
+		List<Cart> car2 = auc.get("ING");
+		
+		ship = member.ordercheck(sess_id);
+		
+		List<Ship> order = ship.get("order");
+		List<Ship> detail = ship.get("detail");
+		
+		if(order != null) {
+			model.addAttribute("order", order);
+		}
+		if(detail != null) {
+			model.addAttribute("detail", detail);
+		}
+		
+		List<Pro> stat = member.buystat(sess_id);
+		model.addAttribute("stat", stat);
+		
+		return "/member/buyHistory";
+	}
+	
+	@GetMapping("mainpage")
+	public String mainpage() {
+		
+		return "/index";
+	}
+	
+	@PostMapping("findpw")
+	public String findpw(Mem mem, Map<String, String> findpw,
+						Model model) {
+		
+		String lostid = mem.getMemId();
+		String lostemail = mem.getMemEmail();
+		
+		findpw = member.findPw(lostid, lostemail);
+		
+		switch(findpw.get("find")) {
+		case "ok" :
+			
+			model.addAttribute("lostpw", "회원님의 비밀번호는 "+findpw.get("lostpw")+"입니다.");
+			
+			break;
+			
+		case "pwfail" :
+			
+			model.addAttribute("lostpw", "주소를 확인해주세요");
+			
+			break;
+			
+		case "no_member" :
+			
+			model.addAttribute("lostpw", "회원정보를 확인해주세요");
+			
+			break;
+			
+		case "null" :
+			
+			model.addAttribute("lostpw", "회원정보를 확인해주세요");
+			
+			break;
+			
+		default :
+			
+			model.addAttribute("lostpw", "회원정보를 확인해주세요");
+
+		}
+		
+		return "/member/login";
+	}
+	
+	@GetMapping("findId")
+	public String find(Mem mem, Map<String, String> findid,
+						Model model) {
+		String lostid = mem.getMemId();
+		
+		findid = member.findId(lostid);
+		
+		switch(findid.get("find")) {
+		case "ok" :
+			
+			model.addAttribute("lostid", "회원님의 아이디는 "+findid.get("lostid")+"입니다.");
+			
+			break;
+			
+		case "pwfail" :
+			
+			model.addAttribute("lostid", "회원정보를 확인해주세요");
+			
+			break;
+			
+		case "no_member" :
+			
+			model.addAttribute("lostid", "회원정보를 확인해주세요");
+			
+			break;
+			
+		default :
+			
+			model.addAttribute("lostid", "회원정보를 확인해주세요");
+
+		}
+		
+		return "/member/login";
+	}
+	
+	@PostMapping("changepw")
+	public String change(HttpSession sess, Model model,Map<String, String> find,
+						@RequestParam("find_id") String find_id,
+						@RequestParam("now_pw") String now_pw,
+						@RequestParam("new_pw") String new_pw) {
+		
+		String sess_id = (String)sess.getAttribute("sess_id");
+		
+		if(find_id.equals(sess_id)) {
+			
+			find = member.changePw(new_pw, find_id, now_pw);
+			model.addAttribute("change", find.get("change"));
+			
+		} else {
+			model.addAttribute("change", "no_member");
+		}
+		
+		return "/mem/mypage";
+	}
+	
+//	@GetMapping("idCheck")
+//	public int idcheck(@RequestParam("id") String id) {
+//		int rs = member.idcheck(id);
+//		PrintWriter out = resp.getWriter();
+//		out.print(rs);
+//		
+//		return rs;
+//	}
 
 }
