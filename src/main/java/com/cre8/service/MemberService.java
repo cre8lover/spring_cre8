@@ -15,8 +15,6 @@ public interface MemberService {
 
 	Map<String, String> login(String id, String pw);
 
-	String insert(HttpServletRequest req);
-	
 	Mem mypage(String id);
 
 	Mem meminfo(String id);
@@ -29,8 +27,6 @@ public interface MemberService {
 	
 	Map<String, List<Ship>> ordercheck(String id);
 	
-	void infoinsert(HttpServletRequest req);
-
 	Map<String, String> changePw(String new_pw, String id, String now_pw);
 	
 	Map<String, String> findId(String idemail);
@@ -38,6 +34,10 @@ public interface MemberService {
 	Map<String, String> findPw(String id, String email);
 
 	int idcheck(String id);
+
+	String insert(Mem mem);
+
+	void infoinsert(Mem mem, HttpServletRequest req);
 
 
 
