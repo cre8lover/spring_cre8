@@ -12,6 +12,14 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cre8.dto.Auc;
 import com.cre8.dto.Creator;
@@ -20,179 +28,135 @@ import com.cre8.dto.Pro;
 import com.cre8.service.CreatorServiceImp;
 import com.cre8.service.FileService;
 
-
-@WebServlet("/cre/*")
-public class Creatercontroller extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+@Controller
+@RequestMapping(value="/cre/")
+public class Creatercontroller {
    
-    public Creatercontroller() {
-        super();
-    }
-
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doAction(req, resp);
-
-	}
-
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doAction(req, resp);
-	}
-
-	private void doAction(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.setContentType("text/html; charset=utf8");
-		req.setCharacterEncoding("utf-8");
+	@Autowired
+	CreatorServiceImp cs;
+	
+	@RequestMapping(value="creReg", method = {RequestMethod.POST, RequestMethod.GET})
+	public String Creatoradd(HttpSession sess, @RequestParam("seqno") String seqno, Model model) {
+		String add = (String)sess.getAttribute("auth");
+		String id = (String)sess.getAttribute("sess_id");
 		
-		String uri = req.getRequestURI();
-		String cmd = uri.substring(uri.lastIndexOf("/")+1);
-		
-		CreatorServiceImp cs = new CreatorServiceImp();
-		
-		if(cmd.equals("creReg")) {
-			String add = (String)req.getSession().getAttribute("auth");
-			String id = (String)req.getSession().getAttribute("sess_id");
-//			System.out.println(id);
-			
-			if(id == null || add == null) {
-				goView(req, resp, "/member/memreg.jsp");
-			}
-			else if(add.equals("C")) {
-				
-				String seqno = (String) req.getAttribute("seqno");
-				
-				List<Pro> prolist = cs.Prolist(seqno, id);
-				List<Auc> auclist = cs.Auclist(seqno, id);
-				
-				String total = cs.totalmoney(id);
-				
-				req.setAttribute("prolist", prolist);
-				req.setAttribute("auclist", auclist);
-				req.setAttribute("total", total);
-			
-				goView(req, resp, "/creater/artistpage.jsp");
-			}else {
-				cs.CreatorName(id);
-				goView(req, resp, "/creater/creReg.jsp");
-			}
-			
-			
-	/////?—¬ê¸°ì„œ ?‹œ?‘!!//////////////////////
-		}else if(cmd.equals("artistpage")) {
-			//?—¬ê¸°ì„œ ?‘ê°?ë¡? ?“±ê¸‰ì„ ì¤?
-			cs.Creatoradd(req);//?‹¤?˜¤?—? ‘ê·¼ì„ ?•˜ê¸°ìœ„?•œ ?ˆ˜?‹¨?´?¼ ?ƒê°?!
-			goView(req, resp, "/cre/creReg");
-				
-		} else if(cmd.equals("cremodify")) { 
-	         //ëª»í•¨
-	         String id = (String)req.getSession().getAttribute("sess_id");
-	         Creator cre = cs.infomodify(id);
-	         
-	         req.setAttribute("cre", cre);
-	         goView(req, resp, "/creater/creReg2.jsp");
-	         
-	      } //ê´‘ê³  ë¦¬ìŠ¤?Š¸ë³´ì—¬ì£¼ëŠ” ?˜?´ì§? 
-			else if(cmd.equals("Adlist")) {
-			List<Marketing> marketing = cs.mk(); 
-			req.setAttribute("marketing", marketing);
-			goView(req, resp, "/listimg/product_ad.jsp");
-			
-		}//ê´‘ê³  ?•˜?‚˜ë¥? ?´ë¦??–ˆ?„?•Œ ?‚˜?˜¤?Š” ?˜?´ì§? 
-			else if(cmd.equals("marketingDetail")) {	
-			int seqno = Integer.parseInt(req.getParameter("seqno"));
-//			System.out.println(seqno);
-//			List<Marketing> marketing2 = cs.mkk(seqno); 
-			
-			req.setAttribute("marketing", cs.mkk(seqno));
-			
-			goView(req, resp, "/creater/marketingDetail.jsp");
-				
+		if(id == null || add == null) {
+			return "/member/memreg";
 		}
-			//?•„ì§? sqlë¬? ë¯¸ì™„?„±!
-		else if(cmd.equals("salesHistory")) {
-			String id = (String)req.getSession().getAttribute("sess_id");
-			List<Pro> salesHistory = cs.salesHistory(id);
+		else if(add.equals("C")) {
 			
-			Map<String, List<Pro>> calculate = cs.calculate(id);
+			List<Pro> prolist = cs.Prolist(seqno, id);
+			List<Auc> auclist = cs.Auclist(seqno, id);
 			
+			String total = cs.totalmoney(id);
 			
-			req.setAttribute("cre", salesHistory);
-			req.setAttribute("month", calculate.get("month"));
-			req.setAttribute("year", calculate.get("year"));
-			goView(req, resp, "/creater/jmh_salesHistory.jsp");
+			model.addAttribute("prolist", prolist);
+			model.addAttribute("auclist", auclist);
+			model.addAttribute("total", total);
 			
-		} else if(cmd.equals("auction_reg")) {
-		
-			String seqno = req.getParameter("seqno");
-		
-			if(seqno != null) {
-		     Auc auc = cs.aucdetail(seqno);
-		     req.setAttribute("auc", auc);
-			}
-		         
-		 goView(req, resp, "/creater/auction_registration.jsp");
-		 
-		 //?˜¥?…˜ ?ˆ˜? •?“±ë¡?
-		  } else if(cmd.equals("auction_modify")) {
-			  
-
-		 String seqno = cs.aucadd(req);
-		 
-		 
-		 goView(req, resp, "/cre/auction_reg?seqno="+seqno);
-		 
-		 
-		 //?ˆ˜? •?“±ë¡ì°½ ?„?š°?Š”ê³?
-		  } else if(cmd.equals("product_registration")) {
-		    
-		 String seqno = req.getParameter("seqno");
-		 
-		    if(seqno != null) {
-		       Pro pro = cs.productdetail(seqno);
-		       req.setAttribute("pro", pro);
+			return "/creater/artistpage";
+		}else {
+			cs.CreatorName(id);
+			return "/creater/creReg";
 		}
 		
-		goView(req,resp,"/creater/product_registration.jsp");
-		
-		//?¼ë°? ?ˆ˜? • ?“±ë¡?
-		   } else if(cmd.equals("promodify")) {
-			   
-		   String seqno = cs.productadd(req);
-		   
-		  goView(req,resp,"/cre/product_registration?seqno="+seqno);
-		   
-		   
-		   } else if(cmd.equals("cremodifyreg")) { 
-		          //?¬ë¦¬ì—?´?„° ? •ë³´ìˆ˜? •
-		            Map<String, String> cremo = cs.cremodifyreg(req);
-		            req.setAttribute("modi", cremo);
-		           goView(req, resp, "/cre/cremodify");
-		            
-		   }else if (cmd.equals("fileDel")) {
-			   FileService fileservice = new FileServiceImp();
-			   int rs=0;
-			    String attseqno = req.getParameter("attseqno");
-				String savefilename = req.getParameter("savefilename");
-				String filepath = req.getParameter("filepath");
-				String thumb_filename = req.getParameter("thumb_filename");
-//				System.out.println("?‹œ???Š¤?Š”?"+attseqno);
-				if(attseqno != "") {
-				rs = fileservice.delete(attseqno,savefilename,filepath,thumb_filename);
-//				System.out.println("?ŒŒ?¼?‚­? œê²°ê³¼"+rs);
-				}else {
-					rs = 1;
-				}
-				PrintWriter out = resp.getWriter();
-				
-				out.print(rs);
-			   
-		   }else if (cmd.equals("prodel")) {
-			   String seqno = req.getParameter("proseqno");
-			   cs.prodel(seqno);
-			   goView(req, resp, "/cre/creReg");
-		   }
-		  
-		  
-		
 	}
+			
+			
+	/////?ï¿½ï¿½ê¸°ì„œ ?ï¿½ï¿½?ï¿½ï¿½!!//////////////////////
+	/*
+	 * }else if(cmd.equals("artistpage")) { //?ï¿½ï¿½ê¸°ì„œ ?ï¿½ï¿½ï¿½?ï¿½? ?ï¿½ï¿½ê¸‰ì„ ï¿½?
+	 * cs.Creatoradd(req);//?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ê·¼ì„ ?ï¿½ï¿½ê¸°ìœ„?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ï¿½?! goView(req,
+	 * resp, "/cre/creReg");
+	 * 
+	 * } else if(cmd.equals("cremodify")) { //ëª»í•¨ String id =
+	 * (String)req.getSession().getAttribute("sess_id"); Creator cre =
+	 * cs.infomodify(id);
+	 * 
+	 * req.setAttribute("cre", cre); goView(req, resp, "/creater/creReg2.jsp");
+	 * 
+	 * } //ê´‘ê³  ë¦¬ìŠ¤?ï¿½ï¿½ë³´ì—¬ì£¼ëŠ” ?ï¿½ï¿½?ï¿½ï¿½ï¿½? else if(cmd.equals("Adlist")) { List<Marketing>
+	 * marketing = cs.mk(); req.setAttribute("marketing", marketing); goView(req,
+	 * resp, "/listimg/product_ad.jsp");
+	 * 
+	 * }//ê´‘ê³  ?ï¿½ï¿½?ï¿½ï¿½ï¿½? ?ï¿½ï¿½ï¿½??ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ï¿½? else
+	 * if(cmd.equals("marketingDetail")) { int seqno =
+	 * Integer.parseInt(req.getParameter("seqno")); // System.out.println(seqno); //
+	 * List<Marketing> marketing2 = cs.mkk(seqno);
+	 * 
+	 * req.setAttribute("marketing", cs.mkk(seqno));
+	 * 
+	 * goView(req, resp, "/creater/marketingDetail.jsp");
+	 * 
+	 * } //?ï¿½ï¿½ï¿½? sqlï¿½? ë¯¸ì™„?ï¿½ï¿½! else if(cmd.equals("salesHistory")) { String id =
+	 * (String)req.getSession().getAttribute("sess_id"); List<Pro> salesHistory =
+	 * cs.salesHistory(id);
+	 * 
+	 * Map<String, List<Pro>> calculate = cs.calculate(id);
+	 * 
+	 * 
+	 * req.setAttribute("cre", salesHistory); req.setAttribute("month",
+	 * calculate.get("month")); req.setAttribute("year", calculate.get("year"));
+	 * goView(req, resp, "/creater/jmh_salesHistory.jsp");
+	 * 
+	 * } else if(cmd.equals("auction_reg")) {
+	 * 
+	 * String seqno = req.getParameter("seqno");
+	 * 
+	 * if(seqno != null) { Auc auc = cs.aucdetail(seqno); req.setAttribute("auc",
+	 * auc); }
+	 * 
+	 * goView(req, resp, "/creater/auction_registration.jsp");
+	 * 
+	 * //?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ï¿½? } else if(cmd.equals("auction_modify")) {
+	 * 
+	 * 
+	 * String seqno = cs.aucadd(req);
+	 * 
+	 * 
+	 * goView(req, resp, "/cre/auction_reg?seqno="+seqno);
+	 * 
+	 * 
+	 * //?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ë¡ì°½ ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ï¿½? } else if(cmd.equals("product_registration")) {
+	 * 
+	 * String seqno = req.getParameter("seqno");
+	 * 
+	 * if(seqno != null) { Pro pro = cs.productdetail(seqno);
+	 * req.setAttribute("pro", pro); }
+	 * 
+	 * goView(req,resp,"/creater/product_registration.jsp");
+	 * 
+	 * //?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ï¿½? } else if(cmd.equals("promodify")) {
+	 * 
+	 * String seqno = cs.productadd(req);
+	 * 
+	 * goView(req,resp,"/cre/product_registration?seqno="+seqno);
+	 * 
+	 * 
+	 * } else if(cmd.equals("cremodifyreg")) { //?ï¿½ï¿½ë¦¬ì—?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ë³´ìˆ˜?ï¿½ï¿½ Map<String,
+	 * String> cremo = cs.cremodifyreg(req); req.setAttribute("modi", cremo);
+	 * goView(req, resp, "/cre/cremodify");
+	 * 
+	 * }else if (cmd.equals("fileDel")) { FileService fileservice = new
+	 * FileServiceImp(); int rs=0; String attseqno = req.getParameter("attseqno");
+	 * String savefilename = req.getParameter("savefilename"); String filepath =
+	 * req.getParameter("filepath"); String thumb_filename =
+	 * req.getParameter("thumb_filename"); //
+	 * System.out.println("?ï¿½ï¿½???ï¿½ï¿½?ï¿½ï¿½?"+attseqno); if(attseqno != "") { rs =
+	 * fileservice.delete(attseqno,savefilename,filepath,thumb_filename); //
+	 * System.out.println("?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ê²°ê³¼"+rs); }else { rs = 1; } PrintWriter out =
+	 * resp.getWriter();
+	 * 
+	 * out.print(rs);
+	 * 
+	 * }else if (cmd.equals("prodel")) { String seqno =
+	 * req.getParameter("proseqno"); cs.prodel(seqno); goView(req, resp,
+	 * "/cre/creReg"); }
+	 * 
+	 * 
+	 * 
+	 * }
+	 */
 
 	private void goView(HttpServletRequest req, HttpServletResponse resp, String viewPage) throws ServletException, IOException {
 		RequestDispatcher rd = req.getRequestDispatcher(viewPage);
