@@ -47,7 +47,7 @@ public class Membercontroller{
 		
 		String id = mem.getMemId();
 		String pw = mem.getMemPw();
-		
+		String viewPage = null;
 		Map<String, String> status = member.login(id, pw);
 		
 		switch(status.get("login")) {
@@ -57,29 +57,51 @@ public class Membercontroller{
 			sess.setAttribute("sess_name", status.get("name"));
 			sess.setAttribute("auth", status.get("auth"));
 			
-			return "/index";
-			
+			viewPage = "/index";
+			break;
 		case "pwfail" :
 			
 			sess.setAttribute("err", "비밀번호를 확인해주세요");
-			return "/member/login";
-			
+			viewPage = "/member/login";
+			break;
 			
 		case "no_member" :
 			
 			sess.setAttribute("err", "회원을 확인해주세요");
-			return "/member/login";
-			
+			viewPage = "/member/login";
+			break;
 			
 		default :
 			sess.setAttribute("err", "회원을 확인해주세요");
-			return "/member/login";
-	}
+			viewPage = "/member/login";
 			
+		}
+		return viewPage;
 
-}
+	}
 	
-
+	@GetMapping("loginout")
+	public String logout(HttpSession sess) {
+	
+		sess.invalidate();
+		
+		return "redirect:/index";
+	}
+	
+	@GetMapping("memreg")
+	public void memreg() {
+		
+	}
+	
+	@PostMapping("memregform")
+	public String register(Mem mem) {
+		
+		member.insert(mem);
+		
+		return "/member/memreg";
+	}
+	
+	
 /*
 		} else if(cmd.equals("loginout")) {
 			sess.invalidate();
