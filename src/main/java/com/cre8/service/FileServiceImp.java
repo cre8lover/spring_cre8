@@ -10,15 +10,16 @@ import java.util.UUID;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FilenameUtils;
 
-import dao.FileDao;
-import dto.Address;
-import dto.Att;
-import dto.Auc;
-import dto.Item;
-import dto.Marketing;
-import dto.Mem;
-import dto.Pro;
-import dto.Thumbnail;
+import com.cre8.dao.FileDao;
+import com.cre8.dto.Address;
+import com.cre8.dto.Att;
+import com.cre8.dto.Auc;
+import com.cre8.dto.Item;
+import com.cre8.dto.Marketing;
+import com.cre8.dto.Mem;
+import com.cre8.dto.Pro;
+import com.cre8.dto.Thumbnail;
+
 import net.coobird.thumbnailator.Thumbnails;
 
 public class FileServiceImp implements FileService {
