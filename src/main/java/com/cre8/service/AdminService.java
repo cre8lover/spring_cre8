@@ -5,12 +5,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import dto.AdminKeyWord;
-import dto.Cat;
-import dto.Item;
-import dto.Marketing;
-import dto.Mem;
-import dto.Pro;
+import com.cre8.dto.AdminKeyWord;
+import com.cre8.dto.Cat;
+import com.cre8.dto.Marketing;
+import com.cre8.dto.Mem;
 
 public interface AdminService {
 	

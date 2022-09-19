@@ -23,7 +23,7 @@ public class CreatorServiceImp implements CreatorService{
 	
 	
 	private static final String CHARSET = "utf-8";
-	CreatorDao creatorDao = new CreatorDao();
+	CreatorDaoImp creatorDao = new CreatorDaoImp();
 	Mem mem = new Mem();
 
 	@Override
@@ -88,8 +88,8 @@ public class CreatorServiceImp implements CreatorService{
     public String aucadd(HttpServletRequest req) {
 		
 		DiskFileItemFactory factory = new DiskFileItemFactory(); 
-		factory.setDefaultCharset(CHARSET);//?ƒ?ˆ˜ë¡? ?„ ?–¸?•˜?Š”ê²? ì¢‹ë‹¤.
-		//factory form?˜ ?°?´?„°ë¥? ê°?? ¸???„œ ???¥ utf8ë¡? ???¥?•˜?Š”ê²? ì¢‹ìŒ
+		factory.setDefaultCharset(CHARSET);//?ï¿½ï¿½?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ï¿½? ì¢‹ë‹¤.
+		//factory form?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ï¿½? ï¿½??ï¿½ï¿½???ï¿½ï¿½ ???ï¿½ï¿½ utf8ï¿½? ???ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ï¿½? ì¢‹ìŒ
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		
 		Auc auc = new Auc();
@@ -99,9 +99,9 @@ public class CreatorServiceImp implements CreatorService{
 		
 		try {
 			List<FileItem> items = upload.parseRequest(req);
-			//ë©??‹°?ŒŒ?Š¸ ?™•?¸ë²?
+			//ï¿½??ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ï¿½?
 			for(FileItem item : items) {
-				if (item.isFormField()) {//2ì§„ë°?´?„°?¸ì§? ?…?Š¤?Š¸?¸ì§? êµ¬ë³„?•´ì¤?
+				if (item.isFormField()) {//2ì§„ë°?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ï¿½? êµ¬ë³„?ï¿½ï¿½ï¿½?
 					auc =  fileService.getFormParameter2(item,auc,proitem); 
 				}else {
 					attachfile = fileService.fileUpload(item);
@@ -140,8 +140,8 @@ public class CreatorServiceImp implements CreatorService{
 	   public String productadd(HttpServletRequest req) {
 		
 		DiskFileItemFactory factory = new DiskFileItemFactory(); 
-		factory.setDefaultCharset("CHARSET");//?ƒ?ˆ˜ë¡? ?„ ?–¸?•˜?Š”ê²? ì¢‹ë‹¤.
-		//factory form?˜ ?°?´?„°ë¥? ê°?? ¸???„œ ???¥ utf8ë¡? ???¥?•˜?Š”ê²? ì¢‹ìŒ
+		factory.setDefaultCharset("CHARSET");//?ï¿½ï¿½?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ï¿½? ì¢‹ë‹¤.
+		//factory form?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ï¿½? ï¿½??ï¿½ï¿½???ï¿½ï¿½ ???ï¿½ï¿½ utf8ï¿½? ???ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ï¿½? ì¢‹ìŒ
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		
 		
@@ -154,9 +154,9 @@ public class CreatorServiceImp implements CreatorService{
 		
 		try {
 			List<FileItem> items = upload.parseRequest(req);
-			//ë©??‹°?ŒŒ?Š¸ ?™•?¸ë²?
+			//ï¿½??ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ï¿½?
 			for(FileItem item : items) {
-				if (item.isFormField()) {//2ì§„ë°?´?„°?¸ì§? ?…?Š¤?Š¸?¸ì§? êµ¬ë³„?•´ì¤?
+				if (item.isFormField()) {//2ì§„ë°?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ï¿½? êµ¬ë³„?ï¿½ï¿½ï¿½?
 					pro =  fileService.getFormParameter(item,pro,proitem); 
 				}else {
 					attachfile = fileService.fileUpload(item);
