@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,62 +62,56 @@ public class Creatercontroller {
 		}
 		
 	}
+	@GetMapping("artistpage")
+	public String artistpage() {
+		return "/cre/creReg";
+	}
+	
 			
-			
-	/////?��기서 ?��?��!!//////////////////////
-	/*
+	/*---------------완료----------------
 	 * }else if(cmd.equals("artistpage")) { //?��기서 ?���?�? ?��급을 �?
-	 * cs.Creatoradd(req);//?��?��?��?��근을 ?��기위?�� ?��?��?��?�� ?���?! goView(req,
-	 * resp, "/cre/creReg");
+	 * cs.Creatoradd(req);//?��?��?��?��근을 ?��기위?�� ?��?��?��?�� ?���?!
+	 *  goView(req, resp, "/cre/creReg");
 	 * 
-	 * } else if(cmd.equals("cremodify")) { //못함 String id =
-	 * (String)req.getSession().getAttribute("sess_id"); Creator cre =
-	 * cs.infomodify(id);
+	 * } else if(cmd.equals("cremodify")) { 
+	 * //못함 String id =(String)req.getSession().getAttribute("sess_id");
+	 *  Creator cre = cs.infomodify(id);
+	 * req.setAttribute("cre", cre);
+	 * goView(req, resp, "/creater/creReg2.jsp");
 	 * 
-	 * req.setAttribute("cre", cre); goView(req, resp, "/creater/creReg2.jsp");
-	 * 
-	 * } //광고 리스?��보여주는 ?��?���? else if(cmd.equals("Adlist")) { List<Marketing>
-	 * marketing = cs.mk(); req.setAttribute("marketing", marketing); goView(req,
-	 * resp, "/listimg/product_ad.jsp");
-	 * 
-	 * }//광고 ?��?���? ?���??��?��?�� ?��?��?�� ?��?���? else
-	 * if(cmd.equals("marketingDetail")) { int seqno =
-	 * Integer.parseInt(req.getParameter("seqno")); // System.out.println(seqno); //
-	 * List<Marketing> marketing2 = cs.mkk(seqno);
-	 * 
+	 * } //광고 리스?��보여주는 ?��?���? 
+	 * else if(cmd.equals("Adlist")) {
+	 *  List<Marketing>marketing = cs.mk(); 
+	 *  req.setAttribute("marketing", marketing); 
+	 *  goView(req,resp, "/listimg/product_ad.jsp");
+	 * }
+	 * //광고 ?��?���? ?���??��?��?�� ?��?��?�� ?��?���? 
+	 * else if(cmd.equals("marketingDetail")) { 
+	 * int seqno = Integer.parseInt(req.getParameter("seqno")); 
+	 * // System.out.println(seqno); 
+	 * //List<Marketing> marketing2 = cs.mkk(seqno);
 	 * req.setAttribute("marketing", cs.mkk(seqno));
-	 * 
 	 * goView(req, resp, "/creater/marketingDetail.jsp");
-	 * 
-	 * } //?���? sql�? 미완?��! else if(cmd.equals("salesHistory")) { String id =
-	 * (String)req.getSession().getAttribute("sess_id"); List<Pro> salesHistory =
-	 * cs.salesHistory(id);
-	 * 
+	 * } //?���? sql�? 미완?��! 
+	 * else if(cmd.equals("salesHistory")) {
+	 *  String id =(String)req.getSession().getAttribute("sess_id"); 
+	 * List<Pro> salesHistory = cs.salesHistory(id);
 	 * Map<String, List<Pro>> calculate = cs.calculate(id);
-	 * 
-	 * 
-	 * req.setAttribute("cre", salesHistory); req.setAttribute("month",
-	 * calculate.get("month")); req.setAttribute("year", calculate.get("year"));
+	 * req.setAttribute("cre", salesHistory); 
+	 * req.setAttribute("month", calculate.get("month"));
+	 * req.setAttribute("year", calculate.get("year"));
 	 * goView(req, resp, "/creater/jmh_salesHistory.jsp");
-	 * 
-	 * } else if(cmd.equals("auction_reg")) {
-	 * 
+	 * } 
+	 * else if(cmd.equals("auction_reg")) {
 	 * String seqno = req.getParameter("seqno");
-	 * 
-	 * if(seqno != null) { Auc auc = cs.aucdetail(seqno); req.setAttribute("auc",
-	 * auc); }
-	 * 
+	 * if(seqno != null) { Auc auc = cs.aucdetail(seqno);
+	 * req.setAttribute("auc", auc);
+	 * }
 	 * goView(req, resp, "/creater/auction_registration.jsp");
-	 * 
-	 * //?��?�� ?��?��?���? } else if(cmd.equals("auction_modify")) {
-	 * 
-	 * 
+	 * //?��?�� ?��?��?���? }
+	 * else if(cmd.equals("auction_modify")) {
 	 * String seqno = cs.aucadd(req);
-	 * 
-	 * 
 	 * goView(req, resp, "/cre/auction_reg?seqno="+seqno);
-	 * 
-	 * 
 	 * //?��?��?��록창 ?��?��?���? } else if(cmd.equals("product_registration")) {
 	 * 
 	 * String seqno = req.getParameter("seqno");
@@ -158,9 +153,5 @@ public class Creatercontroller {
 	 * }
 	 */
 
-	private void goView(HttpServletRequest req, HttpServletResponse resp, String viewPage) throws ServletException, IOException {
-		RequestDispatcher rd = req.getRequestDispatcher(viewPage);
-		rd.forward(req, resp);		
-	}
 
 }
