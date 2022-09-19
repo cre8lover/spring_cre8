@@ -9,23 +9,28 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import dao.CreatorDao;
-import dto.Att;
-import dto.Auc;
-import dto.Creator;
-import dto.Item;
-import dto.Marketing;
-import dto.Mem;
-import dto.Pro;
+import com.cre8.dao.CreatorDao;
+import com.cre8.dto.Att;
+import com.cre8.dto.Auc;
+import com.cre8.dto.Creator;
+import com.cre8.dto.Item;
+import com.cre8.dto.Marketing;
+import com.cre8.dto.Pro;
 
+
+
+@Service
 public class CreatorServiceImp implements CreatorService{
 	
 	
 	private static final String CHARSET = "utf-8";
-	CreatorDaoImp creatorDao = new CreatorDaoImp();
-	Mem mem = new Mem();
-
+	
+	@Autowired
+	CreatorDao creatorDao;
+	
 	@Override
 	public void Creatoradd(HttpServletRequest request) {
 		creatorDao.Creatoradd(request);
