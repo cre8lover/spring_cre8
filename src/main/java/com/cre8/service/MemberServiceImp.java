@@ -12,7 +12,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-import com.cre8.dao.MemberDao;
+import com.cre8.dao.MemberDaoImp;
 import com.cre8.dto.Address;
 import com.cre8.dto.Att;
 import com.cre8.dto.Cart;
@@ -22,7 +22,7 @@ import com.cre8.dto.Ship;
 
 
 public class MemberServiceImp implements MemberService {
-	MemberDao dao = new MemberDao();
+	MemberDaoImp dao = new MemberDaoImp();
 	Mem mem;
 	private static final String CHARSET = "utf-8";
 
