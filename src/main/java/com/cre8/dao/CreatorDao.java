@@ -37,13 +37,13 @@ public class CreatorDao {
 	Connection conn = OracleConn.getInstance().getConn();
 	PreparedStatement stmt;
 	CallableStatement cstmt;
-	
+	//
 	FileDao filedao = new FileDao();
 	
 	public void Creatoradd(HttpServletRequest request){
 		try {
 			String sql = "call p_creatoradd(?,?,?,?,?,?,?,?)";
-		     	   //?”„ë¡œì‹œ???‹œ?—˜?•´ë´…ë‹ˆ
+		     	   //?ï¿½ï¿½ë¡œì‹œ???ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ë´…ë‹ˆ
 		     	  
 		    String str = (request.getParameter("creadress") + request.getParameter("creadress2"));
 
@@ -63,8 +63,8 @@ public class CreatorDao {
 			 stmt.setString(1, (String)request.getSession().getAttribute("sess_id"));
 			 stmt.executeQuery();
 			
-			 //?“±ê¸? cë¥? ì¤˜ì•¼?¨ ?•„?´?””?•„?š” (idë¥? ë°›ì•„?˜´)
-			//id ê°’ì„ ê°?? ¸???„œ ê·¸ì•„?´?””?šŒ?›?˜ ?“±ê¸‰ì„ cë¡? ?˜¬? ¤ì¤˜ì•¼?•˜?Š”sql = update
+			 //?ï¿½ï¿½ï¿½? cï¿½? ì¤˜ì•¼?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ (idï¿½? ë°›ì•„?ï¿½ï¿½)
+			//id ê°’ì„ ï¿½??ï¿½ï¿½???ï¿½ï¿½ ê·¸ì•„?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ê¸‰ì„ cï¿½? ?ï¿½ï¿½?ï¿½ï¿½ì¤˜ì•¼?ï¿½ï¿½?ï¿½ï¿½sql = update
 			
 			stmt.close();
 		 }catch (SQLException e) {
@@ -87,7 +87,7 @@ public class CreatorDao {
 		return mem;
 		}
 		
-	////ê´‘ê³  ë¦¬ìŠ¤?Š¸ë³´ì—¬ì£¼ëŠ” ?˜?´ì§? 
+	////ê´‘ê³  ë¦¬ìŠ¤?ï¿½ï¿½ë³´ì—¬ì£¼ëŠ” ?ï¿½ï¿½?ï¿½ï¿½ï¿½? 
 	public List<Marketing> mk(){ 
 		List<Marketing> mk = new ArrayList<Marketing>();
 		
@@ -114,7 +114,7 @@ public class CreatorDao {
 	}
 	
 	
-	//ê´‘ê³  ?•˜?‚˜ë¥? ?´ë¦??–ˆ?„?•Œ ?‚˜?˜¤?Š” ?˜?´ì§? 
+	//ê´‘ê³  ?ï¿½ï¿½?ï¿½ï¿½ï¿½? ?ï¿½ï¿½ï¿½??ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ï¿½? 
 	public Marketing mkk(int seqno) {
 		Marketing mkk = new Marketing();
 			String sql = "select * from Marketing where mar_seqno=?";
@@ -344,7 +344,7 @@ public class CreatorDao {
 	
 
 	
-	//?¼ë°˜ë¬¼?’ˆ?´?‘ ê²½ë§¤ë¬¼í’ˆ ?‘ê°??˜?´ì§??—?„œ ?„?š°ê¸?
+	//?ï¿½ï¿½ë°˜ë¬¼?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ê²½ë§¤ë¬¼í’ˆ ?ï¿½ï¿½ï¿½??ï¿½ï¿½?ï¿½ï¿½ï¿½??ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ï¿½?
 	public List<Pro> Prolist(String seqno,String id ) {
 		List<Pro> prolist = new ArrayList<>();
 		try {
