@@ -1,0 +1,92 @@
+@charset "UTF-8";
+
+* {
+	margin: 0;
+ 	box-sizing: border-box;
+}
+
+/* 로그인 */
+.khm_adminloginbox {
+	display : block;
+	background : #1F4287;
+	position : fixed;
+	border : solid 1px #1F4287;
+	width: 100%;
+	height: 45%;
+	text-align: center;
+	top:30%;
+}
+
+table.khm_adminlogin {
+	margin: auto;
+}
+
+table.khm_adminlogin td > input[type=submit]{
+	background : #21E6C1;
+	border: none;
+	height: 55px;
+	width: 60px;
+	border-radius: 6px;
+}
+table.khm_adminlogin td > input[type=password]{
+	border: none;
+	border-radius: 2px;
+	height:20px;
+}
+table.khm_adminlogin td > input[type=text]{
+	border: none;
+	border-radius: 2px;
+	height:20px;
+}
+
+/* Header/Blog Title */
+.khm_header {
+  padding: 30px;
+  text-align: center;
+  background: #1F4287;
+}
+
+.khm_header h1 {
+  font-size: 50px;
+}
+
+/* Style the top navigation bar */
+.khm_topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+/* Style the topnav links */
+.khm_topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change color on hover */
+.khm_topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Footer */
+.khm_footer {
+  padding: 20px;
+    text-align: center;
+    background: #ddd;
+    margin-top: 20px;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+}
+
+/* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
+@media screen and (max-width: 400px) {
+  .topnav a {
+    float: none;
+    width: 100%;
+  }
+}

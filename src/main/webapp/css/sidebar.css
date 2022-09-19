@@ -1,0 +1,82 @@
+@charset "UTF-8";
+/*패딩값0*/
+*{
+padding:0;
+}
+.jmh_border{
+	all:unset;
+	box-sizing: border-box;
+}
+/*플렉스 박스 및 가운대 정렬*/
+.jmh_navposition {
+	position: fixed;
+    right: 2%;
+    top: 38%;
+	display:flex;
+	justify-content:center;
+	align-item:center;
+	min-height:100vh;
+	z-index:100;
+}
+/* 포지션 및 크기정하기*/
+.jmh_navigation {
+	position: relative;
+	width:70px;
+	height: 270px;
+	background: #fff;
+	border-radius: 35px;
+	box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+	
+}
+.jmh_navigation ul {
+	position: absolute;
+	top:0;
+	left:0;
+	width:100%;
+	display:flex;
+	flex-direction:column;
+}
+
+.jmh_navigation ul li {
+	position : relative;
+	list-style: none;
+	width:70px;
+	height:70px;
+	z-index:3;
+}
+
+.jmh_navigation ul li a {
+	position : relative;
+	display:flex;
+	justify-content: center;
+	align-items:center;
+	width:100%;
+	text-align:center;
+	color: #333;
+	font-weight:500;
+}
+
+.jmh_navigation ul li a .icon {
+	position:relative;
+	display: block;
+	line-height: 75px;
+	text-align: center;
+}
+
+.jmh_navigation ul li a .icon i {
+	font-size: 24px;
+}
+
+.jmh_navigation ul li a .title {
+	position: absolute;
+	top: 50%;
+	left: -100px;
+	background: #fff;
+	transform: translateY(-50%);
+	padding: 5px 10px;
+	border-radius: 6px;
+	transition: 0.5s;
+	box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+	opacity: 0;
+	visibility: hidden;
+}

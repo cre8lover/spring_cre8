@@ -1,0 +1,151 @@
+@charset "UTF-8";
+.jmh_mainpagd {
+	width:60%;
+	height:100%;
+}
+.jmh_mainboardlength {
+	width:100%;
+	border-collapse: collapse;
+}
+.jmh_saleimgboard{
+	width:100%;
+	heigth:6vw;
+}
+
+.jmh_saleshistoryboard {
+	border: 1px solid;
+}
+.jmh_saleboardwidth1{
+	width:5%
+}
+.jmh_saleboardwidth2{
+	width:10%;
+	height:15%;
+}
+.jmh_saleboardwidth3{
+	width:20%
+}
+.jmh_saleboardwidth4{
+	width:10%
+}
+.jmh_saleboardwidth5{
+	width:15%;
+}
+.jmh_saleboardimgwidth2{
+	width:5%;
+}
+
+/* 탭 전체 스타일 */
+.tabs {
+  padding-bottom: 40px;
+  margin: 0 auto;
+  
+ }
+
+/* 탭 스타일 */
+.tab_item {
+  width: calc(100%/4);
+  height: 50px;
+  border-bottom: 3px solid #333333;
+  background-color: #f8f8f8;
+  line-height: 50px;
+  font-size: 16px;
+  text-align: center;
+  color: #333333;
+  display: block;
+  float: left;
+  text-align: center;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+.tab_item:hover {
+  opacity: 0.75;
+}
+
+/* 라디오 버튼 UI삭제*/
+input[name="tab_item"] {
+  display: none;
+}
+
+/* 탭 컨텐츠 스타일 */
+.tab_content {
+  display: none;
+  clear: both;
+  overflow: hidden;
+}
+
+
+/* 선택 된 탭 콘텐츠를 표시 */
+#all:checked ~ #all_content,
+#programming:checked ~ #programming_content,
+#quarterlysales:checked ~ #quarterlysales_content,
+#monthsales:checked ~ #monthsales_content{
+  display: block;
+}
+
+/* 선택된 탭 스타일 */
+.tabs input:checked + .tab_item {
+  background-color: #333333;
+  color: #fff;
+}
+
+.bton {
+	margin-left: 5px;
+	width: 99%;
+	height: 60px;
+	border-radius: 10px;
+	background: #071E3d;
+	color: white;
+	cursor: pointer;
+	border: none;
+	font-size:20px;
+}
+
+.bton:hover {
+	background-color: #21e6c1;
+	color: black;
+	cursor: pointer;
+}
+
+
+/*슬라이더*/
+
+.slidecontainer {
+  width: 100%;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 40px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  border-radius: 5px;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 50px;
+  height: 50px;
+  background: #21e6c1;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #04AA6D;
+  cursor: pointer;
+}
+.totalamount{
+	
+	width:20%;
+}

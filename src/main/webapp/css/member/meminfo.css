@@ -1,0 +1,42 @@
+@charset "UTF-8";
+body {
+  color: #666;
+  font: 14px/24px "Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", Sans-Serif;
+}
+ table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  border-collapse: collapse;
+  
+}
+th,td {
+  padding: 6px 15px;
+}
+th {
+  color: black;
+  text-align: left;
+}
+
+th,td {
+  border: 1px solid #c6c9cc;
+}
+td:first-child {
+  border-left: 1px solid #c6c9cc;
+}
+
+.khm_box{
+	margin-top:3%;
+	width: 100%;
+}
+
+input[type=text]{
+	width: 100%;
+    height: 21px;
+    border: none;
+}
+input[type=password]{
+	width: 40%;
+    height: 21px;
+ border: none;
+}

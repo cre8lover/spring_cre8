@@ -1,0 +1,238 @@
+@charset "UTF-8";
+a{
+	text-decoration-line: none;
+}
+#productView{
+	display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    width : 850px;
+    margin-left: 53px;
+}
+.pro-img {
+width: 250px;
+height: 250px;
+background-color: gray;
+}
+.product-list .product {
+  width: 100%;
+  min-width: 320px;
+}
+.product-list .product-image {
+  float: left;
+  margin-right: 20px;
+}
+.product {
+  padding: 10px;
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  width: fit-content;
+
+}
+.product:hover {
+  border: 1px solid #aaa;
+  cursor: pointer;
+}
+
+.body{
+display:flex;
+height:60%;
+ justify-content: center;
+}
+.content{
+width: 20%;
+margin-top:80px;
+}
+.leftSideBar, .rightSideBar{
+width:20%;
+}
+.footer{
+}
+
+#leftSideBar{
+width:20%;
+}
+.mypage {
+  width: 1050px;
+   /*border-radius: 30px;
+  background-color:white;
+  box-sizing: border-box;
+  height: 600px;
+  margin: 20px auto;
+  font-family: "Roboto", helvetica, arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  text-rendering: optimizeLegibility; */
+}
+
+.info{
+	margin-top: 20px;
+	text-align:left;
+
+    text-align: center;
+    background-color: gray;
+    height: 500px;
+}
+
+.list{
+	display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    width: 260px;
+}
+.item{
+	float: left;
+	width:210px;
+	display:inline;
+	margin:15px;
+	padding:15px;
+	background: #EAEAEA;
+}
+
+.info2{
+text-align: center;
+    display: inline-block;
+    left: 65%;
+    top: 50%;
+    position: absolute;
+}
+.item2{
+	text-align:center;
+	margin:15px;
+	padding:15px;
+	border: 1px solid #F6F6F6;
+	width: fit-content;
+}
+.mysale{
+	display:block;
+	font-size:18px;
+	float:left;
+	padding:20px;
+}
+.sales {font-size:13px;}
+.price {font-size:13px;}
+.name2 {font-size:20px; magin:5px;}
+.sum {font-size:20px; magin:5px;}
+.price2 {font-size:20px; magin:5px;}
+
+.frame {
+  display: table-row;
+  text-align: center;
+}
+button {
+  margin: 5px;
+}
+.custom-btn {
+  width: 80px;
+  height: 40px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 10px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  outline: none;
+}
+
+.btn-1 {
+  background: rgb(96,9,240);
+  background: linear-gradient(0deg, rgba(96,9,240,1) 0%, rgba(129,5,240,1) 100%);
+  border: none;
+  
+}
+.btn-1:before {
+  height: 0%;
+  width: 2px;
+}
+.btn-1:hover {
+  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+              -4px -4px 6px 0 rgba(116, 125, 136, .5), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.2),
+    inset 4px 4px 6px 0 rgba(0, 0, 0, .4);
+}
+
+.btn-2 {
+  background: #081F3F;
+  background: linear-gradient(0deg, rgba(6,14,131,1) 0%, rgba(12,25,180,1) 100%);
+  border: none;
+}
+.btn-2:hover {
+  background: rgb(0,3,255);
+  background: linear-gradient(0deg, rgba(0,3,255,1) 0%, rgba(2,126,251,1) 100%);
+}
+
+
+
+/**
+ * Tabs
+ */
+.tabs {
+	display: flex;
+	flex-wrap: wrap; 
+	border-radius: 5px;
+}
+.tabs label {
+	
+	order: 1; 
+	display: block;
+	padding: 1rem 2rem;
+	margin-right: 0rem;
+	cursor: pointer;
+  background: #90CAF9;
+  font-weight: bold;
+  transition: background ease 0.2s;
+  border-radius: 5px;
+}
+.tabs .tab {
+  order: 99;
+  flex-grow: 1;
+	width: 100%;
+	display: none;
+  padding: 1rem;
+  background: #fff;
+   border-radius: 7px;
+}
+.tabs input[type="radio"] {
+	display: none;
+}
+.tabs input[type="radio"]:checked + label {
+	background: #fff;
+}
+.tabs input[type="radio"]:checked + label + .tab {
+	display: block;
+}
+
+@media (max-width: 100em) {
+  .tabs .tab,
+  .tabs label {
+   
+  }
+  .tabs label {
+   
+    margin-right: 0;
+    margin-top: 0.2rem;
+  }
+}
+
+/**
+ * Generic Styling
+*/
+body {
+  width:100%;
+  height: 500px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+  font-weight: 300;
+  line-height: 1.5;
+  margin: 0 auto;
+  font-size: 112%;
+}
+

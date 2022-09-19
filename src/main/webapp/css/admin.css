@@ -1,0 +1,151 @@
+@charset "UTF-8";
+
+* {
+	margin: 0;
+ 	box-sizing: border-box;
+}
+
+/* Header/Blog Title */
+.khm_header {
+  padding: 30px;
+  text-align: center;
+  background: #1F4287;
+}
+
+.khm_header h1 {
+  font-size: 50px;
+}
+
+/* Style the top navigation bar */
+.khm_topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+/* Style the topnav links */
+.khm_topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change color on hover */
+.khm_topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.khm_topnav-active{
+	background:white;
+	color:balck;
+}
+
+/* Footer */
+.khm_footer {
+  padding: 20px;
+    text-align: center;
+    background: #ddd;
+    margin-top: 20px;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+}
+
+/* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
+@media screen and (max-width: 400px) {
+  .topnav a {
+    float: none;
+    width: 100%;
+  }
+}
+
+/* 테이블 */
+
+body {
+  color: #666;
+  font: 14px/24px "Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", Sans-Serif;
+}
+table {
+  border-collapse: separate;
+  width: 100%;
+}
+th,td {
+  padding: 6px 15px;
+}
+th {
+  background: #42444e;
+  color: #fff;
+  text-align: left;
+}
+tr:first-child th:first-child {
+  border-top-left-radius: 6px;
+}
+tr:first-child th:last-child {
+  border-top-right-radius: 6px;
+}
+td {
+  border-right: 1px solid #c6c9cc;
+  border-bottom: 1px solid #c6c9cc;
+}
+td:first-child {
+  border-left: 1px solid #c6c9cc;
+}
+tr:nth-child(even) td {
+  background: #eaeaed;
+}
+tr:last-child td:first-child {
+  border-bottom-left-radius: 6px;
+}
+tr:last-child td:last-child {
+  border-bottom-right-radius: 6px;
+}
+
+
+/* 검색 */
+
+.khm_search {
+	padding: 1%;
+    border: solid 1px;
+    margin-top: 1%;
+    font-size: large;
+}
+
+.khm_form {
+	padding-left: 200px;
+}
+
+
+.khm_find {
+	width: 50%;
+	text-align: right;
+}
+.khm_find input[type=text] {
+	width: 182px;
+    height: 36px;
+
+}
+.khm_find input[type=submit]{
+	width: 95px;
+    height: 36px;
+    background: lightgrey;
+}
+.khm_find input[type=submit]:hover{
+    background: #f80a10;
+}
+
+/* 카테고리 */
+.khm_category {
+    display: flex;
+    width: 16%;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 1%;
+}
+
+.khm_button {
+	text-align:right;
+	padding: 5px;
+}

@@ -1,0 +1,140 @@
+@charset "UTF-8";
+/*--장바구니--김창목*/
+.mypage {
+	border-radius: 30px;
+	background-color: white;
+	box-sizing: border-box;
+	width: 100%;
+	height: 100%;
+	margin: 20px auto;
+	font-family: "Roboto", helvetica, arial, sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	text-rendering: optimizeLegibility;
+}
+
+th>img {
+	width: 300px;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+}
+
+.body {
+	font-family: fantasy;
+	display: flex;
+	height: 100%;
+	justify-content: space-around;
+}
+
+.content {
+	width: 65%;
+	height: 100%;
+}
+
+.leftSideBar, .rightSideBar {
+	width: 20%
+}
+
+.kcmimg {
+	width: 100%;
+}
+
+.kcmtable {
+	width: 100%;
+	font-size: 20px;
+	border: 3px solid #444444;
+	border-radius: 30px;
+	line-height: 4;
+}
+
+.kcmtable img {
+	size: 20px;
+}
+
+table thead tr {
+	border: 1px soild;
+}
+
+table thead th {
+	border: 1px soild;
+}
+
+.bton {
+	float: right;
+	margin-top: 50px;
+	margin-right: 10px;
+	width: 80px;
+	height: 80px;
+	border-radius: 100%;
+	background: #263343;
+	color: white;
+	cursor: pointer;
+}
+
+.bton:hover {
+	background-color: #008CBA;
+	color: white;
+	cursor: pointer;
+}
+
+
+/* 탭 전체 스타일 */
+.tabs {
+  padding-bottom: 40px;
+  margin: 0 auto;
+  
+ }
+/* 탭 스타일 */
+.tab_item {
+  cursor: pointer;
+  margin-bottom : 5px;
+  width: calc(70%/4);
+  height: 50px;
+  border-bottom: 3px solid #333333;
+  background-color: #f8f8f8;
+  line-height: 50px;
+  font-size: 16px;
+  text-align: center;
+  color: #333333;
+  display: block;
+  float: left;
+  text-align: center;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+.tab_item:hover {
+  opacity: 0.75;
+}
+
+/* 라디오 버튼 UI삭제*/
+input[name="tab_item"] {
+  display: none;
+}
+
+/* 탭 컨텐츠 스타일 */
+.tab_content {
+  display: none;
+  clear: both;
+  overflow: hidden;
+}
+
+
+/* 선택 된 탭 콘텐츠를 표시 */
+#all:checked ~ #all_content,
+#programming:checked ~ #programming_content,
+#quarterlysales:checked ~ #quarterlysales_content,
+#monthsales:checked ~ #monthsales_content{
+  display: block;
+}
+
+/* 선택된 탭 스타일 */
+.tabs input:checked + .tab_item {
+  background-color: #333333;
+  color: #fff;
+  
+}
+
+

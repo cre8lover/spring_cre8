@@ -1,0 +1,231 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;1,800&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+h1 {
+color:white;
+}
+:root {
+  --white: #181717;
+  --black: #f1eaea;
+}
+
+body {
+  height: 100%;
+  display: block;
+  place-items: center;
+
+  background-color: var(--white);
+}
+
+.container {
+  width: 80%;
+  height:100%;
+  max-width: 800px;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  bottom:40%;
+  left:28.4%;
+}
+
+.slide-bar {
+  position: absolute;
+  top: 50%;
+  left: 100px;
+  transform: translateY(-50%) rotateZ(15deg);
+  width: 10px;
+  height: 600px;
+  z-index: 10;
+}
+
+.bar {
+  width: 100%;
+  height: 150px;
+  border-radius: 100px;
+  background-color: var(--black);
+}
+
+.text-block {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background-color: var(--white);
+}
+.text-block h1 {
+  font-family: "Raleway", sans-serif;
+  font-size: 5rem;
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: 2px;
+  position: relative;
+  perspective: 500px;
+  transform-style: preserve-3d;
+  color: var(--black);
+}
+.text-block h1::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100px;
+  left: 0;
+  background: radial-gradient(var(--black), transparent 70%);
+  transform: translateY(100px) rotateX(-60deg);
+  opacity: 0.3;
+}
+
+#textone {
+  z-index: 6;
+  clip-path: polygon(0 0, 18% 0, 8% 100%, 0% 100%);
+}
+#texttwo {
+  z-index: 4;
+  clip-path: polygon(0 0, 91% 0, 81% 100%, 0% 100%);
+}
+
+button {
+/*   width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 3px solid var(--black); */
+  background-color: var(--white);
+  position: fixed;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+/*   opacity: 0.4;
+  transition: opacity 0.3s; */
+}
+button:hover {
+  opacity: 1;
+}
+
+
+
+@import url(https://fonts.googleapis.com/css?family=Nunito);
+
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
+body { 
+  margin:0;
+  padding:0;
+	perspective: 1px;
+	transform-style: preserve-3d;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  font-family: Nunito;
+}
+
+h1 {
+   font-size: 250%
+}
+
+p {
+  font-size: 140%;
+  line-height: 150%;
+  color: #333;
+}
+
+.slide {
+  position: relative;
+  padding: 25vh 10%;
+  min-height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
+  box-shadow: 0 -1px 10px rgba(0, 0, 0, .7);
+	transform-style: inherit;
+}
+
+img {
+	width : 55%;
+  padding: 20px;
+  border-radius: 5px;
+  background: rgba(240,230,220, .7);
+  box-shadow: 0 0 8px rgba(0, 0, 0, .7);
+  disply : inline-flex;
+}
+
+
+.slide:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  box-shadow: 0 0 8px 1px rgba(0, 0, 0, .7);
+}
+
+.title {
+  width: 100%;
+  padding: 3%;
+  border-radius: 5px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, .7);
+  disply : table;
+}
+
+.slide:nth-child(2n) .title {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.slide:nth-child(2n+1) .title {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.slide, .slide:before {
+  background: 50% 50% / cover;  
+}
+
+.header {
+  text-align: center;
+  font-size: 175%;
+  color: #fff;
+  text-shadow: 0 2px 2px #000;
+}
+
+#title {
+  z-index:2;
+}
+
+#title h1 {
+ transform: translateZ(.25px) scale(.75);
+ transform-origin: 50% 100%;
+
+}
+
+#slide1:before {
+  background-image: url("https://lorempixel.com/640/480/abstract/4/");
+  transform: translateZ(-1px) scale(2);
+}
+
+#slide2 {
+  background-image: url("https://lorempixel.com/640/480/abstract/3/");
+  z-index:2;
+}
+
+#slide3:before {
+  background-image: url("https://lorempixel.com/640/480/abstract/5/");
+  transform: translateZ(-1px) scale(2);
+}
+
+#slide4 {
+  background: #222;
+}
+#changeBtn{
+	color:white;
+	font-size:50px;
+	border: none;
+	z-index:4;
+}

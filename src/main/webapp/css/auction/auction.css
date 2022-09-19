@@ -1,0 +1,163 @@
+@charset "UTF-8";
+	.mypage {
+	  border-radius: 30px;
+	  background-color:white;
+	  box-sizing: border-box;
+	  width: 100%;
+	  height: 100%;
+	  margin: 20px auto;
+	  font-family: "Roboto", helvetica, arial, sans-serif;
+	  font-size: 16px;
+	  font-weight: 400;
+	  text-rendering: optimizeLegibility;
+	}
+	
+	[class*="entypo-"]:before { font-family: 'entypo', sans-serif; }
+body {
+  background-color: white;
+  font: 300 1.25em/1.4 "Lato", sans-serif;
+}
+h1, h3, h4, h5, h6 { font-weight: 400; }
+h1, .sub-heading {
+  text-align: center;
+  margin: .5rem 0 1rem;
+}
+.sub-heading {
+  font-size: .75em;
+  font-weight: 300;
+}
+
+/**
+ * @section: utilities;
+ * @see: Justify Grid [http://justifygrid.com/]
+ */
+ .auc_img{
+	 width: 258px;
+    height: 207px;
+    overflow: hidden;
+    }
+._grid {
+  text-align: justify !important;
+  text-justify: distribute-all-lines;
+  font-size: 0 !important;
+  text-rendering: optimizespeed;
+}
+._grid:after {
+  content: "";
+  display: inline-block;
+  width: 100%;
+}
+._column {
+  display: inline-block;
+  vertical-align: top;
+  font-size: medium;
+  text-align: left;
+  text-rendering: optimizeLegibility;
+}
+._btn {
+  display: inline-block;
+  background-color: #bdc3c7;
+  border: none;
+  padding: .5em .75em;
+  text-align: center;
+  font-weight: 300;
+}
+._btn:hover,
+.cart-totals:hover ._btn {
+  background-color: #3498db;
+  color: #ecf0f1;
+}
+
+/**
+ * @section: shopping-cart;
+ */
+.shopping-cart {
+  width: 80%;
+  max-width: 60rem;
+  margin: 0 auto;
+}
+/**
+ * @extends: _grid;
+ */
+.shopping-cart--list-item {
+  border: 1px solid #bdc3c7;
+  margin-bottom: 1rem;
+  height: 13rem;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius:30px;
+}
+.shopping-cart--list-item:hover,
+.shopping-cart--list-item:hover * {
+  border-color: #3498db;
+}
+.shopping-cart--list-item > ._column {
+    height: 100%; /* make vertical lines match */
+}
+.khm_startprice { 
+	color: #B40404;
+	font-size: 22px;
+	padding-left: 46%;
+	font-weight: bold;
+}
+
+/**
+ * @section: product-image;
+ * @extends: _column;
+ */
+.product-image {
+  	width: 258px;
+    height: 207px;
+    overflow: hidden;
+}
+.product-image--img {
+ 
+  width: 100%;
+  height: 100%;
+  /* background: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7") no-repeat center / cover transparent; */
+}
+
+/**
+ * @section: product-info;
+ * @extends: _column;
+ */
+.product-info {
+  width: 70.832119%;
+  padding: 20px 0px 10px 0px;
+  color: #686868;
+  
+}
+.product-name {
+  font: 300 2.4em/1 "Lato", sans-serif;
+  letter-spacing: -.025em;
+  margin: 0 0 .125em;
+  font-size:34px;
+}
+.price {
+  line-height: 1;
+  text-align: right;
+}
+.product-single-price {
+    margin-top: -3rem;
+    font-size: 2.5em;
+    margin-right: 3rem;
+    font-weight: bold;
+    color:#071E3D;
+}
+
+
+
+/* 탭 컨텐츠 스타일 
+.tab_content {
+  display: none;
+  clear: both;
+  overflow: hidden;
+}*/
+
+
+/*  선택 된 탭 콘텐츠를 표시 
+#all:checked ~ #all_content,
+#programming:checked ~ #programming_content,
+#design:checked ~ #design_content {
+  display: block;
+} */

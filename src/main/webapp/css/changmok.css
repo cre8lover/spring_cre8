@@ -1,0 +1,59 @@
+@charset "UTF-8";
+	
+	
+	
+/* --메뉴바-- 김창목*/
+.kcmmenu a{
+	text-decoration: none;
+	color: #263343; 
+	font-size: 15px;
+}
+.kcmnavbar {
+	text-align : center;
+	display: flex;
+    justify-content: space-around;
+	align-items: center;
+	background-color: white; 	
+	padding: 8px; 
+}
+.kcmmenu i{font-size : 45px;}
+.kcmmenu {
+	margin: 0; 
+	font-family: 'Source Sans Pro';
+	display : flex;
+	list-style : none;
+	padding-left : 0px; 
+}
+.kcmmenu i {
+	text-align : center;
+}
+
+.kcmmenu li{
+	font-size : 20px;
+	padding : 18px;
+}
+.kcmmenu li:hover {
+	background-color : #d49466;
+	border-radius: 5px;
+}
+
+@media screen and (max-width:700px) {
+
+	.kcmmenu li {
+		width :100%;
+		text-align: center;
+	}
+}
+
+/*--장바구니--김창목*/
+.kcmcartbar{
+	color : #d49466;
+}
+
+
+
+
+
+
+
+

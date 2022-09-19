@@ -1,0 +1,180 @@
+@charset "UTF-8";
+a{
+text-decoration: none;
+}
+.container > a{
+ color: white;
+}
+.container {
+    height: auto;
+    width: 100vw;
+    max-height: 800px;
+    max-width: 1280px;
+    min-width: 1000px;
+    display: grid;
+    justify-content: inherit;
+    align-items: center;
+    margin: 0 auto;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+.border {
+  height: 369px;
+  width: 290px;
+  background: transparent;
+  border-radius: 10px;
+  transition: border 1s;
+  position: relative;
+}
+.border:hover {
+  border: 1px solid #fff;
+}
+.card {
+  height: 379px;
+  width: 300px;
+  background: #808080;
+  border-radius: 10px;
+  transition: background 0.8s;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 70px 63px -60px #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.card0 {
+  background: url(/cre8/img/p1.png) center center no-repeat;
+  background-size: 300px;
+}
+.card0:hover {
+  background: url(/cre8/img/p1.png) left center no-repeat;
+  background-size: 600px;
+}
+.card0:hover h2 {
+  opacity: 1;
+}
+.card0:hover .fa {
+  opacity: 1;
+}
+.card1 {
+  background: url(/cre8/img/p2.png) center center no-repeat;
+  background-size: 300px;
+}
+.card1:hover {
+  background: url(/cre8/img/p2.png) right top no-repeat;
+  background-size: 600px;
+}
+.card1:hover h2 {
+  opacity: 1;
+}
+.card1:hover .fa {
+  opacity: 1;
+}
+.card2 {
+  background: url(/cre8/img/p3.png) center center no-repeat;
+  background-size: 300px;
+}
+.card2:hover {
+  background: url(/cre8/img/p3.png) top center no-repeat;
+  background-size: 600px;
+}
+.card2:hover h2 {
+  opacity: 1;
+}
+.card2:hover .fa {
+  opacity: 1;
+}
+.card3 {
+  background: url(/cre8/img/p4.png) center center no-repeat;
+  background-size: 300px;
+}
+.card3:hover {
+  background: url(/cre8/img/p4.png) top center no-repeat;
+  background-size: 600px;
+}
+.card3:hover h2 {
+  opacity: 1;
+}
+.card3:hover .fa {
+  opacity: 1;
+}
+.card4 {
+  background: url(/cre8/img/p5.png) center center no-repeat;
+  background-size: 300px;
+}
+.card4:hover {
+  background: url(/cre8/img/p5.png) left center no-repeat;
+  background-size: 600px;
+}
+.card4:hover h2 {
+  opacity: 1;
+}
+.card4:hover .fa {
+  opacity: 1;
+}
+.card5 {
+  background: url(/cre8/img/p6.png) center center no-repeat;
+  background-size: 300px;
+}
+.card5:hover {
+  background: url(/cre8/img/p6.png) right center no-repeat;
+  background-size: 600px;
+}
+.card5:hover h2 {
+  opacity: 1;
+}
+.card5:hover .fa {
+  opacity: 1;
+}
+.card6 {
+  background: url(/cre8/img/p7.png) center center no-repeat;
+  background-size: 300px;
+}
+.card6:hover {
+  background: url(/cre8/img/p7.png) top center no-repeat;
+  background-size: 600px;
+}
+.card6:hover h2 {
+  opacity: 1;
+}
+.card6:hover .fa {
+  opacity: 1;
+}
+.card7 {
+  background: url(/cre8/img/p8.png) center center no-repeat;
+  background-size: 300px;
+}
+.card7:hover {
+  background: url(/cre8/img/p8.png) left center no-repeat;
+  background-size: 600px;
+}
+.card7:hover h2 {
+  opacity: 1;
+}
+.card7:hover .fa {
+  opacity: 1;
+}
+h2 {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #fff;
+  margin: 20px;
+  opacity: 0;
+  transition: opacity 1s;
+}
+.fa {
+  opacity: 0;
+  transition: opacity 1s;
+}
+.icons {
+  position: absolute;
+  fill: #fff;
+  color: #fff;
+  height: 130px;
+  top: 226px;
+  width: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}

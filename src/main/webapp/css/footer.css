@@ -1,0 +1,90 @@
+@charset "UTF-8";
+
+#footer {
+	top: 20%;
+    margin-top: 40px;
+    position: relative;
+    width: 98.5vw;
+    height: 300px;
+    background-color: #6679a0;
+}
+	
+.v-line {
+	border-left: thick solid #ffffff;
+	height:300px;
+	top:0%;
+	left: 18%; 
+	position: absolute;
+}
+.box {
+	top:15%;
+	position:absolute; 
+	left:16%;
+	display: inline-flex;
+	width: 40%;
+	justify-content: space-around;
+}
+.jmh_LogoBottom {
+	display:apsolute;
+	width:18%;
+	height:100%;
+	top:0%; 
+	line-height:150px; 
+	display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cs {
+	margin-left:6%;
+	display:inline; 
+	width: 200px;
+}
+.bank {
+	display:inline; 
+	width: 200px;
+}
+.add {
+	display:inline;
+	width: 210px;
+ }
+.custom {
+	float:left;
+	width:50%;
+}
+.title {
+	font-size:14px;
+	margin-bottom:20px;
+	font-weight:bold;
+}
+.tel {
+	font-size:16px;
+	margin-bottom:20px;
+	font-weight:bold;
+}
+.sub {
+	font-size:12px;
+	font-weight:normal;
+	margin-top:5px;
+}
+.bot{
+	position: absolute;
+	bottom: 15%;
+	width: 70%;
+	left: 20%;
+}
+.sns{    
+	display: inline-flex;
+	position: absolute;
+	bottom: 15%;
+	right: 15%;
+}	
+   
+.people{
+   width: 30%;
+   display: inline-flex;
+   position: absolute;
+   top: -15%;
+   right: 10%;
+  
+}
