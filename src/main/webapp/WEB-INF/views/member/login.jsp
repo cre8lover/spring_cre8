@@ -22,7 +22,7 @@
 			<table class="khm_login">
 				<tr>
 					<td>
-						<input name="id" id="id" type="text" placeholder="ID" required onsubmit="">
+						<input name="memId" id="id" type="text" placeholder="ID" required onsubmit="">
 					</td>
 					<td rowspan="2">
 						<input type="submit" value="로그인">
@@ -30,7 +30,7 @@
 				</tr>
 				<tr>
 					<td>
-						<input name="pw" id="pw" type="password" placeholder="PW" required>
+						<input name="memPw" id="pw" type="password" placeholder="PW" required>
 					</td>
 				</tr>
 			</table>

@@ -14,6 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.cre8.dto.Att;
 import com.cre8.dto.Cart;
 import com.cre8.dto.Mem;
@@ -22,75 +29,58 @@ import com.cre8.dto.Ship;
 import com.cre8.dto.Thumbnail;
 import com.cre8.service.MemberServiceImp;
 
-
-@WebServlet("/mem/*")
-public class Membercontroller extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+@Controller
+@RequestMapping("/mem/*")
+public class Membercontroller{
        
-	private MemberServiceImp member = new MemberServiceImp();
+	@Autowired
+	private MemberServiceImp member;
 	
-    public Membercontroller() {
-        super();
-    }
-
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doAction(req, resp);
-	}
-
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doAction(req, resp);
-	}
-
-	private void doAction(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.setContentType("text/html; charset=utf8");
-		req.setCharacterEncoding("utf-8");
+	@GetMapping("loginpage")
+	public String loginpage() {
 		
-		String uri = req.getRequestURI();
-		String cmd = uri.substring(uri.lastIndexOf("/")+1);
-		String path = req.getContextPath();
+		return "/member/login";
+	}
 		
-		HttpSession sess = req.getSession();
+	@GetMapping("login")
+	public String login(Mem mem, Model model, HttpSession sess) {
+		
+		String id = mem.getMemId();
+		String pw = mem.getMemPw();
+		
+		Map<String, String> status = member.login(id, pw);
+		
+		switch(status.get("login")) {
+		case "ok" :
+			
+			sess.setAttribute("sess_id", id);
+			sess.setAttribute("sess_name", status.get("name"));
+			sess.setAttribute("auth", status.get("auth"));
+			
+			return "/index";
+			
+		case "pwfail" :
+			
+			sess.setAttribute("err", "ë¹„ë°€ë²ˆí˜¸ë¥¼ í™•ì¸í•´ì£¼ì„¸ìš”");
+			return "/member/login";
+			
+			
+		case "no_member" :
+			
+			sess.setAttribute("err", "íšŒì›ì„ í™•ì¸í•´ì£¼ì„¸ìš”");
+			return "/member/login";
+			
+			
+		default :
+			sess.setAttribute("err", "íšŒì›ì„ í™•ì¸í•´ì£¼ì„¸ìš”");
+			return "/member/login";
+	}
+			
 
-		if(cmd.equals("loginpage")) {
-			goView(req, resp, "/member/login.jsp");
-			
-		} else if(cmd.equals("login")) {
-			
-			String id = req.getParameter("id");
-			String pw = req.getParameter("pw");
-			
-			Map<String, String> status = member.login(id, pw);
-			
-			switch(status.get("login")) {
-			case "ok" :
-				
-				sess.setAttribute("sess_id", id);
-				sess.setAttribute("sess_name", status.get("name"));
-				sess.setAttribute("auth", status.get("auth"));
-				
-				goView(req, resp, "/index.jsp");
-				break;
-				
-			case "pwfail" :
-				
-				sess.setAttribute("err", "ë¹„ë?ë²ˆí˜¸ë¥? ?™•?¸?•´ì£¼ì„¸?š”");
-				goView(req, resp, "/member/login.jsp");
-				
-				break;
-				
-			case "no_member" :
-				
-				sess.setAttribute("err", "?šŒ?›? •ë³´ë?? ?™•?¸?•´ì£¼ì„¸?š”");
-				goView(req, resp, "/member/login.jsp");
-				
-				break;
-				
-			default :
-				
-				sess.setAttribute("err", "?šŒ?›? •ë³´ë?? ?™•?¸?•´ì£¼ì„¸?š”");
+}
+	
 
-			}
-			
+/*
 		} else if(cmd.equals("loginout")) {
 			sess.invalidate();
 			
@@ -191,31 +181,31 @@ public class Membercontroller extends HttpServlet {
 			switch(findpw.get("find")) {
 			case "ok" :
 				
-				req.setAttribute("lostpw", "?šŒ?›?‹˜?˜ ë¹„ë?ë²ˆí˜¸?Š”"+findpw.get("lostpw")+"?…?‹ˆ?‹¤.");
+				req.setAttribute("lostpw", "?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ë¹„ï¿½?ë²ˆí˜¸?ï¿½ï¿½"+findpw.get("lostpw")+"?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½.");
 				
 				break;
 				
 			case "pwfail" :
 				
-				req.setAttribute("lostpw", "ì£¼ì†Œë¥? ?™•?¸?•´ì£¼ì„¸?š”");
+				req.setAttribute("lostpw", "ì£¼ì†Œï¿½? ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ì£¼ì„¸?ï¿½ï¿½");
 				
 				break;
 				
 			case "no_member" :
 				
-				req.setAttribute("lostpw", "?šŒ?›? •ë³´ë?? ?™•?¸?•´ì£¼ì„¸?š”");
+				req.setAttribute("lostpw", "?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ë³´ï¿½?? ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ì£¼ì„¸?ï¿½ï¿½");
 				
 				break;
 				
 			case "null" :
 				
-				req.setAttribute("lostpw", "?šŒ?›? •ë³´ë?? ?™•?¸?•´ì£¼ì„¸?š”");
+				req.setAttribute("lostpw", "?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ë³´ï¿½?? ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ì£¼ì„¸?ï¿½ï¿½");
 				
 				break;
 				
 			default :
 				
-				req.setAttribute("lostpw", "?šŒ?›? •ë³´ë?? ?™•?¸?•´ì£¼ì„¸?š”");
+				req.setAttribute("lostpw", "?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ë³´ï¿½?? ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ì£¼ì„¸?ï¿½ï¿½");
 
 			}
 			goView(req, resp, "/member/login.jsp");
@@ -229,25 +219,25 @@ public class Membercontroller extends HttpServlet {
 			switch(findid.get("find")) {
 			case "ok" :
 				
-				req.setAttribute("lostid", "?šŒ?›?‹˜?˜ ?•„?´?””?Š”"+findid.get("lostid")+"?…?‹ˆ?‹¤.");
+				req.setAttribute("lostid", "?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½"+findid.get("lostid")+"?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½.");
 				
 				break;
 				
 			case "pwfail" :
 				
-				req.setAttribute("lostid", "?šŒ?›? •ë³´ë?? ?™•?¸?•´ì£¼ì„¸?š”");
+				req.setAttribute("lostid", "?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ë³´ï¿½?? ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ì£¼ì„¸?ï¿½ï¿½");
 				
 				break;
 				
 			case "no_member" :
 				
-				req.setAttribute("lostid", "?šŒ?›? •ë³´ë?? ?™•?¸?•´ì£¼ì„¸?š”");
+				req.setAttribute("lostid", "?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ë³´ï¿½?? ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ì£¼ì„¸?ï¿½ï¿½");
 				
 				break;
 				
 			default :
 				
-				req.setAttribute("lostid", "?šŒ?›? •ë³´ë?? ?™•?¸?•´ì£¼ì„¸?š”");
+				req.setAttribute("lostid", "?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ë³´ï¿½?? ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ì£¼ì„¸?ï¿½ï¿½");
 
 			}
 			goView(req, resp, "/member/login.jsp");
@@ -283,13 +273,6 @@ public class Membercontroller extends HttpServlet {
 		}
 		
 	}
-	
-	void goView (HttpServletRequest req, HttpServletResponse resp, String viewPage) throws ServletException, IOException {
-		
-		RequestDispatcher rd = req.getRequestDispatcher(viewPage);
-		rd.forward(req, resp);
-		
-	}
-	
+*/	
 
 }
