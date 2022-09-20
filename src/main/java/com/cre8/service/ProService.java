@@ -2,7 +2,7 @@ package com.cre8.service;
 
 import java.util.List;
 
-import dto.Pro;
+import com.cre8.dto.Pro;
 
 public interface ProService {
 
