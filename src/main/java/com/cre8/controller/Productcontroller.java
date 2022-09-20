@@ -10,85 +10,76 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.cre8.dto.Pro;
 import com.cre8.service.ProService;
 import com.cre8.service.ProServiceImp;
 
-
-@WebServlet("/product/*")
+@Controller
+@RequestMapping("/product/")
 public class Productcontroller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	ProService pro = new ProServiceImp();
+	@Autowired
+	ProService pro;
 
-       
-    public Productcontroller() {
-        super();
+    @GetMapping("clothes") 
+    public String clothes(Model model) {
+    	List<Pro> prolist1 = pro.proList_clothes();
+    	model.addAttribute("proList", prolist1);
+    	
+    	return "/listimg/product_clothes";
     }
-
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doAction(req, resp);
-
-	}
-
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doAction(req, resp);
-	}
-
-	private void doAction(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.setContentType("text/html; charset=utf8");
-		req.setCharacterEncoding("utf-8");
+	
+    @GetMapping("furniture")
+    public String furniture(Model model) {
+    	List<Pro> prolist2 = pro.proList_furn();
+		model.addAttribute("proList", prolist2);
 		
-		String uri = req.getRequestURI();
-		String cmd = uri.substring(uri.lastIndexOf("/")+1);
-		String path = req.getContextPath();
-		
-		ProServiceImp proservice = new ProServiceImp();
-		if(cmd.equals("clothes")) {
-//			System.out.println("?ò∑ ÎßµÌïë ?ôï?ù∏");
-			List<Pro> prolist1 = pro.proList_clothes();
-			req.setAttribute("proList", prolist1);
-			goView(req, resp, "/listimg/product_clothes.jsp");
-			
-		} else if(cmd.equals("furniture")) {
-			List<Pro> prolist2 = pro.proList_furn();
-			req.setAttribute("proList", prolist2);
-			goView(req, resp, "/listimg/product_furniture.jsp");
-			
-		} else if(cmd.equals("cosmetics")) {
-			List<Pro> prolist3 = pro.proList_cos();
-			req.setAttribute("proList", prolist3);
-			goView(req, resp, "/listimg/product_cosmetics.jsp");
-			
-			
-		} else if(cmd.equals("interior")) {
-			List<Pro> prolist4 = pro.proList_interior();
-			req.setAttribute("proList", prolist4);
-			goView(req, resp, "/listimg/product_interior.jsp");
-			
-		} else if(cmd.equals("travel")) {
-			List<Pro> prolist5 = pro.proList_tra();
-			req.setAttribute("proList", prolist5);
-			goView(req, resp, "/listimg/product_travel.jsp");
-			
-		} else if(cmd.equals("productDetail")) {
-//			System.out.println("?ÑúÎ∏îÎ¶ø ?ôï?ù∏" );
-			String seqno = req.getParameter("seqno");
-			
-			if (seqno == null) {
-				seqno = (String) req.getAttribute("seqno");
-			}
-			
-			req.setAttribute("detailList", pro.detailList(seqno));
-			goView(req, resp, "/buy/DetailClothes.jsp");
-			
-		}
-			
+		return "/listimg/product_furniture.jsp";
+    }
+    
+   
+    @GetMapping("cosmetics")
+    public String cos(Model model) {
+    	List<Pro> prolist3 = pro.proList_cos();
+    	model.addAttribute("proList", prolist3);
+    	
+    	return "/listimg/product_cosmetics.jsp";
+    }
+    
+    @GetMapping("interior")
+    public String interior(Model model) {
+    	List<Pro> prolist4 = pro.proList_interior();
+    	model.addAttribute("proList", prolist4);
+    	
+    	return "/listimg/product_interior.jsp";
+    }
+    
+    @GetMapping("travel")
+    public String travel(Model model) {
+    	List<Pro> prolist5 = pro.proList_tra();
+    	model.addAttribute("proList", prolist5);
+    	
+    	return "/listimg/product_cosmetics.jsp";
+    }
+    
+/*    @GetMapping("productDetail")
+	public String seqno = req.getParameter("seqno");
+	
+	if (seqno == null) {
+		seqno = (String)req.getAttribute("seqno");
 	}
-
-	private void goView(HttpServletRequest req, HttpServletResponse resp, String viewPage) throws ServletException, IOException {
-		RequestDispatcher rd = req.getRequestDispatcher(viewPage);
-		rd.forward(req, resp);		
-	}
-
+	
+	req.setAttribute("detailList", pro.detailList(seqno));
+	
+	return "/buy/DetailClothes.jsp";
+    */
+	
+	
 }
