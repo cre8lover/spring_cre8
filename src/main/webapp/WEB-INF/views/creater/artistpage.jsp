@@ -5,12 +5,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file="/header.jsp" %>
+<%@ include file="../header.jsp" %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/creater/artistpage.css">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<%@ include file="/menu.jsp" %>
+<%@ include file="../menu.jsp" %>
 <body background="<%= request.getContextPath() %>/img/back.jpg">
       <div id="leftSideBar"> </div>
       <div class="body" >
