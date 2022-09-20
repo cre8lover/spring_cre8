@@ -130,7 +130,7 @@ public class AdminServiceImp implements AdminService {
 		attachfile.setMem(m);
 		
 		market.setAttSet(attachfile);
-		dao.marketReg( market,  req);
+		dao.marketReg( market);
 	}
 
 	@Override

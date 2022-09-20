@@ -22,7 +22,7 @@ public interface AdminDao {
 
 	List<Marketing> yearlist();
 
-	void marketReg(Marketing market, HttpServletRequest req);
+	void marketReg(Marketing market);
 
 	List<Mem> memberlist(AdminKeyWord adkey);
 

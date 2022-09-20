@@ -590,11 +590,4 @@ public class AdminDaoImp implements AdminDao{
 		
 	}
 
-	@Override
-	public void marketReg(Marketing market, HttpServletRequest req) {
-		// TODO Auto-generated method stub
-		
-	}	
-	
-
 }
