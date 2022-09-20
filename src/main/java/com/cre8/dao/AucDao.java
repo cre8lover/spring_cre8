@@ -10,6 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.cre8.common.OracleConn;
 import com.cre8.dto.Auc;
 import com.cre8.dto.AucNowing;
@@ -18,13 +23,11 @@ import com.cre8.dto.Item;
 import com.cre8.dto.Mem;
 
 import oracle.jdbc.OracleTypes;
-
+@Repository
 public class AucDao {
-   
-   
-   Connection conn = OracleConn.getInstance().getConn();
-   PreparedStatement stmt;
-   CallableStatement cstmt;
+   @Autowired
+   DataSource ds;
+
    
 //   public Map<String, List<Auc>> aucList(Auc_Criteria cri) {
 //	   
@@ -161,7 +164,8 @@ public class AucDao {
 //   }
    
    public List<Auc> aucList(Auc_Criteria cri) {
-	   
+	   Connection conn = null;
+	   CallableStatement cstmt = null;
 		  
 	      List<Auc> auclist = new ArrayList<Auc>(); 
 	      Auc auc = null;
@@ -170,6 +174,7 @@ public class AucDao {
 	      String sql = "call aucList(?,?,?,?,?)";
 	      
 	      try {
+	    	  conn = ds.getConnection();
 	         cstmt = conn.prepareCall(sql);
 	         
 	         cstmt.setString(1, cri.getCategory());
@@ -219,8 +224,10 @@ public class AucDao {
    
 //
 //
-//   ?îî?Öå?ùº?éò?ù¥Ïß?
+//   ?ÔøΩÔøΩ?ÔøΩÔøΩ?ÔøΩÔøΩ?ÔøΩÔøΩ?ÔøΩÔøΩÔøΩ?
    public Auc detailList(String seqno) {
+	   Connection conn = null;
+	   CallableStatement cstmt = null;
       Auc auc = null;
       Item item = null;
       List<AucNowing> anlist = new ArrayList<AucNowing>();
@@ -229,6 +236,7 @@ public class AucDao {
       String sql = "call p_auc_detail(?,?,?)";
       	
       try {
+    	  conn = ds.getConnection();
          cstmt = conn.prepareCall(sql);
          cstmt.setString(1, seqno);
          cstmt.registerOutParameter(2, OracleTypes.CURSOR);
@@ -380,11 +388,13 @@ public class AucDao {
    
 
    public void aucnow(String srt, String seqno, String id) {
+	   Connection conn = null;
+	   PreparedStatement stmt = null;
       
       String sql = "insert into auc_nowing(aucnow_seqno,aucnow_lastprice,auc_seqno,mem_id) values (aucnow_seqno.nextVal,?,?,?)";
       
       try {
-         
+         conn = ds.getConnection();
       stmt = conn.prepareStatement(sql);
       stmt.setString(1, srt);
       stmt.setString(2, seqno);

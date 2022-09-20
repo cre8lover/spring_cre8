@@ -66,7 +66,7 @@ window.onload = function(){
    var phonnumber = $("select[name=ssecession]").val();
 
 
-   var name = document.getElementById("name").value;
+   var name = document.getElementById("name2").value;
    var buyer_addr_front = document.getElementById("address_kakao").value;
    var buyer_addr_back = document.getElementById("address_kakao_back").value;
    var phon_front = document.getElementById("phon_front").value;

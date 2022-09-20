@@ -10,22 +10,26 @@ import java.sql.CallableStatement;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.cre8.common.OracleConn;
 import com.cre8.dto.Cart;
 import com.cre8.dto.Item;
 import com.cre8.dto.Orders;
 import com.cre8.dto.Pro;
+import com.cre8.dto.orderadd;
 
 import oracle.jdbc.internal.OracleTypes;
 import oracle.sql.ARRAY;
 import oracle.sql.ArrayDescriptor;
-
+@Repository
 public class BuyDao {
+	@Autowired
+	DataSource ds;
 	
-	Connection conn = OracleConn.getInstance().getConn();
-	PreparedStatement stmt;
-	CallableStatement cstmt;
 //	public Cart buylist(String id) {
 //		Cart cart = new Cart();
 //		Pro pro = new Pro();
@@ -211,19 +215,27 @@ public class BuyDao {
 //		}
 //	}
 	
-	public List<Cart> myCart(String logid, String[] chklist) {
+	public List<Cart> myCart(String logid, ArrayList<String> list) {
 		
+		CallableStatement cstmt=null;
+		Connection conn = null;
 		List<Cart> cartlist = new ArrayList<Cart>();
 		Cart cart = null;
 		Pro pro = null;
 		Item item = null;
-
+		String[] chklist = null;
 		try {
-		
+			conn = ds.getConnection();
+			
 			String sql = "call p_mycart(?,?,?)";	
 			cstmt = conn.prepareCall(sql);
 
 			cstmt.setString(1, logid);
+			if(list.size() != 0) {
+				chklist = new String[list.size()];
+				chklist = list.toArray(chklist);
+			}
+			
 			
 			ArrayDescriptor chk_desc = ArrayDescriptor.createDescriptor("MYCART_PROSEQNOLIST",conn);
 			ARRAY chk = new ARRAY(chk_desc, conn, chklist );
@@ -257,6 +269,7 @@ public class BuyDao {
 					cartlist.add(cart);
 					
 				}
+			conn.close();
 			cstmt.close();
 			
 			} catch (SQLException e) {
@@ -349,7 +362,8 @@ public class BuyDao {
 //	}
 
 	public List<Orders> orderlist(String logid, String o_seqno) {
-		
+		CallableStatement cstmt=null;
+		Connection conn = null;
 		List<Orders> orderlistp = new ArrayList<Orders>();
 		Orders orders = null;
 		Pro pro = null;
@@ -357,6 +371,7 @@ public class BuyDao {
 		
 		String sql = "call p_orders_list(?,?)";
 		try {
+			conn = ds.getConnection();
 			cstmt = conn.prepareCall(sql);
 			cstmt.setInt(1, Integer.parseInt(o_seqno));
 			
@@ -380,6 +395,7 @@ public class BuyDao {
 				orderlistp.add(orders);
 				
 			}
+			conn.close();
 			cstmt.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -516,21 +532,24 @@ public class BuyDao {
 //        }
 //		
 //	}
-	public int orderand(HttpServletRequest req, HttpServletResponse resp) {
-		String[] cart = req.getParameterValues("cart");
-		String[] orderamount = req.getParameterValues("orderamount");
+	public int orderand(orderadd orderadd) {
+		CallableStatement cstmt=null;
+		Connection conn = null;
+		String[] cart = orderadd.getCart();
+		String[] orderamount = orderadd.getOrderamount();
 //		System.out.println(cart[0]);
 //		System.out.println(orderamount[0]);
 		int rs = 0;
 		String sql = "call p_orderadd(?,?,?,?,?,?,?,?,?)";
 		try {
+			conn = ds.getConnection();
 			cstmt = conn.prepareCall(sql);
-			cstmt.setString(1, req.getParameter("pay_method"));
-			cstmt.setString(2, req.getParameter("buyer_name"));
-			cstmt.setString(3, req.getParameter("buyer_tel"));
-			cstmt.setString(4, req.getParameter("merchant_uid"));
-			cstmt.setString(5, req.getParameter("amount"));
-			cstmt.setString(6, (String)req.getSession().getAttribute("sess_id"));
+			cstmt.setString(1, orderadd.getPay_method());
+			cstmt.setString(2, orderadd.getBuyer_name());
+			cstmt.setString(3, orderadd.getBuyer_tel());
+			cstmt.setString(4, orderadd.getMerchant_uid());
+			cstmt.setString(5, orderadd.getAmount());
+			cstmt.setString(6, orderadd.getId());
 			
 			ArrayDescriptor seqno_desc = ArrayDescriptor.createDescriptor("T_ORDERS_CARTSEQNO",conn);
 			ARRAY o_c_seqno = new ARRAY(seqno_desc, conn, cart);
@@ -544,6 +563,7 @@ public class BuyDao {
 			cstmt.registerOutParameter(9, OracleTypes.INTEGER);
 			cstmt.executeQuery();
 			rs = cstmt.getInt(9);
+			conn.close();
 			cstmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
