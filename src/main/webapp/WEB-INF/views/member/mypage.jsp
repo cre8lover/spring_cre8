@@ -6,8 +6,8 @@
 <html>
 <head>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/member/mypage.css">
-	<%@ include file="/header.jsp" %>
-	<%@ include file="/menu.jsp" %>
+	<%@ include file="../header.jsp" %>
+	<%@ include file="../menu.jsp" %>
 <meta charset="UTF-8" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width">
 
 <script src="<%= request.getContextPath() %>/js/mypage.js"></script>
@@ -31,7 +31,11 @@
 					<h3>${my.memName}님 환영합니다!</h3>
 					<button style="float:center;" onclick="newwindow('<%= request.getContextPath() %>/mem/meminfo','info')">정보수정</button>
 					<button style="float:center;" onclick="newwindow('<%= request.getContextPath() %>/mem/buyHistory','buylist')">구매내역</button>
-					<button style="float:center;" onclick="location.href='<%= request.getContextPath() %>/cre/creReg'">작가등록</button>
+<<<<<<< HEAD
+					<button style="float:center;" onclick="location.href='<%= request.getContextPath() %>/cre/creReg?id=${my.memId} '">작가등록</button>
+=======
+					<button style="float:center;" onclick="location.href='<%= request.getContextPath() %>/cre/creReg?seqno=2'">작가등록</button>
+>>>>>>> branch 'master' of https://github.com/cre8lover/spring_cre8.git
 				
 				</div>
 				<table class="table-fill" style="margin-top:100px">
@@ -120,7 +124,7 @@ function plz(msg){
 }
 
 </script>
-<%@ include file="/footer.jsp" %>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>
 

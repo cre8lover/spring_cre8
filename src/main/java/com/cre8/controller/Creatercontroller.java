@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +30,7 @@ import com.cre8.dto.Marketing;
 import com.cre8.dto.Pro;
 import com.cre8.service.CreatorServiceImp;
 import com.cre8.service.FileService;
+import com.cre8.service.FileServiceImp;
 
 @Controller
 @RequestMapping(value="/cre/")
@@ -35,12 +38,13 @@ public class Creatercontroller {
    
 	@Autowired
 	CreatorServiceImp cs;
+	FileServiceImp fs;
 	
-	@RequestMapping(value="creReg", method = {RequestMethod.POST, RequestMethod.GET})
-	public String Creatoradd(HttpSession sess, @RequestParam("seqno") String seqno, Model model) {
+	//크리에이터 페이지( if)비회원&작가이닐경우 =>작가등록 및 회원가입)
+	@GetMapping("creReg")
+	public String Creatoradd(HttpSession sess, @RequestParam("id") String seqno, Model model) {
 		String add = (String)sess.getAttribute("auth");
 		String id = (String)sess.getAttribute("sess_id");
-		
 		if(id == null || add == null) {
 			return "/member/memreg";
 		}
@@ -61,107 +65,68 @@ public class Creatercontroller {
 			return "/creater/creReg";
 		}
 		
-	}//여기서 작가로 등급을 올려줌 
-	@GetMapping("artistpage")
-	public String Creatorpage(HttpServletRequest req) {
-		cs.Creatoradd(req);
+	} 
+	//크리에이터 등록페이지
+	@PostMapping("artistpage")
+	public String Creatorpage(HttpServletRequest request,HttpSession sess, Model model) {
+		
+		String id = (String)sess.getAttribute("sess_id");
+		
+		model.addAttribute("id", id);
 		return "/cre/creReg";
 	}
+	//수정페이지
 	@GetMapping("cremodify")
 	public String cremodify(HttpSession sess, Model model) {
 		String id = ((String)sess.getAttribute("sess_id"));
 		Creator cre = cs.infomodify(id);
 		
 		model.addAttribute("cre", cre);
-		return "/creater/creReg2.jsp";
+		return "/creater/creReg2";
+	}
+	//광고리스트 조회
+	@GetMapping("Adlist")
+	public String mk(List<Marketing> mar , Model model) {
+		mar = cs.mk(); 
+		model.addAttribute("marketing", mar);
+		
+		return "/creater/marketingDetail";
+	}
+	//광고 세부내용 출력
+	@GetMapping("marketingDetail")
+	public String mkk(@ModelAttribute("seqno") int seqno, Model model) {
+		
+		model.addAttribute("marketing", cs.mkk(seqno));
+		
+		return "/creater/marketingDetail";
+	}
+	//파일 삭제
+	@PostMapping("fileDel")
+	public int fileDel(@RequestParam("attseqno") String attseqno,
+					   @RequestParam("savefilename") String savefilename,
+					   @RequestParam("filepath") String filepath,
+					   @RequestParam("thumb_filename") String thumb_filename,
+					   Model model) {
+		int rs=0;
+		if(attseqno != "") {
+			rs=fs.delete(attseqno, savefilename, filepath, thumb_filename);
+			model.addAttribute("fileDel", rs);
+		}
+		
+		return rs;
+	}
+	//게시물 삭제 --구현은되는데 totalprice에서 건드릴것이 있어 미완성 입니다.
+	@RequestMapping("prodel")
+	public String prodel(@RequestParam("proseqno") String seqno,
+						 Model model) {
+		model.addAttribute("proseqno");
+		cs.prodel(seqno);
+		return "/cre/creReg";
 	}
 	
 	
-			
-	/*---------------완료----------------
-	 * }else if(cmd.equals("artistpage")) { //?��기서 ?���?�? ?��급을 �?
-	 * cs.Creatoradd(req);//?��?��?��?��근을 ?��기위?�� ?��?��?��?�� ?���?!
-	 *  goView(req, resp, "/cre/creReg");
-	 * ---------------완료----------------
-	 * } else if(cmd.equals("cremodify")) { 
-	 * //못함 String id =(String)req.getSession().getAttribute("sess_id");
-	 *  Creator cre = cs.infomodify(id);
-	 * req.setAttribute("cre", cre);
-	 * goView(req, resp, "/creater/creReg2.jsp");
-	 * 
-	 * } //광고 리스?��보여주는 ?��?���? 
-	 * else if(cmd.equals("Adlist")) {
-	 *  List<Marketing>marketing = cs.mk(); 
-	 *  req.setAttribute("marketing", marketing); 
-	 *  goView(req,resp, "/listimg/product_ad.jsp");
-	 * }
-	 * //광고 ?��?���? ?���??��?��?�� ?��?��?�� ?��?���? 
-	 * else if(cmd.equals("marketingDetail")) { 
-	 * int seqno = Integer.parseInt(req.getParameter("seqno")); 
-	 * // System.out.println(seqno); 
-	 * //List<Marketing> marketing2 = cs.mkk(seqno);
-	 * req.setAttribute("marketing", cs.mkk(seqno));
-	 * goView(req, resp, "/creater/marketingDetail.jsp");
-	 * } //?���? sql�? 미완?��! 
-	 * else if(cmd.equals("salesHistory")) {
-	 *  String id =(String)req.getSession().getAttribute("sess_id"); 
-	 * List<Pro> salesHistory = cs.salesHistory(id);
-	 * Map<String, List<Pro>> calculate = cs.calculate(id);
-	 * req.setAttribute("cre", salesHistory); 
-	 * req.setAttribute("month", calculate.get("month"));
-	 * req.setAttribute("year", calculate.get("year"));
-	 * goView(req, resp, "/creater/jmh_salesHistory.jsp");
-	 * } 
-	 * else if(cmd.equals("auction_reg")) {
-	 * String seqno = req.getParameter("seqno");
-	 * if(seqno != null) { Auc auc = cs.aucdetail(seqno);
-	 * req.setAttribute("auc", auc);
-	 * }
-	 * goView(req, resp, "/creater/auction_registration.jsp");
-	 * //?��?�� ?��?��?���? }
-	 * else if(cmd.equals("auction_modify")) {
-	 * String seqno = cs.aucadd(req);
-	 * goView(req, resp, "/cre/auction_reg?seqno="+seqno);
-	 * //?��?��?��록창 ?��?��?���? } else if(cmd.equals("product_registration")) {
-	 * 
-	 * String seqno = req.getParameter("seqno");
-	 * 
-	 * if(seqno != null) { Pro pro = cs.productdetail(seqno);
-	 * req.setAttribute("pro", pro); }
-	 * 
-	 * goView(req,resp,"/creater/product_registration.jsp");
-	 * 
-	 * //?���? ?��?�� ?���? } else if(cmd.equals("promodify")) {
-	 * 
-	 * String seqno = cs.productadd(req);
-	 * 
-	 * goView(req,resp,"/cre/product_registration?seqno="+seqno);
-	 * 
-	 * 
-	 * } else if(cmd.equals("cremodifyreg")) { //?��리에?��?�� ?��보수?�� Map<String,
-	 * String> cremo = cs.cremodifyreg(req); req.setAttribute("modi", cremo);
-	 * goView(req, resp, "/cre/cremodify");
-	 * 
-	 * }else if (cmd.equals("fileDel")) { FileService fileservice = new
-	 * FileServiceImp(); int rs=0; String attseqno = req.getParameter("attseqno");
-	 * String savefilename = req.getParameter("savefilename"); String filepath =
-	 * req.getParameter("filepath"); String thumb_filename =
-	 * req.getParameter("thumb_filename"); //
-	 * System.out.println("?��???��?��?"+attseqno); if(attseqno != "") { rs =
-	 * fileservice.delete(attseqno,savefilename,filepath,thumb_filename); //
-	 * System.out.println("?��?��?��?��결과"+rs); }else { rs = 1; } PrintWriter out =
-	 * resp.getWriter();
-	 * 
-	 * out.print(rs);
-	 * 
-	 * }else if (cmd.equals("prodel")) { String seqno =
-	 * req.getParameter("proseqno"); cs.prodel(seqno); goView(req, resp,
-	 * "/cre/creReg"); }
-	 * 
-	 * 
-	 * 
-	 * }
-	 */
-
-
+	
+	
+	
+	
 }

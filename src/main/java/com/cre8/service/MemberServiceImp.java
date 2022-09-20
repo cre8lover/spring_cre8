@@ -14,6 +14,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cre8.dao.MemberDao;
 import com.cre8.dao.MemberDaoImp;
 import com.cre8.dto.Address;
 import com.cre8.dto.Att;
@@ -26,7 +27,7 @@ import com.cre8.dto.Ship;
 public class MemberServiceImp implements MemberService {
 	
 	@Autowired
-	MemberDaoImp dao;
+	MemberDao dao;
 	
 	private static final String CHARSET = "utf-8";
 
@@ -37,7 +38,7 @@ public class MemberServiceImp implements MemberService {
 	}
 
 	@Override
-	public String insert(Mem mem) {
+	public void insert(Mem mem) {
 //		mem = new Mem();
 //		
 //		String id = req.getParameter("id");
@@ -58,7 +59,7 @@ public class MemberServiceImp implements MemberService {
 //		mem.setMemEmail(email);
 //		mem.setMemTel(phone);
 //		mem.setCheck(agree);
-		return dao.reginsert(mem);
+		dao.reginsert(mem);
 	}
 
 	@Override

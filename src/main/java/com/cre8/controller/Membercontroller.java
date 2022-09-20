@@ -56,18 +56,18 @@ public class Membercontroller{
 			break;
 		case "pwfail" :
 			
-			model.addAttribute("err", "鍮꾨�踰덊샇瑜� �솗�씤�빐二쇱꽭�슂");
+			model.addAttribute("err", "비밀번호를 확인해주세요");
 			viewPage = "/member/login";
 			break;
 			
 		case "no_member" :
 			
-			model.addAttribute("err", "�쉶�썝�쓣 �솗�씤�빐二쇱꽭�슂");
+			model.addAttribute("err", "회원정보를 확인해주세요");
 			viewPage = "/member/login";
 			break;
 			
 		default :
-			model.addAttribute("err", "�쉶�썝�쓣 �솗�씤�빐二쇱꽭�슂");
+			model.addAttribute("err", "회원정보를 확인해주세요");
 			viewPage = "/member/login";
 			
 		}
@@ -93,7 +93,7 @@ public class Membercontroller{
 		
 		member.insert(mem);
 		
-		return "/mem/loginpage";
+		return "/member/login";
 	}
 	
 	@GetMapping("mypage")
@@ -132,25 +132,30 @@ public class Membercontroller{
 		
 		member.infoinsert(mem, req);
 		
-		return "/mem/meminfo";
+		return "redirect:/mem/meminfo";
 	}
 	
 	@GetMapping("buyHistory")
-	public String buyHistory(HttpSession sess, List<Pro> pro,
-							Model model,
-							Map<String, List<Cart>> auc,
-							Map<String, List<Ship>> ship){
+	public String buyHistory(HttpSession sess,
+							Model model){
 		String sess_id = (String)sess.getAttribute("sess_id");
 
-		pro = member.membuylist(sess_id);
+		 List<Pro> pro = member.membuylist(sess_id);
 		
 		model.addAttribute("buy", pro);
 		
-		auc = member.memauclist(sess_id);
+		Map<String, List<Cart>> auc = member.memauclist(sess_id);
 		List<Cart> cart = auc.get("END");
 		List<Cart> car2 = auc.get("ING");
 		
-		ship = member.ordercheck(sess_id);
+		if(cart != null) {
+			model.addAttribute("cart", cart);
+		}
+		if(car2 != null) {
+			model.addAttribute("car2", car2);
+		}
+		
+		Map<String, List<Ship>> ship = member.ordercheck(sess_id);
 		
 		List<Ship> order = ship.get("order");
 		List<Ship> detail = ship.get("detail");
@@ -186,38 +191,38 @@ public class Membercontroller{
 		switch(findpw.get("find")) {
 		case "ok" :
 			
-			model.addAttribute("lostpw", "�쉶�썝�떂�쓽 鍮꾨�踰덊샇�뒗 "+findpw.get("lostpw")+"�엯�땲�떎.");
+			model.addAttribute("lostpw", "회원님의 임시비밀번호는"+findpw.get("lostpw")+"입니다.");
 			
 			break;
 			
 		case "pwfail" :
 			
-			model.addAttribute("lostpw", "二쇱냼瑜� �솗�씤�빐二쇱꽭�슂");
+			model.addAttribute("lostpw", "회원정보를 확인해주세요");
 			
 			break;
 			
 		case "no_member" :
 			
-			model.addAttribute("lostpw", "�쉶�썝�젙蹂대�� �솗�씤�빐二쇱꽭�슂");
+			model.addAttribute("lostpw", "회원정보를 확인해주세요");
 			
 			break;
 			
 		case "null" :
 			
-			model.addAttribute("lostpw", "�쉶�썝�젙蹂대�� �솗�씤�빐二쇱꽭�슂");
+			model.addAttribute("lostpw", "회원정보를 확인해주세요");
 			
 			break;
 			
 		default :
 			
-			model.addAttribute("lostpw", "�쉶�썝�젙蹂대�� �솗�씤�빐二쇱꽭�슂");
+			model.addAttribute("lostpw", "회원정보를 확인해주세요");
 
 		}
 		
 		return "/member/login";
 	}
 	
-	@GetMapping("findId")
+	@PostMapping("findId")
 	public String find(Mem mem, Map<String, String> findid,
 						Model model) {
 		String lostid = mem.getMemId();
@@ -227,25 +232,25 @@ public class Membercontroller{
 		switch(findid.get("find")) {
 		case "ok" :
 			
-			model.addAttribute("lostid", "�쉶�썝�떂�쓽 �븘�씠�뵒�뒗 "+findid.get("lostid")+"�엯�땲�떎.");
+			model.addAttribute("lostid", "회원님의 아이디는"+findid.get("lostid")+"입니다.");
 			
 			break;
 			
 		case "pwfail" :
 			
-			model.addAttribute("lostid", "�쉶�썝�젙蹂대�� �솗�씤�빐二쇱꽭�슂");
+			model.addAttribute("lostid", "회원정보를 확인해주세요");
 			
 			break;
 			
 		case "no_member" :
 			
-			model.addAttribute("lostid", "�쉶�썝�젙蹂대�� �솗�씤�빐二쇱꽭�슂");
+			model.addAttribute("lostid", "회원정보를 확인해주세요");
 			
 			break;
 			
 		default :
 			
-			model.addAttribute("lostid", "�쉶�썝�젙蹂대�� �솗�씤�빐二쇱꽭�슂");
+			model.addAttribute("lostid", "회원정보를 확인해주세요");
 
 		}
 		
@@ -255,8 +260,8 @@ public class Membercontroller{
 	@PostMapping("changepw")
 	public String change(HttpSession sess, Model model,Map<String, String> find,
 						@RequestParam("find_id") String find_id,
-						@RequestParam("now_pw") String now_pw,
-						@RequestParam("new_pw") String new_pw) {
+						@RequestParam("n_password") String now_pw,
+						@RequestParam("c_password") String new_pw) {
 		
 		String sess_id = (String)sess.getAttribute("sess_id");
 		
@@ -269,7 +274,7 @@ public class Membercontroller{
 			model.addAttribute("change", "no_member");
 		}
 		
-		return "/mem/mypage";
+		return "redirect:/mem/mypage";
 	}
 	
 //	@GetMapping("idCheck")

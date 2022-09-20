@@ -10,13 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cre8.common.OracleConn;
 import com.cre8.dto.Address;
 import com.cre8.dto.Att;
 import com.cre8.dto.Auc;
@@ -87,18 +85,17 @@ public class MemberDaoImp implements MemberDao{
 		return map;
 	}
 
-	public String reginsert(Mem mem) {
+	public void reginsert(Mem mem) {
 	
 		CallableStatement cstmt = null;
 		Connection conn = null;
 		
 		String sql = "call p_reginsert(?,?,?,?,?,?,?)";
 		
-		String in = "?占쏙옙占�?";
-		
 		try {
 			conn = ds.getConnection();
 			cstmt = conn.prepareCall(sql);
+			
 			
 			cstmt.setString(1, mem.getMemId());
 			cstmt.setString(2, mem.getMemPw());
@@ -116,7 +113,6 @@ public class MemberDaoImp implements MemberDao{
 			resourceClose(conn, cstmt);
 		}
 		
-		return in;
 	}
 
 	public Mem mypage(String id) {

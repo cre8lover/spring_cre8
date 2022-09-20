@@ -25,7 +25,7 @@
 
 							<td>
 								<input type="hidden">
-								<select name="gory"  onchange="this.form.submit()">
+								<select name="category"  onchange="this.form.submit()">
 									<option value="999" <c:if test="${key.category == 999}">selected</c:if>>전체</option>
 									<option value="1" ${key.category == 1 ? 'selected': '' }>의류</option>
 									<option value="2" ${key.category == 2 ? 'selected': '' }>가전/가구</option>
@@ -56,7 +56,7 @@
 							</td>
 						 -->	
 							<td class="bno">
-								<input type="text" name="keysearch" id="search" value="${key.keyword }" />
+								<input type="text" name="keyword" id="search" value="${key.keyword }" />
 							</td>
 							<td class="bno">
 								<input type="submit" value="검색" >

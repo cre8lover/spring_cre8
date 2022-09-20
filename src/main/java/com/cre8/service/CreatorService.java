@@ -13,7 +13,7 @@ import com.cre8.dto.Pro;
 
 public interface CreatorService {
 	
-	void Creatoradd(HttpServletRequest request);
+	void Creatoradd(HttpServletRequest request, String id);
 	
 	public List<Creator> Creatorpage();
 	

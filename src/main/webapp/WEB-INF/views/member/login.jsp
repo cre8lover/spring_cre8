@@ -64,14 +64,14 @@
 			<h2>아이디찾기</h2>
 					
  				<form method="post" action="<%= request.getContextPath() %>/mem/findId">		
-				  <input type="text" name="idemail"  class="text-field" placeholder="이메일을 입력하세요" maxlength="10" placeholder="ID" required>
+				  <input type="text" name="memId"  class="text-field" placeholder="이메일을 입력하세요" maxlength="50" placeholder="ID" required>
 				  <input type="submit" value="아이디찾기" class="submit-but" >
 				</form>  
 			<h2>비밀번호찾기</h2>
 				
 				  <form method="post" action="<%= request.getContextPath() %>/mem/findpw">
-				  <input type="text" name="findid"  class="text-field" placeholder="아이디를 입력하세요" maxlength="10" placeholder="ID" required>
-				  <input type="text"  name="e-mail" class="text-field" placeholder="이메일을 입력하세요" placeholder="E-Mail" required>
+				  <input type="text" name="memId"  class="text-field" placeholder="아이디를 입력하세요" maxlength="10" placeholder="ID" required>
+				  <input type="text"  name="memEmail" class="text-field" placeholder="이메일을 입력하세요" maxlength="50" placeholder="E-Mail" required>
 				  <input type="submit" value="임시비밀번호 발급" class="submit-but" >
 				</form>  
 		</div>
