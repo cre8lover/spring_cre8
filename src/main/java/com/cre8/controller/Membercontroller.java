@@ -37,7 +37,7 @@ public class Membercontroller{
 		return "/member/login";
 	}
 		
-	@GetMapping("login")
+	@PostMapping("login")
 	public String login(Mem mem, Model model, HttpSession sess) {
 		
 		String id = mem.getMemId();

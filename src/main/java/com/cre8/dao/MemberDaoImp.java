@@ -10,13 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cre8.common.OracleConn;
 import com.cre8.dto.Address;
 import com.cre8.dto.Att;
 import com.cre8.dto.Auc;

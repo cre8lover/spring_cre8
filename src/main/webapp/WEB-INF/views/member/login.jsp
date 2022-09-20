@@ -13,8 +13,8 @@
 <title>로그인</title>
 
 </head>
-	<%@ include file="/header.jsp" %>
-	<%@ include file="/menu.jsp" %>
+	<%@ include file="../header.jsp" %>
+	<%@ include file="../menu.jsp" %>
 <div class="jmh_tnwjd">
 	<div class="khm_loginbox">
 		<img src="<%= request.getContextPath() %>/img/cre8.png" style="margin-top:3.5%;">
@@ -79,7 +79,7 @@
 	
 	
 </div>
-<%@ include file="/footer.jsp" %>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>
 
