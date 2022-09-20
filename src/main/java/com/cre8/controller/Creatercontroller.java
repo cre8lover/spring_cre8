@@ -23,11 +23,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cre8.dto.Auc;
 import com.cre8.dto.Creator;
+import com.cre8.dto.Item;
 import com.cre8.dto.Marketing;
 import com.cre8.dto.Pro;
+import com.cre8.service.CreatorService;
 import com.cre8.service.CreatorServiceImp;
 import com.cre8.service.FileService;
 import com.cre8.service.FileServiceImp;
@@ -37,12 +41,12 @@ import com.cre8.service.FileServiceImp;
 public class Creatercontroller {
    
 	@Autowired
-	CreatorServiceImp cs;
+	CreatorService cs;
 	FileServiceImp fs;
 	
 	//크리에이터 페이지( if)비회원&작가이닐경우 =>작가등록 및 회원가입)
 	@GetMapping("creReg")
-	public String Creatoradd(HttpSession sess, @RequestParam("id") String seqno, Model model) {
+	public String Creatoradd(HttpSession sess, @ModelAttribute("id") String seqno, Model model) {
 		String add = (String)sess.getAttribute("auth");
 		String id = (String)sess.getAttribute("sess_id");
 		if(id == null || add == null) {
@@ -68,65 +72,74 @@ public class Creatercontroller {
 	} 
 	//크리에이터 등록페이지
 	@PostMapping("artistpage")
-	public String Creatorpage(HttpServletRequest request,HttpSession sess, Model model) {
-		
-		String id = (String)sess.getAttribute("sess_id");
-		
-		model.addAttribute("id", id);
-		return "/cre/creReg";
+	public String Creatorpage(Creator cre) {
+		cs.Creatoradd(cre);
+//		return "redirect:/cre/creReg";
+		return "/creater/artistpage";
 	}
-	//수정페이지
-	@GetMapping("cremodify")
-	public String cremodify(HttpSession sess, Model model) {
-		String id = ((String)sess.getAttribute("sess_id"));
-		Creator cre = cs.infomodify(id);
-		
-		model.addAttribute("cre", cre);
-		return "/creater/creReg2";
-	}
+
 	//광고리스트 조회
 	@GetMapping("Adlist")
-	public String mk(List<Marketing> mar , Model model) {
-		mar = cs.mk(); 
+	//@RequestMapping(value="Adlist", method= {RequestMethod.POST, RequestMethod.GET})
+	public String mk(Model model) {
+		List<Marketing> mar  = cs.mk(); 
 		model.addAttribute("marketing", mar);
-		
-		return "/creater/marketingDetail";
+		return "/listimg/product_ad";
 	}
-	//광고 세부내용 출력
-	@GetMapping("marketingDetail")
-	public String mkk(@ModelAttribute("seqno") int seqno, Model model) {
-		
-		model.addAttribute("marketing", cs.mkk(seqno));
-		
-		return "/creater/marketingDetail";
-	}
-	//파일 삭제
-	@PostMapping("fileDel")
-	public int fileDel(@RequestParam("attseqno") String attseqno,
-					   @RequestParam("savefilename") String savefilename,
-					   @RequestParam("filepath") String filepath,
-					   @RequestParam("thumb_filename") String thumb_filename,
-					   Model model) {
-		int rs=0;
-		if(attseqno != "") {
-			rs=fs.delete(attseqno, savefilename, filepath, thumb_filename);
-			model.addAttribute("fileDel", rs);
+	
+	//옥션수정등록
+	@RequestMapping(value="auction_reg", method= {RequestMethod.POST, RequestMethod.GET})
+	public String acumodi(@ModelAttribute("seqno") String seqno, Model model) {
+
+		if(seqno != null) {
+			Auc auc = cs.aucdetail(seqno);
+			model.addAttribute("auc", auc);
 		}
 		
-		return rs;
-	}
-	//게시물 삭제 --구현은되는데 totalprice에서 건드릴것이 있어 미완성 입니다.
-	@RequestMapping("prodel")
-	public String prodel(@RequestParam("proseqno") String seqno,
-						 Model model) {
-		model.addAttribute("proseqno");
-		cs.prodel(seqno);
-		return "/cre/creReg";
+		return "creater/auction_registration";
 	}
 	
+	@RequestMapping(value="auction_registration", method= {RequestMethod.POST, RequestMethod.GET})
+	public String umodi(@ModelAttribute("seqno") String seqno, Model model) {
+		
+		if(seqno != null) {
+			Auc auc = cs.aucdetail(seqno);
+			model.addAttribute("auc", auc);
+		}
+		
+		return "creater/auction_registration?seqno =" + seqno;
+	}
+	@RequestMapping(value="auction_modify", method= {RequestMethod.POST, RequestMethod.GET})
+	public String auc_modi(MultipartFile filename, Auc auc, Item item,
+							HttpSession sess,
+							Model model) {
+		auc.setId((String)sess.getAttribute("sess_id"));
+		auc.setItem(item);
+		
+		String seqno = cs.aucadd(filename, auc);
+		model.addAttribute("seqno", seqno);
+		return "redirect:/cre/auction_reg";
+	}
 	
 	
-	
-	
-	
+//	일반상품 아직 미구현
+//		@RequestMapping(value="product_registration", method= {RequestMethod.POST, RequestMethod.GET})
+//	public String proReg(@ModelAttribute("seqno") String seqno, Model model) {
+//		
+//		 if(seqno != null) {
+//		       Pro pro = cs.productdetail(seqno);
+//		       model.addAttribute("pro", pro);
+//		}
+//		 
+//		return "/creater/product_registration";
+//	}
+//		@RequestMapping(value="promodify", method= {RequestMethod.POST, RequestMethod.GET})
+//	public String promdify(@ModelAttribute("seqno") String seqno, Model model) {
+//		
+//		if(seqno != null) {
+//			
+//		}
+//		return "/cre/product_registration?seqno="+seqno;
+//	}
+
 }

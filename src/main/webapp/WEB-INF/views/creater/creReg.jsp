@@ -61,7 +61,7 @@
 			      <th rowspan='2'>연락처(택1 필수)</th>
 			      <td>휴대전화</td>
 			      <td>
-	                <input type="text" id="mobile" name="tel" maxlength="16" placeholder="010-1234-5678">
+	                <input type="text" id="mobile" name="crePhone" maxlength="16" placeholder="010-1234-5678">
 	 			  </td>
 			    </tr>
 			    <tr>
@@ -92,42 +92,42 @@
 			      	상호명
 			      </th>
 			      <td>
-					<input type="text" placeholder="상호명을 입력하세요" name="crecompany">
+					<input type="text" placeholder="상호명을 입력하세요" name="creCompany">
 				  </td>
 			    </tr>
 			    <tr>
 			      <th>연락처</th>
 			      <td>
-				    <input type="text" id="mobile" maxlength="16" placeholder="010-1234-5678" name="cretel">
+				    <input type="text" id="creRegnum" maxlength="16" placeholder="010-1234-5678" name="cretel">
 				  </td>
 			    </tr>
 			    <tr>
 			      <th>대표자 이름</th>
 			      <td>
-					<input type="text" placeholder="대표자 이름을 입력하세요" name="crename">
+					<input type="text" placeholder="대표자 이름을 입력하세요" name="creName">
 				  </td>
 			    </tr>
 			    <tr>
 			      <th rowspan='2'>주소</th>
 			      <td>
-					<input type="text" id="address_kakao" name="address" readonly placeholder="주소를 입력하세요" name ="creadress">
+					<input type="text" id="address_kakao" name="creAddress" readonly placeholder="주소를 입력하세요" name ="creAddress">
 				  </td>
 			    </tr>
 			    <tr>
 			      <td>
-			      	<input type="text" name="address_detail" placeholder="상세주소를 입력하세요" name="creadress2">
+			      	<input type="text" name="address_detail" placeholder="상세주소를 입력하세요" name="creAddress_detail">
 			      </td>
 			    </tr>
 			    <tr>
 			      <th>사업자 등록번호</th>
 			      <td>
-					<input type="text" placeholder="사업자 등록번호를 입력하세요" name ="crenum">
+					<input type="text" placeholder="사업자 등록번호를 입력하세요" name ="creSalenum">
 				  </td>
 			    </tr>
 			    <tr>
 			      <th>통신판매 신고번호</th>
 			      <td>
-					<input type="text" placeholder="통신판매 신고번호" name="crenum2">
+					<input type="text" placeholder="통신판매 신고번호" name="creRegnum">
 				  </td>
 			    </tr>
 			  </tbody>

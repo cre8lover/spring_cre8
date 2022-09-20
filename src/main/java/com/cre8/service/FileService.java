@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.ParseException;
 
 import org.apache.commons.fileupload.FileItem;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cre8.dto.Att;
 import com.cre8.dto.Auc;
@@ -15,7 +16,7 @@ import com.cre8.dto.Thumbnail;
 
 public interface FileService {
 
-	public Att fileUpload(FileItem item) throws Exception;
+	public Att fileUpload(MultipartFile filename) throws Exception;
 	
 	public Thumbnail setThumbnail(String saveFileName,File file) throws IOException;
 
@@ -24,4 +25,6 @@ public interface FileService {
 	public Auc getFormParameter2(FileItem item, Auc pro, Item proitem) throws ParseException;
 
 	int delete(String no, String savefilename, String filepath, String thumb_filename);
+
+	Att fileUpload(FileItem item) throws Exception;
 }

@@ -38,7 +38,7 @@
             <label class='control-label col-md-2 col-md-offset-2' for='id_pets'>경매상태</label>
             <div class='col-md-8'>
               <div class='make-switch' data-on-label='경매중' data-off-label='대기중' id='id_pets_switch'>
-                <input id='id_pets' type='checkbox' name="auc_stat"<c:if test="${pro.aucStat eq 'AUC_ING'}"> checked </c:if>  value='AUC_ING'>
+                <input id='id_pets' type='checkbox' name="aucStat"<c:if test="${pro.aucStat eq 'AUC_ING'}"> checked </c:if>  value='AUC_ING'>
               </div>
             </div>
           </div>
@@ -66,7 +66,7 @@
               </div>
               <div class='col-md-6 indent-small'>
                 <div class='form-group internal'>
-                  <input class='form-control' id='id_first_name' name="item_name" placeholder='상품명' type='text' value="${pro.item.itemName }">
+                  <input class='form-control' id='id_first_name' name="itemName" placeholder='상품명' type='text' value="${pro.item.itemName }">
                 </div>
               </div>
             </div>
@@ -76,7 +76,7 @@
             <div class='col-md-8'>
               <div class='col-md-2'>
                 <div class='form-group internal'>
-                  <input class='form-control col-md-8' id='' placeholder='시작가' type='number' name="auc_price" value="${pro.aucPrice}">
+                  <input class='form-control col-md-8' id='' placeholder='시작가' type='number' name="aucPrice" value="${pro.aucPrice}">
                 </div>
               </div>
               <div class='col-md-6 indent-small'>
@@ -91,7 +91,7 @@
             <div class='col-md-6'>
               <div class='form-group'>
                 <div class='col-md-11'>
-                  <input class='form-control' placeholder='' type='text' name="auc_shortdetail" value="${pro.aucShortdetail}">
+                  <input class='form-control' placeholder='' type='text' name="aucShortdetail" value="${pro.aucShortdetail}">
                 </div>
               </div>        
             </div>
@@ -101,7 +101,7 @@
             <div class='col-md-8'>
               <div class='col-md-3'>
                 <div class='form-group internal input-group'>
-                  <input class='form-control datepicker' id='id_checkin' name="auc_start" value="${pro.aucStart }">
+                  <input class='form-control datepicker' id='id_checkin' name="aucStart" value="${pro.aucStart }">
                   <span class='input-group-addon'>
                     <i class='glyphicon glyphicon-calendar'></i>
                   </span>
@@ -110,7 +110,7 @@
               <label class='control-label col-md-2' >경매종료일</label>
               <div class='col-md-3'>
                 <div class='form-group internal input-group'>
-                  <input class='form-control datepicker' id='id_checkout' name="auc_finish" value="${pro.aucFinish }">
+                  <input class='form-control datepicker' id='id_checkout' name="aucFinish" value="${pro.aucFinish }">
                   <span class='input-group-addon'>
                     <i class='glyphicon glyphicon-calendar'></i>
                   </span>
@@ -222,11 +222,11 @@ function fileDel(attSeqNo,saveFileName,filePath,thumb_file){
           <div class='form-group'>
             <label class='control-label col-md-2 col-md-offset-2' for='id_comments' >제품 상세</label>
             <div class='col-md-6'>
-              <textarea class='form-control' id='id_comments' placeholder='Additional comments' rows='3' name="auc_detail">${pro.aucDetail}</textarea>
+              <textarea class='form-control' id='id_comments' placeholder='Additional comments' rows='3' name="aucDetail">${pro.aucDetail}</textarea>
             </div>
           </div>
-          <input type="hidden" name="seqno" <c:if test="${pro.aucSeqno != null }">value="${pro.aucSeqno }"</c:if>>
-          <input type="hidden" name="itemseqno" value="${pro.item.itemSeqno }">
+          <input type="hidden" name="aucSeqno" <c:if test="${pro.aucSeqno != null }">value="${pro.aucSeqno }"</c:if>>
+          <input type="hidden" name="itemSeqno" value="${pro.item.itemSeqno }">
           <div class='form-group'>
             <div class='col-md-offset-4 col-md-3'>
               <input class='btn-lg btn-primary' id="insert" value="상품등록" type='submit'>

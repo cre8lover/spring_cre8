@@ -11,6 +11,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cre8.dao.CreatorDao;
 import com.cre8.dto.Att;
@@ -32,8 +33,8 @@ public class CreatorServiceImp implements CreatorService{
 	CreatorDao creatorDao;
 	
 	@Override
-	public void Creatoradd(HttpServletRequest request, String id) {
-		creatorDao.Creatoradd(request, id);
+	public void Creatoradd(Creator cre) {
+		creatorDao.Creatoradd(cre);
 	}
 
 	@Override
@@ -90,41 +91,23 @@ public class CreatorServiceImp implements CreatorService{
 	
 	
 	@Override
-    public String aucadd(HttpServletRequest req) {
+    public String aucadd(MultipartFile filename, Auc auc) {
 		
-		DiskFileItemFactory factory = new DiskFileItemFactory(); 
-		factory.setDefaultCharset(CHARSET);//?��?���? ?��?��?��?���? 좋다.
-		//factory form?�� ?��?��?���? �??��???�� ???�� utf8�? ???��?��?���? 좋음
-		ServletFileUpload upload = new ServletFileUpload(factory);
-		
-		Auc auc = new Auc();
-		Item proitem = new Item();
-		Att attachfile = null;
 		FileService fileService = new FileServiceImp();
+		Att attachfile=null;
 		
 		try {
-			List<FileItem> items = upload.parseRequest(req);
-			//�??��?��?�� ?��?���?
-			for(FileItem item : items) {
-				if (item.isFormField()) {//2진데?��?��?���? ?��?��?��?���? 구별?���?
-					auc =  fileService.getFormParameter2(item,auc,proitem); 
-				}else {
-					attachfile = fileService.fileUpload(item);
-				}
-			}
-		} catch (FileUploadException e) {
-			e.printStackTrace();
+			attachfile = fileService.fileUpload(filename);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		auc.setAtt_file(attachfile);
-	    String id = (String)req.getSession().getAttribute("sess_id");
 	    
 	    if (auc.getAucSeqno() != null) {
 	    	return creatorDao.aucmodify(auc);
 	    }else {
-	    	return creatorDao.aucadd(auc, id);
+	    	return creatorDao.aucadd(auc, auc.getId());
 	    }
 		
     }

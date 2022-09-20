@@ -22,4 +22,12 @@
 		<property name="password" value="jmh"/>
 	</bean>
 	
+	<bean id ="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+   		<property name="defaultEncoding" value="utf-8" />
+   		<property name="maxUploadSize" value="1004857600" />
+   		<property name="maxUploadSizePerFile" value="10485760"/>
+   		<property name="maxInMemorySize" value="10485760" />
+   		<property name="uploadTempDir" value="file:\\d:\\upload\\KCM\\tmp" />
+   </bean>
+   
 </beans>
