@@ -6,9 +6,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.BuyDao;
-import dto.Cart;
-import dto.Orders;
+import com.cre8.dao.BuyDao;
+import com.cre8.dto.Cart;
+import com.cre8.dto.Orders;
+
 
 public class BuyServiceimp implements BuyService{
 	BuyDao Dao = new BuyDao();

@@ -2,8 +2,9 @@ package com.cre8.service;
 
 import java.util.List;
 
-import dao.ProductDao;
-import dto.Pro;
+import com.cre8.dao.ProductDao;
+import com.cre8.dto.Pro;
+
 
 public class ProServiceImp implements ProService {
 	ProductDao ProDao = new ProductDao();
