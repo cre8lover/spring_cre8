@@ -80,7 +80,7 @@ public class Membercontroller{
 	
 		sess.invalidate();
 		
-		return "redirect:/index";
+		return "redirect:/";
 	}
 	
 	@GetMapping("memreg")
