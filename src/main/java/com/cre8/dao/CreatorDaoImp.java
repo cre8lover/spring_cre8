@@ -47,7 +47,7 @@ public class CreatorDaoImp implements CreatorDao{
 	
 	FileDao filedao = new FileDao();
 	
-	public void Creatoradd(HttpServletRequest request){
+	public void Creatoradd(HttpServletRequest request, String id){
 		Connection conn = null;///////////////////////
 		try {
 			String sql = "call p_creatoradd(?,?,?,?,?,?,?,?)";
@@ -55,24 +55,21 @@ public class CreatorDaoImp implements CreatorDao{
 		    String str = (request.getParameter("creadress") + request.getParameter("creadress2"));
 		    
 		    conn = ds.getConnection();
-		    stmt = conn.prepareStatement(sql);
-		    stmt.setString(1, request.getParameter("crecompany"));
-			stmt.setString(2, request.getParameter("cretel"));
-			stmt.setString(3, request.getParameter("crename"));
-			stmt.setString(4, str);
-			stmt.setString(5, request.getParameter("crenum"));
-			stmt.setString(6, request.getParameter("crenum2"));
-			stmt.setString(7, request.getParameter("intro"));
-			stmt.setString(8, request.getParameter("mem_id"));
-			stmt.executeQuery();
+		    cstmt = conn.prepareCall(sql);
+		    cstmt.setString(1, request.getParameter("crecompany"));
+			cstmt.setString(2, request.getParameter("cretel"));
+			cstmt.setString(3, request.getParameter("crename"));
+			cstmt.setString(4, str);
+			cstmt.setString(5, request.getParameter("crenum"));
+			cstmt.setString(6, request.getParameter("crenum2"));
+			cstmt.setString(7, request.getParameter("intro"));
+			cstmt.setString(8, request.getParameter("mem_id"));
+			cstmt.executeQuery();
 			
 			 sql = "update mem_auth set auth_name ='C' where auth_name='M' and mem_id = ?";
-			 stmt = conn.prepareStatement(sql);
-			 stmt.setString(1, (String)request.getSession().getAttribute("sess_id"));
-			 stmt.executeQuery();
-			
-			 //?占쏙옙占�? c占�? 以섏빞?占쏙옙 ?占쏙옙?占쏙옙?占쏙옙?占쏙옙?占쏙옙 (id占�? 諛쏆븘?占쏙옙)
-			//id 媛믪쓣 占�??占쏙옙???占쏙옙 洹몄븘?占쏙옙?占쏙옙?占쏙옙?占쏙옙?占쏙옙 ?占쏙옙湲됱쓣 c占�? ?占쏙옙?占쏙옙以섏빞?占쏙옙?占쏙옙sql = update
+			 cstmt = conn.prepareCall(sql);
+			 cstmt.setString(1, (String)request.getSession().getAttribute("sess_id"));
+			 cstmt.executeQuery();
 			
 		 }catch (SQLException e) {
 				e.printStackTrace();
@@ -460,7 +457,7 @@ public class CreatorDaoImp implements CreatorDao{
 	      Mem mem = new Mem();
 	      Creator cre = new Creator();
 	      
-	      String sql = "call p_infomodify (?,?,?,?,?,?,?,?,?,?,?)";
+	      String sql = "call p_infomodify (?,?,?,?,?,?,?,?,?,?,?,?)";
 	      
 	      try {
 	    	  conn = ds.getConnection();////////////////////
@@ -488,6 +485,7 @@ public class CreatorDaoImp implements CreatorDao{
 			            }
 				cstmt.setString(10, email);
 				cstmt.setString(11, mem.getMemSnsinfo());
+				cstmt.setString(11, mem.getMemId());
 				cstmt.executeQuery();
 				
 	            cre.setMem(mem);

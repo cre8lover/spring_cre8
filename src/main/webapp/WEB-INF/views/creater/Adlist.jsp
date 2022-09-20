@@ -13,11 +13,11 @@ padding:0;
 <title>Insert title here</title>
 </head>
 <body>
-	<%@ include file="/header.jsp" %>
-	<%@ include file="/menu.jsp" %>
-	<%@ include file="/listimg/product_ad.jsp" %>
-	<%@ include file="/sidebar.jsp" %>
-	<%@ include file="/footer.jsp" %>
+	<%@ include file="../header.jsp" %>
+	<%@ include file="../menu.jsp" %>
+	<%@ include file="../listimg/product_ad.jsp" %>
+	<%@ include file="../sidebar.jsp" %>
+	<%@ include file="../footer.jsp" %>
 	
 </body>
 </html>

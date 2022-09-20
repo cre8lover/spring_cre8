@@ -32,8 +32,8 @@ public class CreatorServiceImp implements CreatorService{
 	CreatorDao creatorDao;
 	
 	@Override
-	public void Creatoradd(HttpServletRequest request) {
-		creatorDao.Creatoradd(request);
+	public void Creatoradd(HttpServletRequest request, String id) {
+		creatorDao.Creatoradd(request, id);
 	}
 
 	@Override
