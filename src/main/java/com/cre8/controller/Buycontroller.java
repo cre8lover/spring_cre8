@@ -14,41 +14,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.cre8.dto.Cart;
 import com.cre8.dto.Orders;
 import com.cre8.service.BuyServiceimp;
 
 
-
-@WebServlet("/buyer/*")
+@Controller
+@RequestMapping("/buyer/")
 public class Buycontroller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    @Autowired
 	BuyServiceimp buy = new BuyServiceimp();
-	
-    public Buycontroller() {
-        super();
-    }
-
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doAction(req, resp);
-
-	}
-
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doAction(req, resp);
-	}
-
-	private void doAction(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.setContentType("text/html; charset=utf8");
-//		req.setCharacterEncoding("utf-8");
-		
-		String uri = req.getRequestURI();
-		String cmd = uri.substring(uri.lastIndexOf("/")+1);
-		String path = req.getContextPath();
-		HttpSession sess = req.getSession();
+    
+    @RequestMapping("cart")
+	private String cart(HttpSession sess, @RequestParam("orderbutton")String orderbutton,
+						@RequstP){
 		String logid = (String) sess.getAttribute("sess_id");
-		
 		
 		if(cmd.equals("cart")) {
 			

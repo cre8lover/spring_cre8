@@ -2,12 +2,16 @@ package com.cre8.service;
 
 import java.util.List;
 
-import com.cre8.dao.ProductDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cre8.dao.ProductDaoimp;
 import com.cre8.dto.Pro;
 
-
+@Service
 public class ProServiceImp implements ProService {
-	ProductDao ProDao = new ProductDao();
+	@Autowired
+	ProductDaoimp ProDao;
 
 	@Override
 	public List<Pro> proList_clothes() {
