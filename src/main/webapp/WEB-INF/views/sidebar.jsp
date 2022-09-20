@@ -13,7 +13,7 @@
  			</a>
  		</li>
  		<li class="jmh_list">
- 			<a href="<%= request.getContextPath() %>/mainpage">
+ 			<a href="<%= request.getContextPath() %>/">
  				<span class="jmh_icon"><i class="fa-solid fa-house"></i></span>
  				<span class="title">홈으로</span>
  			</a>

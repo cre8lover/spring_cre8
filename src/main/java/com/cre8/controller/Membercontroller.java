@@ -84,8 +84,9 @@ public class Membercontroller{
 	}
 	
 	@GetMapping("memreg")
-	public void memreg() {
+	public String memreg() {
 		
+		return "/member/memreg";
 	}
 	
 	@PostMapping("memregform")
@@ -171,12 +172,6 @@ public class Membercontroller{
 		model.addAttribute("stat", stat);
 		
 		return "/member/buyHistory";
-	}
-	
-	@GetMapping("mainpage")
-	public String mainpage() {
-		
-		return "/index";
 	}
 	
 	@PostMapping("findpw")

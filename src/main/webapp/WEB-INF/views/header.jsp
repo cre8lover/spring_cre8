@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/header.css">
 	<div class="header" >
 		<div class="logo">
-		<a href="<%= request.getContextPath() %>/mainpage">
+		<a href="<%= request.getContextPath() %>/">
 		<img src="<%= request.getContextPath() %>/img/logo.png" alt="index.html" style="float:left; height:95px; top:5px;  margin-left: 18%; ">
 		</a>
 		</div>

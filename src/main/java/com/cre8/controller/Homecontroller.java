@@ -16,19 +16,14 @@ import com.cre8.service.ProService;
 @RequestMapping("/")
 public class Homecontroller{
 	
-	/*
-	 * @Autowired ProService pro;
-	 * 
-	 * @GetMapping("/") public String home(Model model, List<Pro> prolist) {
-	 * 
-	 * prolist = pro.proList_clothes(); model.addAttribute("proList", prolist);
-	 * 
-	 * return "/index"; }
-	 */
-
-	@GetMapping("/")
-	public String home() {
+	@Autowired 
+	ProService pro;
 	
+	@GetMapping("/")
+	public String home(Model model) {
+		List<Pro> prolist = pro.proList_clothes(); 
+		model.addAttribute("proList", prolist);
+		
 		return "/index";
 	}
 
