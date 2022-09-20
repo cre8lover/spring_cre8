@@ -26,7 +26,7 @@
             <label class='control-label col-md-2 col-md-offset-2' for='id_accomodation'>카테고리</label>
             <div class='col-md-2'>
            <input type="hidden" >
-              <select class='form-control' name ="marcate" id='id_accomodation'>
+              <select class='form-control' name ="marCategory" id='id_accomodation'>
                 <option>포털마케팅</option>
                 <option>SNS마케팅</option>
                 <option>바이럴마케팅</option>
@@ -40,7 +40,7 @@
             <div class='col-md-8'>
               <div class='col-md-6 indent-small'>
                 <div class='form-group internal'>
-                  <input class='form-control' id='id_first_name' name="name" placeholder='상품명' type='text'>
+                  <input class='form-control' id='id_first_name' name="marProduct" placeholder='상품명' type='text'>
                 </div>
               </div>
             </div>
@@ -50,7 +50,7 @@
             <div class='col-md-8'>
               <div class='col-md-6 indent-small'>
                 <div class='form-group internal'>
-                  <input class='form-control' id='id_children' name = "price" placeholder='최종판매가격' type='number'>
+                  <input class='form-control' id='id_children' name = "marPrice" placeholder='최종판매가격' type='number'>
                 </div>
               </div>
             </div>
@@ -60,7 +60,7 @@
             <div class='col-md-6'>
               <div class='form-group'>
                 <div class='col-md-11'>
-                  <input class='form-control' name="company" placeholder='' type='text'>
+                  <input class='form-control' name="marCompany" placeholder='' type='text'>
                 </div>
             </div>
           </div>
@@ -69,7 +69,7 @@
             <div class='col-md-6'>
               <div class='form-group'>
                 <div class='col-md-11'>
-                  <input class='form-control' name="ceo" placeholder='' type='text'>
+                  <input class='form-control' name="marCeo" placeholder='' type='text'>
                 </div>
               </div>        
             </div>
@@ -79,7 +79,7 @@
             <div class='col-md-6'>
               <div class='form-group'>
                 <div class='col-md-11'>
-                  <input class='form-control' name="phone" placeholder='01012345678' type='text'>
+                  <input class='form-control' name="marPhone" placeholder='01012345678' type='text'>
                 </div>
               </div>        
             </div>
@@ -88,7 +88,7 @@
             <div class='col-md-6'>
               <div class='form-group'>
                 <div class='col-md-11'>
-                  <input class='form-control' name="regnum" placeholder='' type='text'>
+                  <input class='form-control' name="marRegnum" placeholder='' type='text'>
                 </div>
               </div>        
             </div>
@@ -98,7 +98,7 @@
             <div class='col-md-8'>
               <div class='col-md-3'>
                 <div class='form-group internal input-group'>
-                  <input class='form-control datepicker' type="date" name = "start"id='id_checkin'>
+                  <input class='form-control datepicker' type="date" name = "marOpendate"id='id_checkin'>
                   <span class='input-group-addon'>
                     <i class='glyphicon glyphicon-calendar'></i>
                   </span>
@@ -107,7 +107,7 @@
               <label class='control-label col-md-2' >판매종료일</label>
               <div class='col-md-3'>
                 <div class='form-group internal input-group'>
-                  <input class='form-control datepicker' type="date" name = "finish" id='id_checkout'>
+                  <input class='form-control datepicker' type="date" name = "marClosedate" id='id_checkout'>
                   <span class='input-group-addon'>
                     <i class='glyphicon glyphicon-calendar'></i>
                   </span>
@@ -130,7 +130,7 @@
           <div class='form-group'>
             <label class='control-label col-md-2 col-md-offset-2' for='id_comments'>제품 상세</label>
             <div class='col-md-6'>
-              <textarea class='form-control' id='id_comments' name = "comment" placeholder='Additional comments' rows='3'></textarea>
+              <textarea class='form-control' id='id_comments' name = "marDetail" placeholder='Additional comments' rows='3'></textarea>
             </div>
           </div>
           <div class='form-group'>

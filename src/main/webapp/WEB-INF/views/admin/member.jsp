@@ -10,7 +10,7 @@
 <title>회원관리</title>
 </head>
 
- <%@ include file="/admin/adminmenu.jsp" %>
+ <%@ include file="../admin/adminmenu.jsp" %>
  
 		<div class="khm_searchs">
 		<form method="post" action="<%= request.getContextPath() %>/master/member">

@@ -8,7 +8,7 @@
 <title>관리자 메인</title>
 </head>
 
-<%@ include file="/admin/adminmenu.jsp" %>
+<%@ include file="../admin/adminmenu.jsp" %>
 
 <div class="khm_manage">
 	<a>신규주문 0건</a>

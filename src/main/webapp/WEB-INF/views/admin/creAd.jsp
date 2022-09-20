@@ -11,7 +11,7 @@
 </head>
 <script src="<%= request.getContextPath() %>/js/artistpage.js"></script>
 
- <%@ include file="/admin/adminmenu.jsp" %>
+ <%@ include file="../admin/adminmenu.jsp" %>
 
 		<div class="khm_searchs">
 		<h2 class="khm_category">마케팅 상품관리</h2>
@@ -23,9 +23,9 @@
 								등록일자
 							</th>
 							<td colspan="3">
-								<input type="date" value="sdate" class="date" >
+								<input type="date" value="sdate" class="sdate" >
 								~
-								<input type="date" value="fdate" class="date" >
+								<input type="date" value="fdate" class="fdate" >
 							</td>
 							<th>검색어</th>
 							<td>
@@ -39,7 +39,7 @@
 								</select>
 							</td>
 							<td class="bno">
-								<input type="text" name="keysearch" id="search" value="${key.keyword }" />
+								<input type="text" name="keyword" id="search" value="${key.keyword }" />
 							</td>
 							<td class="bno">
 								<input type="submit" value="검색" >

@@ -10,7 +10,7 @@
 <title>물품 관리</title>
 </head>
 
- <%@ include file="/admin/adminmenu.jsp" %>
+ <%@ include file="../admin/adminmenu.jsp" %>
 
 		<div class="khm_searchs">
 		<form method="get">

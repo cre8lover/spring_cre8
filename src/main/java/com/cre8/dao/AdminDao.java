@@ -3,6 +3,8 @@ package com.cre8.dao;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.cre8.dto.AdminKeyWord;
 import com.cre8.dto.Cat;
 import com.cre8.dto.Marketing;
@@ -20,7 +22,7 @@ public interface AdminDao {
 
 	List<Marketing> yearlist();
 
-	void marketReg(Marketing market);
+	void marketReg(Marketing market, HttpServletRequest req);
 
 	List<Mem> memberlist(AdminKeyWord adkey);
 

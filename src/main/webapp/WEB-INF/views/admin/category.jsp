@@ -11,7 +11,7 @@
 
 </head>
 
- <%@ include file="/admin/adminmenu.jsp" %>
+ <%@ include file="../admin/adminmenu.jsp" %>
 
 		<div class="khm_searchs">
 		<h2 class="khm_category">카테고리</h2>

@@ -28,7 +28,7 @@ public interface AdminService {
 	
 	List<Marketing> year();
 	
-	void reg(HttpServletRequest req);
+	void reg(Marketing market, HttpServletRequest req);
 	
 	Marketing modify(String seqno);
 

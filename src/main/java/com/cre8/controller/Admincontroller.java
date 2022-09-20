@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -88,7 +89,7 @@ public class Admincontroller {
 		return "redirect:/admin/adminlogin";
 	}
 	
-	@GetMapping("category")
+	@RequestMapping("category")
 	public String categoryList(AdminKeyWord adkey, Model model) {
 		
 		List<Cat> category = admin.catelist(adkey);
@@ -99,7 +100,7 @@ public class Admincontroller {
 		
 	}
 	
-	@GetMapping("member")
+	@RequestMapping("member")
 	public String memberlist(AdminKeyWord adkey, Model model) {
 		
 		List<Mem> member = admin.memberlist(adkey);
@@ -109,7 +110,7 @@ public class Admincontroller {
 		return "/admin/member";
 	}
 	
-	@GetMapping("creAd")
+	@RequestMapping("creAd")
 	public String marketingList(AdminKeyWord adkey, Model model) {
 		
 		List<Marketing> marketing = admin.marketinglist(adkey);
@@ -118,65 +119,52 @@ public class Admincontroller {
 		
 		return "/admin/creAd";
 	}
-/*			
-		} else if(cmd.equals("creAd")) {
-			AdminKeyWord adkey = new AdminKeyWord();
-			
-	        adkey.setKeyword(req.getParameter("keysearch"));
-	        adkey.setClassification(req.getParameter("classification"));
-	        adkey.setSdate(req.getParameter("sdate"));
-	        adkey.setFdate(req.getParameter("fdate"));
-			
-			List<Marketing> marketing = admin.marketinglist(adkey);
-			req.setAttribute("marketing", marketing);
-	        req.setAttribute("key", adkey);
+	
+	@RequestMapping("adCheck")
+	public String marketingCheck(AdminKeyWord adkey, Model model) {
+	
+		List<Marketing> list = admin.purchase(adkey);
+		model.addAttribute("key", adkey);
+		model.addAttribute("list", list);
+		
+		List<Marketing> month = admin.month();
+		model.addAttribute("month", month);
+		
+		List<Marketing> year = admin.year();
+		model.addAttribute("year", year);
+		
+		return "/admin/creAd2";
+	}
+	
+	@RequestMapping("adreg")
+	public String marketReg() {
+		
+		return "/admin/admin_adreg";
+	}
+	
+	@RequestMapping("marReg")
+	public String marinsert(Marketing market, HttpServletRequest req) {
+		admin.reg(market, req);
 
-			goView(req, resp, "/admin/creAd.jsp");
-			
-		} else if(cmd.equals("adCheck")) {
-			AdminKeyWord adkey = new AdminKeyWord();
-			
-	         adkey.setKeyword(req.getParameter("keysearch"));
-	         adkey.setClassification(req.getParameter("classification"));
-	         adkey.setSdate(req.getParameter("sdate"));
-	         adkey.setFdate(req.getParameter("fdate"));
+		return "/admin/admin_adreg";
+	}
+	
+	@RequestMapping("admodify")
+	public String marketingModify(@ModelAttribute("seqno") String seqno, Model model) {
+		
+			Marketing market = admin.modify(seqno);
 
-			List<Marketing> list = admin.purchase(adkey);
-			req.setAttribute("key", adkey);
-			req.setAttribute("list", list);
-			
-			List<Marketing> month = admin.month();
-			req.setAttribute("month", month);
-			
-			List<Marketing> year = admin.year();
-			req.setAttribute("year", year);
-			
-			goView(req, resp, "/admin/creAd2.jsp");
-			
-		} else if(cmd.equals("adreg")) {
-			
-			goView(req, resp, "/admin/admin_adreg.jsp");
-			
-		} else if(cmd.equals("marReg")) {
-			admin.reg(req);
-
-			goView(req, resp, "/admin/admin_adreg.jsp");
-			
-		} else if(cmd.equals("admodify")) {
-			String seqno = req.getParameter("seqno");
-			if(seqno !=null) { 
-				Marketing market = admin.modify(seqno);
-
-				req.setAttribute("market", market);
-			}
-			goView(req, resp, "/admin/admin_adreg2.jsp");
-
-		} else if(cmd.equals("adupdate")) {
-			admin.reg(req);
-			goView(req, resp, "/master/admofiy");
-
-		}
+			model.addAttribute("market", market);
+		
+		return "/admin/admin_adreg2";
+	}
+	
+	@RequestMapping("adupdate")
+	public String marketingUpdate(Marketing market, HttpServletRequest req) {
+		
+		admin.reg(market, req);
+		
+		return "/master/admofiy";
 	}
 
-*/
 }

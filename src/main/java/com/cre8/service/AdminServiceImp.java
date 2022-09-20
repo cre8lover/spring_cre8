@@ -66,8 +66,7 @@ public class AdminServiceImp implements AdminService {
 	}
 
 	@Override
-	public void reg(HttpServletRequest req) {
-		Marketing market = new Marketing();
+	public void reg(Marketing market, HttpServletRequest req) {
 /*		
 		String cate = req.getParameter("marcate");
 		String name = req.getParameter("name");
@@ -131,7 +130,7 @@ public class AdminServiceImp implements AdminService {
 		attachfile.setMem(m);
 		
 		market.setAttSet(attachfile);
-		dao.marketReg(market);
+		dao.marketReg( market,  req);
 	}
 
 	@Override

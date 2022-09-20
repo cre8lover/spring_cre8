@@ -11,7 +11,7 @@
 <title>광고상품 주문내역조회</title>
 </head>
 
- <%@ include file="/admin/adminmenu.jsp" %>
+ <%@ include file="../admin/adminmenu.jsp" %>
 
 		<div class="khm_searchs">
 		<h2 class="khm_category">광고상품 주문관리</h2>
@@ -37,7 +37,7 @@
 								</select>
 							</td>
 							<td class="bno">
-								<input type="text" name="keysearch" id="sval" value="${key.keyword }" />
+								<input type="text" name="keyword" id="sval" value="${key.keyword }" />
 							</td>
 							<td class="bno">
 								<input type="submit" value="검색" >
