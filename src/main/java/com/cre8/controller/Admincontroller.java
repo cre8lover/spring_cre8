@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -59,14 +60,14 @@ public class Admincontroller {
 			
 		case "pwfail" :
 			
-			model.addAttribute("err2", "ë¹„ë?ë²ˆí˜¸ë¥? ?™•?¸?•´ì£¼ì„¸?š”");
+			model.addAttribute("err2", "ë¹„ï¿½?ë²ˆí˜¸ï¿½? ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ì£¼ì„¸?ï¿½ï¿½");
 			goView = "/admin/adminlogin";
 			
 			break;
 			
 		case "no_member" :
 			
-			model.addAttribute("err2", "ê¶Œí™˜?„ ?™•?¸?•´ì£¼ì„¸?š”");
+			model.addAttribute("err2", "ê¶Œí™˜?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ì£¼ì„¸?ï¿½ï¿½");
 			goView = "/admin/adminlogin";
 			
 			break;

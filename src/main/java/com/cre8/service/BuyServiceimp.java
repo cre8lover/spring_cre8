@@ -1,20 +1,27 @@
 package com.cre8.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.cre8.dao.BuyDao;
 import com.cre8.dto.Cart;
 import com.cre8.dto.Orders;
+import com.cre8.dto.orderadd;
 
-
+@Service
 public class BuyServiceimp implements BuyService{
-	BuyDao Dao = new BuyDao();
+	@Autowired
+	BuyDao Dao;
+	
 	@Override
-	public List<Cart> myCart(String logid, String[] chklist) {
+	public List<Cart> myCart(String logid, ArrayList<String> chklist) {
 		
 		return Dao.myCart(logid, chklist);
 	}
@@ -31,8 +38,8 @@ public class BuyServiceimp implements BuyService{
 			return Dao.orderlist(logid,o_seqno);
 	}
 	@Override
-	public int orderand(HttpServletRequest req, HttpServletResponse resp) {
+	public int orderand(orderadd orderadd) {
 		
-		return Dao.orderand(req,resp);
+		return Dao.orderand(orderadd);
 	}
 }

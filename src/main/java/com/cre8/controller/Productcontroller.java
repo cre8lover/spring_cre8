@@ -42,7 +42,7 @@ public class Productcontroller extends HttpServlet {
       model.addAttribute("proList", prolist2);
       
       return "/listimg/product_furniture.jsp";
-    }
+    } 
     
    
     @GetMapping("cosmetics")
