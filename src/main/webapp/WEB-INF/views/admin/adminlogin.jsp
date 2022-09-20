@@ -17,7 +17,7 @@
 			<table class="khm_adminlogin">
 				<tr>
 					<td>
-						<input name="id" id="id" type="text" placeholder="ID">
+						<input name="memId" id="id" type="text" placeholder="ID">
 					</td>
 					<td rowspan="2">
 						<input type="submit" value="로그인">
@@ -25,7 +25,7 @@
 				</tr>
 				<tr>
 					<td>
-						<input name="pw" id="pw" type="password" placeholder="PW">
+						<input name="memPw" id="pw" type="password" placeholder="PW">
 					</td>
 				</tr>
 			</table>

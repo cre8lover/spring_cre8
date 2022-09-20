@@ -22,7 +22,7 @@
 							등급
 						</th>
 						<td>
-							<select name="gory"  onchange="this.form.submit()">
+							<select name="category"  onchange="this.form.submit()">
 								<option value="999" <c:if test="${key.category == '999'}">selected</c:if>>전체</option>
 								<option value="A" ${key.category == 'A' ? 'selected': '' }>관리자</option>							
 								<option value="U" ${key.category == 'U' ? 'selected': '' }>회원</option>
@@ -33,9 +33,9 @@
 							가입 날짜
 						</th>
 						<td colspan="3">
-							<input type="date" value="" class="date" >
+							<input type="sdate" value="" class="date" >
 							~
-							<input type="date">
+							<input type="fdate">
 						</td>
 						<th>검색어</th>
 						<td>
@@ -48,7 +48,7 @@
 							</select>
 						</td>
 						<td class="bno">
-							<input type="text" name="keysearch" id="sval" value="${key.keyword }" />
+							<input type="text" name="keyword" id="sval" value="${key.keyword }" />
 						</td>
 						<td class="bno">
 							<input type="submit" value="검색" >

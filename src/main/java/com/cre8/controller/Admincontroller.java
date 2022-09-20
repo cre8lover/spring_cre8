@@ -7,139 +7,118 @@ import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.cre8.dto.AdminKeyWord;
 import com.cre8.dto.Cat;
 import com.cre8.dto.Marketing;
 import com.cre8.dto.Mem;
-import com.cre8.service.AdminServiceImp;
+import com.cre8.service.AdminService;
 
-
-@WebServlet("/master/*")
-public class Admincontroller extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+@Controller
+@RequestMapping("/master/")
+public class Admincontroller {
 	
-	AdminServiceImp admin = new AdminServiceImp();
+	@Autowired
+	private AdminService admin;
        
-    public Admincontroller() {
-        super();
-    }
 
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doAction(req, resp);
-
+	@GetMapping("adminlogin")
+	public String loginpage() {
+		
+		return "/admin/adminlogin";
 	}
+	
+	@PostMapping("adminMain")
+	public String adminpage(Mem mem, Model model, HttpSession sess) {
+		
+		String goView = null;
+		
+		String id = mem.getMemId();
+		String pw = mem.getMemPw();
+		
+		Map<String, String> status = admin.login(id, pw);
+		
+		switch(status.get("login")) {
+		case "ok" :
+			
+			sess.setAttribute("sess_id", id);
+			sess.setAttribute("sess_name", status.get("name"));
+			
+			goView = "/admin/adminMain";
+			break;
+			
+		case "pwfail" :
+			
+			model.addAttribute("err2", "ÎπÑÎ?Î≤àÌò∏Î•? ?ôï?ù∏?ï¥Ï£ºÏÑ∏?öî");
+			goView = "/admin/adminlogin";
+			
+			break;
+			
+		case "no_member" :
+			
+			model.addAttribute("err2", "Í∂åÌôò?ùÑ ?ôï?ù∏?ï¥Ï£ºÏÑ∏?öî");
+			goView = "/admin/adminlogin";
+			
+			break;
+			
+		default :
+			
+			goView = "/admin/adminlogin.jsp";
 
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doAction(req, resp);
+		}
+		
+		return goView;
 	}
-
-	private void doAction(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.setContentType("text/html; charset=utf8");
-		req.setCharacterEncoding("utf-8");
+	
+	@GetMapping("logout")
+	public String logout(HttpSession sess) {
+	
+		sess.invalidate();
 		
-		String uri = req.getRequestURI();
-		String cmd = uri.substring(uri.lastIndexOf("/")+1);
-		String path = req.getContextPath();
+		return "redirect:/admin/adminlogin";
+	}
+	
+	@GetMapping("category")
+	public String categoryList(AdminKeyWord adkey, Model model) {
 		
-		HttpSession sess = req.getSession();
-
+		List<Cat> category = admin.catelist(adkey);
+		model.addAttribute("cate", category);
+		model.addAttribute("key", adkey);
 		
-		if(cmd.equals("adminlogin")) {
-			
-			goView(req, resp, "/admin/adminlogin.jsp");
-			
-		} else if(cmd.equals("adminMain")) {
-			
-			String id = req.getParameter("id");
-			String pw = req.getParameter("pw");
-			
-			Map<String, String> status = admin.login(id, pw);
-			
-
-			switch(status.get("login")) {
-			case "ok" :
-				
-				sess.setAttribute("sess_id", id);
-				sess.setAttribute("sess_name", status.get("name"));
-				
-				goView(req, resp, "/admin/adminMain.jsp");
-				break;
-				
-			case "pwfail" :
-				
-				sess.setAttribute("err2", "ÎπÑÎ?Î≤àÌò∏Î•? ?ôï?ù∏?ï¥Ï£ºÏÑ∏?öî");
-				goView(req, resp, "/admin/adminlogin.jsp");
-				
-				break;
-				
-			case "no_member" :
-				
-				sess.setAttribute("err2", "Í∂åÌôò?ùÑ ?ôï?ù∏?ï¥Ï£ºÏÑ∏?öî");
-				goView(req, resp, "/admin/adminlogin.jsp");
-				
-				break;
-				
-			default :
-				
-				goView(req, resp, "/admin/adminlogin.jsp");
-
-
-			}
-			
-		} else if(cmd.equals("logout")) {
-			sess.invalidate();
-			
-			resp.sendRedirect(req.getContextPath() + "/admin/adminlogin.jsp");
-			
-		} else if(cmd.equals("category")) {
-			String currentPage = req.getParameter("currentPage");
-			String rowPerPage = req.getParameter("rowPerPage");
-			
-			AdminKeyWord adkey = new AdminKeyWord();
-//			AdminKeyWord adkey = new AdminKeyWord(Integer.parseInt(currentPage), Integer.parseInt(rowPerPage));
-			
-			adkey.setCategory(req.getParameter("gory"));
-			adkey.setKeyword(req.getParameter("keysearch"));
-			adkey.setSdate(req.getParameter("sdate"));
-			adkey.setFdate(req.getParameter("fdate"));
-//			adkey.setClassification(req.getParameter("stype"));
-			
-			if(currentPage == null) currentPage = "1";
-			if(rowPerPage == null) rowPerPage = "10";
-			
-			
-			List<Cat> category = admin.catelist(adkey);
-			req.setAttribute("cate", category);
-			req.setAttribute("key", adkey);
-			goView(req, resp, "/admin/category.jsp");
-
-		} else if(cmd.equals("member")) {
-	         
-			AdminKeyWord adkey = new AdminKeyWord();
-	         
-	         adkey.setCategory(req.getParameter("gory"));
-	         adkey.setKeyword(req.getParameter("keysearch"));
-	         adkey.setClassification(req.getParameter("classification"));
-	         adkey.setSdate(req.getParameter("sdate"));
-	         adkey.setFdate(req.getParameter("fdate"));
-	         
-	         List<Mem> member = admin.memberlist(adkey);
-	         req.setAttribute("member", member);
-	         req.setAttribute("key", adkey);
-	         goView(req, resp, "/admin/member.jsp");
-/*	         
-		} else if(cmd.equals("item")) {
-			
-			List<Pro> item = admin.itemlist();
-			req.setAttribute("item", item);
-			
-			goView(req, resp, "/admin/item.jsp");
-*/			
+		return "/admin/category";
+		
+	}
+	
+	@GetMapping("member")
+	public String memberlist(AdminKeyWord adkey, Model model) {
+		
+		List<Mem> member = admin.memberlist(adkey);
+		model.addAttribute("member", member);
+		model.addAttribute("key", adkey);
+		
+		return "/admin/member";
+	}
+	
+	@GetMapping("creAd")
+	public String marketingList(AdminKeyWord adkey, Model model) {
+		
+		List<Marketing> marketing = admin.marketinglist(adkey);
+		model.addAttribute("marketing", marketing);
+		model.addAttribute("key", adkey);
+		
+		return "/admin/creAd";
+	}
+/*			
 		} else if(cmd.equals("creAd")) {
 			AdminKeyWord adkey = new AdminKeyWord();
 			
@@ -199,9 +178,5 @@ public class Admincontroller extends HttpServlet {
 		}
 	}
 
-	private void goView(HttpServletRequest req, HttpServletResponse resp, String viewPage) throws ServletException, IOException {
-		RequestDispatcher rd = req.getRequestDispatcher(viewPage);
-		rd.forward(req, resp);		
-	}
-
+*/
 }

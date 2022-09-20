@@ -35,7 +35,7 @@ public interface MemberService {
 
 	int idcheck(String id);
 
-	String insert(Mem mem);
+	void insert(Mem mem);
 
 	void infoinsert(Mem mem, HttpServletRequest req);
 
