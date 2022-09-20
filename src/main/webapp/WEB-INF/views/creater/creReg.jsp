@@ -11,9 +11,9 @@
 <title>회원가입</title>
 </head>
 <body>
-	<%@ include file="/header.jsp" %>
-	<%@ include file="/menu.jsp" %>
-	<%@ include file="/sidebar.jsp" %>
+	<%@ include file="../header.jsp" %>
+	<%@ include file="../menu.jsp" %>
+	<%@ include file="../sidebar.jsp" %>
 	
 <div class="jmh_body">
 
@@ -183,7 +183,7 @@
 	<div class="jmh_project">
 </div>
 		
- <%@ include file="/footer.jsp" %> 
+ <%@ include file="../footer.jsp" %> 
  </body>
 </html>
 

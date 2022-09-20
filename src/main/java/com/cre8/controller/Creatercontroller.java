@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +30,7 @@ import com.cre8.dto.Marketing;
 import com.cre8.dto.Pro;
 import com.cre8.service.CreatorServiceImp;
 import com.cre8.service.FileService;
+import com.cre8.service.FileServiceImp;
 
 @Controller
 @RequestMapping(value="/cre/")
@@ -35,8 +38,10 @@ public class Creatercontroller {
    
 	@Autowired
 	CreatorServiceImp cs;
+	FileServiceImp fs;
 	
 	@RequestMapping(value="creReg", method = {RequestMethod.POST, RequestMethod.GET})
+	//크리에이터 페이지( if)비회원&작가이닐경우 =>작가등록 및 회원가입)
 	public String Creatoradd(HttpSession sess, @RequestParam("seqno") String seqno, Model model) {
 		String add = (String)sess.getAttribute("auth");
 		String id = (String)sess.getAttribute("sess_id");
@@ -61,19 +66,61 @@ public class Creatercontroller {
 			return "/creater/creReg";
 		}
 		
-	}//여기서 작가로 등급을 올려줌 
+	} 
+	//크리에이터 등록페이지
 	@GetMapping("artistpage")
 	public String Creatorpage(HttpServletRequest req) {
 		cs.Creatoradd(req);
 		return "/cre/creReg";
 	}
-	@GetMapping("cremodify")
+	//수정페이지
+	@PostMapping("cremodify")
 	public String cremodify(HttpSession sess, Model model) {
 		String id = ((String)sess.getAttribute("sess_id"));
 		Creator cre = cs.infomodify(id);
 		
 		model.addAttribute("cre", cre);
 		return "/creater/creReg2.jsp";
+	}
+	//광고리스트 조회
+	@GetMapping("Adlist")
+	public String mk(List<Marketing> mar , Model model) {
+		mar = cs.mk(); 
+		model.addAttribute("marketing", mar);
+		
+		return "/creater/marketingDetail.jsp";
+	}
+	//광고 세부내용 출력
+	@GetMapping("marketingDetail")
+	public String mkk(@ModelAttribute("seqno") int seqno, Model model) {
+		
+		model.addAttribute("marketing", cs.mkk(seqno));
+		
+		return "/creater/marketingDetail.jsp";
+	}
+	//파일 삭제
+	@PostMapping("fileDel")
+	public int fileDel(@RequestParam("attseqno") String attseqno,
+					   @RequestParam("savefilename") String savefilename,
+					   @RequestParam("filepath") String filepath,
+					   @RequestParam("thumb_filename") String thumb_filename,
+					   Model model) {
+		int rs=0;
+		//여기에 int rs선언해되나? spring에서
+		if(attseqno != "") {
+			rs=fs.delete(attseqno, savefilename, filepath, thumb_filename);
+			model.addAttribute("fileDel", rs);
+		}
+		
+		return rs;
+	}
+	//게시물 삭제 --구현은되는데 totalprice에서 건드릴것이 있어 미완성 입니다.
+	@PostMapping("prodel")
+	public String prodel(@RequestParam("proseqno") String proseqno,
+						 Model model) {
+		String seqno = model.addAttribute("proseqno");
+		cs.prodel(seqno);
+		return "/cre/creReg";
 	}
 	
 	

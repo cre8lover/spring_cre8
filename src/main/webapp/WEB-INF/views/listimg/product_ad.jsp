@@ -9,8 +9,8 @@
 <!-- <link rel ="stylesheet" href="css/products.css"> -->
 <title>Insert title here</title>
 </head>
-	<%@ include file="/header.jsp" %>
-	<%@ include file="/menu.jsp" %>
+	<%@ include file="../header.jsp" %>
+	<%@ include file="../menu.jsp" %>
 <body>
 <h2 style="text-align:center;"><판매량UP!UP! 외부마케팅></h2>
 <main>
@@ -39,7 +39,7 @@
 			</div>
 	</div>
 
-	<%@ include file="/sidebar.jsp" %>
-	<%@ include file="/footer.jsp" %>
+	<%@ include file="../sidebar.jsp" %>
+	<%@ include file="../footer.jsp" %>
 </body>
 </html>

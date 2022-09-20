@@ -37,12 +37,11 @@ import oracle.sql.STRUCT;
 import oracle.sql.StructDescriptor;
 
 @Repository
-public class CreatorDaoImp {
+public class CreatorDaoImp implements CreatorDao{
 	
 	@Autowired
 	private DataSource ds;/////////////////////
 	
-	Connection conn = OracleConn.getInstance().getConn();
 	PreparedStatement stmt;
 	CallableStatement cstmt;
 	
@@ -78,7 +77,7 @@ public class CreatorDaoImp {
 		 }catch (SQLException e) {
 				e.printStackTrace();
 		 }finally {///////////////////
-			resourceClose(conn, stmt);	
+			resourceClose(conn, cstmt);	
 		 }
 		}
 	
@@ -123,7 +122,7 @@ public class CreatorDaoImp {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {///////////////////
-			resourceClose(conn, stmt);	
+			resourceClose(conn, cstmt);	
 		 }
 		return mk;
 	}
@@ -152,7 +151,7 @@ public class CreatorDaoImp {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {///////////////////
-			resourceClose(conn, stmt);	
+			resourceClose(conn, cstmt);	
 		 }
 		return mkk;
 	}
@@ -214,7 +213,7 @@ public class CreatorDaoImp {
 		 }catch (SQLException e) {
 				e.printStackTrace();
 			}	finally {///////////////////
-				resourceClose(conn, stmt);	
+				resourceClose(conn, cstmt);	
 			 }	
 			return cre;
 		}
@@ -278,7 +277,7 @@ public class CreatorDaoImp {
 	      } catch (SQLException e) {
 	         e.printStackTrace();
 	      }finally {///////////////////
-				resourceClose(conn, stmt);	
+				resourceClose(conn, cstmt);	
 			 }
 	      return cremodi;
 	   }
@@ -320,7 +319,7 @@ public class CreatorDaoImp {
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}finally {///////////////////
-			resourceClose(conn, stmt);	
+			resourceClose(conn, cstmt);	
 		 }
 		
 		return cre;
@@ -368,7 +367,7 @@ public class CreatorDaoImp {
 			e.printStackTrace();
 		}
 		 finally {///////////////////
-			resourceClose(conn, stmt);	
+			resourceClose(conn, cstmt);	
 		 }
 		calculate.put("month", mcal);
 		calculate.put("year", ycal);
@@ -410,7 +409,7 @@ public class CreatorDaoImp {
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}finally {///////////////////
-			resourceClose(conn, stmt);	
+			resourceClose(conn, cstmt);	
 		 }
 		return prolist;
 	}
@@ -450,7 +449,7 @@ public class CreatorDaoImp {
 	      }catch (SQLException e) {
 	         e.printStackTrace();
 	      }finally {///////////////////
-				resourceClose(conn, stmt);	
+				resourceClose(conn, cstmt);	
 			 }
 	      
 	      return auclist;
@@ -497,7 +496,7 @@ public class CreatorDaoImp {
 	      } catch (SQLException e) {
 	         e.printStackTrace();
 	      }finally {///////////////////
-				resourceClose(conn, stmt);	
+				resourceClose(conn, cstmt);	
 			 }
 	      
 	      return cre;
@@ -524,7 +523,7 @@ public String totalmoney(String id) {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {///////////////////
-			resourceClose(conn, stmt);	
+			resourceClose(conn, cstmt);	
 		 }
 
 		return total;
@@ -720,7 +719,7 @@ public String totalmoney(String id) {
 		} catch (SQLException e) {
 		         e.printStackTrace();
 		}finally {///////////////////
-			resourceClose(conn, stmt);	
+			resourceClose(conn, cstmt);	
 		 }
 		      return pro;
 	}
@@ -850,7 +849,7 @@ public String totalmoney(String id) {
 		         e.printStackTrace();
 			}
 				      finally {///////////////////
-							resourceClose(conn, stmt);	
+							resourceClose(conn, cstmt);	
 						 }
 		      
 		      return seqno;
@@ -958,7 +957,7 @@ public String totalmoney(String id) {
 		         // TODO Auto-generated catch block
 		         e.printStackTrace();
 		      }finally {///////////////////
-					resourceClose(conn, stmt);	
+					resourceClose(conn, cstmt);	
 				 }
 		      
 		      return auc;
@@ -1019,7 +1018,7 @@ public String totalmoney(String id) {
 			 } catch (SQLException e) {
 			         e.printStackTrace();
 			 }finally {///////////////////
-					resourceClose(conn, stmt);	
+					resourceClose(conn, cstmt);	
 			 }
 			
 			String seqno = String.valueOf(auc.getAucSeqno());
@@ -1215,7 +1214,7 @@ public String totalmoney(String id) {
 				         e.printStackTrace();
 				 }
 				 finally {///////////////////
-					resourceClose(conn, stmt);	
+					resourceClose(conn, cstmt);	
 				 }
 				String seqno = String.valueOf(pro.getProSeqno());
 //				      System.out.println(seqno);
@@ -1273,20 +1272,21 @@ public String totalmoney(String id) {
 	      } catch (SQLException e) {
 	         e.printStackTrace();
 		}finally {///////////////////
-			resourceClose(conn, stmt);	
+			resourceClose(conn, cstmt);	
 		 }
 	      
 	      return seqno;
 	   }
 
-
+		   //게시물삭제
 		public Att prodel(String seqno) {
-			
+			Connection conn = null;///////////////////////
 			Att att = new Att();
 			Thumbnail att_at = new Thumbnail();
 			
 			String sql = "call p_prodelete(?,?)";
 			try {
+				 conn = ds.getConnection();////////////////////
 				cstmt = conn.prepareCall(sql);
 				cstmt.setString(1, seqno);
 				cstmt.registerOutParameter(2, OracleTypes.CURSOR);
@@ -1302,7 +1302,7 @@ public String totalmoney(String id) {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}finally {///////////////////
-				resourceClose(conn, stmt);	
+				resourceClose(conn, cstmt);	
 			 }
 			return att;
 		}
@@ -1415,29 +1415,36 @@ public String totalmoney(String id) {
 //			   }
 	
 		
-		//�옄�썝諛섎궔
 		private void resourceClose(Connection conn, PreparedStatement stmt) {
-		      try {
-		    	  if(stmt != null || conn != null) {
-			         stmt.close();
-			         conn.close();
-		    	 }
-		      } catch (SQLException e) {
-		         e.printStackTrace();
-		      }
-		   }
-		   
-		//�옄�썝諛섎궔
-		private void resourceClose(Connection conn, CallableStatement stmt) {
-		      try {
-		    	  if(stmt != null || conn != null) {
-				         stmt.close();
-				         conn.close();
-			    	 }
-		      } catch (SQLException e) {
-		         e.printStackTrace();
-		      }
-		   }
+			//�옄�썝諛섎궔
+			try {
+				if(stmt != null || conn != null) {
+					stmt.close();
+					conn.close();
+				}
+				
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			
+		}
+		
+		private void resourceClose(Connection conn, CallableStatement cstmt) {
+			//�옄�썝諛섎궔
+			try {
+				
+				if(cstmt != null || conn != null) {
+					cstmt.close();
+					conn.close();
+				}
+				
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			
+		}	
 }	
 
 	
