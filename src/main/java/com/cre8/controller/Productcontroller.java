@@ -10,31 +10,32 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.cre8.dto.Pro;
 import com.cre8.service.ProService;
 import com.cre8.service.ProServiceImp;
 
-
-@WebServlet("/product/*")
+@Controller
+@RequestMapping("/product/")
 public class Productcontroller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	ProService pro = new ProServiceImp();
+	@Autowired
+	ProService pro;
 
-       
-    public Productcontroller() {
-        super();
+    @GetMapping("clothes") 
+    public String clothes(Model model) {
+    	List<Pro> prolist1 = pro.proList_clothes();
+    	model.addAttribute("proList", prolist1);
+    	
+    	return "/listimg/product_clothes";
     }
-
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doAction(req, resp);
-
-	}
-
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doAction(req, resp);
-	}
-
+	
 	private void doAction(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html; charset=utf8");
 		req.setCharacterEncoding("utf-8");
@@ -45,7 +46,6 @@ public class Productcontroller extends HttpServlet {
 		
 		ProServiceImp proservice = new ProServiceImp();
 		if(cmd.equals("clothes")) {
-//			System.out.println("?ò∑ ÎßµÌïë ?ôï?ù∏");
 			List<Pro> prolist1 = pro.proList_clothes();
 			req.setAttribute("proList", prolist1);
 			goView(req, resp, "/listimg/product_clothes.jsp");

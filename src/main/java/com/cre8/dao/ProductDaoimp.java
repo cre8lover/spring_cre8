@@ -22,12 +22,11 @@ import com.cre8.dto.Review;
 
 @Repository
 public class ProductDaoimp implements ProductDao{
+	
 	@Autowired
 	private DataSource ds;
 	
-
-	
-	//?���? cat=1
+	//?占쏙옙占�? cat=1
 	public List<Pro> proList_clothes() {
 		PreparedStatement stmt = null;
 		Connection conn = null;
@@ -71,8 +70,10 @@ public class ProductDaoimp implements ProductDao{
 		return prolist1;
 	}
 	
-	//�??��&�?�? cat=2
+	//占�??占쏙옙&占�?占�? cat=2
 	public List<Pro> proList_furn() {
+		PreparedStatement stmt = null;
+		Connection conn = null;
 		List<Pro> prolist2 = new ArrayList<Pro>(); 
 		Pro pro = null;
 		Item item = null;
@@ -86,6 +87,7 @@ public class ProductDaoimp implements ProductDao{
 				+ "    order by pro_hits desc" ;
 		
 		try {
+			conn = ds.getConnection();
 			stmt = conn.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			
@@ -112,8 +114,10 @@ public class ProductDaoimp implements ProductDao{
 		return prolist2;
 	}
 	
-	//?��?��?�� cat=3
+	//?占쏙옙?占쏙옙?占쏙옙 cat=3
 	public List<Pro> proList_cos() {
+		PreparedStatement stmt = null;
+		Connection conn = null;
 		List<Pro> prolist3 = new ArrayList<Pro>(); 
 		Pro pro = null;
 		Item item = null;
@@ -127,6 +131,7 @@ public class ProductDaoimp implements ProductDao{
 				+ "    order by pro_hits desc" ;
 		
 		try {
+			conn = ds.getConnection();
 			stmt = conn.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			
@@ -153,8 +158,10 @@ public class ProductDaoimp implements ProductDao{
 		return prolist3;
 	}
 	
-	//?��?��리어 cat=4
+	//?占쏙옙?占쏙옙由ъ뼱 cat=4
 	public List<Pro> proList_interior() {
+		PreparedStatement stmt = null;
+		Connection conn = null;
 		List<Pro> prolist4 = new ArrayList<Pro>(); 
 		Pro pro = null;
 		Item item = null;
@@ -168,6 +175,7 @@ public class ProductDaoimp implements ProductDao{
 				+ "    order by pro_hits desc" ;
 		
 		try {
+			conn = ds.getConnection();
 			stmt = conn.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			
@@ -194,8 +202,10 @@ public class ProductDaoimp implements ProductDao{
 		return prolist4;
 	}
 	
-	//?��?�� cat=5
+	//?占쏙옙?占쏙옙 cat=5
 	public List<Pro> proList_tra() {
+		PreparedStatement stmt = null;
+		Connection conn = null;
 		List<Pro> prolist5 = new ArrayList<Pro>(); 
 		Pro pro = null;
 		Item item = null;
@@ -209,6 +219,7 @@ public class ProductDaoimp implements ProductDao{
 				+ "    order by pro_hits desc" ;
 		
 		try {
+			conn = ds.getConnection();
 			stmt = conn.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			
@@ -237,6 +248,9 @@ public class ProductDaoimp implements ProductDao{
 	
 	
 	public Pro detailList(String seqno) {
+		PreparedStatement stmt = null;
+		Connection conn = null;
+		
 		Pro pro = new Pro();
 		String sql = " select (SELECT c.cre_company FROM creator c where c.mem_id = p.mem_id) as companyname,"
 				+ "        i.item_img, i.item_name, p.pro_price, p.pro_detail, p.pro_saleprice,"
@@ -249,6 +263,7 @@ public class ProductDaoimp implements ProductDao{
 				    
 		
 		try {
+			conn = ds.getConnection();
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, seqno);
 			ResultSet rs =stmt.executeQuery();
