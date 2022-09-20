@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Pro implements Serializable {
+public class Pro{
 
 	private static final long serialVersionUID = 1L;
 	

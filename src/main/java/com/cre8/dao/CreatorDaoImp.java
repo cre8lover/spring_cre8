@@ -37,7 +37,7 @@ import oracle.sql.STRUCT;
 import oracle.sql.StructDescriptor;
 
 @Repository
-public class CreatorDaoImp {
+public class CreatorDaoImp implements CreatorDao{
 	
 	@Autowired
 	private DataSource ds;/////////////////////

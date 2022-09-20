@@ -36,7 +36,7 @@ import oracle.sql.STRUCT;
 import oracle.sql.StructDescriptor;
 
 @Repository
-public class MemberDaoImp {
+public class MemberDaoImp implements MemberDao{
 //	private final Connection conn = OracleConn.getInstance().getConn();
 	
 	@Autowired
