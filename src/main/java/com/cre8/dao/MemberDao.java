@@ -12,7 +12,7 @@ public interface MemberDao {
 
 	public Map<String, String> longinProc(String id, String pw);
 	
-	public String reginsert(Mem mem);
+	public void reginsert(Mem mem);
 	
 	public Mem mypage(String id);
 	

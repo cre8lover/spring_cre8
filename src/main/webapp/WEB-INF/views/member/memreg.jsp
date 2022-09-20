@@ -11,8 +11,8 @@
 <title>회원가입</title>
 </head>
 <body>
-	<%@ include file="/header.jsp" %>
-	<%@ include file="/menu.jsp" %>
+	<%@ include file="../header.jsp" %>
+	<%@ include file="../menu.jsp" %>
 <div class="jmh_body">
 	<div class="body">
 		<div class="leftSideBar"></div>
@@ -29,7 +29,7 @@
                 <!-- 아이디 -->
                 <div>
                     <h3>아이디</h3>
-                    <input type="text" id="memId" name="id" class="khm_text" maxlength="20" placeholder="아이디" onchange="idcheck('<%= request.getContextPath() %>')">
+                    <input type="text" id="id" name="memId" class="khm_text" maxlength="20" placeholder="아이디" onchange="idcheck('<%= request.getContextPath() %>')">
                     <input type="hidden" id="isidcheck">
                     <p id="idcheckmsg" style="color:red;"></p>
                 </div>
@@ -91,7 +91,7 @@
 </div>
 	<div class="jmh_project">
 </div>
-<%@ include file="/footer.jsp" %>
+<%@ include file="../footer.jsp" %>
 </body>
 
 </html>

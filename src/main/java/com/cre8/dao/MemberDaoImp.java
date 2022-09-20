@@ -85,18 +85,17 @@ public class MemberDaoImp implements MemberDao{
 		return map;
 	}
 
-	public String reginsert(Mem mem) {
+	public void reginsert(Mem mem) {
 	
 		CallableStatement cstmt = null;
 		Connection conn = null;
 		
 		String sql = "call p_reginsert(?,?,?,?,?,?,?)";
 		
-		String in = "?占쏙옙占�?";
-		
 		try {
 			conn = ds.getConnection();
 			cstmt = conn.prepareCall(sql);
+			
 			
 			cstmt.setString(1, mem.getMemId());
 			cstmt.setString(2, mem.getMemPw());
@@ -114,7 +113,6 @@ public class MemberDaoImp implements MemberDao{
 			resourceClose(conn, cstmt);
 		}
 		
-		return in;
 	}
 
 	public Mem mypage(String id) {

@@ -56,7 +56,7 @@
 					</tr>
 					<tr class="panel${total}" style="display:none;">
 					<td  colspan='6' id="block">
-						<%@ include file="/buy/buyDetail.jsp" %>
+						<%@ include file="../buy/buyDetail.jsp" %>
 					</td>
 					</tr>
 				</c:forEach>

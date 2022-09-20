@@ -10,8 +10,11 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cre8.dao.AdminDao;
+import com.cre8.dao.AdminDaoImp;
 import com.cre8.dto.Address;
 import com.cre8.dto.AdminKeyWord;
 import com.cre8.dto.Att;
@@ -19,10 +22,12 @@ import com.cre8.dto.Cat;
 import com.cre8.dto.Marketing;
 import com.cre8.dto.Mem;
 
-
+@Service
 public class AdminServiceImp implements AdminService {
-	AdminDao dao = new AdminDao();
-	Marketing market;
+	
+	@Autowired
+	AdminDao dao;
+	
 	private static final String CHARSET = "utf-8";
 
 	@Override
@@ -62,7 +67,7 @@ public class AdminServiceImp implements AdminService {
 
 	@Override
 	public void reg(HttpServletRequest req) {
-		market = new Marketing();
+		Marketing market = new Marketing();
 /*		
 		String cate = req.getParameter("marcate");
 		String name = req.getParameter("name");
