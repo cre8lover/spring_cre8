@@ -14,9 +14,9 @@ padding:0;
 
 </head>
 <body>
-	<%@ include file="/header.jsp" %>
-	<%@ include file="/menu.jsp" %>
-	<%@ include file="/auction/atDetail.jsp" %>
-	<%@ include file="/footer.jsp" %>
+	<%@ include file="../header.jsp" %>
+	<%@ include file="../menu.jsp" %>
+	<%@ include file="atDetail.jsp" %>
+	<%@ include file="../footer.jsp" %>
 </body>
 </html>

@@ -12,7 +12,7 @@
 	<context:component-scan base-package="com.cre8.dao" />
 	<context:component-scan base-package="com.cre8.dto" />
 	<context:component-scan base-package="com.cre8.service" />
-	<!-- <context:component-scan base-package="com.cre8.controller" /> -->
+	<context:component-scan base-package="com.cre8.controller" />
 	
 	<!-- db컨넥션 풀 bean 설정 -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">

@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -586,6 +587,12 @@ public class AdminDaoImp implements AdminDao{
 			
 			e.printStackTrace();
 		}
+		
+	}
+
+	@Override
+	public void marketReg(Marketing market, HttpServletRequest req) {
+		// TODO Auto-generated method stub
 		
 	}	
 	

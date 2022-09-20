@@ -10,8 +10,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 </head>
 <body>
-<%@ include file="/header.jsp" %>
-   <%@ include file="/menu.jsp" %>
+<%@ include file="../header.jsp" %>
+   <%@ include file="../menu.jsp" %>
    <div class="mypage">
    <br>
    <div style="text-align: center;">
@@ -28,15 +28,15 @@
    
    	 
    
-     <input  id="all" type="radio" name="tab_item" value="sdate" 
+     <input  id="all" type="radio" name="category" value="sdate" 
      <c:if test="${cate eq 'sdate'}"> checked </c:if> onchange="listchange()">
      <label class="tab_item" for="all">최신순</label>
      
-     <input  id="programming" type="radio" name="tab_item" value="auc_hits"
+     <input  id="programming" type="radio" name="category" value="auc_hits"
      <c:if test="${cate eq 'auc_hits'}"> checked </c:if> onchange="listchange()">
      <label class="tab_item" for="programming">인기순</label>
      
-     <input  id="design" type="radio" name="tab_item" value="minusday" 
+     <input  id="design" type="radio" name="category" value="minusday" 
      <c:if test="${cate eq 'minusday'}"> checked </c:if> onchange="listchange()">
      <label class="tab_item" for="design">마감임박</label>
      
@@ -66,16 +66,16 @@
      </div>
      <div class="page">
 		<c:if test ="${pageMaker.prev}">
-		  <a href="<%= request.getContextPath() %>/auc/auction?currentPage=${pageMaker.startPage-1}&tap_item=${cate}">&laquo;</a>
+		  <a href="<%= request.getContextPath() %>/auc/auction?currentPage=${pageMaker.startPage-1}&category=${cate}">&laquo;</a>
 		</c:if>
 		  <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-		  	<a href="<%= request.getContextPath() %>/auc/auction?currentPage=${num }&tab_item=${cate}"
+		  	<a href="<%= request.getContextPath() %>/auc/auction?currentPage=${num }&category=${cate}"
 		  	class="${pageMaker.cri.currentPage == num ? "active" : "" }">${num}</a>
 		   </c:forEach>
 		  
 		  <!-- <a class="active" href="#">2</a> -->
 		  <c:if test="${pageMaker.next}">
-		  <a href="<%= request.getContextPath() %>/auc/auction?currentPage=${pageMaker.endPage+1}&tap_item=${cate}">&raquo;</a>
+		  <a href="<%= request.getContextPath() %>/auc/auction?currentPage=${pageMaker.endPage+1}&category=${cate}">&raquo;</a>
 		  </c:if>
 	</div>
         
@@ -141,7 +141,7 @@
    </div>
 </form>
 </div>
-<%@ include file="/footer.jsp" %>
+<%@ include file="../footer.jsp" %>
 
 </body>
 </html>

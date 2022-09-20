@@ -3,6 +3,7 @@ package com.cre8.controller;
 import javax.servlet.http.HttpServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,89 +15,84 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.cre8.dto.Cart;
 import com.cre8.dto.Orders;
+import com.cre8.dto.orderadd;
 import com.cre8.service.BuyServiceimp;
 
 
 
-@WebServlet("/buyer/*")
+@Controller
+@RequestMapping("/buyer/")
 public class Buycontroller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	BuyServiceimp buy = new BuyServiceimp();
-	
-    public Buycontroller() {
-        super();
-    }
-
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doAction(req, resp);
-
-	}
-
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doAction(req, resp);
-	}
-
-	private void doAction(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.setContentType("text/html; charset=utf8");
-//		req.setCharacterEncoding("utf-8");
-		
-		String uri = req.getRequestURI();
-		String cmd = uri.substring(uri.lastIndexOf("/")+1);
-		String path = req.getContextPath();
-		HttpSession sess = req.getSession();
-		String logid = (String) sess.getAttribute("sess_id");
-		
-		
-		if(cmd.equals("cart")) {
-			
-			
-			String orderbutton = req.getParameter("orderbutton");
-			
-			String[] chklist =  req.getParameterValues("allponecheck");
-			
-			List<Cart> prolist = buy.myCart(logid,chklist);
+    @Autowired
+	BuyServiceimp buy;
+    
+//    @RequestMapping("cart")
+//	public String cart(HttpSession sess,HttpServletRequest req,Model model){
+//       
+//		String orderbutton = req.getParameter("orderbutton");
+//		
+//		String[] chklist =  req.getParameterValues("allponecheck");
+//    	
+//			List<Cart> prolist = buy.myCart((String) sess.getAttribute("sess_id"),chklist);
+//			
+//			if(prolist != null) {
+//				model.addAttribute("cartp", prolist);
+//			}
+//
+//			if (orderbutton != null) {
+//				return "/buy/buylist";
+//			} else {
+//				return "/buy/cart";
+//			}
+//    }	
+    @RequestMapping("cart")
+	public String cart(HttpSession sess,@ModelAttribute("allponecheck")ArrayList<String> chklist,
+						@ModelAttribute("orderbutton")String orderbutton,Model model){
+    	
+    	if (chklist.size() != 0) {
+    	System.out.println(chklist.get(0));
+    	}
+			List<Cart> prolist = buy.myCart((String) sess.getAttribute("sess_id"),chklist);
 			
 			if(prolist != null) {
-				req.setAttribute("cartp", prolist);
+				model.addAttribute("cartp", prolist);
 			}
-
-			if (orderbutton != null) {
-				req.setAttribute("total", req.getParameter("total"));
-				goView(req, resp, "/buy/buylist.jsp");
-				
+			
+			if (orderbutton.equals("1")) {
+				return "/buy/buylist";
 			} else {
-				goView(req, resp, "/buy/cart.jsp");
+				return "/buy/cart";
 			}
-				
-				
-			
-			
-			
-		}  else if(cmd.equals("buy")) {
-			String o_seqno = req.getParameter("seqno");
-			List<Orders> prolist = buy.orderlist(logid, o_seqno);
-			if(prolist != null) {
-			req.setAttribute("cartp", prolist);
-			}
-			
-			goView(req, resp, "/buy/buy.jsp");
-
-		} else if(cmd.equals("order")) {
-	        int rs = buy.orderand(req,resp);
-	        String seqno = String.valueOf(rs);
-	        PrintWriter out = resp.getWriter();
-	        out.print(seqno);
-	        
+    }	
+    
+    @RequestMapping("buy")
+    public String buy(Model model,@RequestParam("seqno")String o_seqno,
+    					HttpSession sess) {
+		List<Orders> prolist = buy.orderlist((String) sess.getAttribute("sess_id"), o_seqno);
+		if(prolist != null) {
+		model.addAttribute("cartp", prolist);
 		}
+		return "/buy/buy" ;
+    	
+    }
+			
+	@RequestMapping("order")
+	public void order(orderadd orderadd,HttpServletResponse resp,HttpSession sess) throws IOException {
+		orderadd.setId((String) sess.getAttribute("sess_id"));
+		int rs = buy.orderand(orderadd);
+        String seqno = String.valueOf(rs);
+        PrintWriter out = resp.getWriter();
+        out.print(seqno);
+	}
 	
-	}
-
-	private void goView(HttpServletRequest req, HttpServletResponse resp, String viewPage) throws ServletException, IOException {
-		RequestDispatcher rd = req.getRequestDispatcher(viewPage);
-		rd.forward(req, resp);		
-	}
-
 }

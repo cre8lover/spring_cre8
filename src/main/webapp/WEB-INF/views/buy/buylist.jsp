@@ -12,8 +12,8 @@
 
 </head>
 <body background="<%= request.getContextPath() %>/img/back.jpg">
-<%@ include file="/header.jsp"%>
-<%@ include file="/menu.jsp"%>
+<%@ include file="../header.jsp"%>
+<%@ include file="../menu.jsp"%>
 <div class="jmh_body3">
 	<div class="body">
 		<div class="leftSideBar"></div>
@@ -173,7 +173,7 @@
 </div>
 <div style="height:100%">
 </div>
-		<%@ include file="/footer.jsp" %>
+		<%@ include file="../footer.jsp" %>
 
 </body>
 <script src="https://kit.fontawesome.com/236f0b5985.js"

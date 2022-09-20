@@ -80,13 +80,12 @@ public class Membercontroller{
 	
 		sess.invalidate();
 		
-		return "redirect:/";
+		return "redirect:/index";
 	}
 	
 	@GetMapping("memreg")
-	public String memreg() {
+	public void memreg() {
 		
-		return "/member/memreg";
 	}
 	
 	@PostMapping("memregform")

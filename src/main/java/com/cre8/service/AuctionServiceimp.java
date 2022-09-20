@@ -3,13 +3,17 @@ package com.cre8.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.cre8.dao.AucDao;
 import com.cre8.dto.Auc;
 import com.cre8.dto.Auc_Criteria;
 
-
+@Service
 public class AuctionServiceimp implements AuctionServeice {
-	AucDao Dao = new AucDao();
+	@Autowired
+	AucDao Dao;
 	
 	@Override
 	public List<Auc> aucList(Auc_Criteria cri) {

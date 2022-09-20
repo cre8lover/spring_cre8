@@ -15,8 +15,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 </head>
 <body background="img/back.jpg">
-	<%@ include file="/header.jsp"%>
-	<%@ include file="/menu.jsp"%>
+	<%@ include file="../header.jsp"%>
+	<%@ include file="../menu.jsp"%>
 	<div class="body">
 		<div class="leftSideBar"></div>
 		<div class="content">
@@ -100,7 +100,7 @@
 	
 	</div>
 	
-<%@ include file="/footer.jsp" %>
+<%@ include file="../footer.jsp" %>
 
 
 </body>
