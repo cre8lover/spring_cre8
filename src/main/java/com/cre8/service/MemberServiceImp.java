@@ -11,6 +11,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cre8.dao.MemberDaoImp;
@@ -23,8 +24,10 @@ import com.cre8.dto.Ship;
 
 @Service
 public class MemberServiceImp implements MemberService {
-	MemberDaoImp dao = new MemberDaoImp();
-	Mem mem;
+	
+	@Autowired
+	MemberDaoImp dao;
+	
 	private static final String CHARSET = "utf-8";
 
 	@Override
