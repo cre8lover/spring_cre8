@@ -29,7 +29,7 @@
                 <!-- 아이디 -->
                 <div>
                     <h3>아이디</h3>
-                    <input type="text" id="id" name="id" class="khm_text" maxlength="20" placeholder="아이디" onchange="idcheck('<%= request.getContextPath() %>')">
+                    <input type="text" id="memId" name="id" class="khm_text" maxlength="20" placeholder="아이디" onchange="idcheck('<%= request.getContextPath() %>')">
                     <input type="hidden" id="isidcheck">
                     <p id="idcheckmsg" style="color:red;"></p>
                 </div>
@@ -37,7 +37,7 @@
                 <!-- 비밀번호 -->
                 <div>
                     <h3>비밀번호</h3>
-                    <input type="password" name="pw" class="khm_pw" maxlength="20" placeholder="영문,숫자 포함 8자리">
+                    <input type="password" name="memPw" class="khm_pw" maxlength="20" placeholder="영문,숫자 포함 8자리">
                 </div>
 
                 <div>
@@ -48,25 +48,25 @@
                 <!-- 이름 -->
                 <div>
                     <h3>이름</h3>
-                    <input type="text" name="name" class="khm_text" maxlength="20" placeholder="홍길동">
+                    <input type="text" name="memName" class="khm_text" maxlength="20" placeholder="홍길동">
                 </div>
 
                 <!-- 생년월일 -->
                 <div>
                     <h3>생년월일</h3>
-                    <input type="text" name="birth" class="khm_text" maxlength="6" placeholder="주민번호앞 6자리">
+                    <input type="text" name="memBirth" class="khm_text" maxlength="6" placeholder="주민번호앞 6자리">
                 </div>
 
                 <!-- 이메일 -->
                 <div>
                     <h3>이메일</h3>
-                    <input type="text" name="email" class="khm_text" maxlength="100" placeholder="ex) cre8@naver.com">
+                    <input type="text" name="memEmail" class="khm_text" maxlength="100" placeholder="ex) cre8@naver.com">
                 </div>
 
                 <!-- 핸드폰 -->
                 <div>
                     <h3>휴대전화</h3>
-                    <input type="tel" name="mobile" class="khm_text" maxlength="16" placeholder="ex) 01012345678">
+                    <input type="tel" name="memTel" class="khm_text" maxlength="16" placeholder="ex) 01012345678">
                 </div>
 
 				<!-- 개인정보 동의 -->

@@ -11,6 +11,8 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cre8.dao.MemberDaoImp;
 import com.cre8.dto.Address;
@@ -20,10 +22,12 @@ import com.cre8.dto.Mem;
 import com.cre8.dto.Pro;
 import com.cre8.dto.Ship;
 
-
+@Service
 public class MemberServiceImp implements MemberService {
-	MemberDaoImp dao = new MemberDaoImp();
-	Mem mem;
+	
+	@Autowired
+	MemberDaoImp dao;
+	
 	private static final String CHARSET = "utf-8";
 
 	@Override
@@ -33,27 +37,27 @@ public class MemberServiceImp implements MemberService {
 	}
 
 	@Override
-	public String insert(HttpServletRequest req) {
-		mem = new Mem();
-		
-		String id = req.getParameter("id");
-		String pw = req.getParameter("pw");
-		String name = req.getParameter("name");
-		String birth = req.getParameter("birth");
-		String email = req.getParameter("email");
-		String mobile = req.getParameter("mobile");
-		String agree = req.getParameter("check");
-		String phone = mobile;
-		if(mobile.length() == 11) {
-		  phone = mobile.replaceFirst("(^[0-9]{3})([0-9]{4})([0-9]{4})$","$1-$2-$3");
-		} 
-		mem.setMemId(id);
-		mem.setMemPw(pw);
-		mem.setMemName(name);
-		mem.setMemBirth(birth);
-		mem.setMemEmail(email);
-		mem.setMemTel(phone);
-		mem.setCheck(agree);
+	public String insert(Mem mem) {
+//		mem = new Mem();
+//		
+//		String id = req.getParameter("id");
+//		String pw = req.getParameter("pw");
+//		String name = req.getParameter("name");
+//		String birth = req.getParameter("birth");
+//		String email = req.getParameter("email");
+//		String mobile = req.getParameter("mobile");
+//		String agree = req.getParameter("check");
+//		String phone = mobile;
+//		if(mobile.length() == 11) {
+//		  phone = mobile.replaceFirst("(^[0-9]{3})([0-9]{4})([0-9]{4})$","$1-$2-$3");
+//		} 
+//		mem.setMemId(id);
+//		mem.setMemPw(pw);
+//		mem.setMemName(name);
+//		mem.setMemBirth(birth);
+//		mem.setMemEmail(email);
+//		mem.setMemTel(phone);
+//		mem.setCheck(agree);
 		return dao.reginsert(mem);
 	}
 
@@ -94,12 +98,11 @@ public class MemberServiceImp implements MemberService {
 	}
 
 	@Override
-	public void infoinsert(HttpServletRequest req) {
+	public void infoinsert(Mem mem, HttpServletRequest req) {
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		
 		factory.setDefaultCharset(CHARSET);
 		ServletFileUpload upload = new ServletFileUpload(factory);
-		mem = new Mem();
 		
 		HttpSession sess = req.getSession();
 		/*

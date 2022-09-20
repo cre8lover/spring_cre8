@@ -61,18 +61,28 @@ public class Creatercontroller {
 			return "/creater/creReg";
 		}
 		
-	}
+	}//여기서 작가로 등급을 올려줌 
 	@GetMapping("artistpage")
-	public String artistpage() {
+	public String Creatorpage(HttpServletRequest req) {
+		cs.Creatoradd(req);
 		return "/cre/creReg";
 	}
+	@GetMapping("cremodify")
+	public String cremodify(HttpSession sess, Model model) {
+		String id = ((String)sess.getAttribute("sess_id"));
+		Creator cre = cs.infomodify(id);
+		
+		model.addAttribute("cre", cre);
+		return "/creater/creReg2.jsp";
+	}
+	
 	
 			
 	/*---------------완료----------------
 	 * }else if(cmd.equals("artistpage")) { //?��기서 ?���?�? ?��급을 �?
 	 * cs.Creatoradd(req);//?��?��?��?��근을 ?��기위?�� ?��?��?��?�� ?���?!
 	 *  goView(req, resp, "/cre/creReg");
-	 * 
+	 * ---------------완료----------------
 	 * } else if(cmd.equals("cremodify")) { 
 	 * //못함 String id =(String)req.getSession().getAttribute("sess_id");
 	 *  Creator cre = cs.infomodify(id);

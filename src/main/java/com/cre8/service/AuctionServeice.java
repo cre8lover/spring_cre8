@@ -1,10 +1,10 @@
 package com.cre8.service;
 
 import java.util.List;
-import java.util.Map;
 
-import dto.Auc;
-import dto.Auc_Criteria;
+import com.cre8.dto.Auc;
+import com.cre8.dto.Auc_Criteria;
+
 
 public interface AuctionServeice {
 

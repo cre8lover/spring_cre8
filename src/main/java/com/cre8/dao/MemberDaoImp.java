@@ -63,13 +63,13 @@ public class MemberDaoImp {
 			if(rs.next()) {
 				
 				if(rs.getString("mem_pw").equals(pw)) {
-					//로그?�� ?���?
+					//濡쒓렇?占쏙옙 ?占쏙옙占�?
 					map.put("login", "ok");
 					map.put("name",rs.getString("mem_name"));
 					map.put("auth",rs.getString("auth_name"));
 					
 				} else {
-					//비�?번호 ?���?
+					//鍮꾬옙?踰덊샇 ?占쏙옙占�?
 					map.put("login", "pwfail");
 				}
 				
@@ -94,7 +94,7 @@ public class MemberDaoImp {
 		
 		String sql = "call p_reginsert(?,?,?,?,?,?,?)";
 		
-		String in = "?���?";
+		String in = "?占쏙옙占�?";
 		
 		try {
 			conn = ds.getConnection();
@@ -576,7 +576,7 @@ public class MemberDaoImp {
 //			
 //			cstmt.executeQuery();
 //			
-//			//첨�??��?��
+//			//泥⑨옙??占쏙옙?占쏙옙
 //			if(att != null) {
 //				
 //				sql = "INSERT INTO att(att_seqno, att_name, att_savename, att_size, att_type, att_path, mem_id)"
@@ -602,7 +602,7 @@ public class MemberDaoImp {
 //				
 //				String fileType = att.getAttType();
 //				
-//				//?��?��?��
+//				//?占쏙옙?占쏙옙?占쏙옙
 //				if(fileType.substring(0, fileType.indexOf("/")).equals("image")) {
 //					sql = "INSERT INTO att_thumb (thumb_seqno, thumb_filename, thumb_filesize, thumb_filepath, att_seqno) "
 //							+ " VALUES (thumb_seqno.nextval, ?, ?, ?, ?)";
@@ -723,11 +723,11 @@ public class MemberDaoImp {
 						
 						stmt.executeQuery();
 						
-						//비�?번호 �?�? ?���?
+						//鍮꾬옙?踰덊샇 占�?占�? ?占쏙옙占�?
 						map.put("change", "ok");
 						
 					} else {
-						//비�?번호 �?�? ?��?��
+						//鍮꾬옙?踰덊샇 占�?占�? ?占쏙옙?占쏙옙
 						map.put("change", "pwfail");
 					}
 					
@@ -765,11 +765,11 @@ public class MemberDaoImp {
 			if(rs.next()) {
 				
 				if(rs.getString("mem_email").equals(idemail)) {
-					//주소?���?
+					//二쇱냼?占쏙옙占�?
 					map.put("find", "ok");
 					map.put("lostid", rs.getString("mem_id"));
 				} else {
-					//비�?번호 �?�? ?��?��
+					//鍮꾬옙?踰덊샇 占�?占�? ?占쏙옙?占쏙옙
 					map.put("find", "pwfail");
 				}
 				
@@ -819,7 +819,6 @@ public class MemberDaoImp {
 					}
 					
 				} else {
-					System.out.println("진입");
 					map.put("find", "no_member");
 				}
 			}	else {
@@ -872,7 +871,7 @@ public class MemberDaoImp {
 	}
 	
 	private void resourceClose(Connection conn, PreparedStatement stmt) {
-		//자원반납
+		//�옄�썝諛섎궔
 		try {
 			if(stmt != null || conn != null) {
 				stmt.close();
@@ -887,7 +886,7 @@ public class MemberDaoImp {
 	}
 	
 	private void resourceClose(Connection conn, CallableStatement cstmt) {
-		//자원반납
+		//�옄�썝諛섎궔
 		try {
 			
 			if(cstmt != null || conn != null) {
