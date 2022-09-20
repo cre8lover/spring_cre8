@@ -14,9 +14,9 @@
 
 </head>
 <body>
-	<%@ include file="/header.jsp" %>
-	<%@ include file="/menu.jsp" %>
-	<%@ include file="/banner/banner.jsp" %>
+	<%@ include file="header.jsp" %>
+	<%@ include file="menu.jsp" %>
+	<%@ include file="banner/banner.jsp" %>
 
 
 	<h2 style="text-align:center;">기러기 역삼역 별똥별 지금여기123jj3</h2>
@@ -48,6 +48,6 @@
 			</div>	
 	</div>
 	</main>
-	<%@ include file="/footer.jsp" %>
+	<%@ include file="footer.jsp" %>
 </body>
 </html>

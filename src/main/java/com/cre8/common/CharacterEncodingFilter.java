@@ -7,40 +7,32 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpFilter;
 
-@WebFilter(
-		urlPatterns = { "/*" }, 
-		initParams = { 
-				@WebInitParam(name = "encoding", value = "utf-8")
-		})
-public class CharacterEncodingFilter extends HttpFilter implements Filter {
+public class CharacterEncodingFilter implements Filter {
+       
+	private String encoding = null;
 	
-	FilterConfig config;
-	
-    public CharacterEncodingFilter() {
-        super();
-    }
-
-	public void destroy() {
-//		System.out.println("?¸ì½”ë”© ?•„?„° ì¢…ë£Œ : destroy() ?˜¸ì¶?");
+	@Override
+	public void init(FilterConfig fConfig) throws ServletException {
+		
+		this.encoding = fConfig.getInitParameter("encoding"); //"encoding"Àº web.xml¿¡ ÀÖ´Â init-param¸¦ Àû¾îÁÜ
+		System.out.println(fConfig.getFilterName() + "ÇÊÅÍ°¡ ½ÃÀÛµÇ¾ú½À´Ï´Ù.");
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-//		System.out.println("doFilter() ?˜¸ì¶?");
-		//?š”ì²??•„?„° ê¸°ëŠ¥
-		request.setCharacterEncoding(config.getInitParameter("encoding"));
-		chain.doFilter(request, response);
-		//?‘?‹µ?•„?„° ê¸°ëŠ¥
 		
+		if(encoding != null) {
+			//¿äÃ»°ú ÀÀ´äÀ» ¸ğµÎ encodingÀ» »ç¿ëÇÏ°Ú´Ù°í ¼³Á¤
+			request.setCharacterEncoding(encoding);
+			response.setCharacterEncoding(encoding);
+		}
+		
+		chain.doFilter(request, response);
 	}
 
-	public void init(FilterConfig fConfig) throws ServletException {
-		this.config = fConfig;
-//		System.out.println("?¸ì½”ë”© ì´ˆê¸°ê°? ?„¤? • : init() ?˜¸ì¶?");
-	
+	public void destroy() {
+		
 	}
 
 }

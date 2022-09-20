@@ -21,6 +21,7 @@ import com.cre8.dto.Mem;
 import com.cre8.dto.Pro;
 import com.cre8.dto.Ship;
 import com.cre8.dto.Thumbnail;
+import com.cre8.service.MemberService;
 import com.cre8.service.MemberServiceImp;
 
 @Controller
@@ -28,7 +29,7 @@ import com.cre8.service.MemberServiceImp;
 public class Membercontroller{
        
 	@Autowired
-	private MemberServiceImp member;
+	private MemberService member;
 	
 	@GetMapping("loginpage")
 	public String loginpage() {
@@ -55,18 +56,18 @@ public class Membercontroller{
 			break;
 		case "pwfail" :
 			
-			model.addAttribute("err", "비밀번호를 확인해주세요");
+			model.addAttribute("err", "鍮꾨�踰덊샇瑜� �솗�씤�빐二쇱꽭�슂");
 			viewPage = "/member/login";
 			break;
 			
 		case "no_member" :
 			
-			model.addAttribute("err", "회원을 확인해주세요");
+			model.addAttribute("err", "�쉶�썝�쓣 �솗�씤�빐二쇱꽭�슂");
 			viewPage = "/member/login";
 			break;
 			
 		default :
-			model.addAttribute("err", "회원을 확인해주세요");
+			model.addAttribute("err", "�쉶�썝�쓣 �솗�씤�빐二쇱꽭�슂");
 			viewPage = "/member/login";
 			
 		}
@@ -185,31 +186,31 @@ public class Membercontroller{
 		switch(findpw.get("find")) {
 		case "ok" :
 			
-			model.addAttribute("lostpw", "회원님의 비밀번호는 "+findpw.get("lostpw")+"입니다.");
+			model.addAttribute("lostpw", "�쉶�썝�떂�쓽 鍮꾨�踰덊샇�뒗 "+findpw.get("lostpw")+"�엯�땲�떎.");
 			
 			break;
 			
 		case "pwfail" :
 			
-			model.addAttribute("lostpw", "주소를 확인해주세요");
+			model.addAttribute("lostpw", "二쇱냼瑜� �솗�씤�빐二쇱꽭�슂");
 			
 			break;
 			
 		case "no_member" :
 			
-			model.addAttribute("lostpw", "회원정보를 확인해주세요");
+			model.addAttribute("lostpw", "�쉶�썝�젙蹂대�� �솗�씤�빐二쇱꽭�슂");
 			
 			break;
 			
 		case "null" :
 			
-			model.addAttribute("lostpw", "회원정보를 확인해주세요");
+			model.addAttribute("lostpw", "�쉶�썝�젙蹂대�� �솗�씤�빐二쇱꽭�슂");
 			
 			break;
 			
 		default :
 			
-			model.addAttribute("lostpw", "회원정보를 확인해주세요");
+			model.addAttribute("lostpw", "�쉶�썝�젙蹂대�� �솗�씤�빐二쇱꽭�슂");
 
 		}
 		
@@ -226,25 +227,25 @@ public class Membercontroller{
 		switch(findid.get("find")) {
 		case "ok" :
 			
-			model.addAttribute("lostid", "회원님의 아이디는 "+findid.get("lostid")+"입니다.");
+			model.addAttribute("lostid", "�쉶�썝�떂�쓽 �븘�씠�뵒�뒗 "+findid.get("lostid")+"�엯�땲�떎.");
 			
 			break;
 			
 		case "pwfail" :
 			
-			model.addAttribute("lostid", "회원정보를 확인해주세요");
+			model.addAttribute("lostid", "�쉶�썝�젙蹂대�� �솗�씤�빐二쇱꽭�슂");
 			
 			break;
 			
 		case "no_member" :
 			
-			model.addAttribute("lostid", "회원정보를 확인해주세요");
+			model.addAttribute("lostid", "�쉶�썝�젙蹂대�� �솗�씤�빐二쇱꽭�슂");
 			
 			break;
 			
 		default :
 			
-			model.addAttribute("lostid", "회원정보를 확인해주세요");
+			model.addAttribute("lostid", "�쉶�썝�젙蹂대�� �솗�씤�빐二쇱꽭�슂");
 
 		}
 		
