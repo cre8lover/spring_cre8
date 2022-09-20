@@ -72,8 +72,8 @@ public class CreatorDaoImp implements CreatorDao{
 			 stmt.setString(1, (String)request.getSession().getAttribute("sess_id"));
 			 stmt.executeQuery();
 			
-			 //?���? c�? 줘야?�� ?��?��?��?��?�� (id�? 받아?��)
-			//id 값을 �??��???�� 그아?��?��?��?��?�� ?��급을 c�? ?��?��줘야?��?��sql = update
+			 //?占쏙옙占�? c占�? 以섏빞?占쏙옙 ?占쏙옙?占쏙옙?占쏙옙?占쏙옙?占쏙옙 (id占�? 諛쏆븘?占쏙옙)
+			//id 媛믪쓣 占�??占쏙옙???占쏙옙 洹몄븘?占쏙옙?占쏙옙?占쏙옙?占쏙옙?占쏙옙 ?占쏙옙湲됱쓣 c占�? ?占쏙옙?占쏙옙以섏빞?占쏙옙?占쏙옙sql = update
 			
 		 }catch (SQLException e) {
 				e.printStackTrace();
@@ -99,7 +99,7 @@ public class CreatorDaoImp implements CreatorDao{
 		return mem;
 		}
 		
-	////광고 리스?��보여주는 ?��?���? 
+	////愿묎퀬 由ъ뒪?占쏙옙蹂댁뿬二쇰뒗 ?占쏙옙?占쏙옙占�? 
 	public List<Marketing> mk(){ 
 		List<Marketing> mk = new ArrayList<Marketing>();
 		Connection conn = null;///////////////////////
@@ -129,7 +129,7 @@ public class CreatorDaoImp implements CreatorDao{
 	}
 	
 	
-	//광고 ?��?���? ?���??��?��?�� ?��?��?�� ?��?���? 
+	//愿묎퀬 ?占쏙옙?占쏙옙占�? ?占쏙옙占�??占쏙옙?占쏙옙?占쏙옙 ?占쏙옙?占쏙옙?占쏙옙 ?占쏙옙?占쏙옙占�? 
 	public Marketing mkk(int seqno) {
 		Connection conn = null;///////////////////////
 		Marketing mkk = new Marketing();
@@ -379,7 +379,7 @@ public class CreatorDaoImp implements CreatorDao{
 	
 
 	
-	//?��반물?��?��?�� 경매물품 ?���??��?���??��?�� ?��?���?
+	//?占쏙옙諛섎Ъ?占쏙옙?占쏙옙?占쏙옙 寃쎈ℓ臾쇳뭹 ?占쏙옙占�??占쏙옙?占쏙옙占�??占쏙옙?占쏙옙 ?占쏙옙?占쏙옙占�?
 	public List<Pro> Prolist(String seqno,String id ) {
 		Connection conn = null;///////////////////////
 		List<Pro> prolist = new ArrayList<>();
@@ -1415,7 +1415,7 @@ public String totalmoney(String id) {
 //			   }
 	
 		
-		//자원반납
+		//�옄�썝諛섎궔
 		private void resourceClose(Connection conn, PreparedStatement stmt) {
 		      try {
 		    	  if(stmt != null || conn != null) {
@@ -1427,7 +1427,7 @@ public String totalmoney(String id) {
 		      }
 		   }
 		   
-		//자원반납
+		//�옄�썝諛섎궔
 		private void resourceClose(Connection conn, CallableStatement stmt) {
 		      try {
 		    	  if(stmt != null || conn != null) {
