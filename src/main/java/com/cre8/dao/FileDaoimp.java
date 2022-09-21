@@ -6,22 +6,30 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.cre8.common.OracleConn;
 import com.cre8.dto.Att;
 
-
-public class FileDao {
-	private final Connection conn = OracleConn.getInstance().getConn();
+@Repository
+public class FileDaoimp implements FileDao{
+	@Autowired
+	DataSource ds;
 	
+	@Override
 	public int deletfile(String no) {
-		
+		Connection conn = null;
 		int seqno = Integer.parseInt(no);
 		int rs = 0;
-		//ì²¨ë??ŒŒ?¼ ? ˆì½”ë“œ?‚­? œ, ?„¬?„¤?¼ ? ˆì½”ë“œ?‚­? œ
+		//ì²¨ï¿½??ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ì½”ë“œ?ï¿½ï¿½?ï¿½ï¿½, ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ì½”ë“œ?ï¿½ï¿½?ï¿½ï¿½
 		String sql = "DELETE FROM att_thumb WHERE att_seqno = ?";
 		PreparedStatement stmt;
 		
 		try {
+			conn = ds.getConnection();
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, seqno);
 			stmt.executeUpdate();
@@ -37,15 +45,16 @@ public class FileDao {
 		}
 		return rs;
 	}
-
+	@Override
 	public String insertAttachFile(String seqno,Att attachfile) {
-		
-		//ì²¨ë??ŒŒ?¼???¥
+		Connection conn = null;
+		//ì²¨ï¿½??ï¿½ï¿½?ï¿½ï¿½???ï¿½ï¿½
 		String sql = "insert into att(att_seqno, item_seqno, att_name, att_savename, att_size, att_type, att_path)";
 		sql += " values(att_seqno.nextval, ?,?,?,?,?,?)";
 		PreparedStatement stmt;
 		String att_seqno = null;
 		try {
+			conn = ds.getConnection();
 		stmt = conn.prepareStatement(sql);
 		stmt.setString(1, seqno);
 		stmt.setString(2, attachfile.getAttName());
@@ -71,14 +80,14 @@ public class FileDao {
 		return att_seqno;
 	}
 	
-	
-	void insertThumbNail(Att attachfile,String att_seqno) {
-		
+	@Override
+	public void insertThumbNail(Att attachfile,String att_seqno) {
+		Connection conn = null;
 		String sql = "insert into att_thumb(thumb_seqno, thumb_filename, thumb_filesize, thumb_filepath, att_seqno)"
 				+ " values (thumb_seqno.nextval,?,?,?,?)";
 		PreparedStatement stmt;
 			try {
-				
+				conn = ds.getConnection();
 				stmt = conn.prepareStatement(sql);
 				stmt.setString(1, attachfile.getAttThumb().getFileName());
 				stmt.setString(2, attachfile.getAttThumb().getFileSize());
