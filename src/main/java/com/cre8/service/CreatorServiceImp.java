@@ -148,7 +148,9 @@ public class CreatorServiceImp implements CreatorService{
 	   public String productadd(Pro pro,MultipartFile filename,String id) {
 		Att attachfile = null;
 		try {
+			if(filename != null) {
 			attachfile = fileService.fileUpload(filename);
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -166,10 +168,9 @@ public class CreatorServiceImp implements CreatorService{
 	   }
 	@Override
 	public void prodel(String seqno) {
-		FileService fileservice = new FileServiceImp();
 		Att att = creatorDao.prodel(seqno);
 
-		fileservice.delete(null,att.getSavefilename(),att.getAttPath(),att.getAttThumb().getFileName());
+		fileService.delete(seqno,att.getSavefilename(),att.getAttPath(),att.getAttThumb().getFileName());
 	}
 	
 

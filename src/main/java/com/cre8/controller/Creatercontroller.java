@@ -46,7 +46,7 @@ public class Creatercontroller {
 	
 	//크리에이터 페이지( if)비회원&작가이닐경우 =>작가등록 및 회원가입)
 	@GetMapping("creReg")
-	public String Creatoradd(HttpSession sess, @RequestParam("id") String seqno, Model model) {
+	public String Creatoradd(HttpSession sess, @ModelAttribute("id") String seqno, Model model) {
 		String add = (String)sess.getAttribute("auth");
 		String id = (String)sess.getAttribute("sess_id");
 		if(id == null || add == null) {
@@ -130,7 +130,7 @@ public class Creatercontroller {
 						 Model model) {
 		model.addAttribute("proseqno");
 		cs.prodel(seqno);
-		return "/cre/creReg";
+		return "redirect:/cre/creReg";
 	}
 	
 
