@@ -106,7 +106,7 @@
             <div class='col-md-6'>
               <div class='form-group'>
                 <div class='col-md-11'>
-                  <input class='form-control' placeholder='' type='number' name="amount" value="${pro.proAmount }">
+                  <input class='form-control' placeholder='' type='number' name="proAmount" value="${pro.proAmount }">
                 </div>
               </div>        
             </div>
@@ -270,8 +270,8 @@ function fileDel(attSeqNo,saveFileName,filePath,thumb_file){
               <textarea class='form-control' id='id_comments' placeholder='Additional comments'name="proDetail" rows='3'>${pro.proDetail}</textarea>
             </div>
           </div>
-          <input type="hidden" name="seqno" <c:if test="${pro.proSeqno != null }">value="${pro.proSeqno }"</c:if>>
-          <input type="hidden" name="itemseqno" value="${pro.item.itemSeqno }">
+          <input type="hidden" name="proSeqno" <c:if test="${pro.proSeqno != null }">value="${pro.proSeqno }"</c:if>>
+          <input type="hidden" name="itemSeqno" value="${pro.item.itemSeqno }">
           <div class='form-group'>
             <div class='col-md-offset-4 col-md-3'>
               <input class='btn-lg btn-primary' type='submit' id="proReg" value="상품등록">

@@ -9,8 +9,12 @@ import java.util.UUID;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cre8.dao.FileDao;
+import com.cre8.dao.FileDaoimp;
 import com.cre8.dto.Address;
 import com.cre8.dto.Att;
 import com.cre8.dto.Auc;
@@ -21,26 +25,27 @@ import com.cre8.dto.Pro;
 import com.cre8.dto.Thumbnail;
 
 import net.coobird.thumbnailator.Thumbnails;
-
+@Service
 public class FileServiceImp implements FileService {
-
+	@Autowired
+	FileDao filedao;
 	
 	
 	@Override
-	public Att fileUpload(FileItem item) throws Exception {
-		//ì²¨ë??ŒŒ?¼ : ë°”ì´?„ˆë¦¬íŒŒ?¼
+	public Att fileUpload(MultipartFile item) throws Exception {
+		//ì²¨ï¿½??ï¿½ï¿½?ï¿½ï¿½ : ë°”ì´?ï¿½ï¿½ë¦¬íŒŒ?ï¿½ï¿½
 		long fileSize = item.getSize();
 		Att attachfile = null;
-		//System.out.println("?—…ë¡œë“œ ?ŒŒ?¼ ?‚¬?´ì¦?:" + fileSize);	
+		//System.out.println("?ï¿½ï¿½ë¡œë“œ ?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ï¿½?:" + fileSize);	
 		if(fileSize > 0) {
 			
 			String fileUploadPath = "D:/jmh/upload/";
-			String fileName = item.getName();
-			// ?¼?´ë¸ŒëŸ¬ë¦¬ì´?š©
+			String fileName = item.getOriginalFilename();
+			// ?ï¿½ï¿½?ï¿½ï¿½ë¸ŒëŸ¬ë¦¬ì´?ï¿½ï¿½
 //			System.out.println(FilenameUtils.getExtension(fileName)); 
 //			System.out.println(FilenameUtils.getBaseName(fileName));
 			
-			//?„œë¸ŒìŠ¤?‹°ë§? ?´?š©
+			//?ï¿½ï¿½ë¸ŒìŠ¤?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½
 			String split_fileName = fileName.substring(0,fileName.lastIndexOf("."));
 			String split_extension = fileName.substring(fileName.lastIndexOf(".")+1);
 			
@@ -48,15 +53,74 @@ public class FileServiceImp implements FileService {
 //			System.out.println(split_fileName);
 //			System.out.println(split_extension);
 			
-			//ì¤‘ë³µ?œ ?ŒŒ?¼?„ ?—…ë¡œë“œ ?•˜ì§? ?•Šê¸? ?œ„?•´ UIDê°? ?ƒ?„±
+			//ì¤‘ë³µ?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ë¡œë“œ ?ï¿½ï¿½ï¿½? ?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½ UIDï¿½? ?ï¿½ï¿½?ï¿½ï¿½
 			UUID uid = UUID.randomUUID();
 			
 			String saveFileName = split_fileName + "_"+ uid + "."+ split_extension;
 			
 //			System.out.println(fileUploadPath);
-//			System.out.println("?—…ë¡œë“œ ?ŒŒ?¼ ?´ë¦? : "+ fileName); //?š´?˜ì²´ì œ?— ?”°ë¥? ?ŒŒ?¼ ê²½ë¡œë½‘ê¸° File.separator
-//			System.out.println(saveFileName); //???¥?•  ?ŒŒ?¼ ?´ë¦?
-			//?—…ë¡œë“œ ?ŒŒ?¼ ???¥
+//			System.out.println("?ï¿½ï¿½ë¡œë“œ ?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ï¿½? : "+ fileName); //?ï¿½ï¿½?ï¿½ï¿½ì²´ì œ?ï¿½ï¿½ ?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½ ê²½ë¡œë½‘ê¸° File.separator
+//			System.out.println(saveFileName); //???ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ï¿½?
+			//?ï¿½ï¿½ë¡œë“œ ?ï¿½ï¿½?ï¿½ï¿½ ???ï¿½ï¿½
+			File file = new File(fileUploadPath + saveFileName);
+			
+			item.transferTo(file);
+			
+			attachfile = new Att();
+			
+			attachfile.setAttName(fileName);
+			attachfile.setAttPath(fileUploadPath);
+			attachfile.savefilename(saveFileName);
+			attachfile.setAttSize(String.valueOf(fileSize));
+			attachfile.setAttType(item.getContentType());
+			
+			String fileType = item.getContentType();
+			String type = fileType.substring(0,fileType.indexOf("/"));
+		
+			if(type.equals("image")) {
+				attachfile.setAttThumb(setThumbnail(saveFileName,file));
+				
+			}
+		}
+		return attachfile;
+	}
+	
+	
+	
+	
+	
+	
+	@Override
+	public Att fileUpload(FileItem item) throws Exception {
+		//ì²¨ï¿½??ï¿½ï¿½?ï¿½ï¿½ : ë°”ì´?ï¿½ï¿½ë¦¬íŒŒ?ï¿½ï¿½
+		long fileSize = item.getSize();
+		Att attachfile = null;
+		//System.out.println("?ï¿½ï¿½ë¡œë“œ ?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ï¿½?:" + fileSize);	
+		if(fileSize > 0) {
+			
+			String fileUploadPath = "D:/jmh/upload/";
+			String fileName = item.getName();
+			// ?ï¿½ï¿½?ï¿½ï¿½ë¸ŒëŸ¬ë¦¬ì´?ï¿½ï¿½
+//			System.out.println(FilenameUtils.getExtension(fileName)); 
+//			System.out.println(FilenameUtils.getBaseName(fileName));
+			
+			//?ï¿½ï¿½ë¸ŒìŠ¤?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½
+			String split_fileName = fileName.substring(0,fileName.lastIndexOf("."));
+			String split_extension = fileName.substring(fileName.lastIndexOf(".")+1);
+			
+			
+//			System.out.println(split_fileName);
+//			System.out.println(split_extension);
+			
+			//ì¤‘ë³µ?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ë¡œë“œ ?ï¿½ï¿½ï¿½? ?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½ UIDï¿½? ?ï¿½ï¿½?ï¿½ï¿½
+			UUID uid = UUID.randomUUID();
+			
+			String saveFileName = split_fileName + "_"+ uid + "."+ split_extension;
+			
+//			System.out.println(fileUploadPath);
+//			System.out.println("?ï¿½ï¿½ë¡œë“œ ?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ï¿½? : "+ fileName); //?ï¿½ï¿½?ï¿½ï¿½ì²´ì œ?ï¿½ï¿½ ?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½ ê²½ë¡œë½‘ê¸° File.separator
+//			System.out.println(saveFileName); //???ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ï¿½?
+			//?ï¿½ï¿½ë¡œë“œ ?ï¿½ï¿½?ï¿½ï¿½ ???ï¿½ï¿½
 			File file = new File(fileUploadPath + saveFileName);
 			item.write(file);
 			
@@ -82,7 +146,7 @@ public class FileServiceImp implements FileService {
 	@Override
 	public Thumbnail setThumbnail(String saveFileName, File file) throws IOException {
 		
-	//?„¬?„¤?¼ ?ŒŒ?¼ ???¥
+	//?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ ???ï¿½ï¿½
 		String thumbFileName = "thumb_200x200_" + saveFileName;
 		String thumbFilePath = "D:/jmh/upload/thumbnail/";
 		File thumbFile = new File(thumbFilePath+thumbFileName);
@@ -92,7 +156,7 @@ public class FileServiceImp implements FileService {
 		Thumbnail thumbnail = new Thumbnail();
 		thumbnail.setFileName(thumbFileName);
 		thumbnail.setFilePath(thumbFilePath);
-		//?ŒŒ?¼ ?‚¬?´ì¦? êµ¬í•˜ê¸?
+		//?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ï¿½? êµ¬í•˜ï¿½?
 		thumbnail.setFileSize(String.valueOf(thumbFile.length()));
 		
 		return thumbnail;
@@ -102,8 +166,8 @@ public class FileServiceImp implements FileService {
 	@Override
 	public Pro getFormParameter(FileItem item,Pro pro,Item proitem) throws ParseException {
 		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
-		//<input> : ?ƒœê·¸ê°’
-		//System.out.printf("?•„?“œ?´ë¦? : %s, ?•„?“œê°?: %s\n", item.getFieldName(), item.getString());
+		//<input> : ?ï¿½ï¿½ê·¸ê°’
+		//System.out.printf("?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ï¿½? : %s, ?ï¿½ï¿½?ï¿½ï¿½ï¿½?: %s\n", item.getFieldName(), item.getString());
 		String get = item.getString();
 		if (item.getFieldName().equals("proStat")) {
 			pro.setProStat(get);
@@ -144,8 +208,8 @@ public class FileServiceImp implements FileService {
 
 	@Override
 	public Auc getFormParameter2(FileItem item, Auc auc, Item proitem) throws ParseException {
-		//<input> : ?ƒœê·¸ê°’
-		//System.out.printf("?•„?“œ?´ë¦? : %s, ?•„?“œê°?: %s\n", item.getFieldName(), item.getString());
+		//<input> : ?ï¿½ï¿½ê·¸ê°’
+		//System.out.printf("?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ï¿½? : %s, ?ï¿½ï¿½?ï¿½ï¿½ï¿½?: %s\n", item.getFieldName(), item.getString());
 		
 		String get = item.getString();
 		
@@ -176,7 +240,7 @@ public class FileServiceImp implements FileService {
 	}
 
 	public Mem getFormParameter_mypage(FileItem item, Mem mem, Address add) {
-		//System.out.printf("?•„?“œ?´ë¦? : %s, ?•„?“œê°?: %s\n", item.getFieldName(), item.getString());
+		//System.out.printf("?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ï¿½? : %s, ?ï¿½ï¿½?ï¿½ï¿½ï¿½?: %s\n", item.getFieldName(), item.getString());
 
 		String get = item.getString();
 		if (item.getFieldName().equals("phone")) {
@@ -204,18 +268,14 @@ public class FileServiceImp implements FileService {
 	
 	@Override
 	public int delete(String no, String savefilename, String filepath, String thumb_filename) {
-		FileDao filedao = new FileDao();
 		
 		int rs = 0;
 		if(no != null) {
 		rs = filedao.deletfile(no);
 		}
-		//attachfile ? ˆì½”ë“œ ?‚­? œ
-		//?ŒŒ?¼?‚­? œ
 		File file = new File(filepath+savefilename);
 		if (file.exists()) {
 			file.delete();
-			//?¸?„¤?¼ ?‚­? œ
 			if(thumb_filename != null) {
 				File thumbfile = new File(filepath+"thumbnail/"+thumb_filename);
 				if(thumbfile.exists()) {
@@ -228,7 +288,7 @@ public class FileServiceImp implements FileService {
 	}
 
 	public Marketing getFormParameter_marketing(FileItem item, Marketing market, Address add) {
-		//System.out.printf("?•„?“œ?´ë¦? : %s, ?•„?“œê°?: %s\n", item.getFieldName(), item.getString());
+		//System.out.printf("?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ï¿½? : %s, ?ï¿½ï¿½?ï¿½ï¿½ï¿½?: %s\n", item.getFieldName(), item.getString());
 
 		String get = item.getString();
 		if (item.getFieldName().equals("marcate")) {
