@@ -26,7 +26,7 @@ import oracle.jdbc.internal.OracleTypes;
 import oracle.sql.ARRAY;
 import oracle.sql.ArrayDescriptor;
 @Repository
-public class BuyDao {
+public class BuyDaoimp implements BuyDao{
 	@Autowired
 	DataSource ds;
 	

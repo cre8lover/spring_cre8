@@ -24,7 +24,7 @@ import com.cre8.dto.Mem;
 
 import oracle.jdbc.OracleTypes;
 @Repository
-public class AucDao {
+public class AucDaoimp implements AucDao{
    @Autowired
    DataSource ds;
 

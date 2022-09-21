@@ -124,9 +124,17 @@ public class Creatercontroller {
 		return "/cre/creReg";
 	}
 	
+
+	@RequestMapping("product_registration")
+	public String product_reg(@ModelAttribute("seqno")String seqno) {
+		
+		       Pro pro = cs.productdetail(seqno);
+		       
+		return "/creater/product_registration.jsp";
 	
+		
+	}
+		
+}	
 	
-	
-	
-	
-}
+
