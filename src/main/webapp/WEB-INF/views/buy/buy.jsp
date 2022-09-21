@@ -62,7 +62,7 @@
 
 				</table>
 				<br>
-			<a href ="<%= request.getContextPath() %>/index.jsp"type="button" class="bton"><img src = "<%= request.getContextPath() %>/img/home.png" style="width : 80px;"></a>
+			<a href ="<%= request.getContextPath() %>/"type="button" class="bton"><img src = "<%= request.getContextPath() %>/img/home.png" style="width : 80px;"></a>
 			<br>
 			<a style="font-size: 20px;">HOME</a>
 				</center>
