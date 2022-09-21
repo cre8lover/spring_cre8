@@ -45,7 +45,7 @@ public class CreatorDaoImp implements CreatorDao{
 	PreparedStatement stmt;
 	CallableStatement cstmt;
 	
-	FileDao filedao = new FileDao();
+	FileDaoimp filedao = new FileDaoimp();
 	
 	public void Creatoradd(HttpServletRequest request, String id){
 		Connection conn = null;///////////////////////
@@ -485,7 +485,7 @@ public class CreatorDaoImp implements CreatorDao{
 			            }
 				cstmt.setString(10, email);
 				cstmt.setString(11, mem.getMemSnsinfo());
-				cstmt.setString(11, mem.getMemId());
+				cstmt.setString(12, mem.getMemId());
 				cstmt.executeQuery();
 				
 	            cre.setMem(mem);
@@ -672,12 +672,11 @@ public String totalmoney(String id) {
 	public Pro productdetail(String seqno) {
 		Connection conn = null;///////////////////////
 		Pro pro = new Pro();
-		      
 		String sql = "call p_prodetail(?,?,?)";
 		try {
 			conn = ds.getConnection();////////////////////
 		         cstmt =conn.prepareCall(sql);
-		         cstmt.setInt(1, Integer.parseInt(seqno));
+		         cstmt.setString(1, seqno);
 		         cstmt.registerOutParameter(2, OracleTypes.CURSOR);
 		         cstmt.registerOutParameter(3, OracleTypes.CURSOR);
 		         cstmt.executeQuery();

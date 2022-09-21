@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.ParseException;
 
 import org.apache.commons.fileupload.FileItem;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cre8.dto.Att;
 import com.cre8.dto.Auc;
@@ -16,6 +17,8 @@ import com.cre8.dto.Thumbnail;
 public interface FileService {
 
 	public Att fileUpload(FileItem item) throws Exception;
+	
+	public Att fileUpload(MultipartFile item) throws Exception;
 	
 	public Thumbnail setThumbnail(String saveFileName,File file) throws IOException;
 

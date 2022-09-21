@@ -61,14 +61,14 @@ public class Admincontroller {
 			
 		case "pwfail" :
 			
-			model.addAttribute("err2", "ë¹„ï¿½?ë²ˆí˜¸ï¿½? ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ì£¼ì„¸?ï¿½ï¿½");
+			model.addAttribute("err2", "ºñ¹Ð¹øÈ£¸¦ È®ÀÎÇØ ÁÖ¼¼¿ä");
 			goView = "/admin/adminlogin";
 			
 			break;
 			
 		case "no_member" :
 			
-			model.addAttribute("err2", "ê¶Œí™˜?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ì£¼ì„¸?ï¿½ï¿½");
+			model.addAttribute("err2", "±ÇÈ¯À» È®ÀÎÇØÁÖ¼¼¿ä");
 			goView = "/admin/adminlogin";
 			
 			break;

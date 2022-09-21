@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.cre8.dto.Auc;
 import com.cre8.dto.Creator;
 import com.cre8.dto.Marketing;
@@ -41,7 +43,7 @@ public interface CreatorService {
 	
 	public Pro productdetail(String seqno);
 
-	String productadd(HttpServletRequest req);
+	String productadd(Pro pro,MultipartFile filename, String string);
 
 	Map<String, String> cremodifyreg(HttpServletRequest req);
 

@@ -12,6 +12,8 @@ public interface MainlistService {
 	public List<Pro> mainList();
 	
 	public HashMap<String, List<Creator>> creList();
+
+	public Creator creDetail(String memid);
 	
 
 }
