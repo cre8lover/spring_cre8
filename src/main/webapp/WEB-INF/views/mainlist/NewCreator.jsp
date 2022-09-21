@@ -6,8 +6,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mainlist/NewCreator.css">
-<%@ include file="/header.jsp"%>
-	<%@ include file="/menu.jsp"%>
+<%@ include file="../header.jsp"%>
+	<%@ include file="../menu.jsp"%>
 
 </head>
 <body>
@@ -15,8 +15,9 @@
 <h1 style = "text-align: center">New Cre8</h1>
 
 <div class="container">
+<div class="container">
         <c:forEach items="${crelist}" var="list">
-<a href="<%= request.getContextPath() %>/cre/Detail">
+<a href="<%= request.getContextPath() %>/main/Detail?memid=${list.mem.memId}">
   <div class="card card0">
     <div class="border" >
        <h2>${list.mem.memName}</h2>
@@ -31,7 +32,7 @@
         </c:forEach>
 </div>
 
-<%@ include file="/footer.jsp" %>
+<%@ include file="../footer.jsp" %>
 
 
 

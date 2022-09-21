@@ -11,58 +11,62 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.cre8.dto.Creator;
+import com.cre8.service.MainlistService;
 import com.cre8.service.MainlistServiceImp;
 
 
-@WebServlet("/main/*")
-public class Mainlistcontroller extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-    MainlistServiceImp main = new MainlistServiceImp();   
+@Controller
+@RequestMapping("/main/")
+public class Mainlistcontroller {
 	
-    public Mainlistcontroller() {
-        super();
+	@Autowired	
+    MainlistService main;   
+	 
+    @GetMapping("productDetail")
+    public String detail() {
+  
+    	return "/buy/DetailClothes";
     }
 
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doAction(req, resp);
-
-	}
-
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doAction(req, resp);
-	}
-
-	private void doAction(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.setContentType("text/html; charset=utf8");
-		req.setCharacterEncoding("utf-8");
+    @GetMapping("HotCreator")
+    public String hot(Model model) {
+    	
+    	HashMap<String, List<Creator>> hot = main.creList();
+	 	List<Creator> hotlist = hot.get("hot");
+	 	model.addAttribute("crelist", hotlist);
+    	
+    	
+    	return "/mainlist/HotCreator";
+    }
+    
+    @GetMapping("NewCreator")
+    public String new1(Model model) {
+    	
+    	HashMap<String, List<Creator>> hot = main.creList();
+		List<Creator> newlist = hot.get("new");
+		model.addAttribute("crelist", newlist);
+    	
+    	
+    	return "/mainlist/NewCreator";
+    }	
+    
+    @GetMapping("Detail")
+    public String list(Model model, @RequestParam("memid") String memid) {
+    	
+		Creator detailList = main.creDetail(memid);
+		model.addAttribute("detailList", detailList);
 		
-		String uri = req.getRequestURI();
-		String cmd = uri.substring(uri.lastIndexOf("/")+1);
-		String path = req.getContextPath();
-		
-		if(cmd.equals("productDetail")) {
-			goView(req, resp, "/buy/DetailClothes.jsp");
-			
-		} else if(cmd.equals("HotCreator")) {
-			HashMap<String, List<Creator>> hot = main.creList();
-		 	List<Creator> hotlist = hot.get("hot");
-		 	req.setAttribute("crelist", hotlist);
-		 	goView(req, resp, "/mainlist/HotCreator.jsp");
-
-		} else if(cmd.equals("NewCreator")) {
-			HashMap<String, List<Creator>> hot = main.creList();
-			List<Creator> newlist = hot.get("new");
-			req.setAttribute("crelist", newlist);
-			goView(req, resp, "/mainlist/NewCreator.jsp");
-		
-		}
-		
-	}
-
-	private void goView(HttpServletRequest req, HttpServletResponse resp, String viewPage) throws ServletException, IOException {
-		RequestDispatcher rd = req.getRequestDispatcher(viewPage);
-		rd.forward(req, resp);		
-	}
-
+		return "/creater/creatorDetail";
+    }
+ 
 }

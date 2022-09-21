@@ -7,8 +7,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<%@ include file="/header.jsp"%>
-	<%@ include file="/menu.jsp"%>
+<%@ include file="../header.jsp"%>
+	<%@ include file="../menu.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
@@ -19,7 +19,7 @@
 
 <div class="container">
         <c:forEach items="${crelist}" var="list">
-<a href="<%= request.getContextPath() %>/cre/Detail">
+<a href="<%= request.getContextPath() %>/main/Detail?memid=${list.mem.memId}">
   <div class="card card0">
     <div class="border" >
        <h2>${list.mem.memName}</h2>
@@ -37,7 +37,7 @@
 
 
 
-<%@ include file="/footer.jsp" %>
+<%@ include file="../footer.jsp" %>
 
 
 

@@ -1,5 +1,6 @@
 package com.cre8.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,6 +8,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.cre8.common.OracleConn;
 import com.cre8.dto.Cat;
@@ -16,26 +22,36 @@ import com.cre8.dto.Mem;
 import com.cre8.dto.MemAuth;
 import com.cre8.dto.Pro;
 
+import oracle.jdbc.OracleTypes;
 
-public class MainDao {
+@Repository
+public class MainDaoImp implements MainDao{
 
-	Connection conn = OracleConn.getInstance().getConn();
-	PreparedStatement stmt;
+	
 
+	@Autowired
+	private DataSource ds;
+	
+	@Override
 	public List<Pro> mainList() {
+		
+		Connection conn = null;
+		CallableStatement stmt = null;
+		
 		List<Pro> mainlist = new ArrayList<Pro>();
 		Pro pro = null;
 		Item item = null;
 		Cat cat = null;
 		
-		String sql = "select i.item_img as item_img, i.item_name as item_name,"
-				   + " p.pro_price as pro_price, p.pro_hits as pro_hits, i.cat_seqno"
-				   + " from item i, pro p "
-			       + " where i.item_seqno = p.item_seqno and i.cat_seqno = 6";
+		String sql = "call p_mainlist(?)";
 
 		try {
-			stmt = conn.prepareStatement(sql);
-			ResultSet rs = stmt.executeQuery();
+			conn = ds.getConnection();
+			stmt = conn.prepareCall(sql);
+			stmt.registerOutParameter(1, OracleTypes.CURSOR);
+			stmt.executeQuery();
+			
+			ResultSet rs = (ResultSet)stmt.getObject(1);
 			
 			while (rs.next()) {
 				pro = new Pro();
@@ -52,11 +68,18 @@ public class MainDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			resourceClose(conn, stmt);
 		}
 		return mainlist;
 	}
 		
+	@Override
 	public HashMap<String, List<Creator>> creList() {
+		
+		Connection conn = null;
+		CallableStatement stmt = null;
+		
 		HashMap<String, List<Creator>> creatormap = new HashMap<String, List<Creator>>();
 		List<Creator> hotcrelist = new ArrayList<Creator>();
 		List<Creator> newcrelist = new ArrayList<Creator>();
@@ -64,17 +87,14 @@ public class MainDao {
 		Mem mem = null;
 		Creator creator = null;
 		
-		String sql = "select k.mem_id, k.mem_name, k.mem_tel, k.mem_email, k.mem_snsinfo, count(k.mem_id) as cnt"
-				   + " from pro p,"
-				   + " (select m.mem_id, mem_name, mem_tel, m.MEM_EMAIL, m.mem_snsinfo,  a.auth_name, a.auth_date"
-				   + " from mem m, mem_auth a"
-				   + " where m.mem_id = a.mem_id and a.auth_name = 'C') k"
-				   + " where p.mem_id = k.mem_id and p.pro_stat = 'END'"
-				   + " group by k.mem_id, k.mem_name, k.mem_tel, k.mem_email, k.mem_snsinfo"
-				   + " order by cnt desc";
+		String sql = "call p_hotcrelist(?)";
 		try {
-			stmt = conn.prepareStatement(sql);
-			ResultSet rs = stmt.executeQuery();
+			conn = ds.getConnection();
+			stmt = conn.prepareCall(sql);
+			stmt.registerOutParameter(1, OracleTypes.CURSOR);
+			stmt.executeQuery();
+			ResultSet rs = (ResultSet)stmt.getObject(1);
+			
 			while (rs.next()) {
 				mem = new Mem();
 				creator = new Creator();
@@ -87,14 +107,11 @@ public class MainDao {
 				hotcrelist.add(creator);
 			}
 			
-			sql = "select m.mem_id, m.mem_name, m.mem_tel, m.MEM_EMAIL, m.mem_snsinfo,  a.auth_name, a.auth_date"
-				+ " from mem m, mem_auth a"
-				+ " where m.mem_id = a.mem_id "
-				+ " and a.auth_name = 'C'"
-				+ " order by a.auth_date desc";
-			
-			stmt = conn.prepareStatement(sql);
-			rs = stmt.executeQuery();
+			sql = "call p_newcrelist(?)";
+			stmt = conn.prepareCall(sql);
+			stmt.registerOutParameter(1, OracleTypes.CURSOR);
+			stmt.executeQuery();
+			rs = (ResultSet)stmt.getObject(1);
 			while (rs.next()) {
 				mem = new Mem();
 				creator = new Creator();
@@ -115,14 +132,11 @@ public class MainDao {
 			}
 			
 			
-			sql = "select z.mem_id, z.mem_img, z.cre_name, z.cre_company, z.cre_phone, z.cre_address, z.cre_salenum, (select item_img from item i where p.item_seqno = i.item_seqno) as img"
-					+ " from pro p,"
-					+ " (select c.cre_name, c.cre_phone, c.cre_company, c.cre_address, c.cre_salenum, m.mem_id"
-					+ " from creator c, mem m"
-					+ " where c.mem_id = m.mem_id "
-					+ " and m.mem_id = 'ddd')z"
-					+ " where p.mem_id = z.mem_id";
-			
+			sql = "call p_solcrelist(?)";
+			stmt = conn.prepareCall(sql);
+			stmt.registerOutParameter(1, OracleTypes.CURSOR);
+			stmt.executeQuery();
+			rs = (ResultSet)stmt.getObject(1);
 
 			while (rs.next()) {
 				creator = new Creator();
@@ -146,6 +160,8 @@ public class MainDao {
 			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			resourceClose(conn, stmt);
 		}
 		creatormap.put("new", newcrelist);
 		creatormap.put("hot", hotcrelist);
@@ -154,20 +170,22 @@ public class MainDao {
 		return creatormap;
 	}
 
+	@Override
 	public Creator detailcre(String memid) {
+		
+		Connection conn = null;
+		CallableStatement stmt = null;
+		
 		Creator cre = new Creator();
-		String sql = "select z.mem_name, z.mem_img ,z.cre_name, z.cre_phone, z.cre_company, z.cre_address, z.cre_salenum, (select item_img from item i where p.item_seqno = i.item_seqno) as img"
-				+ " from pro p,"
-				+ " (select m.mem_img,m.mem_name, c.cre_name, c.cre_phone, c.cre_company, c.cre_address, c.cre_salenum, m.mem_id"
-				+ " from creator c, mem m"
-				+ " where c.mem_id = m.mem_id"
-				+ " and m.mem_id = ?)z"
-				+ " where p.mem_id = z.mem_id";
+		String sql = "call p_detailcre(?,?)";
 		
 		try {
-			stmt = conn.prepareStatement(sql);
+			conn = ds.getConnection();
+			stmt = conn.prepareCall(sql);
 			stmt.setString(1, memid);
-			ResultSet rs = stmt.executeQuery();
+			stmt.registerOutParameter(2, OracleTypes.CURSOR);
+			stmt.executeQuery();
+			ResultSet rs = (ResultSet)stmt.getObject(2);
 			
 			if(rs.next()) {
 				//Item item = new Item();
@@ -185,7 +203,24 @@ public class MainDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			resourceClose(conn, stmt);
 		}
 		return cre;
+	}
+	
+	private void resourceClose(Connection conn, CallableStatement stmt) {
+		//�옄�썝諛섎궔
+		try {
+			if(stmt != null || conn != null) {
+				stmt.close();
+				conn.close();
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
 	}
 }

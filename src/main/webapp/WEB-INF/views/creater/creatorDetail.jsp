@@ -16,7 +16,7 @@
 
 
 <body>
-<%@ include file="/sidebar2.jsp" %>
+<%@ include file="../sidebar2.jsp" %>
 	<div class="container" id="top">
 		<c:set value="${detailList}" var="list" />
 		<div class="slide-bar" id="slidebar">
