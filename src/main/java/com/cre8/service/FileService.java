@@ -16,7 +16,6 @@ import com.cre8.dto.Thumbnail;
 
 public interface FileService {
 
-	public Att fileUpload(MultipartFile filename) throws Exception;
 	
 	public Att fileUpload(MultipartFile item) throws Exception;
 	
