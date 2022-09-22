@@ -16,7 +16,7 @@ import com.cre8.dto.Thumbnail;
 
 public interface FileService {
 
-	public Att fileUpload(MultipartFile filename) throws Exception;
+	public Att fileUpload(FileItem item) throws Exception;
 	
 	public Att fileUpload(MultipartFile item) throws Exception;
 	
@@ -27,6 +27,4 @@ public interface FileService {
 	public Auc getFormParameter2(FileItem item, Auc pro, Item proitem) throws ParseException;
 
 	int delete(String no, String savefilename, String filepath, String thumb_filename);
-
-	Att fileUpload(FileItem item) throws Exception;
 }

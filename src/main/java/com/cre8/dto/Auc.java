@@ -26,19 +26,11 @@ public class Auc implements Serializable {
 	private Cart cartSet;
 	private Att att_file;
 	private Thumbnail thumb;
-	private String id;
 	
 	
 	
 	
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
+	
 	public Att getAtt_file() {
 		return att_file;
 	}

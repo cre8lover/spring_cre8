@@ -35,8 +35,8 @@ public class CreatorServiceImp implements CreatorService{
 	FileService fileService;
 	
 	@Override
-	public void Creatoradd(Creator cre) {
-		creatorDao.Creatoradd(cre);
+	public void Creatoradd(HttpServletRequest request, String id) {
+		creatorDao.Creatoradd(request, id);
 	}
 
 	@Override
@@ -93,23 +93,41 @@ public class CreatorServiceImp implements CreatorService{
 	
 	
 	@Override
-    public String aucadd(MultipartFile filename, Auc auc) {
+    public String aucadd(HttpServletRequest req) {
 		
+		DiskFileItemFactory factory = new DiskFileItemFactory(); 
+		factory.setDefaultCharset(CHARSET);//?��?���? ?��?��?��?���? 좋다.
+		//factory form?�� ?��?��?���? �??��???�� ???�� utf8�? ???��?��?���? 좋음
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		
+		Auc auc = new Auc();
+		Item proitem = new Item();
+		Att attachfile = null;
 		FileService fileService = new FileServiceImp();
-		Att attachfile=null;
 		
 		try {
-			attachfile = fileService.fileUpload(filename);
+			List<FileItem> items = upload.parseRequest(req);
+			//�??��?��?�� ?��?���?
+			for(FileItem item : items) {
+				if (item.isFormField()) {//2진데?��?��?���? ?��?��?��?���? 구별?���?
+					auc =  fileService.getFormParameter2(item,auc,proitem); 
+				}else {
+					attachfile = fileService.fileUpload(item);
+				}
+			}
+		} catch (FileUploadException e) {
+			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		auc.setAtt_file(attachfile);
+	    String id = (String)req.getSession().getAttribute("sess_id");
 	    
 	    if (auc.getAucSeqno() != null) {
 	    	return creatorDao.aucmodify(auc);
 	    }else {
-	    	return creatorDao.aucadd(auc, auc.getId());
+	    	return creatorDao.aucadd(auc, id);
 	    }
 		
     }
