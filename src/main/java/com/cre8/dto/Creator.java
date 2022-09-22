@@ -10,109 +10,16 @@ public class Creator implements Serializable {
 	private String crePhone;
 	private String creName;
 	private String creAddress;
-	private String creAddress_detail;
-	private String eid;
-	private String Domain;
 	private String creRegnum;
 	private String creSalenum;
 	private String crePot;
 	private Mem mem;
 	private Artdetail artdetailSet;
 	private Att attSet;
-	private String pw;
-	private String id;
-	private String name;
-	private String cretel;
-	
+
 	public Creator() {
 
 	}
-
-	
-	
-	public String getCreAddress_detail() {
-		return creAddress_detail;
-	}
-
-
-
-	public void setCreAddress_detail(String creAddress_detail) {
-		this.creAddress_detail = creAddress_detail;
-	}
-
-
-
-	public String getEid() {
-		return eid;
-	}
-
-
-
-	public void setEid(String eid) {
-		this.eid = eid;
-	}
-
-
-
-	public String getDomain() {
-		return Domain;
-	}
-
-
-
-	public void setDomain(String domain) {
-		Domain = domain;
-	}
-
-
-
-	public String getPw() {
-		return pw;
-	}
-
-
-
-	public void setPw(String pw) {
-		this.pw = pw;
-	}
-
-
-
-	public String getId() {
-		return id;
-	}
-
-
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-
-
-	public String getName() {
-		return name;
-	}
-
-
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-
-
-	public String getCretel() {
-		return cretel;
-	}
-
-
-
-	public void setCretel(String cretel) {
-		this.cretel = cretel;
-	}
-
-
 
 	public String getCreCompany() {
 		return creCompany;
