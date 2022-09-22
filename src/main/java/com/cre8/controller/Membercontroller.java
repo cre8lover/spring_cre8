@@ -133,10 +133,10 @@ public class Membercontroller{
 	}
 	
 	@PostMapping("infoinsert")
-	public String infoinsert(Mem mem, Address add,
-							MultipartFile filename,
-							Model model,HttpSession sess) {
+	public String infoinsert(HttpSession sess, Mem mem, Address add,
+							Model model, MultipartFile filename) {
 		mem.setAddressSet(add);
+		
 		member.infoinsert(mem, filename, (String)sess.getAttribute("sess_id"));
 		
 		return "redirect:/mem/meminfo";
