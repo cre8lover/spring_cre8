@@ -16,8 +16,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-	<%@ include file="/header.jsp" %>
-	<%@ include file="/menu.jsp" %>
+	<%@ include file="../header.jsp" %>
+	<%@ include file="../menu.jsp" %>
 <body background="<%= request.getContextPath() %>/img/back.jpg">
 
 	<div class="leftSideBar"></div>
@@ -216,7 +216,7 @@
 				
 		</div>
 	</div>
-<%@ include file="/footer.jsp" %>
+<%@ include file="../footer.jsp" %>
 	<div class="rightSideBar"></div>
 	
 	 
