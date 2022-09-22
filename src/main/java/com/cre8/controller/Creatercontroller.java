@@ -165,8 +165,6 @@ public class Creatercontroller {
 		model.addAttribute("cre", salesHistory);
 		return "/creater/jmh_salesHistory";
 	}
-<<<<<<< HEAD
-		
 	@RequestMapping("promodify")
 	public String promodify(Model model,Pro pro, Item item, MultipartFile filename,HttpSession sess) {
 		
@@ -177,21 +175,4 @@ public class Creatercontroller {
 		   model.addAttribute("seqno", seqno);
 		  return "redirect:/cre/product_registration";	
 	}
-=======
->>>>>>> branch 'master' of https://github.com/cre8lover/spring_cre8.git
-
-<<<<<<< HEAD
-=======
-	@RequestMapping("promodify")
-	public String promodify(Model model, Pro pro, Item item, MultipartFile filename, HttpSession sess) {
-
-		pro.setItem(item);
-
-		String seqno = cs.productadd(pro, filename, (String) sess.getAttribute("sess_id"));
-
-		model.addAttribute("seqno", seqno);
-		return "redirect:/cre/product_registration";
-	}
-
->>>>>>> branch 'master' of https://github.com/cre8lover/spring_cre8.git
 }
