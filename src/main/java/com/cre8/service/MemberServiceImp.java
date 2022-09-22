@@ -13,6 +13,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cre8.dao.MemberDao;
 import com.cre8.dao.MemberDaoImp;
@@ -28,6 +29,8 @@ public class MemberServiceImp implements MemberService {
 	
 	@Autowired
 	MemberDao dao;
+	@Autowired 
+	FileService fileService;
 	
 	private static final String CHARSET = "utf-8";
 
@@ -99,65 +102,19 @@ public class MemberServiceImp implements MemberService {
 	}
 
 	@Override
-	public void infoinsert(Mem mem, HttpServletRequest req) {
-		DiskFileItemFactory factory = new DiskFileItemFactory();
+	public void infoinsert(Mem mem, MultipartFile filename, String id) {
 		
-		factory.setDefaultCharset(CHARSET);
-		ServletFileUpload upload = new ServletFileUpload(factory);
-		
-		HttpSession sess = req.getSession();
-		/*
-		String id = (String)sess.getAttribute("sess_id");
-		mem.setMemId(id);
-		
-		String phone = req.getParameter("phone");
-		String eamil = req.getParameter("eamil");
-		String sns = req.getParameter("sns");
-		
-		mem.setMemTel(phone);
-		mem.setMemEmail(eamil);
-		mem.setMemSnsinfo(sns);
-		
-		String cate = req.getParameter("cate");
-		String mobile = req.getParameter("mobile");
-		String person = req.getParameter("person");
-		String address = req.getParameter("address");
-		String detail = req.getParameter("address_detail");
-		
-		Address add = new Address();
-
-		add.setAddCategory(cate);
-		add.setAddPhone(mobile);
-		add.setAddPerson(person);
-		add.setAddAddress(address);
-		add.setAddetail(detail);
-		
-		mem.setAddressSet(add);
-		
-		*/
-		Address add = new Address();
 		Att attachfile = null;
-		FileServiceImp fileService = new FileServiceImp();
 		
 		try {
-			List<FileItem> items =  upload.parseRequest(req);
-			for(FileItem item : items) {
-				
-				if(item.isFormField()) {
-					mem = fileService.getFormParameter_mypage(item, mem, add);
-				} else {
-					attachfile = fileService.fileUpload(item);
-				}
+			if(filename != null) {
+				attachfile = fileService.fileUpload(filename);
 			}
-		} catch (FileUploadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		mem.setAtt(attachfile);
-		String id = (String)sess.getAttribute("sess_id");
 		mem.setMemId(id);
 		dao.infoinsert(mem);	
 	}
