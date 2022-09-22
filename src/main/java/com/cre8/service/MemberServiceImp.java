@@ -42,26 +42,6 @@ public class MemberServiceImp implements MemberService {
 
 	@Override
 	public void insert(Mem mem) {
-//		mem = new Mem();
-//		
-//		String id = req.getParameter("id");
-//		String pw = req.getParameter("pw");
-//		String name = req.getParameter("name");
-//		String birth = req.getParameter("birth");
-//		String email = req.getParameter("email");
-//		String mobile = req.getParameter("mobile");
-//		String agree = req.getParameter("check");
-//		String phone = mobile;
-//		if(mobile.length() == 11) {
-//		  phone = mobile.replaceFirst("(^[0-9]{3})([0-9]{4})([0-9]{4})$","$1-$2-$3");
-//		} 
-//		mem.setMemId(id);
-//		mem.setMemPw(pw);
-//		mem.setMemName(name);
-//		mem.setMemBirth(birth);
-//		mem.setMemEmail(email);
-//		mem.setMemTel(phone);
-//		mem.setCheck(agree);
 		dao.reginsert(mem);
 	}
 
