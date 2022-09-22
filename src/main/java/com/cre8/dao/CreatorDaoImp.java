@@ -42,45 +42,50 @@ public class CreatorDaoImp implements CreatorDao{
 	@Autowired
 	private DataSource ds;/////////////////////
 	
-	PreparedStatement stmt;
-	CallableStatement cstmt;
+//	PreparedStatement stmt;
+//	CallableStatement cstmt;
 	
 	FileDaoimp filedao = new FileDaoimp();
 	
-	public void Creatoradd(HttpServletRequest request, String id){
-		Connection conn = null;///////////////////////
+	public void Creatoradd(Creator cre){
+		PreparedStatement stmt = null;
+		CallableStatement cstmt = null;
+		Connection conn = null;
 		try {
 			String sql = "call p_creatoradd(?,?,?,?,?,?,?,?)";
 		     	  
-		    String str = (request.getParameter("creadress") + request.getParameter("creadress2"));
+		    String str = (cre.getCreAddress() + cre.getCreAddress_detail());
 		    
 		    conn = ds.getConnection();
 		    cstmt = conn.prepareCall(sql);
-		    cstmt.setString(1, request.getParameter("crecompany"));
-			cstmt.setString(2, request.getParameter("cretel"));
-			cstmt.setString(3, request.getParameter("crename"));
-			cstmt.setString(4, str);
-			cstmt.setString(5, request.getParameter("crenum"));
-			cstmt.setString(6, request.getParameter("crenum2"));
-			cstmt.setString(7, request.getParameter("intro"));
-			cstmt.setString(8, request.getParameter("mem_id"));
+		    cstmt.setString(1, cre.getCreCompany());
+			cstmt.setString(2, cre.getCretel());
+			cstmt.setString(3, cre.getCreName());
+			cstmt.setString(4, "123");
+			cstmt.setString(5, cre.getCreRegnum());
+			cstmt.setString(6, cre.getCreSalenum());
+			cstmt.setString(7, "123");
+			cstmt.setString(8, cre.getId());
 			cstmt.executeQuery();
 			
 			 sql = "update mem_auth set auth_name ='C' where auth_name='M' and mem_id = ?";
-			 cstmt = conn.prepareCall(sql);
-			 cstmt.setString(1, (String)request.getSession().getAttribute("sess_id"));
-			 cstmt.executeQuery();
+			 stmt = conn.prepareStatement(sql);
+			 stmt.setString(1, cre.getId());
+			 stmt.executeQuery();
 			
 		 }catch (SQLException e) {
 				e.printStackTrace();
 		 }finally {///////////////////
 			resourceClose(conn, cstmt);	
 		 }
+		
 		}
 	
 	
 	public Mem CreatorName(String id) {
-		Connection conn = null;///////////////////////
+		PreparedStatement stmt = null;
+		CallableStatement cstmt = null;
+		Connection conn = null;
 		Mem mem = new Mem();
 		try{
 			conn = ds.getConnection();////////////////////
@@ -98,7 +103,8 @@ public class CreatorDaoImp implements CreatorDao{
 	////愿묎퀬 由ъ뒪?占쏙옙蹂댁뿬二쇰뒗 ?占쏙옙?占쏙옙占�? 
 	public List<Marketing> mk(){ 
 		List<Marketing> mk = new ArrayList<Marketing>();
-		Connection conn = null;///////////////////////
+		PreparedStatement stmt = null;
+		Connection conn = null;
 			String sql = "select mar_seqno, mar_product, mar_img, mar_price from Marketing";
 		try{
 			conn = ds.getConnection();////////////////////
@@ -119,7 +125,7 @@ public class CreatorDaoImp implements CreatorDao{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {///////////////////
-			resourceClose(conn, cstmt);	
+			resourceClose(conn, stmt);	
 		 }
 		return mk;
 	}
@@ -127,7 +133,9 @@ public class CreatorDaoImp implements CreatorDao{
 	
 	//愿묎퀬 ?占쏙옙?占쏙옙占�? ?占쏙옙占�??占쏙옙?占쏙옙?占쏙옙 ?占쏙옙?占쏙옙?占쏙옙 ?占쏙옙?占쏙옙占�? 
 	public Marketing mkk(int seqno) {
-		Connection conn = null;///////////////////////
+		PreparedStatement stmt = null;
+		CallableStatement cstmt = null;
+		Connection conn = null;
 		Marketing mkk = new Marketing();
 			String sql = "select * from Marketing where mar_seqno=?";
 		try{
@@ -161,7 +169,9 @@ public class CreatorDaoImp implements CreatorDao{
 	
 	//creater/artistpage.jsp
 	public List<Creator> Creatorpage(){
-		Connection conn = null;///////////////////////
+		PreparedStatement stmt = null;
+		CallableStatement cstmt = null;
+		Connection conn = null;
 		Creator c = new Creator();
 		List<Creator>cre = new ArrayList<Creator>();
 		
@@ -217,7 +227,9 @@ public class CreatorDaoImp implements CreatorDao{
 		
 	
 	public Map<String, String> cremodifyreg(HttpServletRequest req) {
-		Connection conn = null;///////////////////////  
+		PreparedStatement stmt = null;
+		CallableStatement cstmt = null;
+		Connection conn = null;
 		
 	      Map<String, String> cremodi = new HashMap<>();
 	      
@@ -282,7 +294,9 @@ public class CreatorDaoImp implements CreatorDao{
 	
 	
 	public List<Pro> salesHistory(String id){
-		Connection conn = null;///////////////////////
+		PreparedStatement stmt = null;
+		CallableStatement cstmt = null;
+		Connection conn = null;
 		List<Pro>cre = new ArrayList<Pro>();
 		
 		String sql = "call p_salesHistory(?,?)";
@@ -325,7 +339,9 @@ public class CreatorDaoImp implements CreatorDao{
 	
 	
 	public Map<String, List<Pro>> calculate(String id) {
-		Connection conn = null;///////////////////////
+		PreparedStatement stmt = null;
+		CallableStatement cstmt = null;
+		Connection conn = null;
 		
 		Map<String, List<Pro>> calculate = new HashMap<>();
 		List<Pro> mcal = new ArrayList<>();
@@ -377,7 +393,9 @@ public class CreatorDaoImp implements CreatorDao{
 	
 	//?占쏙옙諛섎Ъ?占쏙옙?占쏙옙?占쏙옙 寃쎈ℓ臾쇳뭹 ?占쏙옙占�??占쏙옙?占쏙옙占�??占쏙옙?占쏙옙 ?占쏙옙?占쏙옙占�?
 	public List<Pro> Prolist(String seqno,String id ) {
-		Connection conn = null;///////////////////////
+		PreparedStatement stmt = null;
+		CallableStatement cstmt = null;
+		Connection conn = null;
 		List<Pro> prolist = new ArrayList<>();
 		try {
 			conn = ds.getConnection();////////////////////
@@ -414,7 +432,9 @@ public class CreatorDaoImp implements CreatorDao{
 	
 
 	public List<Auc> Auclist(String seqno, String id) {
-		Connection conn = null;///////////////////////
+		PreparedStatement stmt = null;
+		CallableStatement cstmt = null;
+		Connection conn = null;
 	      List<Auc> auclist = new ArrayList<>();
 	      Auc a = null;
 	      Item i = null;
@@ -453,7 +473,9 @@ public class CreatorDaoImp implements CreatorDao{
 	   }
 	
 	public Creator infomodify(String id) {
-		Connection conn = null;///////////////////////
+		PreparedStatement stmt = null;
+		CallableStatement cstmt = null;
+		Connection conn = null;
 	      Mem mem = new Mem();
 	      Creator cre = new Creator();
 	      
@@ -490,7 +512,7 @@ public class CreatorDaoImp implements CreatorDao{
 				
 	            cre.setMem(mem);
 	            
-	         stmt.close();
+	         cstmt.close();
 	      } catch (SQLException e) {
 	         e.printStackTrace();
 	      }finally {///////////////////
@@ -502,7 +524,9 @@ public class CreatorDaoImp implements CreatorDao{
 
 	
 public String totalmoney(String id) {
-	Connection conn = null;///////////////////////
+	PreparedStatement stmt = null;
+	CallableStatement cstmt = null;
+	Connection conn = null;
 		String total = "0";
 		
 		String sql = "call p_totalm(?,?)";
@@ -670,7 +694,9 @@ public String totalmoney(String id) {
 //	}
 
 	public Pro productdetail(String seqno) {
-		Connection conn = null;///////////////////////
+		PreparedStatement stmt = null;
+		CallableStatement cstmt = null;
+		Connection conn = null;
 		Pro pro = new Pro();
 		String sql = "call p_prodetail(?,?,?)";
 		try {
@@ -797,7 +823,9 @@ public String totalmoney(String id) {
 	
 	
 			public String aucadd(Auc auc, String id) {
-				Connection conn = null;///////////////////////
+				PreparedStatement stmt = null;
+				CallableStatement cstmt = null;
+				Connection conn = null;
 			      
 			      String seqno = "";
 		
@@ -906,7 +934,9 @@ public String totalmoney(String id) {
 			
 			
 		public Auc aucdetail(String seqno) {
-			Connection conn = null;///////////////////////
+			PreparedStatement stmt = null;
+			CallableStatement cstmt = null;
+			Connection conn = null;
 		      Auc auc = new Auc();
 		      Item item = new Item();
 		      
@@ -962,7 +992,8 @@ public String totalmoney(String id) {
 
 		
 		public String aucmodify(Auc auc) {
-			Connection conn = null;///////////////////////
+			CallableStatement cstmt = null;
+			Connection conn = null;
 			if(auc.getAucStat() == null) {
 				auc.setAucStat("WAIT");
 			}
@@ -977,7 +1008,7 @@ public String totalmoney(String id) {
 				STRUCT att_rec =null;
 				Object[] thumb_obj = null;
 				Object[] att_obj = null;
-				if(auc.getAtt_file().getAttName() != null) {
+				if(auc.getAtt_file() != null) {
 					
 		    	  thumb_obj = new Object[]{auc.getAtt_file().getAttThumb().getFileName(),
 						    			   auc.getAtt_file().getAttThumb().getFileSize(),
@@ -1014,9 +1045,9 @@ public String totalmoney(String id) {
 		         cstmt.close();
 			 } catch (SQLException e) {
 			         e.printStackTrace();
-			 }finally {///////////////////
-					resourceClose(conn, cstmt);	
-			 }
+		} /*
+			 * finally {/////////////////// resourceClose(conn, cstmt); }
+			 */
 			
 			String seqno = String.valueOf(auc.getAucSeqno());
 			 return seqno;
@@ -1155,7 +1186,9 @@ public String totalmoney(String id) {
 		   
 		   public String productmodify(Pro pro) {
 			      
-			   Connection conn = null;///////////////////////
+			   PreparedStatement stmt = null;
+				CallableStatement cstmt = null;
+				Connection conn = null;
 				if(pro.getProStat() == null) {
 					pro.setProStat("WAIT");
 				}
@@ -1221,7 +1254,9 @@ public String totalmoney(String id) {
 		   
 		   
 		   public String productadd(Pro pro, String id) {
-			   Connection conn = null;///////////////////////
+			   PreparedStatement stmt = null;
+				CallableStatement cstmt = null;
+				Connection conn = null;
 			   String seqno = "";
 
 		      String sql = "call p_pro_add_test(?,?)";
@@ -1277,7 +1312,9 @@ public String totalmoney(String id) {
 
 		   //게시물삭제
 		public Att prodel(String seqno) {
-			Connection conn = null;///////////////////////
+			PreparedStatement stmt = null;
+			CallableStatement cstmt = null;
+			Connection conn = null;
 			Att att = new Att();
 			Thumbnail att_at = new Thumbnail();
 			
@@ -1413,7 +1450,6 @@ public String totalmoney(String id) {
 	
 		
 		private void resourceClose(Connection conn, PreparedStatement stmt) {
-			//�옄�썝諛섎궔
 			try {
 				if(stmt != null || conn != null) {
 					stmt.close();
@@ -1428,7 +1464,6 @@ public String totalmoney(String id) {
 		}
 		
 		private void resourceClose(Connection conn, CallableStatement cstmt) {
-			//�옄�썝諛섎궔
 			try {
 				
 				if(cstmt != null || conn != null) {

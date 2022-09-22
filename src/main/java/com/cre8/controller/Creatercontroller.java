@@ -24,6 +24,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+<<<<<<< HEAD
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+=======
+>>>>>>> branch 'master' of https://github.com/cre8lover/spring_cre8.git
 
 import com.cre8.dto.Auc;
 import com.cre8.dto.Creator;
@@ -41,8 +45,12 @@ public class Creatercontroller {
    
 	@Autowired
 	CreatorService cs;
+<<<<<<< HEAD
+	FileServiceImp fs;
+=======
 	@Autowired
 	FileService fs;
+>>>>>>> branch 'master' of https://github.com/cre8lover/spring_cre8.git
 	
 	//크리에이터 페이지( if)비회원&작가이닐경우 =>작가등록 및 회원가입)
 	@GetMapping("creReg")
@@ -72,30 +80,33 @@ public class Creatercontroller {
 	} 
 	//크리에이터 등록페이지
 	@PostMapping("artistpage")
-	public String Creatorpage(HttpServletRequest request,HttpSession sess, Model model) {
-		
-		String id = (String)sess.getAttribute("sess_id");
-		
-		model.addAttribute("id", id);
-		return "/cre/creReg";
+	public String Creatorpage(Creator cre) {
+		cs.Creatoradd(cre);
+//		return "redirect:/cre/creReg";
+		return "/creater/artistpage";
 	}
-	//수정페이지
-	@GetMapping("cremodify")
-	public String cremodify(HttpSession sess, Model model) {
-		String id = ((String)sess.getAttribute("sess_id"));
-		Creator cre = cs.infomodify(id);
-		
-		model.addAttribute("cre", cre);
-		return "/creater/creReg2";
-	}
+
 	//광고리스트 조회
 	@GetMapping("Adlist")
-	public String mk(List<Marketing> mar , Model model) {
-		mar = cs.mk(); 
+	//@RequestMapping(value="Adlist", method= {RequestMethod.POST, RequestMethod.GET})
+	public String mk(Model model) {
+		List<Marketing> mar  = cs.mk(); 
 		model.addAttribute("marketing", mar);
-		
-		return "/creater/marketingDetail";
+		return "/listimg/product_ad";
 	}
+<<<<<<< HEAD
+	
+	//옥션수정등록
+	@RequestMapping(value="auction_reg", method= {RequestMethod.POST, RequestMethod.GET})
+	public String acumodi(@ModelAttribute("seqno") String seqno, Model model) {
+
+		if(seqno != null) {
+			Auc auc = cs.aucdetail(seqno);
+			model.addAttribute("auc", auc);
+		}
+		
+		return "creater/auction_registration";
+=======
 	//광고 세부내용 출력
 	@GetMapping("marketingDetail")
 	public String mkk(@ModelAttribute("seqno") int seqno, Model model) {
@@ -122,8 +133,31 @@ public class Creatercontroller {
 				e.printStackTrace();
 			}
 			out.print(rs);
+>>>>>>> branch 'master' of https://github.com/cre8lover/spring_cre8.git
 	}
 	
+<<<<<<< HEAD
+	@RequestMapping(value="auction_registration", method= {RequestMethod.POST, RequestMethod.GET})
+	public String umodi(@ModelAttribute("seqno") String seqno, Model model) {
+		
+		if(seqno != null) {
+			Auc auc = cs.aucdetail(seqno);
+			model.addAttribute("auc", auc);
+		}
+		
+		return "creater/auction_registration?seqno =" + seqno;
+	}
+	@RequestMapping(value="auction_modify", method= {RequestMethod.POST, RequestMethod.GET})
+	public String auc_modi(MultipartFile filename, Auc auc, Item item,
+							HttpSession sess,
+							Model model) {
+		auc.setId((String)sess.getAttribute("sess_id"));
+		auc.setItem(item);
+		
+		String seqno = cs.aucadd(filename, auc);
+		model.addAttribute("seqno", seqno);
+		return "redirect:/cre/auction_reg";
+=======
 	//게시물 삭제 --구현은되는데 totalprice에서 건드릴것이 있어 미완성 입니다.
 	@RequestMapping("prodel")
 	public String prodel(@RequestParam("proseqno") String seqno,
@@ -131,6 +165,7 @@ public class Creatercontroller {
 		model.addAttribute("proseqno");
 		cs.prodel(seqno);
 		return "redirect:/cre/creReg";
+>>>>>>> branch 'master' of https://github.com/cre8lover/spring_cre8.git
 	}
 	
 
@@ -143,6 +178,29 @@ public class Creatercontroller {
 		}
 		return "/creater/product_registration";
 	
+<<<<<<< HEAD
+//	일반상품 아직 미구현
+//		@RequestMapping(value="product_registration", method= {RequestMethod.POST, RequestMethod.GET})
+//	public String proReg(@ModelAttribute("seqno") String seqno, Model model) {
+//		
+//		 if(seqno != null) {
+//		       Pro pro = cs.productdetail(seqno);
+//		       model.addAttribute("pro", pro);
+//		}
+//		 
+//		return "/creater/product_registration";
+//	}
+//		@RequestMapping(value="promodify", method= {RequestMethod.POST, RequestMethod.GET})
+//	public String promdify(@ModelAttribute("seqno") String seqno, Model model) {
+//		
+//		if(seqno != null) {
+//			
+//		}
+//		return "/cre/product_registration?seqno="+seqno;
+//	}
+
+}
+=======
 		
 	}
 	@RequestMapping("salesHistory")
@@ -176,3 +234,4 @@ public class Creatercontroller {
 }	
 	
 
+>>>>>>> branch 'master' of https://github.com/cre8lover/spring_cre8.git

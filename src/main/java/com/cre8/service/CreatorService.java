@@ -15,7 +15,7 @@ import com.cre8.dto.Pro;
 
 public interface CreatorService {
 	
-	void Creatoradd(HttpServletRequest request, String id);
+	void Creatoradd(Creator cre);
 	
 	public List<Creator> Creatorpage();
 	
@@ -37,7 +37,7 @@ public interface CreatorService {
 
 	String totalmoney(String id);
 	
-	String aucadd(HttpServletRequest req);
+	String aucadd(MultipartFile filename, Auc auc);
 
 	   Auc aucdetail(String seqno);
 	
@@ -48,4 +48,5 @@ public interface CreatorService {
 	Map<String, String> cremodifyreg(HttpServletRequest req);
 
 	public void prodel(String seqno);
+
 }
