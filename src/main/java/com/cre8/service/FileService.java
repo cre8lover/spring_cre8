@@ -18,6 +18,8 @@ public interface FileService {
 
 	public Att fileUpload(MultipartFile filename) throws Exception;
 	
+	public Att fileUpload(MultipartFile item) throws Exception;
+	
 	public Thumbnail setThumbnail(String saveFileName,File file) throws IOException;
 
 	public Pro getFormParameter(FileItem item, Pro pro, Item proitem) throws ParseException;

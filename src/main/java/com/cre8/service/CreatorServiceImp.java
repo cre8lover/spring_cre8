@@ -31,6 +31,8 @@ public class CreatorServiceImp implements CreatorService{
 	
 	@Autowired
 	CreatorDao creatorDao;
+	@Autowired
+	FileService fileService;
 	
 	@Override
 	public void Creatoradd(Creator cre) {
@@ -125,39 +127,18 @@ public class CreatorServiceImp implements CreatorService{
 	}
 	
 	@Override
-	   public String productadd(HttpServletRequest req) {
-		
-		DiskFileItemFactory factory = new DiskFileItemFactory(); 
-		factory.setDefaultCharset("CHARSET");//?��?���? ?��?��?��?���? 좋다.
-		//factory form?�� ?��?��?���? �??��???�� ???�� utf8�? ???��?��?���? 좋음
-		ServletFileUpload upload = new ServletFileUpload(factory);
-		
-		
-		
-		
-		Pro pro = new Pro();
-		Item proitem = new Item();
+	   public String productadd(Pro pro,MultipartFile filename,String id) {
 		Att attachfile = null;
-		FileService fileService = new FileServiceImp();
-		
 		try {
-			List<FileItem> items = upload.parseRequest(req);
-			//�??��?��?�� ?��?���?
-			for(FileItem item : items) {
-				if (item.isFormField()) {//2진데?��?��?���? ?��?��?��?���? 구별?���?
-					pro =  fileService.getFormParameter(item,pro,proitem); 
-				}else {
-					attachfile = fileService.fileUpload(item);
-				}
+			if(filename != null) {
+			attachfile = fileService.fileUpload(filename);
 			}
-		} catch (FileUploadException e) {
-			e.printStackTrace();
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		pro.setAtt_file(attachfile);
-	    String id = (String)req.getSession().getAttribute("sess_id");
 	    if(pro.getProSeqno() != null) return creatorDao.productmodify(pro);
 	    else return creatorDao.productadd(pro,id);
 	      
@@ -169,10 +150,9 @@ public class CreatorServiceImp implements CreatorService{
 	   }
 	@Override
 	public void prodel(String seqno) {
-		FileService fileservice = new FileServiceImp();
 		Att att = creatorDao.prodel(seqno);
 
-		fileservice.delete(null,att.getSavefilename(),att.getAttPath(),att.getAttThumb().getFileName());
+		fileService.delete(seqno,att.getSavefilename(),att.getAttPath(),att.getAttThumb().getFileName());
 	}
 	
 

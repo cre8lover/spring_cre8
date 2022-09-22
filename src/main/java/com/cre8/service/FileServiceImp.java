@@ -9,9 +9,15 @@ import java.util.UUID;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FilenameUtils;
+<<<<<<< HEAD
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+>>>>>>> branch 'master' of https://github.com/cre8lover/spring_cre8.git
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cre8.dao.FileDao;
+import com.cre8.dao.FileDaoimp;
 import com.cre8.dto.Address;
 import com.cre8.dto.Att;
 import com.cre8.dto.Auc;
@@ -22,9 +28,10 @@ import com.cre8.dto.Pro;
 import com.cre8.dto.Thumbnail;
 
 import net.coobird.thumbnailator.Thumbnails;
-
+@Service
 public class FileServiceImp implements FileService {
-
+	@Autowired
+	FileDao filedao;
 	
 	
 	@Override
@@ -58,6 +65,68 @@ public class FileServiceImp implements FileService {
 //			System.out.println("?��로드 ?��?�� ?���? : "+ fileName); //?��?��체제?�� ?���? ?��?�� 경로뽑기 File.separator
 //			System.out.println(saveFileName); //???��?�� ?��?�� ?���?
 			//?��로드 ?��?�� ???��
+<<<<<<< HEAD
+=======
+			File file = new File(fileUploadPath + saveFileName);
+			
+			item.transferTo(file);
+			
+			attachfile = new Att();
+			
+			attachfile.setAttName(fileName);
+			attachfile.setAttPath(fileUploadPath);
+			attachfile.savefilename(saveFileName);
+			attachfile.setAttSize(String.valueOf(fileSize));
+			attachfile.setAttType(item.getContentType());
+			
+			String fileType = item.getContentType();
+			String type = fileType.substring(0,fileType.indexOf("/"));
+		
+			if(type.equals("image")) {
+				attachfile.setAttThumb(setThumbnail(saveFileName,file));
+				
+			}
+		}
+		return attachfile;
+	}
+	
+	
+	
+	
+	
+	
+	@Override
+	public Att fileUpload(FileItem item) throws Exception {
+		//첨�??��?�� : 바이?��리파?��
+		long fileSize = item.getSize();
+		Att attachfile = null;
+		//System.out.println("?��로드 ?��?�� ?��?���?:" + fileSize);	
+		if(fileSize > 0) {
+			
+			String fileUploadPath = "D:/jmh/upload/";
+			String fileName = item.getName();
+			// ?��?��브러리이?��
+//			System.out.println(FilenameUtils.getExtension(fileName)); 
+//			System.out.println(FilenameUtils.getBaseName(fileName));
+			
+			//?��브스?���? ?��?��
+			String split_fileName = fileName.substring(0,fileName.lastIndexOf("."));
+			String split_extension = fileName.substring(fileName.lastIndexOf(".")+1);
+			
+			
+//			System.out.println(split_fileName);
+//			System.out.println(split_extension);
+			
+			//중복?�� ?��?��?�� ?��로드 ?���? ?���? ?��?�� UID�? ?��?��
+			UUID uid = UUID.randomUUID();
+			
+			String saveFileName = split_fileName + "_"+ uid + "."+ split_extension;
+			
+//			System.out.println(fileUploadPath);
+//			System.out.println("?��로드 ?��?�� ?���? : "+ fileName); //?��?��체제?�� ?���? ?��?�� 경로뽑기 File.separator
+//			System.out.println(saveFileName); //???��?�� ?��?�� ?���?
+			//?��로드 ?��?�� ???��
+>>>>>>> branch 'master' of https://github.com/cre8lover/spring_cre8.git
 			File file = new File(fileUploadPath + saveFileName);
 			
 			item.transferTo(file);
@@ -206,18 +275,23 @@ public class FileServiceImp implements FileService {
 	
 	@Override
 	public int delete(String no, String savefilename, String filepath, String thumb_filename) {
-		FileDao filedao = new FileDao();
 		
 		int rs = 0;
 		if(no != null) {
 		rs = filedao.deletfile(no);
 		}
+<<<<<<< HEAD
 		//attachfile ?��코드 ?��?��
 		//?��?��?��?��
+=======
+>>>>>>> branch 'master' of https://github.com/cre8lover/spring_cre8.git
 		File file = new File(filepath+savefilename);
 		if (file.exists()) {
 			file.delete();
+<<<<<<< HEAD
 			//?��?��?�� ?��?��
+=======
+>>>>>>> branch 'master' of https://github.com/cre8lover/spring_cre8.git
 			if(thumb_filename != null) {
 				File thumbfile = new File(filepath+"thumbnail/"+thumb_filename);
 				if(thumbfile.exists()) {

@@ -43,7 +43,7 @@ public interface CreatorService {
 	
 	public Pro productdetail(String seqno);
 
-	String productadd(HttpServletRequest req);
+	String productadd(Pro pro,MultipartFile filename, String string);
 
 	Map<String, String> cremodifyreg(HttpServletRequest req);
 

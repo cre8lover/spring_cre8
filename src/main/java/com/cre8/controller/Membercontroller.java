@@ -23,6 +23,7 @@ import com.cre8.dto.Ship;
 import com.cre8.dto.Thumbnail;
 import com.cre8.service.MemberService;
 import com.cre8.service.MemberServiceImp;
+import com.cre8.service.ProService;
 
 @Controller
 @RequestMapping("/mem/")
@@ -30,6 +31,8 @@ public class Membercontroller{
        
 	@Autowired
 	private MemberService member;
+	@Autowired
+	private ProService pro;
 	
 	@GetMapping("loginpage")
 	public String loginpage() {
@@ -51,6 +54,9 @@ public class Membercontroller{
 			sess.setAttribute("sess_id", id);
 			sess.setAttribute("sess_name", status.get("name"));
 			sess.setAttribute("auth", status.get("auth"));
+			
+			List<Pro> prolist = pro.proList_clothes(); 
+			model.addAttribute("proList", prolist);
 			
 			viewPage = "/index";
 			break;
