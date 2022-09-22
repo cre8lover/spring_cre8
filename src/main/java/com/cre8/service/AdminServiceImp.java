@@ -12,6 +12,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cre8.dao.AdminDao;
 import com.cre8.dao.AdminDaoImp;
@@ -27,6 +28,8 @@ public class AdminServiceImp implements AdminService {
 	
 	@Autowired
 	AdminDao dao;
+	@Autowired 
+	FileService fileService;
 	
 	private static final String CHARSET = "utf-8";
 
@@ -66,63 +69,19 @@ public class AdminServiceImp implements AdminService {
 	}
 
 	@Override
-	public void reg(Marketing market, HttpServletRequest req) {
-/*		
-		String cate = req.getParameter("marcate");
-		String name = req.getParameter("name");
-		String price = req.getParameter("price");
-		String company = req.getParameter("company");
-		String start = req.getParameter("start");
-		String finish = req.getParameter("finish");
-		String comment = req.getParameter("comment");
-		String phone = req.getParameter("phone");
-		String ceo = req.getParameter("ceo");
-		String regnum = req.getParameter("regnum");
-		String mobile = phone;
-		if(phone.length() == 11) {
-			mobile = phone.replaceFirst("(^[0-9]{3})([0-9]{4})([0-9]{4})$","$1-$2-$3");
-		}
-		market.setMarCategory(cate);
-		market.setMarProduct(name);
-		market.setMarPrice(price);
-		market.setMarCompany(company);
-		market.setMarOpendate(start);
-		market.setMarClosedate(finish);
-		market.setMarDetail(comment);
-		market.setMarPhone(mobile);
-		market.setMarCeo(ceo);
-		market.setMarRegnum(regnum);
-*/		
+	public void reg(Marketing market, MultipartFile filename, String id) {
 		Mem m = new Mem();
-		HttpSession sess = req.getSession();
-		String id = (String)sess.getAttribute("sess_id");
-		
-		DiskFileItemFactory factory = new DiskFileItemFactory();
-		factory.setDefaultCharset(CHARSET);
-		ServletFileUpload upload = new ServletFileUpload(factory);
-
-		Address add = new Address();
 		Att attachfile = null;
-		FileServiceImp fileService = new FileServiceImp();
 		
 		
 		
 		try {
-			List<FileItem> items =  upload.parseRequest(req);
-			for(FileItem item : items) {
-				
-				if(item.isFormField()) {
-					market = fileService.getFormParameter_marketing(item, market, add);
-				} else {
-					attachfile = fileService.fileUpload(item);
-				}
+			if(filename != null) {
+				attachfile = fileService.fileUpload(filename);
 			}
-
 		} catch (FileUploadException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -130,7 +89,7 @@ public class AdminServiceImp implements AdminService {
 		attachfile.setMem(m);
 		
 		market.setAttSet(attachfile);
-		dao.marketReg( market);
+		dao.marketReg(market);
 	}
 
 	@Override
@@ -150,39 +109,4 @@ public class AdminServiceImp implements AdminService {
 		
 		return dao.modify(seqno);
 	}
-/*
-	public void update(HttpServletRequest req) {
-		Marketing market = new Marketing();
-		
-		String o = req.getParameter("seqno");
-		int seqno = Integer.parseInt(o);
-		
-		String cate = req.getParameter("marcate");
-		String name = req.getParameter("name");
-		String price = req.getParameter("price");
-		String company = req.getParameter("company");
-		String start = req.getParameter("start");
-		String finish = req.getParameter("finish");
-		String comment = req.getParameter("comment");
-		String phone = req.getParameter("phone");
-		String ceo = req.getParameter("ceo");
-		String regnum = req.getParameter("regnum");
-		String mobile = phone;
-		if(phone.length() == 11) {
-			mobile = phone.replaceFirst("(^[0-9]{3})([0-9]{4})([0-9]{4})$","$1-$2-$3");
-			}
-		market.setMarCategory(cate);
-		market.setMarProduct(name);
-		market.setMarPrice(price);
-		market.setMarCompany(company);
-		market.setMarOpendate(start);
-		market.setMarClosedate(finish);
-		market.setMarDetail(comment);
-		market.setMarPhone(mobile);
-		market.setMarCeo(ceo);
-		market.setMarRegnum(regnum);
-		market.setMarSeqno(seqno);
-		dao.update(market);
-	}
-*/
 }

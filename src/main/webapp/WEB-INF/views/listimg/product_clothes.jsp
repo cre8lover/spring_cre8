@@ -12,8 +12,8 @@
 
 </head>
 <body>
-<%@ include file="/header.jsp" %>
-	<%@ include file="/menu.jsp" %>
+<%@ include file="../header.jsp" %>
+	<%@ include file="../menu.jsp" %>
 	<div class="mypage">
 	<br>
 	<h2>Clothes</h2>
@@ -65,6 +65,6 @@
 	</main>
 	</div>
 	</div>
-<%@ include file="/footer.jsp" %>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

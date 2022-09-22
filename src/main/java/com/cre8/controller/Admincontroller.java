@@ -1,15 +1,9 @@
 package com.cre8.controller;
 
-import javax.servlet.http.HttpServlet;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.cre8.dto.Address;
 import com.cre8.dto.AdminKeyWord;
 import com.cre8.dto.Cat;
 import com.cre8.dto.Marketing;
@@ -61,14 +57,14 @@ public class Admincontroller {
 			
 		case "pwfail" :
 			
-			model.addAttribute("err2", "ºñ¹Ð¹øÈ£¸¦ È®ÀÎÇØ ÁÖ¼¼¿ä");
+			model.addAttribute("err2", "ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½");
 			goView = "/admin/adminlogin";
 			
 			break;
 			
 		case "no_member" :
 			
-			model.addAttribute("err2", "±ÇÈ¯À» È®ÀÎÇØÁÖ¼¼¿ä");
+			model.addAttribute("err2", "ï¿½ï¿½È¯ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½");
 			goView = "/admin/adminlogin";
 			
 			break;
@@ -144,8 +140,8 @@ public class Admincontroller {
 	}
 	
 	@RequestMapping("marReg")
-	public String marinsert(Marketing market, HttpServletRequest req) {
-		admin.reg(market, req);
+	public String marinsert(Marketing market, HttpSession sess, MultipartFile filename) {
+		admin.reg(market, filename, (String)sess.getAttribute("sess_id"));
 
 		return "/admin/admin_adreg";
 	}
@@ -161,9 +157,10 @@ public class Admincontroller {
 	}
 	
 	@RequestMapping("adupdate")
-	public String marketingUpdate(Marketing market, HttpServletRequest req) {
+	public String marketingUpdate(HttpSession sess, Marketing market,
+			 						MultipartFile filename) {
 		
-		admin.reg(market, req);
+		admin.reg(market, filename, (String)sess.getAttribute("sess_id"));
 		
 		return "/master/admofiy";
 	}

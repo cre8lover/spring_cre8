@@ -132,7 +132,6 @@ public class Creatercontroller {
 		cs.prodel(seqno);
 		return "redirect:/cre/creReg";
 	}
-	
 
 	@RequestMapping("product_registration")
 	public String product_reg(@ModelAttribute("seqno")String seqno,Model model) {
@@ -145,6 +144,7 @@ public class Creatercontroller {
 	
 		
 	}
+
 	@RequestMapping("salesHistory")
 	public String salesHistory(Model model,HttpSession sess) {
 		
@@ -169,10 +169,5 @@ public class Creatercontroller {
 		   model.addAttribute("seqno", seqno);
 		  return "redirect:/cre/product_registration";	
 	}
-		   
-		
-		
-		
-}	
-	
 
+}
