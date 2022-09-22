@@ -60,7 +60,7 @@ public class Buycontroller extends HttpServlet {
 						@ModelAttribute("orderbutton")String orderbutton,Model model){
     	
     	if (chklist.size() != 0) {
-    	System.out.println(chklist.get(0));
+//    	System.out.println(chklist.get(0));
     	}
 			List<Cart> prolist = buy.myCart((String) sess.getAttribute("sess_id"),chklist);
 			
