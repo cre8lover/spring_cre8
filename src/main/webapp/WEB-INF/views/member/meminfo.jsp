@@ -30,7 +30,7 @@
 			    <tr>
 			      <th>이름</th>
 			      <td colspan='2'>
-			      	  <input type="text" name="name" value="${info.memName }" readonly style="background:lightgray; border: 0.1px solid;">
+			      	  <input type="text" name="memName" value="${info.memName }" readonly style="background:lightgray; border: 0.1px solid;">
 			      </td>
 			    </tr>
 			    <tr>
@@ -40,13 +40,13 @@
 			      <th rowspan='2'>연락처(택1 필수)</th>
 			      <td>휴대전화</td>
 			      <td>
-	                <input type="text" name="phone" value="${info.memTel}" maxlength="16" placeholder="010-1234-5678">
+	                <input type="text" name="memTel" value="${info.memTel}" maxlength="16" placeholder="010-1234-5678">
 	 			  </td>
 			    </tr>
 			    <tr>
 			      <td>이메일</td>
 			      <td>
-					<input style="width:100%" type="text" value="${info.memEmail }" placeholder="ex)cre8@naver.com"  name="email">
+					<input style="width:100%" type="text" value="${info.memEmail }" placeholder="ex)cre8@naver.com"  name="memEmail">
 				  </td>
 			    </tr>
 			  </tbody>
@@ -64,30 +64,30 @@
 			      	배송지명
 			      </th>
 			      <td>
-					<input type="text" name="cate"  placeholder="배송지명을 입력하세요" value="${info.addressSet.addCategory }">
+					<input type="text" name="addCategory"  placeholder="배송지명을 입력하세요" value="${info.addressSet.addCategory }">
 				  </td>
 			    </tr>
 			    <tr>
 			      <th>연락처</th>
 			      <td>
-				    <input type="text" name="mobile" id="mobile" maxlength="16" value="${info.addressSet.addPhone }" placeholder="010-1234-5678">
+				    <input type="text" name="addPhone" id="mobile" maxlength="16" value="${info.addressSet.addPhone }" placeholder="010-1234-5678">
 				  </td>
 			    </tr>
 			    <tr>
 			      <th>이름</th>
 			      <td>
-					<input type="text" placeholder="이름을 입력하세요" value="${info.addressSet.addPerson }" name="person">
+					<input type="text" placeholder="이름을 입력하세요" value="${info.addressSet.addPerson }" name="addPerson">
 				  </td>
 			    </tr>
 			    <tr>
 			      <th rowspan='2'>주소</th>
 			      <td>
-					<input type="text" id="address_kakao" value="${info.addressSet.addAddress }" name="address" readonly placeholder="주소를 입력하세요" />
+					<input type="text" id="address_kakao" value="${info.addressSet.addAddress }" name="addAddress" readonly placeholder="주소를 입력하세요" />
 				  </td>
 			    </tr>
 			    <tr>
 			      <td>
-			      	<input type="text" name="address_detail" value="${info.addressSet.addetail }" placeholder="상세주소를 입력하세요"/>
+			      	<input type="text" name="addetail" value="${info.addressSet.addetail }" placeholder="상세주소를 입력하세요"/>
 			      </td>
 			    </tr>
 
@@ -106,7 +106,7 @@
 			      	SNS정보
 			      </th>
 			      <td>
-					<input type="button" name="sns" value="sns" id='facebook'>
+					<input type="button" name="memSnsinfo" value="sns" id='facebook'>
 				  </td>
 			    </tr>
 			   
