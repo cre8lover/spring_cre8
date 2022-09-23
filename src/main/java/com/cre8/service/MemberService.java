@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.cre8.dto.Cart;
 import com.cre8.dto.Mem;
 import com.cre8.dto.Pro;
@@ -37,7 +39,7 @@ public interface MemberService {
 
 	void insert(Mem mem);
 
-	void infoinsert(Mem mem, HttpServletRequest req);
+	void infoinsert(Mem mem, MultipartFile filename, String id);
 
 
 

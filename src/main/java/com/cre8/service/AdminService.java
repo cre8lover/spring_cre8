@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.cre8.dto.AdminKeyWord;
 import com.cre8.dto.Cat;
 import com.cre8.dto.Marketing;
@@ -28,7 +30,7 @@ public interface AdminService {
 	
 	List<Marketing> year();
 	
-	void reg(Marketing market, HttpServletRequest req);
+	void reg(Marketing market, MultipartFile filename, String string);
 	
 	Marketing modify(String seqno);
 

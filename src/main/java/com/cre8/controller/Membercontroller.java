@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cre8.dto.Address;
 import com.cre8.dto.Att;
@@ -132,12 +133,11 @@ public class Membercontroller{
 	}
 	
 	@PostMapping("infoinsert")
-	public String infoinsert(Mem mem, Address add,
-							HttpServletRequest req,
-							Model model) {
+	public String infoinsert(HttpSession sess, Mem mem, Address add,
+							Model model, MultipartFile filename) {
 		mem.setAddressSet(add);
 		
-		member.infoinsert(mem, req);
+		member.infoinsert(mem, filename, (String)sess.getAttribute("sess_id"));
 		
 		return "redirect:/mem/meminfo";
 	}

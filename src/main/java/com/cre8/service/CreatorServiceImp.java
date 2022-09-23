@@ -148,11 +148,10 @@ public class CreatorServiceImp implements CreatorService{
 	   public String productadd(Pro pro,MultipartFile filename,String id) {
 		Att attachfile = null;
 		try {
-			if(filename != null) {
+			if(filename.isEmpty()) {
 			attachfile = fileService.fileUpload(filename);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
