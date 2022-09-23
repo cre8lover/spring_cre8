@@ -17,9 +17,12 @@
 	<!-- db컨넥션 풀 bean 설정 -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-		<property name="url" value="jdbc:oracle:thin:@192.168.10.135:1521:cre8"/>
-		<property name="username" value="jmh"/>
-		<property name="password" value="jmh"/>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+		<property name="username" value="joy"/>
+		<property name="password" value="8088"/>
 	</bean>
-	
+		<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" >
+		<property name="maxUploadSize" value="10000000" />
+		<property name="maxInMemorySize" value="10485760" />
+	</bean>
 </beans>
