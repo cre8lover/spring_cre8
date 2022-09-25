@@ -59,6 +59,8 @@ public class Buycontroller extends HttpServlet {
 	public String cart(HttpSession sess,@ModelAttribute("allponecheck")ArrayList<String> chklist,
 						@ModelAttribute("orderbutton")String orderbutton,Model model){
     	
+//    	System.out.println("chk"+chklist.size());
+//    	System.out.println("or"+orderbutton);
     	if (chklist.size() != 0) {
 //    	System.out.println(chklist.get(0));
     	}
