@@ -148,7 +148,7 @@ public class CreatorServiceImp implements CreatorService{
 	   public String productadd(Pro pro,MultipartFile filename,String id) {
 		Att attachfile = null;
 		try {
-			if(filename.isEmpty()) {
+			if(filename != null) {
 			attachfile = fileService.fileUpload(filename);
 			}
 		} catch (Exception e) {
@@ -156,6 +156,7 @@ public class CreatorServiceImp implements CreatorService{
 		}
 		
 		pro.setAtt_file(attachfile);
+//		System.out.println("서비스"+pro.getProSeqno());
 	    if(pro.getProSeqno() != null) return creatorDao.productmodify(pro);
 	    else return creatorDao.productadd(pro,id);
 	      
