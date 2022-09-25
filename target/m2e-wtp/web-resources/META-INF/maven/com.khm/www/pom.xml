@@ -40,14 +40,6 @@
 		    <version>5.3.22</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
-		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-test</artifactId>
-		    <version>${org.springframework-version}</version>
-		    <scope>test</scope>
-		</dependency>
-
 				
 		<!-- AspectJ -->
 		<dependency>
@@ -185,20 +177,7 @@
 		    <version>0.4.17</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
-		<dependency>
-		    <groupId>org.mybatis</groupId>
-		    <artifactId>mybatis</artifactId>
-		    <version>3.5.6</version>
-		</dependency>
 		
-		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
-		<dependency>
-		    <groupId>org.mybatis</groupId>
-		    <artifactId>mybatis-spring</artifactId>
-		    <version>2.0.6</version>
-		</dependency>
-
 	</dependencies>
 	
 

@@ -24,14 +24,23 @@
 			<property name="dataSource" ref="dataSource" />
 			<property name="mapperLocations" value="classpath:mapper/**/*Mapper.xml"/>
 		</bean>
-	
+	 
 	
 	<!-- db컨넥션 풀 bean 설정 -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-		<property name="url" value="jdbc:oracle:thin:@192.168.10.135:1521:cre8"/>
-		<property name="username" value="jmh"/>
-		<property name="password" value="jmh"/>
+<!-- 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/> -->
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
+		<property name="url" value="jdbc:log4jdbc:oracle:thin:@localhost:1521/xe"/>
+		<property name="username" value="joy"/>
+		<property name="password" value="8088"/>
 	</bean>
 	
+		<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+			<property name="defaultEncoding" value="utf-8"/>
+			<property name="maxUploadSize" value="100024000"/>
+			<property name="maxUploadSizePerFile" value="10002400"/>
+			<property name="maxInMemorySize" value="10002400"/>
+			<property name="uploadTempDir" value="file:\\d:\\upload\\tmp"></property>
+		</bean>
 </beans>

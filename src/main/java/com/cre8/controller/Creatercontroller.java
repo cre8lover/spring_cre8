@@ -169,7 +169,7 @@ public class Creatercontroller {
 	public String promodify(Model model,Pro pro, Item item, MultipartFile filename,HttpSession sess) {
 		
 		pro.setItem(item);
-		
+//		System.out.println("컨"+pro.getProSeqno());
 		String seqno = cs.productadd(pro,filename,(String)sess.getAttribute("sess_id"));
 		
 		   model.addAttribute("seqno", seqno);
