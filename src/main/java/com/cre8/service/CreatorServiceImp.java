@@ -152,11 +152,11 @@ public class CreatorServiceImp implements CreatorService{
 			attachfile = fileService.fileUpload(filename);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		pro.setAtt_file(attachfile);
+//		System.out.println("서비스"+pro.getProSeqno());
 	    if(pro.getProSeqno() != null) return creatorDao.productmodify(pro);
 	    else return creatorDao.productadd(pro,id);
 	      

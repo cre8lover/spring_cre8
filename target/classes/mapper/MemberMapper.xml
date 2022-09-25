@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- 인터페이스 이름(com.chick.mapper.MemberMapper)과 xml의 namespace 속성값이 일치 -->
+  <mapper namespace="com.cre8.mapper.MemberMapper">
+  
+  	<select id="getById" resultType="com.cre8.dto.Mem">
+  		select mem_id as memId, mem_name as memName from mem where mem_id = #{id}
+  	</select>
+  </mapper>

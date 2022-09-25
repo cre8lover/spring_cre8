@@ -41,7 +41,7 @@ public class Productcontroller extends HttpServlet {
        List<Pro> prolist2 = pro.proList_furn();
       model.addAttribute("proList", prolist2);
       
-      return "/listimg/product_furniture.jsp";
+      return "/listimg/product_furniture";
     } 
     
    
@@ -50,7 +50,7 @@ public class Productcontroller extends HttpServlet {
        List<Pro> prolist3 = pro.proList_cos();
        model.addAttribute("proList", prolist3);
        
-       return "/listimg/product_cosmetics.jsp";
+       return "/listimg/product_cosmetics";
     }
     
     @GetMapping("interior")
@@ -58,7 +58,7 @@ public class Productcontroller extends HttpServlet {
        List<Pro> prolist4 = pro.proList_interior();
        model.addAttribute("proList", prolist4);
        
-       return "/listimg/product_interior.jsp";
+       return "/listimg/product_interior";
     }
     
     @GetMapping("travel")
@@ -66,7 +66,7 @@ public class Productcontroller extends HttpServlet {
        List<Pro> prolist5 = pro.proList_tra();
        model.addAttribute("proList", prolist5);
        
-       return "/listimg/product_cosmetics.jsp";
+       return "/listimg/product_cosmetics";
     }
     
 }
