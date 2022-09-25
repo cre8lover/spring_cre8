@@ -31,9 +31,10 @@
 <!-- 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/> -->
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
-		<property name="url" value="jdbc:log4jdbc:oracle:thin:@localhost:1521/xe"/>
-		<property name="username" value="joy"/>
-		<property name="password" value="8088"/>
+<!-- 		<property name="url" value="jdbc:log4jdbc:oracle:thin:@localhost:1521/xe"/> -->
+		<property name="url" value="jdbc:log4jdbc:oracle:thin:@192.168.10.135:1521/cre8"/>
+		<property name="username" value="jmh"/>
+		<property name="password" value="jmh"/>
 	</bean>
 	
 		<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
