@@ -490,7 +490,7 @@ public class CreatorDaoImp implements CreatorDao{
 				
 	            cre.setMem(mem);
 	            
-	         stmt.close();
+	         cstmt.close();
 	      } catch (SQLException e) {
 	         e.printStackTrace();
 	      }finally {///////////////////
@@ -977,7 +977,7 @@ public String totalmoney(String id) {
 				STRUCT att_rec =null;
 				Object[] thumb_obj = null;
 				Object[] att_obj = null;
-				if(auc.getAtt_file().getAttName() != null) {
+				if(auc.getAtt_file() != null) {
 					
 		    	  thumb_obj = new Object[]{auc.getAtt_file().getAttThumb().getFileName(),
 						    			   auc.getAtt_file().getAttThumb().getFileSize(),

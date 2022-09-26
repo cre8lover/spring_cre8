@@ -7,6 +7,6 @@
   <mapper namespace="com.cre8.mapper.MemberMapper">
   
   	<select id="getById" resultType="com.cre8.dto.Mem">
-  		select mem_id as memId, mem_name as memName from mem where mem_id = #{id}
+  		select mem_name as memName from mem where mem_id = #{id}
   	</select>
   </mapper>
