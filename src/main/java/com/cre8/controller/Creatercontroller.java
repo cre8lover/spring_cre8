@@ -169,10 +169,43 @@ public class Creatercontroller {
 	public String promodify(Model model,Pro pro, Item item, MultipartFile filename,HttpSession sess) {
 		
 		pro.setItem(item);
-		
+//		System.out.println("컨"+pro.getProSeqno());
 		String seqno = cs.productadd(pro,filename,(String)sess.getAttribute("sess_id"));
 		
 		   model.addAttribute("seqno", seqno);
 		  return "redirect:/cre/product_registration";	
+	}
+	
+	@RequestMapping(value="auction_registration", method= {RequestMethod.POST, RequestMethod.GET})
+	public String aucmodi(@ModelAttribute("seqno") String seqno, Model model) {
+
+		if(seqno != null) {
+			Auc auc = cs.aucdetail(seqno);
+			model.addAttribute("auc", auc);
+		}
+
+		return "creater/auction_registration?seqno =" + seqno;
+	}
+	@RequestMapping(value="auction_modify", method= {RequestMethod.POST, RequestMethod.GET})
+	public String auc_modi(MultipartFile filename, Auc auc, Item item,
+							HttpSession sess,
+							Model model) {
+		auc.setId((String)sess.getAttribute("sess_id"));
+		auc.setItem(item);
+
+		String seqno = cs.aucadd(filename, auc);
+		model.addAttribute("seqno", seqno);
+		return "redirect:/cre/auction_reg";
+	}
+	//옥션수정등록
+	@RequestMapping(value="auction_reg", method= {RequestMethod.POST, RequestMethod.GET})
+	public String acumodi(@ModelAttribute("seqno") String seqno, Model model) {
+
+		if(seqno != null) {
+			Auc auc = cs.aucdetail(seqno);
+			model.addAttribute("auc", auc);
+		}
+
+		return "creater/auction_registration";
 	}
 }
