@@ -490,7 +490,7 @@ public class CreatorDaoImp implements CreatorDao{
 				
 	            cre.setMem(mem);
 	            
-	         stmt.close();
+	         cstmt.close();
 	      } catch (SQLException e) {
 	         e.printStackTrace();
 	      }finally {///////////////////
