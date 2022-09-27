@@ -30,7 +30,11 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="/Users/kanghongmook/ojdbc8.jar">
+=======
+	<classpathentry kind="lib" path="/Users/cmrikim/eclipse/ojdbc8.jar">
+>>>>>>> branch 'master' of https://github.com/cre8lover/spring_cre8.git
 		<attributes>
 			<attribute name="module" value="true"/>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
