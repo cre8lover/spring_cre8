@@ -10,4 +10,30 @@
   		 insert into creator (cre_company, cre_phone, cre_name, cre_address, cre_regnum, cre_salenum, cre_pot, mem_id)
     values (#{creCompany},#{crePhone},#{creName},#{creAddress},#{creRegnum},#{creSalenum},#{crePot},#{mem.memId})
   	</insert>
+  	
+  	<!-- pro수정  -->
+  	<update id = "update"> 
+		UPDATE reply SET content=#{content} WHERE seqno = #{seqno}
+	</update> 
+	
+	<!-- pro삭제  -->
+	<delete id = "delete">
+	 	DELETE from reply WHERE seqno = #{rno} 
+	</delete> 
+	
+	<!--mkList 조회  -->
+	<select id="getList" resultType="com.kcm.dto.ReplyVo">
+	 	<![CDATA[
+	 	SELECT * 
+	 	FROM(
+		 	SELECT /*+INDEX(reply PK_REPLY) */
+		 		rownum rn, seqno, content, id,
+		 		TO_CHAR(wdate, 'YYYY-MM-DD HH:MI:SS')as wdate
+		 	FROM reply
+		 	WHERE board_seqno = #{bno}
+		 		AND rownum <= #{cri.currentPage} * #{cri.rowPerPage}
+		 ) WHERE rn > (#{cri.currentPage}-1) * #{cri.rowPerPage}
+		 ]]>
+	</select> 
+	  
   </mapper>

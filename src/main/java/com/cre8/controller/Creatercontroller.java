@@ -133,13 +133,6 @@ public class Creatercontroller {
 		out.print(rs);
 	}
 
-	// 게시물 삭제 --구현은되는데 totalprice에서 건드릴것이 있어 미완성 입니다.
-	@RequestMapping("prodel")
-	public String prodel(@RequestParam("proseqno") String seqno, Model model) {
-		model.addAttribute("proseqno");
-		cs.prodel(seqno);
-		return "redirect:/cre/creReg";
-	}
 
 	@RequestMapping("product_registration")
 	public String product_reg(@ModelAttribute("seqno") String seqno, Model model) {
@@ -165,6 +158,8 @@ public class Creatercontroller {
 		model.addAttribute("cre", salesHistory);
 		return "/creater/jmh_salesHistory";
 	}
+	
+	//게시물 수정 
 	@RequestMapping("promodify")
 	public String promodify(Model model,Pro pro, Item item, MultipartFile filename,HttpSession sess) {
 		
@@ -175,6 +170,13 @@ public class Creatercontroller {
 		   model.addAttribute("seqno", seqno);
 		  return "redirect:/cre/product_registration";	
 	}
+	// 게시물 삭제 
+		@RequestMapping("prodel")
+		public String prodel(@RequestParam("proseqno") String seqno, Model model) {
+			model.addAttribute("proseqno");
+			cs.prodel(seqno);
+			return "redirect:/cre/creReg";
+		}
 	
 	@RequestMapping(value="auction_registration", method= {RequestMethod.POST, RequestMethod.GET})
 	public String aucmodi(@ModelAttribute("seqno") String seqno, Model model) {
