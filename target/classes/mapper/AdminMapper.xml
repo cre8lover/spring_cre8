@@ -5,7 +5,7 @@
   
   <!-- 인터페이스 이름(com.chick.mapper.MemberMapper)과 xml의 namespace 속성값이 일치 -->
   <mapper namespace="com.cre8.mapper.AdminMapper">
-  
+ <!--  
   	<select id="longinProc" resultType="com.cre8.dto.Mem">
   		select m.mem_id as memId, m.mem_pw as memPw, m.mem_name as memName
   		  from mem m, mem_auth a
@@ -13,13 +13,51 @@
    		  and (a.auth_name = 'A' or a.auth_name = 'M') 
           and m.mem_id = #{memId}
   	</select>
-  	
-  	<select id="categoryList" resultType="com.cre8.dto.Cat">
-  		<![CDATA[ 
-  			select rownum, c.cat_name as catName, c.cat_regdate as catRegdate, c.cat_seqno as catSeqno,
-                (select mem.mem_name from mem where mem.mem_id = m.mem_id) memName
-			    from cat c, mem_auth m
-			    where m.mem_id = c.mem_id and cat_seqno = #{adkey.category} and cat_name like #{adkey.keyword}
-  		]]>	
+  -->	
+  
+  <!-- 조회 -->
+  	<select id="marketinglist" resultType="com.cre8.dto.Marketing">
+  			select rownum, a.*
+			from(
+				 select m.mar_seqno as mar_seqno, m.mar_product as mar_product, 
+				 		m.mar_company as mar_company, m.mar_ceo as mar_ceo,
+						m.mar_phone as mar_phone, m.mar_regnum as mar_regnum, 
+						m.mar_opendate as mar_opendate
+				 from marketing m
+				 order by m.mar_opendate desc) a
+			where mar_product like #{keyword} or mar_company like #{keyword}  or mar_ceo like #{keyword} or mar_phone like #{keyword} or mar_regnum like #{keyword} 
   	</select>
+ 
+ <!-- 등록(marSeqno == null) / 수정 --> 	
+  	<insert id="marketReg">
+	  	<choose>
+	  		<when test='marSeqno == null'>
+	  		insert into marketing (mar_seqno, mar_cate, mar_product, mar_price, mar_company, 
+					mar_opendate, mar_closedate, mar_detail, mar_ceo, mar_phone, mar_regnum)
+	            values (mar_seqno.nextval, #{marCategory }, #{ marProduct}, #{ marPrice}, #{marCompany }, #{ marOpendate},
+	                    #{ marClosedate}, #{marDetail }, #{marCeo }, #{marPhone }, #{ marRegnum})
+	
+	<!--                    
+	        INSERT INTO att (att_seqno, att_name, att_savename, att_size, att_type, att_path, mem_id)
+	            VALUES (att_seqno.nextval, p_att.p_att_name, p_att.p_att_savename, p_att.p_att_size, p_att.p_att_type, p_att.p_att_path, p_id)
+	
+	    	insert INTO att_thumb (thumb_seqno, thumb_filename, thumb_filesize, thumb_filepath, att_seqno) 
+	                VALUES (thumb_seqno.nextval, p_att.p_att_thumb.p_attth_name, p_att.p_att_thumb.p_attth_size, p_att.p_att_thumb.p_attth_path, v_att_seqno)           
+	-->
+			</when>
+			<otherwise>
+				update marketing set mar_cate =#{marCategory }, mar_product=#{ marProduct}, mar_price=#{ marPrice}, mar_company=#{marCompany }, 
+						mar_opendate=#{ marOpendate}, mar_closedate=#{ marClosedate}, mar_detail=#{marDetail }, mar_ceo=#{marCeo }, mar_phone=#{marPhone }, mar_regnum=#{ marRegnum}
+						where mar_seqno =#{ marSeqno}
+	<!-- 
+	  			INSERT INTO att (att_seqno, att_name, att_savename, att_size, att_type, att_path, mem_id, mar_seqno)
+	       			     VALUES (v_att_seqno, p_att.p_att_name, p_att.p_att_savename, p_att.p_att_size, p_att.p_att_type, p_att.p_att_path, p_id, p_mar_seqno)
+	
+	   			insert INTO att_thumb (thumb_seqno, thumb_filename, thumb_filesize, thumb_filepath, att_seqno) 
+	               		 VALUES (thumb_seqno.nextval, p_att.p_att_thumb.p_attth_name, p_att.p_att_thumb.p_attth_size, p_att.p_att_thumb.p_attth_path, v_att_seqno)
+	 --> 
+			</otherwise>
+		</choose>
+  	</insert>
+  	
   </mapper>

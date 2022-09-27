@@ -9,8 +9,7 @@
 <meta charset="UTF-8">
 <title>마케팅 상품관리</title>
 </head>
-<script src="<%= request.getContextPath() %>/js/artistpage.js"></script>
-
+<%-- <script src="<%= request.getContextPath() %>/js/artistpage.js"></script>--%>
  <%@ include file="../admin/adminmenu.jsp" %>
 
 		<div class="khm_searchs">
@@ -97,6 +96,10 @@
 		  </tbody>
 		</table>
 	</div>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/creAd.js"></script>
+<script>
 
+
+</script>
  </body>
 </html>

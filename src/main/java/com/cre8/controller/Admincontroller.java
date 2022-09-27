@@ -139,7 +139,7 @@ public class Admincontroller {
 		return "/admin/admin_adreg";
 	}
 	
-	@RequestMapping("marReg")
+	@PostMapping("marReg")
 	public String marinsert(Marketing market, HttpSession sess, MultipartFile filename) {
 		admin.reg(market, filename, (String)sess.getAttribute("sess_id"));
 
@@ -164,5 +164,5 @@ public class Admincontroller {
 		
 		return "/master/admofiy";
 	}
-
+	
 }

@@ -22,10 +22,13 @@ import com.cre8.dto.Att;
 import com.cre8.dto.Cat;
 import com.cre8.dto.Marketing;
 import com.cre8.dto.Mem;
+import com.cre8.mapper.AdminMapper;
 
 @Service
 public class AdminServiceImp implements AdminService {
 	
+	@Autowired
+	private AdminMapper mapper;
 	@Autowired
 	AdminDao dao;
 	@Autowired 
@@ -54,7 +57,7 @@ public class AdminServiceImp implements AdminService {
 	@Override
 	public List<Marketing> marketinglist(AdminKeyWord adkey) {
 		
-		return dao.marketinglist(adkey);
+		return mapper.marketinglist(adkey);
 	}
 
 	@Override
@@ -74,22 +77,24 @@ public class AdminServiceImp implements AdminService {
 		Att attachfile = null;
 		
 		
+		m.setMemId(id);
 		
 		try {
 			if(filename != null) {
 				attachfile = fileService.fileUpload(filename);
+				attachfile.setMem(m);
+				
+				market.setAttSet(attachfile);
 			}
 		} catch (FileUploadException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		m.setMemId(id);
-		attachfile.setMem(m);
 		
-		market.setAttSet(attachfile);
-		dao.marketReg(market);
+		System.out.println("이건 진짜 무형이형이 최고란 뜻입니다!");
+
+		mapper.marketReg(market);
 	}
 
 	@Override

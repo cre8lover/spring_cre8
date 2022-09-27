@@ -231,7 +231,11 @@ label.control-label {
 }
 
 </style>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/creAd.js"></script>
+<script>
 
+
+</script>
 <script>
 
     $("#reg").click( function() {

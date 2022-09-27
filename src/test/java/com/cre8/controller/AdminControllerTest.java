@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -34,6 +35,7 @@ public class AdminControllerTest {
 	private MockMvc mockMvc;
 	//junit 임포트
 	
+//	MockMultipartFile image = new MockMultipartFile("files", "imagefile.jpeg", "image/jpeg", "<<jpeg data>>".getBytes());
 	
 	protected MockHttpSession session;
 	protected MockHttpServletRequest request;
@@ -55,12 +57,36 @@ public class AdminControllerTest {
 	    session.clearAttributes();
 	    session = null;
 	}
-	
+/*	
 	@Test
-	public void test() {
+	public void marektinglistTest() {
 		try {
-			String rs = mockMvc.perform(MockMvcRequestBuilders.get("/master/adminlogin")
-										.param("memId", "ddd").param("memPw", "1234")
+			String rs = mockMvc.perform(MockMvcRequestBuilders.get("/master/creAd")
+										.param("keyword", "0")
+										).andReturn().getModelAndView().getViewName();
+			
+			log.info(rs);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+*/	
+	@Test
+	public void marketingChange() {
+		try {
+			String rs = mockMvc.perform(MockMvcRequestBuilders.post("/master/marReg")
+										.param("marCategory", "0")
+										.param("marCeo", "0")
+										.param("marClosedate", "12/12/12")
+										.param("marCompany", "0")
+										.param("marDetail", "0")
+										.param("marOpendate", "11/11/11")
+										.param("marPhone", "010-1234-5678")
+										.param("marPrice", "0")
+										.param("marProduct", "0")
+										.param("marRegnum", "0")
+										.session(session)
 										).andReturn().getModelAndView().getViewName();
 			
 			log.info(rs);

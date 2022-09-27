@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.cre8.dto.AdminKeyWord;
 import com.cre8.dto.Cat;
+import com.cre8.dto.Marketing;
 import com.cre8.dto.Mem;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,21 +26,33 @@ public class AdminMapperTest {
 	private AdminMapper mapper;
 	
 	@Test
-	public void test() {
-		Mem m = mapper.longinProc("bbb","1234");
+	public void marlist() {
 		
-		log.info(m.getMemName());
+		AdminKeyWord adkey = new AdminKeyWord();
+		adkey.setKeyword("");
+		List<Marketing> m = mapper.marketinglist(adkey);
+		
+		for(Marketing list : m) {
+			log.info("카테고리 이름 : " + list.getMarCeo());
+		}
 	}
 	
 	@Test
-	public void test2() {
+	public void marChange() {
+		Marketing m = new Marketing();
+//		m.setMarSeqno(11);
+		m.setMarCategory("말씀만...");
+		m.setMarCeo("3");
+		m.setMarClosedate("220309");
+		m.setMarCompany("3");
+		m.setMarDetail("3");
+		m.setMarOpendate("220101");
+		m.setMarPhone("010-1234-5678");
+		m.setMarPrice("3");
+		m.setMarProduct("4");
+		m.setMarRegnum("353-74435");
 		
-		AdminKeyWord adkey = new AdminKeyWord("1","의");
-		List<Cat> c = mapper.categoryList(adkey);
-		
-		for(Cat list : c) {
-			log.info("카테고리 이름 : " + list.getCatName());
-		}
+		mapper.marketReg(m);
 	}
 	
 }
