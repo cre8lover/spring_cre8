@@ -15,9 +15,16 @@ public class AdminKeyWord {
 	public AdminKeyWord() {
 		super();
 	}
+	public AdminKeyWord(String category, String keyword) {
+		super();
+		this.category = category;
+		this.keyword = keyword;
+	}
 	
 	public AdminKeyWord(int currentPage, int rowPerPage) {
-		// TODO Auto-generated constructor stub
+		super();
+		this.currentPage = currentPage;
+		this.rowPerPage = rowPerPage;
 	}
 	public int getCurrentPage() {
 		return currentPage;

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- 인터페이스 이름(com.chick.mapper.MemberMapper)과 xml의 namespace 속성값이 일치 -->
+  <mapper namespace="com.cre8.mapper.AdminMapper">
+  
+  	<select id="longinProc" resultType="com.cre8.dto.Mem">
+  		select m.mem_id as memId, m.mem_pw as memPw, m.mem_name as memName
+  		  from mem m, mem_auth a
+  		  where m.mem_id = a.mem_id 
+   		  and (a.auth_name = 'A' or a.auth_name = 'M') 
+          and m.mem_id = #{memId}
+  	</select>
+  	
+  	<select id="categoryList" resultType="com.cre8.dto.Cat">
+  		<![CDATA[ 
+  			select rownum, c.cat_name as catName, c.cat_regdate as catRegdate, c.cat_seqno as catSeqno,
+                (select mem.mem_name from mem where mem.mem_id = m.mem_id) memName
+			    from cat c, mem_auth m
+			    where m.mem_id = c.mem_id and cat_seqno = #{adkey.category} and cat_name like #{adkey.keyword}
+  		]]>	
+  	</select>
+  </mapper>

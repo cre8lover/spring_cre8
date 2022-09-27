@@ -11,6 +11,8 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,14 +25,17 @@ import com.cre8.dto.Cart;
 import com.cre8.dto.Mem;
 import com.cre8.dto.Pro;
 import com.cre8.dto.Ship;
+import com.cre8.mapper.MemberMapper;
 
 @Service
 public class MemberServiceImp implements MemberService {
 	
+	private static final Logger log = LoggerFactory.getLogger(MemberServiceImp.class);
+	
 	@Autowired
-	MemberDao dao;
+	private MemberDao dao;
 	@Autowired 
-	FileService fileService;
+	private FileService fileService;
 	
 	private static final String CHARSET = "utf-8";
 
