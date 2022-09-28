@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,13 +32,15 @@ public class Creatercontroller2 {
 
 	 // 게시물 삭제
 	
+	// 일반물풀 삭제
 	//RestService로 바꿈
-	@DeleteMapping(value="{rno}", produces ="text/plain; charset=utf-8")
-	public ResponseEntity<prodelVo> remove(@PathVariable("rno") String seqno){
-		log.info("delete : " + seqno);
-		return cs.prodel(seqno) == 1 ? new ResponseEntity<prodelVo>(HttpStatus.OK) :
-			  						 new ResponseEntity<prodelVo>(HttpStatus.INTERNAL_SERVER_ERROR);
-
+	@DeleteMapping(value="remove", produces ="text/plain; charset=utf-8", consumes="application/json")
+	public ResponseEntity<String> remove(@RequestBody prodelVo seqno){
+	log.info("delete : " + seqno);
+	return cs.prodel(seqno) == 1 ? new ResponseEntity<String>("삭제되었습니다 ",HttpStatus.OK) :
+	  new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	  //@RequestBody방식은 html 바디에 숨겨서 post 방식 키값을 안써도됨 
+	  //@path는 url : get방식
 	}
 
 }

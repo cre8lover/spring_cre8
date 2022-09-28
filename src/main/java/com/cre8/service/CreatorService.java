@@ -12,6 +12,7 @@ import com.cre8.dto.Auc;
 import com.cre8.dto.Creator;
 import com.cre8.dto.Marketing;
 import com.cre8.dto.Pro;
+import com.cre8.dto.prodelVo;
 
 
 public interface CreatorService {
@@ -50,7 +51,7 @@ public interface CreatorService {
 
 	String aucadd(MultipartFile filename, Auc auc);
 
-	int prodel(String seqno);
+	int prodel(prodelVo seqno);
 
 
 

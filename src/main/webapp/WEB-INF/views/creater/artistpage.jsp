@@ -136,52 +136,35 @@
 </div>
    
 <%--   <%@ include file="/footer.jsp" %>  --%>
-
- 
-
-<script>
-/* var rno = '<c:out value="${list.proSeqno}" />'; */
+	
+	<script>
+	/* var rno = '<c:out value="${list.proSeqno}" />'; */
 
 
-$(document).ready(function(){
-	// 수정버튼 클릭 시
-/* 	$("#cn1").on("click", function(e){
-		console.log("확인함");
-
-		console.log("pro 수정 번호 : " + modal.data("rno"));
-		console.log("pro 수정 내용 : " + modal_content.val());
-
-		var pro ={seqno : modal.data("rno"),
-				  content : modal_content.val()};
-		
- 		 creatorService.update(reply, function(result){
-		 alert(result);
-			
-/* 			modal.hide();
-			showList(currentPage);
-		 }); 
-	}); */
+	$(document).ready(function(){
+	//마케팅 리스트 조회 
 	
 	
 	
-	//삭제버튼 클릭시
+	//일반물품 삭제버튼 클릭시
 	$(".cn2").on("click", function(e){
 	var ino = '<c:out value = "${item.itemSeqno}" />';
 	var ano = '<c:out value = "${att.attSeqno}" />';
 	var pno = '<c:out value = "${pro.proSeqno}" />';
-		 
-	 	var no = {
-				itemSeqno : ino,
-				attSeqno : ano,
-				proSeqno : pno
-		}; 
-		
-		CreatorService.remove(no, function(result){
-			alert(result);
-		}); 
+	console.log("아이탬 시퀀" + ino);
+	console.log("어테치 시퀀" + ino);
+	console.log("프로  시퀀" + ino);
+	 
+	var no = {
+	itemSeqno : ino,
+	attSeqno : ano,
+	proSeqno : pno
+	}; 
+	CreatorService.remove(no, function(result){
+	alert(result);
 	}); 
-	
-});
+	}); 
+	});
 </script>  
 <script src="<%= request.getContextPath() %>/js/artistpage.js"></script>
 
