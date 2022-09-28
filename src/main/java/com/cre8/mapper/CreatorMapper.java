@@ -6,6 +6,7 @@ import com.cre8.dto.Att;
 import com.cre8.dto.Creator;
 import com.cre8.dto.Marketing;
 import com.cre8.dto.Pro;
+import com.cre8.dto.prodelVo;
 
 public interface CreatorMapper {
 	
@@ -15,6 +16,6 @@ public interface CreatorMapper {
 
 	public int cremodifyreg(Pro p);
 
-	public int prodel(String seqno);
+	public int prodel(prodelVo seqno);
 	
 }

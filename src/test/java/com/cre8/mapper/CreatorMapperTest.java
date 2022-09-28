@@ -14,6 +14,7 @@ import com.cre8.dto.Creator;
 import com.cre8.dto.Marketing;
 import com.cre8.dto.Mem;
 import com.cre8.dto.Pro;
+import com.cre8.dto.prodelVo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/root-context.xml",
@@ -68,9 +69,9 @@ public class CreatorMapperTest {
 	
 	//삭제
 	@Test
-	public void testdelete(@Param("seqno") String seqno) {
-		seqno = "1";
-		mapper.prodel(seqno);
+	public void testdelete(prodelVo seqno) {
+		prodelVo p = new prodelVo();
+		mapper.prodel(p);
 	}
 	
 	
