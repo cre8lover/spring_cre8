@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cre8.dto.Att;
 import com.cre8.dto.Auc;
 import com.cre8.dto.Creator;
 import com.cre8.dto.Marketing;
@@ -47,7 +48,10 @@ public interface CreatorService {
 
 	Map<String, String> cremodifyreg(HttpServletRequest req);
 
-	public void prodel(String seqno);
-
 	String aucadd(MultipartFile filename, Auc auc);
+
+	int prodel(String seqno);
+
+
+
 }

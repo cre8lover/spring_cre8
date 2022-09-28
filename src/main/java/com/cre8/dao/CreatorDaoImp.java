@@ -393,13 +393,17 @@ public class CreatorDaoImp implements CreatorDao{
 		while(rs.next()) {
 			Pro p = new Pro();
 			Item i = new Item();
-
+			Att a = new Att();
+			
+			a.setArtSeqno(rs.getString("att_seqno"));
+			i.setItemName(rs.getString("item_seqno"));
 			i.setItemDetail(rs.getString("item_detail"));
 			p.setProAmount(rs.getInt("pro_amount"));
 			p.setProSaleprice(rs.getInt("pro_saleprice"));
 			p.setProSeqno(rs.getInt("pro_seqno"));
 			i.setItemImg(rs.getString("thumb_filename"));
 			p.setItem(i);
+			p.setAtt_file(a);
 			prolist.add(p);
 		}
 		cstmt.close();

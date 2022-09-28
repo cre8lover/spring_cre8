@@ -20,6 +20,7 @@ import com.cre8.dto.Creator;
 import com.cre8.dto.Item;
 import com.cre8.dto.Marketing;
 import com.cre8.dto.Pro;
+import com.cre8.mapper.CreatorMapper;
 
 
 
@@ -33,6 +34,9 @@ public class CreatorServiceImp implements CreatorService{
 	CreatorDao creatorDao;
 	@Autowired
 	FileService fileService;
+	@Autowired
+	CreatorMapper mapper;
+	
 	
 	@Override
 	public void Creatoradd(HttpServletRequest request, String id) {
@@ -186,10 +190,12 @@ public class CreatorServiceImp implements CreatorService{
 	      return creatorDao.cremodifyreg(req);
 	   }
 	@Override
-	public void prodel(String seqno) {
+	public int prodel(String seqno) {
 		Att att = creatorDao.prodel(seqno);
 
 		fileService.delete(seqno,att.getSavefilename(),att.getAttPath(),att.getAttThumb().getFileName());
+	
+		return mapper.prodel(seqno);
 	}
 	
 

@@ -2,9 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 
+
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <%@ include file="../header.jsp" %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/creater/artistpage.css">
 <meta charset="UTF-8">
@@ -43,8 +46,9 @@
                         <p>총 판매금액 : ${list.proSaleprice }
                     </p>
                     <div style="text-align: center;">
-                      <button class="custom-btn btn-1" onclick = "newwindow('<%= request.getContextPath() %>/cre/product_registration?seqno=${list.proSeqno}','modify');">수정</button>
-                  <button class="custom-btn btn-1" onclick = "prodelete('${list.proSeqno}')">삭제</button>
+                      <button class="custom-btn btn-1 cn1" <%-- onclick = "newwindow('<%= request.getContextPath() %>/cre/product_registration?seqno=${list.proSeqno}','modify');" --%>>수정</button>
+                  <%-- <button class="custom-btn btn-1" id="cn2" onclick = "prodelete('${list.proSeqno}')">삭제</button> --%>
+                  <button class="custom-btn btn-1 cn2"  <%-- onclick = "prodelete('${list.proSeqno}')" --%>>삭제</button>
                   </div>
                 </div>
             </c:forEach>
@@ -132,8 +136,57 @@
 </div>
    
 <%--   <%@ include file="/footer.jsp" %>  --%>
-</body>
+
+ 
+
+<script>
+/* var rno = '<c:out value="${list.proSeqno}" />'; */
+
+
+$(document).ready(function(){
+	// 수정버튼 클릭 시
+/* 	$("#cn1").on("click", function(e){
+		console.log("확인함");
+
+		console.log("pro 수정 번호 : " + modal.data("rno"));
+		console.log("pro 수정 내용 : " + modal_content.val());
+
+		var pro ={seqno : modal.data("rno"),
+				  content : modal_content.val()};
+		
+ 		 creatorService.update(reply, function(result){
+		 alert(result);
+			
+/* 			modal.hide();
+			showList(currentPage);
+		 }); 
+	}); */
+	
+	
+	
+	//삭제버튼 클릭시
+	$(".cn2").on("click", function(e){
+	var ino = '<c:out value = "${item.itemSeqno}" />';
+	var ano = '<c:out value = "${att.attSeqno}" />';
+	var pno = '<c:out value = "${pro.proSeqno}" />';
+		 
+	 	var no = {
+				itemSeqno : ino,
+				attSeqno : ano,
+				proSeqno : pno
+		}; 
+		
+		CreatorService.remove(no, function(result){
+			alert(result);
+		}); 
+	}); 
+	
+});
+</script>  
 <script src="<%= request.getContextPath() %>/js/artistpage.js"></script>
+
+<script type="text/javascript" src="/js/creator.js"></script>
+</body>
 
 
 </html>
