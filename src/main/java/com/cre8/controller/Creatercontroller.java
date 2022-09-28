@@ -14,22 +14,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cre8.dto.Att;
 import com.cre8.dto.Auc;
 import com.cre8.dto.Creator;
 import com.cre8.dto.Item;
 import com.cre8.dto.Marketing;
 import com.cre8.dto.Pro;
+import com.cre8.dto.prodelVo;
 import com.cre8.service.CreatorService;
 import com.cre8.service.CreatorServiceImp;
 import com.cre8.service.FileService;
@@ -39,6 +48,9 @@ import com.cre8.service.FileServiceImp;
 @RequestMapping(value = "/cre/")
 public class Creatercontroller {
 
+	private static final Logger log = LoggerFactory.getLogger(Creatercontroller.class);
+	
+	
 	@Autowired
 	CreatorService cs;
 	@Autowired
@@ -52,7 +64,9 @@ public class Creatercontroller {
 		if (id == null || add == null) {
 			return "/member/memreg";
 		} else if (add.equals("C")) {
-
+			
+			prodelVo prodelvo = new prodelVo();
+			
 			List<Pro> prolist = cs.Prolist(seqno, id);
 			List<Auc> auclist = cs.Auclist(seqno, id);
 
@@ -61,6 +75,7 @@ public class Creatercontroller {
 			model.addAttribute("prolist", prolist);
 			model.addAttribute("auclist", auclist);
 			model.addAttribute("total", total);
+			model.addAttribute("prodelvo", prodelvo);
 
 			return "/creater/artistpage";
 		} else {
@@ -170,13 +185,26 @@ public class Creatercontroller {
 		   model.addAttribute("seqno", seqno);
 		  return "redirect:/cre/product_registration";	
 	}
-	// 게시물 삭제 
-		@RequestMapping("prodel")
-		public String prodel(@RequestParam("proseqno") String seqno, Model model) {
-			model.addAttribute("proseqno");
-			cs.prodel(seqno);
-			return "redirect:/cre/creReg";
-		}
+	
+	 // 게시물 삭제
+	  
+//	  @RequestMapping("prodel") public String prodel(@RequestParam("proseqno")
+//	  String seqno, Model model) { model.addAttribute("proseqno");
+//	  cs.prodel(seqno); return "redirect:/cre/creReg"; }
+	 
+	
+	/*
+	 * //RestService로 바꿈
+	 * 
+	 * controller2에 구현
+	 * @DeleteMapping(value="{rno}", produces ="text/plain; charset=utf-8") public
+	 * void remove(@PathVariable("prodel") String seqno, Att att_seq){
+	 * log.info("delete : " + seqno); }
+	 */
+	
+	
+	
+	
 	
 	@RequestMapping(value="auction_registration", method= {RequestMethod.POST, RequestMethod.GET})
 	public String aucmodi(@ModelAttribute("seqno") String seqno, Model model) {

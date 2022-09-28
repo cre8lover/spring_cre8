@@ -1,5 +1,6 @@
 package com.cre8.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -8,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.cre8.dto.Att;
 import com.cre8.dto.Creator;
+import com.cre8.dto.Marketing;
 import com.cre8.dto.Mem;
+import com.cre8.dto.Pro;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/root-context.xml",
@@ -21,6 +25,7 @@ public class CreatorMapperTest {
 	@Autowired
 	private CreatorMapper mapper;
 	
+	//크리에이터 가입
 	@Test
 	public void test() {
 		Creator c = new Creator();
@@ -36,5 +41,37 @@ public class CreatorMapperTest {
 		c.setMem(m);
 		mapper.Creatoradd(c);
 	}
+	
+	//마케팅 리스트 조회
+	@Test
+	public void test1() {
+		Marketing m = new Marketing();
+		m.setMarSeqno(13);
+		m.setMarProduct("짠짠");
+		m.setMarImg("호이");
+		m.setMarPrice("100000");
+		mapper.mk(m);
+		
+		log.info("마케팅 가격" + m.getMarPrice());
+		
+	}
+	
+	//수정
+	@Test
+	public void testupdate() {
+		Pro p = new Pro(); 
+		p.setProSeqno(1); //아무거나 댓글 seqno있는것
+		p.setProPrice(30000);
+		int count = mapper.cremodifyreg(p);
+		log.info("update count : " + count);
+	}
+	
+	//삭제
+	@Test
+	public void testdelete(@Param("seqno") String seqno) {
+		seqno = "1";
+		mapper.prodel(seqno);
+	}
+	
 	
 }

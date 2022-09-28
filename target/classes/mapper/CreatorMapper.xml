@@ -6,33 +6,36 @@
   <!-- 인터페이스 이름(com.chick.mapper.MemberMapper)과 xml의 namespace 속성값이 일치 -->
   <mapper namespace="com.cre8.mapper.CreatorMapper">
   
+  
   	<insert id="Creatoradd">
   		 insert into creator (cre_company, cre_phone, cre_name, cre_address, cre_regnum, cre_salenum, cre_pot, mem_id)
     values (#{creCompany},#{crePhone},#{creName},#{creAddress},#{creRegnum},#{creSalenum},#{crePot},#{mem.memId})
   	</insert>
   	
-  	<!-- pro수정  -->
-  	<update id = "update"> 
-		UPDATE reply SET content=#{content} WHERE seqno = #{seqno}
-	</update> 
+  	
+  	
+  	<!-- 크리에이터 수정  -->
+  	<update id ="cremodifyreg"> 
+		update mem set mem_tel = #{memTel}, mem_email = #{memEmail}, MEM_SNSINFO = #{memSnsinfo} where mem_id = #{memId}
+
+        update creator set CRE_COMPANY =#{creCompany}, CRE_PHONE = #{crePhone}, CRE_NAME = #{creName}, CRE_ADDRESS = #{creAddress},
+                           CRE_REGNUM = #{creRegnum}, CRE_SALENUM = #{creSalenum}, CRE_POT = #{crePot} where mem_id = #{memId}
+	</update>
+	
+	
 	
 	<!-- pro삭제  -->
-	<delete id = "delete">
-	 	DELETE from reply WHERE seqno = #{rno} 
-	</delete> 
-<!-- 	
-	<select id="getList" resultType="com.kcm.dto.ReplyVo">
-	 	<![CDATA[
-	 	SELECT * 
-	 	FROM(
-		 	SELECT /*+INDEX(reply PK_REPLY) */
-		 		rownum rn, seqno, content, id,
-		 		TO_CHAR(wdate, 'YYYY-MM-DD HH:MI:SS')as wdate
-		 	FROM reply
-		 	WHERE board_seqno = #{bno}
-		 		AND rownum <= #{cri.currentPage} * #{cri.rowPerPage}
-		 ) WHERE rn > (#{cri.currentPage}-1) * #{cri.rowPerPage}
-		 ]]>
+	<delete id = "prodel">
+			  delete pro where pro_seqno = #{proSeqno}
+			  <!-- delete att where att_seqno = #{attSeqno} -->
+	</delete>  
+	
+	
+ <!-- 마케팅 리스트조회 -->
+	<select id="mk" resultType="com.cre8.dto.Marketing">
+	 	select mar_seqno, mar_product, mar_img, mar_price from Marketing WHERE mar_seqno = #{marSeqno}
+		 		<!-- AND rownum <= #{cri.currentPage} * #{cri.rowPerPage}
+		 ) WHERE rn > (#{cri.currentPage}-1) * #{cri.rowPerPage} -->
 	</select> 
- -->	  
+ 	  
   </mapper>
