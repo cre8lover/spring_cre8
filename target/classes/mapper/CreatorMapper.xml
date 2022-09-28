@@ -20,8 +20,7 @@
 	<delete id = "delete">
 	 	DELETE from reply WHERE seqno = #{rno} 
 	</delete> 
-	
-	<!--mkList 조회  -->
+<!-- 	
 	<select id="getList" resultType="com.kcm.dto.ReplyVo">
 	 	<![CDATA[
 	 	SELECT * 
@@ -35,5 +34,5 @@
 		 ) WHERE rn > (#{cri.currentPage}-1) * #{cri.rowPerPage}
 		 ]]>
 	</select> 
-	  
+ -->	  
   </mapper>
