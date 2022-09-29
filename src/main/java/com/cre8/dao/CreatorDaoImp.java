@@ -29,6 +29,7 @@ import com.cre8.dto.Marketing;
 import com.cre8.dto.Mem;
 import com.cre8.dto.Pro;
 import com.cre8.dto.Thumbnail;
+import com.cre8.dto.prodelVo;
 
 import oracle.jdbc.OracleType;
 import oracle.jdbc.OracleTypes;
@@ -1445,6 +1446,20 @@ public String totalmoney(String id) {
 				e.printStackTrace();
 			}
 			
+		}
+
+
+		@Override
+		public Att prodel(prodelVo seqno) {
+			
+			return null;
+		}
+
+
+		@Override
+		public Creator infomodify(Creator c) {
+			// TODO Auto-generated method stub
+			return null;
 		}	
 }	
 

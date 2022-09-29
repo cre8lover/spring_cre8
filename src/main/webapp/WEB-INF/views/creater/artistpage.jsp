@@ -123,7 +123,7 @@
             <p class="sum">총 정산금액</p>
             <p class="price2">${total }원</p>
             <div class="frame">
-               <button class="custom-btn btn-2" onclick = "newwindow('<%= request.getContextPath() %>/cre/cremodify','modify');">정보수정</button>
+               <button class="custom-btn btn-2 cn3" onclick = "newwindow('<%= request.getContextPath() %>/cre/cremodify','modify');">정보수정</button>
                <button class="custom-btn btn-2" onclick = "location.href='<%= request.getContextPath() %>/cre/Adlist'">광고신청</button>
                <button class="custom-btn btn-2" onclick = "newwindow('<%= request.getContextPath() %>/cre/salesHistory','sale');">판매현황</button>
             </div>
@@ -136,36 +136,65 @@
 </div>
    
 <%--   <%@ include file="/footer.jsp" %>  --%>
-	
+<script type="text/javascript" src="/js/creator.js"></script>	
 	<script>
 	/* var rno = '<c:out value="${list.proSeqno}" />'; */
 
 
 	$(document).ready(function(){
-	//마케팅 리스트 조회 
 	
-	
-	
+		
+	//크리에이터 정보 수정
+		$(".cn3").on("click", function(e){
+			 var creCompany = '<c:out value="${Creator.creCompany}" />'; 
+			 var crePhone = '<c:out value="${Creator.crePhone}" />'; 
+			 var creName = '<c:out value="${Creator.creName}" />'; 
+			 var creAddress = '<c:out value="${Creator.creAddress}" />'; 
+			 var creRegnum = '<c:out value="${Creator.creRegnum}" />'; 
+			 var creSalenum = '<c:out value="${Creator.creSalenum}" />'; 
+			 var crePot = '<c:out value="${Creator.crePot}" />'; 
+			 var memid = '<c:out value="${Creator.memid}" />'; 
+		
+		 var ccc ={creCompany : creCompany,
+					crePhone : crePhone,
+					creName : creName,
+					creAddress : creAddress,
+					creRegnum : creRegnum,
+					creSalenum : creSalenum,
+					crePot : crePot,
+					memid : id,
+					};
+		
+		 CreatorService.update(ccc, function(result){
+			
+			 if(result == '크리에이터 수정완료'){
+				 window.close();
+				 }
+				
+			 });
+		});
+		
 	//일반물품 삭제버튼 클릭시
-	$(".cn2").on("click", function(e){
-	var ino = '<c:out value = "${item.itemSeqno}" />';
-	var ano = '<c:out value = "${att.attSeqno}" />';
-	var pno = '<c:out value = "${pro.proSeqno}" />';
-	console.log("아이탬 시퀀" + ino);
-	console.log("어테치 시퀀" + ino);
-	console.log("프로  시퀀" + ino);
-	 
-	var no = {
-	itemSeqno : ino,
-	attSeqno : ano,
-	proSeqno : pno
-	}; 
-	CreatorService.remove(no, function(result){
-	alert(result);
-	}); 
-	}); 
-	});
-</script>  
+	
+		$(".cn2").on("click", function(e) {
+				var ino = '<c:out value = "${item.itemSeqno}" />';
+				var ano = '<c:out value = "${att.attSeqno}" />';
+				var pno = '<c:out value = "${pro.proSeqno}" />';
+				console.log("아이탬 시퀀" + ino);
+				console.log("어테치 시퀀" + ino);
+				console.log("프로  시퀀" + ino);
+
+				var no = {
+					itemSeqno : ino,
+					attSeqno : ano,
+					proSeqno : pno
+				};
+				CreatorService.remove(no, function(result) {
+					alert(result);
+				});
+			});
+		});
+	</script>  
 <script src="<%= request.getContextPath() %>/js/artistpage.js"></script>
 
 <script type="text/javascript" src="/js/creator.js"></script>
