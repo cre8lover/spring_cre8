@@ -26,6 +26,8 @@ public class AdminMapperTest {
 	@Autowired
 	private AdminMapper mapper;
 	
+	
+	//조회
 	@Test
 	public void marlist() {
 		
@@ -39,10 +41,13 @@ public class AdminMapperTest {
 		}
 	}
 	
+	//수정 및 등록
 	@Test
 	public void marChange() {
 		MarketingVo m = new MarketingVo();
-		m.setMarSeqno(3);
+
+//		시퀀스번호가 있으면 update 없으면 insert
+		//		m.setMarSeqno(3);
 		m.setMarCategory("test...");
 		m.setMarCeo("3");
 		m.setMarClosedate("220309");
@@ -55,5 +60,13 @@ public class AdminMapperTest {
 		m.setMarRegnum("353-74435");
 		
 		mapper.marketReg(m);
+	}
+	
+	//삭제
+	@Test
+	public void marDel() {
+		Long marSeqno = 16L;
+		
+		mapper.remove(marSeqno);
 	}
 }
