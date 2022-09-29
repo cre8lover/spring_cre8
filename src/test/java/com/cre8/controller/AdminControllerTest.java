@@ -20,6 +20,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.cre8.dto.MarketingVo;
+import com.google.gson.Gson;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -31,9 +34,9 @@ public class AdminControllerTest {
 	
 	@Inject
 	private WebApplicationContext wac;
-	//요청과 응답 처리
+	//�슂泥�怨� �쓳�떟 泥섎━
 	private MockMvc mockMvc;
-	//junit 임포트
+	//junit �엫�룷�듃
 	
 //	MockMultipartFile image = new MockMultipartFile("files", "imagefile.jpeg", "image/jpeg", "<<jpeg data>>".getBytes());
 	
@@ -74,22 +77,27 @@ public class AdminControllerTest {
 */	
 	@Test
 	public void marketingChange() {
+		
+		MarketingVo vo = new MarketingVo();
+		vo.setCategory("2");
+		vo.setMarCompany("2");
+		vo.setMarCeo("2");
+		vo.setMarRegnum("2");
+		vo.setMarPhone("2");
+		vo.setMarOpendate("11/11/11");
+		vo.setMarClosedate("12/12/12");
+		vo.setMarDetail("dd");
+		vo.setMarProduct("2");
+		vo.setMarPrice("2");
+		
+		String json = new Gson().toJson(vo);
+		
 		try {
-			String rs = mockMvc.perform(MockMvcRequestBuilders.post("/master/marReg")
-										.param("marCategory", "0")
-										.param("marCeo", "0")
-										.param("marClosedate", "12/12/12")
-										.param("marCompany", "0")
-										.param("marDetail", "0")
-										.param("marOpendate", "11/11/11")
-										.param("marPhone", "010-1234-5678")
-										.param("marPrice", "0")
-										.param("marProduct", "0")
-										.param("marRegnum", "0")
-										.session(session)
-										).andReturn().getModelAndView().getViewName();
-			
-			log.info(rs);
+			 mockMvc.perform(MockMvcRequestBuilders
+					 		.post("/master/add")
+					 		.content("application/json; charset=utf-8")
+					 		.content(json)
+					 		.session(session));
 			
 		} catch (Exception e) {
 			e.printStackTrace();
