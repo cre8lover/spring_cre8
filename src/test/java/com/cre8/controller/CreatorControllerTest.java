@@ -40,7 +40,7 @@ public class CreatorControllerTest {
 	@Before
 	public void setup() {
 		session = new MockHttpSession();
-		session.setAttribute("sess_id", "ddd");
+		session.setAttribute("sess_id", "cmcm");
 		session.setAttribute("auth", "C");
 		
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();

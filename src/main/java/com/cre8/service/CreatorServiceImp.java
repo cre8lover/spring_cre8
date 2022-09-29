@@ -20,6 +20,7 @@ import com.cre8.dto.Creator;
 import com.cre8.dto.Item;
 import com.cre8.dto.Marketing;
 import com.cre8.dto.Pro;
+import com.cre8.dto.prodelVo;
 import com.cre8.mapper.CreatorMapper;
 
 
@@ -81,8 +82,8 @@ public class CreatorServiceImp implements CreatorService{
 
 	
 	@Override
-	   public Creator infomodify(String id) {
-	      return creatorDao.infomodify(id);
+	   public int infomodify(Creator c) {
+		return mapper.infomodify(c);
 	}
 	@Override
 	public String totalmoney(String id) {
@@ -191,11 +192,20 @@ public class CreatorServiceImp implements CreatorService{
 	   }
 	@Override
 	public int prodel(String seqno) {
-		Att att = creatorDao.prodel(seqno);
+		//Att att = creatorDao.prodel(seqno);
 
-		fileService.delete(seqno,att.getSavefilename(),att.getAttPath(),att.getAttThumb().getFileName());
-	
 		return mapper.prodel(seqno);
+	}
+
+	@Override
+	public List<Marketing> getList() {
+
+		return mapper.getlist();
+	}
+
+	@Override
+	public int prodel(prodelVo seqno) {
+		return 0;
 	}
 	
 

@@ -65,7 +65,7 @@ public class Creatercontroller {
 			return "/member/memreg";
 		} else if (add.equals("C")) {
 			
-			prodelVo prodelvo = new prodelVo();
+			//prodelVo prodelvo = new prodelVo();
 			
 			List<Pro> prolist = cs.Prolist(seqno, id);
 			List<Auc> auclist = cs.Auclist(seqno, id);
@@ -75,7 +75,7 @@ public class Creatercontroller {
 			model.addAttribute("prolist", prolist);
 			model.addAttribute("auclist", auclist);
 			model.addAttribute("total", total);
-			model.addAttribute("prodelvo", prodelvo);
+			//model.addAttribute("prodelvo", prodelvo);
 
 			return "/creater/artistpage";
 		} else {
@@ -99,9 +99,9 @@ public class Creatercontroller {
 	@GetMapping("cremodify")
 	public String cremodify(HttpSession sess, Model model) {
 		String id = ((String) sess.getAttribute("sess_id"));
-		Creator cre = cs.infomodify(id);
+//		int cre = cs.infomodify(c);
 
-		model.addAttribute("cre", cre);
+//		model.addAttribute("cre", cre);
 		return "/creater/creReg2";
 	}
 	/*

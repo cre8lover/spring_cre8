@@ -35,7 +35,7 @@ public interface CreatorService {
 	
 	List<Auc> Auclist(String seqno, String id);
 	
-	public Creator infomodify(String id);
+	public int infomodify(Creator c);
 
 	String totalmoney(String id);
 	
@@ -52,6 +52,10 @@ public interface CreatorService {
 	String aucadd(MultipartFile filename, Auc auc);
 
 	int prodel(prodelVo seqno);
+
+	List<Marketing> getList();
+
+	int prodel(String seqno);
 
 
 

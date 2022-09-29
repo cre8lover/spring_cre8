@@ -12,30 +12,23 @@
     values (#{creCompany},#{crePhone},#{creName},#{creAddress},#{creRegnum},#{creSalenum},#{crePot},#{mem.memId})
   	</insert>
   	
+	
+ <!-- 마케팅 리스트조회 -->
+	<select id="getlist" resultType="com.cre8.dto.Marketing">
+	 	select mar_seqno marSeqno, mar_product marProduct, mar_img marImg, mar_price marPrice from Marketing
+	</select> 
   	
-  	
-  	<!-- 크리에이터 수정  -->
-  	<update id ="cremodifyreg"> 
-		update mem set mem_tel = #{memTel}, mem_email = #{memEmail}, MEM_SNSINFO = #{memSnsinfo} where mem_id = #{memId}
-
-        update creator set CRE_COMPANY =#{creCompany}, CRE_PHONE = #{crePhone}, CRE_NAME = #{creName}, CRE_ADDRESS = #{creAddress},
-                           CRE_REGNUM = #{creRegnum}, CRE_SALENUM = #{creSalenum}, CRE_POT = #{crePot} where mem_id = #{memId}
+  	<!-- 크리에이터 정보 수정  -->
+  	<update id ="infomodify"> 
+		update Creator set CRE_COMPANY =#{creCompany}, CRE_PHONE = #{crePhone}, CRE_NAME = #{creName}, CRE_ADDRESS = #{creAddress},
+                           CRE_REGNUM = #{creRegnum}, CRE_SALENUM = #{creSalenum}, CRE_POT = #{crePot} where MEM_ID = #{memid}
 	</update>
 	
 	
-	
-	<!-- pro삭제  -->
+	<!-- pro 일반물품삭제  -->
 	<delete id = "prodel">
-			  delete pro where pro_seqno = #{proSeqno}
-			  <!-- delete att where att_seqno = #{attSeqno} -->
+			  delete FROM pro where pro_seqno = #{proSeqno}
 	</delete>  
 	
-	
- <!-- 마케팅 리스트조회 -->
-	<select id="mk" resultType="com.cre8.dto.Marketing">
-	 	select mar_seqno, mar_product, mar_img, mar_price from Marketing WHERE mar_seqno = #{marSeqno}
-		 		<!-- AND rownum <= #{cri.currentPage} * #{cri.rowPerPage}
-		 ) WHERE rn > (#{cri.currentPage}-1) * #{cri.rowPerPage} -->
-	</select> 
  	  
   </mapper>

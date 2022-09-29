@@ -1,5 +1,7 @@
 package com.cre8.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.cre8.dto.Att;
@@ -10,12 +12,16 @@ import com.cre8.dto.prodelVo;
 
 public interface CreatorMapper {
 	
+	List<Marketing> getlist();
+
 	public void Creatoradd(Creator cre);
 
 	public void mk(Marketing m);
 
 	public int cremodifyreg(Pro p);
 
-	public int prodel(prodelVo seqno);
+	public int prodel(String seqno);
+
+	public int infomodify(Creator c);
 	
 }
