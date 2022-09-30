@@ -29,10 +29,6 @@ function dlqckf(){
       });
 	}
 }
-
-
-
-
 var slider = document.getElementById("myRange");
 var output = document.getElementById("demo");
 var money = document.getElementById("money");
@@ -44,6 +40,15 @@ slider.oninput = function() {
   output.value = this.value;
   money.value = this.value;
 }
+
+function equalsmoney(best){
+	if(output.value > best){
+	money.value = output.value;
+	}else{
+		alert("가격을 다시 책정해 주세요");
+	}
+}
+
 
 
 
@@ -72,7 +77,7 @@ function remaindTime() {
       $("#d-day-hour").html(hour);
       $("#d-day-min").html(min);
       $("#d-day-sec").html(sec);
-      tag.innerHTML = "<input  type='submit' class='bton' value='입찰하기'>"
+      tag.innerHTML = "<input type='button' class='bton' value='입찰하기'>"
    } 
    /*else{ //현재시간이 종료시간보다 크면
    tag.innerHTML = "<input type='button' onclick='timeover()' class='bton' value='입찰종료'>"*/
@@ -88,3 +93,72 @@ function timeover(){
 	
 	alert('경매시간이 종료되었습니다.');
 }
+
+
+var aucnowingService = (function(){
+
+
+	function add(aucnow, callback){
+ 		console.log("aucnow add.....");
+ 		
+ 		$.ajax({
+ 			type: 'post',
+ 			url : '/aucnow/add',
+ 			data : JSON.stringify(aucnow),
+ 			contentType : 'application/json; charset=utf-8',
+ 			success : function(result, status, xhr){
+ 				if (callback){
+ 					callback(result);
+ 				}
+ 			},
+ 			error : function (xhr, status, er){
+ 				if (error) {
+ 					error(er);
+ 				}
+ 			}
+ 		
+ 		});
+ 	}
+	 	
+  	
+  	function getList(param, callback, error){
+ 		var bno = param.bno;
+ 		var page = param.page || 1;
+ 		
+ 		$.getJSON("/aucnow/list/"+bno+"/"+page+".json",function(data){
+ 			if(callback){
+ 				callback(data.total,data.anlist);
+ 			}
+ 		}).fail(function(xhr,status,err){ 
+ 			if(error){
+ 				error();
+ 			}
+ 		});
+ 	}	
+	 	
+	 	
+	 	
+	 	
+ 	return {
+ 		add : add,
+ 		getList : getList
+	};
+ 	
+})();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

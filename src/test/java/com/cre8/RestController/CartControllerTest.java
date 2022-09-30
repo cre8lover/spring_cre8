@@ -1,6 +1,9 @@
-package com.cre8.controller;
+package com.cre8.RestController;
 
-import java.util.ArrayList;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -11,36 +14,44 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
+
+import com.cre8.dto.CartlistVO;
+import com.google.gson.Gson;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/root-context.xml",
 									"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"})
-public class BuyControllerTest {
+public class CartControllerTest {
 
-	private static final Logger log = LoggerFactory.getLogger("BuyControllerTest.class");
+	private static final Logger log = LoggerFactory.getLogger("CartControllerTest.class");
 	
 	@Inject
 	private WebApplicationContext wac;
 	//요청과 응답 처리
 	private MockMvc mockMvc;
 	//junit 임포트
-	
 	protected MockHttpSession session;
+	protected MockHttpServletRequest request;
 	
 	@Before
 	public void setup() {
 		session = new MockHttpSession();
-		session.setAttribute("sess_id", "aaa");
+		session.setAttribute("sess_id", "ccc");
 		
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
 		log.info("mockMvc setup...");
@@ -54,53 +65,26 @@ public class BuyControllerTest {
 	}
 	
 	@Test
-	public void carttest() {
-		List<String> seqno = new ArrayList<String>();
-		seqno.add("13");
-		seqno.add("14");
+	public void cartlist() {
 		try {
-			String rs = mockMvc.perform(MockMvcRequestBuilders.post("/buyer/cart")
-					.session(session).requestAttr("allponecheck", seqno))
-					.andReturn().getModelAndView().getViewName();
-			log.info(rs);
+			mockMvc.perform(MockMvcRequestBuilders.get("/cart/list/ccc").accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
+					).andExpect(status().isOk());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Test
-	public void buytest() {
-		try {
-			String rs = mockMvc.perform(MockMvcRequestBuilders.get("/buyer/buy").param("seqno", "13").session(session))
-					.andReturn().getModelAndView().getViewName();
-			log.info(rs);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		
 	}
 	
-//	@Test
-//	public void orderadd() {
-//		private String[] cart;
-//		private String[] orderamount;
-//		private String pay_method;
-//		private String buyer_name;
-//		private String buyer_tel;
-//		private String merchant_uid;
-//		private String amount;
-//		private String id;
-//		
-//		try {
-//			String rs = mockMvc.perform(MockMvcRequestBuilders.get("/buyer/order").param("money", "3000").param("seqno","13")
-//					.session(session).)
-//					.andReturn().getModelAndView().getViewName();
-//			log.info(rs);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		
-//		
-//	}
+	@Test
+	public void delete() {
+		String[] seqno = {"13"};
+		
+		Gson g = new Gson();
+		String go = g.toJson(seqno);
+		
+		try {
+			mockMvc.perform(MockMvcRequestBuilders.delete("/cart/delete").content(go).contentType("application/json")).andExpect(status().isOk());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

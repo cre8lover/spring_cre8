@@ -84,7 +84,6 @@ public class auctionControllerTest {
 	@Test
 //	@Transactional
 	public void aucnowtest() {
-
 		
 		try {
 			String rs = mockMvc.perform(MockMvcRequestBuilders.get("/auc/aucnow").param("money", "4000").param("seqno","13").session(session))
@@ -93,7 +92,5 @@ public class auctionControllerTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
 	}
 }

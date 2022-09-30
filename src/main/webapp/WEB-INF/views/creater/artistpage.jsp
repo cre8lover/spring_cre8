@@ -46,7 +46,7 @@
                         <p>총 판매금액 : ${list.proSaleprice }
                     </p>
                     <div style="text-align: center;">
-                      <button class="custom-btn btn-1 cn1" <%-- onclick = "newwindow('<%= request.getContextPath() %>/cre/product_registration?seqno=${list.proSeqno}','modify');" --%>>수정</button>
+                      <button class="custom-btn btn-1 cn1" onclick = "newwindow('<%= request.getContextPath() %>/cre/product_registration?seqno=${list.proSeqno}','modify');">수정</button>
                   <%-- <button class="custom-btn btn-1" id="cn2" onclick = "prodelete('${list.proSeqno}')">삭제</button> --%>
                   <button class="custom-btn btn-1 cn2"  <%-- onclick = "prodelete('${list.proSeqno}')" --%>>삭제</button>
                   </div>
