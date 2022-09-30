@@ -14,7 +14,7 @@
 <c:set value="${marketing}" var="marketList" />
 		<div class="khm_searchs">
 		<h2 class="khm_category">마케팅 상품관리</h2>
-			<form method="post">
+			<div>
 				<table>
 					<tbody>
 						<tr>
@@ -46,7 +46,7 @@
 						</tr>
 					</tbody>
 				</table>
-			</form>
+			</div>
 		</div>
 		
 		<div>
@@ -79,6 +79,9 @@
 		  </tbody>
 		</table>
 	</div>
+	<div id="page" style="text-align: center;">
+	
+	</div>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/creAd.js"></script>
 <script>
 
@@ -86,11 +89,12 @@
 
 $(document).ready(function(){
 	
+var currentPage = 1;
 showList(1);	
 
 	function showList(page){
-		marketingService.getList({page:page || 1}, function(list){
-//			console.log("마케팅 수 : " + marketCnt)
+		marketingService.getList({page:page || 1}, function(Cnt, list){
+			console.log("마케팅 수 : " + Cnt)
 			var str= "";
 			for(var i = 0, len=list.length || 0; i < len; i++){
 				console.log("0번째 : "+list[0].marSeqno);
@@ -110,6 +114,9 @@ showList(1);
 			}
 			
 				$("#Listpage").html(str);
+				
+			showPage(Cnt, currentPage);
+			
 		});
 			
 	}
@@ -138,9 +145,60 @@ showList(1);
 		
 		marketingService.remove(marSeqno, function(result){
 			alert(result);
-			showList(1);
+			showList(currentPage);
 		});
 		
+	});
+	
+function showPage(Cnt){
+//	currentPage	 = 1;
+	console.log("이거입니다!!!!!"+currentPage);
+		var endPage = Math.ceil(currentPage/5.0)*5;
+		var startPage = endPage - 4;
+		console.log("endNum : " + endPage);
+		console.log(Cnt);	
+		var prev = startPage != 1;
+		var next = false;
+		
+		if(endPage*10 >= Cnt){
+			endPage = Math.ceil(Cnt/10.0);
+		}
+		if(endPage*10 < Cnt){
+			next = true;
+		}
+		
+		var str = "<div class='pageUL'>"
+		if(prev){
+			str += "<div class='page-link'>";
+			str += "<a href='" + (startPage - 1) + "'> 이전페이지 </a></div>";
+		}
+		
+		
+		for(var i=startPage; i <= endPage; i++){
+			var active = currentPage == i ? "active" : "";
+			str += "<div class = 'page-link " + active + "'>"; //띄어쓰기 주의
+			str += "<a href='" + i + "'>" + i + "</a></div>";
+		}
+		
+		if(next){
+			str += "<div class='page-link'>";
+			str += "<a href='" + (endPage+1) + "'> 다음페이지 </a></div>";
+		}
+		
+		str += "</div>"
+		console.log(str);
+		$("#page").html(str);
+	}
+	
+	/* 페이지 번호 클릭 */
+	$("#page").on("click","a", function(e){
+		console.log("page click...!!!!");
+		e.preventDefault();
+		
+		var clickPage = $(this).attr("href")
+		console.log("currentPage : " + clickPage);
+		currentPage = clickPage;
+		showList(currentPage);
 	});
 	
 });

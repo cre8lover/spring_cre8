@@ -22,7 +22,6 @@ public class AdminKeyWord {
 	}
 	
 	public AdminKeyWord(int currentPage, int rowPerPage) {
-		super();
 		this.currentPage = currentPage;
 		this.rowPerPage = rowPerPage;
 	}

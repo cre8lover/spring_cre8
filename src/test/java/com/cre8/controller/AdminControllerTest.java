@@ -34,9 +34,9 @@ public class AdminControllerTest {
 	
 	@Inject
 	private WebApplicationContext wac;
-	//�슂泥�怨� �쓳�떟 泥섎━
+	//占쎌뒄筌ｏ옙�⑨옙 占쎌벓占쎈뼗 筌ｌ꼶�봺
 	private MockMvc mockMvc;
-	//junit �엫�룷�듃
+	//junit 占쎌뿫占쎈７占쎈뱜
 	
 //	MockMultipartFile image = new MockMultipartFile("files", "imagefile.jpeg", "image/jpeg", "<<jpeg data>>".getBytes());
 	
@@ -60,7 +60,7 @@ public class AdminControllerTest {
 	    session.clearAttributes();
 	    session = null;
 	}
-/*	
+	
 	@Test
 	public void marektinglistTest() {
 		try {
@@ -74,7 +74,7 @@ public class AdminControllerTest {
 			e.printStackTrace();
 		}
 	}
-*/	
+	
 	@Test
 	public void marketingChange() {
 		

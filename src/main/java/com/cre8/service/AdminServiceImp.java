@@ -25,6 +25,7 @@ import com.cre8.dto.Cat;
 import com.cre8.dto.Marketing;
 import com.cre8.dto.MarketingVo;
 import com.cre8.dto.Mem;
+import com.cre8.dto.PageDTO;
 import com.cre8.mapper.AdminMapper;
 
 @Service
@@ -60,9 +61,11 @@ public class AdminServiceImp implements AdminService {
 	}
 */
 	@Override
-	public List<MarketingVo> marketingList(AdminKeyWord adkey) {
+	public PageDTO marketingList(AdminKeyWord adkey, int page) {
 		
-		return mapper.marketingList(adkey);
+//		return mapper.marketingList(adkey);
+		return new PageDTO(mapper.marketingList(adkey),
+							mapper.getCountMarketing());
 	}
 
 	@Override

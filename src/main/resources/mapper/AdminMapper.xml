@@ -23,27 +23,29 @@
 				 select m.mar_seqno as marSeqno, m.mar_product as marProduct, 
 				 		m.mar_company as marCompany, m.mar_ceo as marCeo,
 						m.mar_phone as marPhone, m.mar_regnum as marRegnum, 
-						m.mar_opendate as marOpendate
+						m.mar_opendate as marOpendate, rownum as rn
 				 from marketing m
+				 where rownum <= #{adkey.currentPage} * #{adkey.rowPerPage}
 				 order by m.mar_opendate desc) a
+			where rn > (#{adkey.currentPage}-1) * #{adkey.rowPerPage}
 			]]>	 
-			<if test='"999".equals(classification)'>
-				where marProduct like #{keyword} or marCompany like #{keyword}  or marCeo like #{keyword} or marPhone like #{keyword} or marRegnum like #{keyword} 
+			<if test='"999".equals(adkey.classification)'>
+				and marProduct like #{adkey.keyword} or marCompany like #{adkey.keyword}  or marCeo like #{adkey.keyword} or marPhone like #{adkey.keyword} or marRegnum like #{adkey.keyword} 
 			</if>
-			<if test='"mar_product".equals(classification)'>
-				where marProduct like #{keyword}
+			<if test='"mar_product".equals(adkey.classification)'>
+				and marProduct like #{adkey.keyword}
 	  		</if>
-			<if test='"mar_company".equals(classification)'>
-				where marCompany like #{keyword} 
+			<if test='"mar_company".equals(adkey.classification)'>
+				and marCompany like #{adkey.keyword} 
 	  		</if>
-			<if test='"mar_ceo".equals(classification)'>
-				where marCeo like #{keyword}  
+			<if test='"mar_ceo".equals(adkey.classification)'>
+				and marCeo like #{adkey.keyword}  
 	  		</if>
-			<if test='"mar_phone".equals(classification)'>
-				where marPhone like #{keyword} 
+			<if test='"mar_phone".equals(adkey.classification)'>
+				and marPhone like #{adkey.keyword} 
 	  		</if>
-			<if test='"mar_regnum".equals(classification)'>
-				where marRegnum like #{keyword} 
+			<if test='"mar_regnum".equals(adkey.classification)'>
+				and marRegnum like #{adkey.keyword} 
 	  		</if>
   	</select>
  
