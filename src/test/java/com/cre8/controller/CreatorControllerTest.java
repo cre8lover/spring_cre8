@@ -1,5 +1,7 @@
 package com.cre8.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
@@ -10,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.ContextConfiguration;
@@ -54,18 +57,54 @@ public class CreatorControllerTest {
 	    session = null;
 	}
 	
+//	@Test
+//	//크리에이터 등록 => RestController에서 구현
+//	public void test() {
+//		try {
+//			String rs = mockMvc.perform(MockMvcRequestBuilders.get("/cre/creReg")
+//					.param("id", "ddd").session(session))
+//					.andReturn().getModelAndView().getViewName();
+//			log.info(rs);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
+	
 	@Test
-	public void test() {
+	public void test1() {
 		try {
-			String rs = mockMvc.perform(MockMvcRequestBuilders.get("/cre/creReg")
-					.param("id", "ddd").session(session))
-					.andReturn().getModelAndView().getViewName();
-			log.info(rs);
+			mockMvc.perform(MockMvcRequestBuilders.delete("/cre2/remove").
+					contentType(MediaType.APPLICATION_JSON).content("10")).andExpect(status().is(200));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
 	}
-
+	
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

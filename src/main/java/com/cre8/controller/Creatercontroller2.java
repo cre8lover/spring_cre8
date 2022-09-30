@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,6 +37,20 @@ public class Creatercontroller2 {
 	@Autowired
 	FileService fs;
 
+	
+	//크리에이터 등록
+	@PostMapping(value = "add",
+				 consumes = "application/json",
+				 produces = "text/plain; charset=utf-8")
+	public ResponseEntity<String> create(@RequestBody Creator cre){
+		log.info("등록이 되었나요" + cre);
+		int rs = cs.add(cre);
+		return rs == 1 ? new ResponseEntity<>("등록이 완료되었습니다", HttpStatus.OK)
+					: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	
+	
 	//마케팅 리스트 조회
 	@GetMapping(value = "/list", produces = { MediaType.APPLICATION_ATOM_XML_VALUE,
 														   MediaType.APPLICATION_JSON_UTF8_VALUE })
@@ -47,21 +62,15 @@ public class Creatercontroller2 {
 	}
 	
 	
-	
 	//크리에이터 정보 수정
 	@RequestMapping(method= {RequestMethod.PUT, RequestMethod.PATCH},
 					value = "ccc",
 					produces = "text/plain; charset=utf-8")
 	public ResponseEntity<String> modify(@RequestBody Creator c){
-	log.info("----------@@@@@@@@@@@@@@@@@@@@@@------------------------");
 
 	return cs.infomodify(c) == 1 ? new ResponseEntity<>("크리에이터 수정완료",HttpStatus.OK) :
 									   new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
-	
-	
-	
 	
 	// 일반물풀 삭제
 	//RestService로 바꿈
@@ -71,8 +80,7 @@ public class Creatercontroller2 {
 	
 	return cs.prodel(seqno) == 1 ? new ResponseEntity<>("삭제되었습니다 ",HttpStatus.OK) :
 								   new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-	  //@RequestBody방식은 html 바디에 숨겨서 post 방식 키값을 안써도됨 
-	  //@path는 url : get방식
+	 
 	}
 	
 	
