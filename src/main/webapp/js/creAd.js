@@ -7,12 +7,11 @@
  console.log("marketing list.....");
  
  	function getList(param, callback, error){
- 		var bno = param.bno;
  		var page = param.page || 1;
  		console.log("why????");
  		$.getJSON("/master/marketingList/" + page + ".json", function(data){
  			if(callback){
- 				callback(data);
+ 				callback(data.cnt, data.list);
  			}	
  		}).fail(function(xhr, status, err){
  			if(err){

@@ -13,13 +13,16 @@ import com.cre8.dto.Mem;
 
 public interface AdminMapper {
 	
-	public List<MarketingVo> marketingList(AdminKeyWord adkey);
+	public List<MarketingVo> marketingList(
+						@Param("adkey") AdminKeyWord adkey);
 
 	public int marketReg(MarketingVo vo);
 
 	public MarketingVo get(String marSeqno);
 
 	public int remove(Long marSeqno);
+
+	public int getCountMarketing();
 
 
 }

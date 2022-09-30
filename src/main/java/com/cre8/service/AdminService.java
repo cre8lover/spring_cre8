@@ -12,6 +12,7 @@ import com.cre8.dto.Cat;
 import com.cre8.dto.Marketing;
 import com.cre8.dto.MarketingVo;
 import com.cre8.dto.Mem;
+import com.cre8.dto.PageDTO;
 
 public interface AdminService {
 	
@@ -39,7 +40,7 @@ public interface AdminService {
 
 	int remove(Long marSeqno);
 
-	List<MarketingVo> marketingList(AdminKeyWord adkey);
+	PageDTO marketingList(AdminKeyWord adkey, int page);
 
 	
 
