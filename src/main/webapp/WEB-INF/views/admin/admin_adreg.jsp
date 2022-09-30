@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-
 <!DOCTYPE html>
 <head>
   <link href='https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
@@ -21,12 +20,11 @@
         <h4>광고상품등록</h4>
       </div>
       <div class='panel-body'>
-        <form method="post" class='form-horizontal' enctype="multipart/form-data" id="insert" role='form' action="<%= request.getContextPath() %>/master/marReg">
+        <div class='form-horizontal'>
           <div class='form-group'>
             <label class='control-label col-md-2 col-md-offset-2' for='id_accomodation'>카테고리</label>
             <div class='col-md-2'>
-           <input type="hidden" >
-              <select class='form-control' name ="marCategory" id='id_accomodation'>
+              <select class='form-control' name ="marCategory" id='marCategory'>
                 <option>포털마케팅</option>
                 <option>SNS마케팅</option>
                 <option>바이럴마케팅</option>
@@ -40,7 +38,7 @@
             <div class='col-md-8'>
               <div class='col-md-6 indent-small'>
                 <div class='form-group internal'>
-                  <input class='form-control' id='id_first_name' name="marProduct" placeholder='상품명' type='text'>
+                  <input class='form-control' id='marProduct' name="marProduct" placeholder='상품명' type='text'>
                 </div>
               </div>
             </div>
@@ -50,7 +48,7 @@
             <div class='col-md-8'>
               <div class='col-md-6 indent-small'>
                 <div class='form-group internal'>
-                  <input class='form-control' id='id_children' name = "marPrice" placeholder='최종판매가격' type='number'>
+                  <input class='form-control' id='marPrice' name = "marPrice" placeholder='최종판매가격' type='number'>
                 </div>
               </div>
             </div>
@@ -60,7 +58,7 @@
             <div class='col-md-6'>
               <div class='form-group'>
                 <div class='col-md-11'>
-                  <input class='form-control' name="marCompany" placeholder='' type='text'>
+                  <input class='form-control' name="marCompany" id='marCompany' placeholder='' type='text'>
                 </div>
             </div>
           </div>
@@ -69,7 +67,7 @@
             <div class='col-md-6'>
               <div class='form-group'>
                 <div class='col-md-11'>
-                  <input class='form-control' name="marCeo" placeholder='' type='text'>
+                  <input class='form-control' name="marCeo" id="marCeo" placeholder='' type='text'>
                 </div>
               </div>        
             </div>
@@ -79,7 +77,7 @@
             <div class='col-md-6'>
               <div class='form-group'>
                 <div class='col-md-11'>
-                  <input class='form-control' name="marPhone" placeholder='01012345678' type='text'>
+                  <input class='form-control' name="marPhone" id="marPhone" placeholder='01012345678' type='text'>
                 </div>
               </div>        
             </div>
@@ -88,7 +86,7 @@
             <div class='col-md-6'>
               <div class='form-group'>
                 <div class='col-md-11'>
-                  <input class='form-control' name="marRegnum" placeholder='' type='text'>
+                  <input class='form-control' id="marRegnum" name="marRegnum" placeholder='' type='text'>
                 </div>
               </div>        
             </div>
@@ -98,7 +96,7 @@
             <div class='col-md-8'>
               <div class='col-md-3'>
                 <div class='form-group internal input-group'>
-                  <input class='form-control datepicker' type="date" name = "marOpendate"id='id_checkin'>
+                  <input class='form-control datepicker' type="date" name = "marOpendate"id='marOpendate'>
                   <span class='input-group-addon'>
                     <i class='glyphicon glyphicon-calendar'></i>
                   </span>
@@ -107,7 +105,7 @@
               <label class='control-label col-md-2' >판매종료일</label>
               <div class='col-md-3'>
                 <div class='form-group internal input-group'>
-                  <input class='form-control datepicker' type="date" name = "marClosedate" id='id_checkout'>
+                  <input class='form-control datepicker' type="date" name = "marClosedate" id='marClosedate'>
                   <span class='input-group-addon'>
                     <i class='glyphicon glyphicon-calendar'></i>
                   </span>
@@ -130,19 +128,19 @@
           <div class='form-group'>
             <label class='control-label col-md-2 col-md-offset-2' for='id_comments'>제품 상세</label>
             <div class='col-md-6'>
-              <textarea class='form-control' id='id_comments' name = "marDetail" placeholder='Additional comments' rows='3'></textarea>
+              <textarea class='form-control' id='marDetail' name = "marDetail" placeholder='Additional comments' rows='3'></textarea>
             </div>
           </div>
           <div class='form-group'>
             <div class='col-md-offset-4 col-md-3'>
-              <input class='btn-lg btn-primary' id="reg" type='submit' value="상품등록">
+              <button class='btn-lg btn-primary' id="reg">상품등록</button>
             </div>
             <div class='col-md-3'>
               <button class='btn-lg btn-danger' style='float:right' onclick="window.close()">취소</button>
             </div>
           </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>
@@ -220,18 +218,26 @@ label.control-label {
 </style>
 <script type="text/javascript" src="<%= request.getContextPath() %>/js/creAd.js"></script>
 <script>
-
-
-</script>
-<script>
-
-    $("#reg").click( function() {
-
-    	var ans = confirm("광고상품이 등록되었습니다.");
-            if (ans){
-         $('#insert').submit();
-            }
-      });
-
+$("#reg").on("click", function(e){
+	var marketing = {
+						marSeqno : $("#marSeqno").val(), 
+						marCategory : $("#marCategory").val(),
+						marPrice : $("#marPrice").val(),
+						marProduct : $("#marProduct").val(),
+						marCompany : $("#marCompany").val(),
+						marCeo : $("#marCeo").val(),
+						marPhone : $("#marPhone").val(),
+						marRegnum : $("#marRegnum").val(),
+						marOpendate : $("#marOpendate").val(),
+						marClosedate : $("#marClosedate").val(),
+						marDetail : $("#marDetail").val()
+						
+						};
+	
+	marketingService.add(marketing, function(result){ //result는 js에서 정해준 값을 넣어줄수 있음
+		alert(result);
+	}); 
+		alert("등록했습니다");
+});
 
 </script>

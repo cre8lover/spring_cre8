@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.cre8.dto.AdminKeyWord;
 import com.cre8.dto.Cat;
 import com.cre8.dto.Marketing;
+import com.cre8.dto.MarketingVo;
 import com.cre8.dto.Mem;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,23 +26,29 @@ public class AdminMapperTest {
 	@Autowired
 	private AdminMapper mapper;
 	
+	
+	//조회
 	@Test
 	public void marlist() {
 		
 		AdminKeyWord adkey = new AdminKeyWord();
-		adkey.setKeyword("");
-		List<Marketing> m = mapper.marketinglist(adkey);
+		adkey.setClassification("mar_product");
+		adkey.setKeyword("%요%");
+		List<MarketingVo> m = mapper.marketingList(adkey);
 		
-		for(Marketing list : m) {
-			log.info("카테고리 이름 : " + list.getMarCeo());
+		for(MarketingVo list : m) {
+			log.info("마케팅 대표 : " + list.getMarCeo());
 		}
 	}
 	
+	//수정 및 등록
 	@Test
 	public void marChange() {
-		Marketing m = new Marketing();
-//		m.setMarSeqno(11);
-		m.setMarCategory("말씀만...");
+		MarketingVo m = new MarketingVo();
+
+//		시퀀스번호가 있으면 update 없으면 insert
+		//		m.setMarSeqno(3);
+		m.setMarCategory("test...");
 		m.setMarCeo("3");
 		m.setMarClosedate("220309");
 		m.setMarCompany("3");
@@ -55,4 +62,11 @@ public class AdminMapperTest {
 		mapper.marketReg(m);
 	}
 	
+	//삭제
+	@Test
+	public void marDel() {
+		Long marSeqno = 16L;
+		
+		mapper.remove(marSeqno);
+	}
 }
