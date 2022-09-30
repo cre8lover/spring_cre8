@@ -57,6 +57,6 @@ public interface CreatorService {
 
 	int prodel(String seqno);
 
-
+	int add(Creator cre);
 
 }

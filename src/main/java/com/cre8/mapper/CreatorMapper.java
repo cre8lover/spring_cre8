@@ -23,5 +23,7 @@ public interface CreatorMapper {
 	public int prodel(String seqno);
 
 	public int infomodify(Creator c);
+
+	public int add(Creator cre);
 	
 }

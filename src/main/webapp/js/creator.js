@@ -1,15 +1,38 @@
 /**
- * 크리에이터 시험 
+ * 22/09/29 김창목 
  */
 
 console.log("creator Module start");
 
 var CreatorService = (function() {
 
-	//크리에이터 수정
+
+	//크리에이터 등록
+	function add(add, callback){
+		console.log(" 등록 완료");
+
+		$.ajax({
+			type : 'post',
+			url : '/cre/add',
+			data : JSON.stringify(add),
+			contentType : "application/json; charset=utf-8",
+			success : function(result, status, xhr){
+				if(callback){
+					callback(result);
+				}
+			},
+			error : function(xhr, status, er){
+				if(error){
+					error(er);
+				}
+			}
+			
+		});
+	}
 	
+	
+	//크리에이터 수정
 	function update(ccc, callback, error){
-		console.log("수정 댓글 : " + ccc.seqno);
 		$.ajax({
 			type : 'put',
 			url : "/cre2/ccc", 
@@ -21,7 +44,6 @@ var CreatorService = (function() {
 					callback(result);
 				}
 			},
-			
 			error : function(status, er, xhr){
 				if(error){
 					error(er);
@@ -29,7 +51,6 @@ var CreatorService = (function() {
 			}
 		});
 	}
-	
 	
 	
 	// 물품삭제
@@ -71,7 +92,9 @@ var CreatorService = (function() {
 	
 	
 	return {
+		add : add,
 		remove : remove,
+		update : update,
 		getList : getList
 	};
 	
