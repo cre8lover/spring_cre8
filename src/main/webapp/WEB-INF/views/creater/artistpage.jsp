@@ -58,8 +58,8 @@
          <div class="info2">
             <img class="" src="<%= request.getContextPath() %>/img/user.png" style="height:150px; width:150px; border-radidus:50%;">
             <p class= name2><b>${sess_name}&nbsp;</b>님</p>
-            <div class="proreg">
-            <a href ="javascript:newwindow('<%= request.getContextPath() %>/cre/product_registration','add');">등록</a>
+            <div class="proreg cn4">
+           		 <a href ="javascript:newwindow('<%= request.getContextPath() %>/cre/product_registration','add');">등록</a>
             </div> 
             <p class="sum">총 정산금액</p>
             <p class="price2">${total }원</p>
@@ -138,12 +138,8 @@
 <%--   <%@ include file="/footer.jsp" %>  --%>
 <script type="text/javascript" src="/js/creator.js"></script>	
 	<script>
-	/* var rno = '<c:out value="${list.proSeqno}" />'; */
-
 
 	$(document).ready(function(){
-	
-		
 	//크리에이터 정보 수정
 		$(".cn3").on("click", function(e){
 			 var creCompany = '<c:out value="${Creator.creCompany}" />'; 
