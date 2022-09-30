@@ -3,7 +3,7 @@ package com.cre8.dto;
 public class Auc_Criteria {
 
 	private int currentPage;
-	private int rowPerPage = 3;
+	private int rowPerPage = 5;
 	private String category;
 	private String key;
 	

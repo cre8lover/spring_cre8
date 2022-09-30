@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/buy/cart.css">
 <meta charset="UTF-8">
@@ -22,10 +23,10 @@
 		<div class="content">
 			<div class="mypage">
 				<form style="color: #263343; font-size: 20px;">
-					<br> <br> &nbsp;&nbsp;<i
-						class="fa-solid fa-cart-shopping"> &nbsp;</i><b>장바구니</b>
+					<br> <br> &nbsp;&nbsp;<i class="fa-solid fa-cart-shopping"> &nbsp;</i><b>장바구니</b>
 					<hr>
 				</form>
+				
 				<center>
 					<img class="kcmimg" src="<%= request.getContextPath() %>/img/cart_ing1.png" style="width: 70%;">
 				</center>
@@ -55,14 +56,14 @@
 						</tr>
 					</thead>
 					
-					<tbody>
+					<c:set var = "total" value = "0" />
+					<tbody id="cartlist">
 						
-						<c:set var = "total" value = "0" />
 						<c:forEach items="${listp}" var="cartp">
 						 <c:set value="${cartp.pro}" var="pro"/>
 						 <c:set value="${pro.item}" var="item"/>
 						<tr>
-							<th><input type="checkbox" name="allponecheck" value="${pro.proSeqno }"></th>
+							<th id="checkfind"><input data-seqno="${cartp.cartSeqno }"class="checkseqno"type="checkbox" name="allponecheck" value="${pro.proSeqno }"></th>
 								
 							<th><%-- <th><img src="<%= request.getContextPath() %>/img/b1.jpg"></th> --%>
 								<a href="<%= request.getContextPath() %>/product/productDetail?seqno=${pro.proSeqno }">
@@ -79,8 +80,9 @@
 					</tbody>
 				</table>
 				
+				<div id="totalmoney">
 				<h1 style="text-align: right">Total Price: <c:out value="${total}"/> 원</h1>
-				
+				</div>
 
 				
 					<input type="hidden" name="pro_list" value="">
@@ -89,7 +91,7 @@
 					<input type="hidden" name="total" value="${total}" > 
 					<input type="submit" class="bton" value="주 문" > 
 				</form>
-					<input type="button" class="bton" value="선택삭제">
+					<input id="cartDeleteBtn" type="button" class="bton" value="선택삭제">
 					
 
 			</div>
@@ -105,9 +107,10 @@
 
 </body>
 
+
+
+
 <script>
-
-
 $(document).ready(function() {
 	$("input[name=allcheck]").click(function() {
 		if($("input[name=allcheck]").is(":checked")) $("input[name=allponecheck]").prop("checked", true);
@@ -122,6 +125,73 @@ $(document).ready(function() {
 		else $("input[name=allcheck]").prop("checked", true); 
 	});
 });
+
+$(document).ready(function(){
+	
+	
+	
+	$("#amdown").on("click", function(e){
+		console.log("화긴");
+		
+		
+	});
+const arr = [];
+	
+	$("#cartDeleteBtn").on("click", function(e){
+		var ans = confirm("정말로 삭제 하시겠습니까"); 
+			if (ans){
+				$("input[name='allponecheck']:checked").each(function(i){
+					var seqno = $(this).data("seqno");
+					arr.push(seqno);
+					console.log(arr[i]);
+				});
+				cartService.cartdelete(arr, function(result){
+					alert(result);
+					showList();
+				});
+			}
+	});
+	
+	
+	
+	function showList(){
+		var logid = '<c:out value="${sess_id}"/>';
+		var path = '<%= request.getContextPath() %>';
+		console.log(path);
+		cartService.cartlist(logid, function(list){
+			console.log(list.length)
+			if(list == null || list.length == 0){
+				$("#cartlist").html("");
+				return;
+			}else{
+			
+			var str="";
+			var totalmo = 0;
+			for(var i = 0, len=list.length || 0; i < len; i++){
+				str +=  "<tr>";
+				str +=	"<th id='checkfind'><input data-seqno='"+list[i].cartseqno+"' class='checkseqno' type='checkbox' name='allponecheck' value='"+list[i].proseqno+"'></th>";
+				str +=	"<th>";
+				str +=	"<a href='"+path+"/product/productDetail?seqno="+list[i].proseqno+"'>";
+				str +=		"<img src='/upload/thumbnail/"+list[i].itemImg +"' style='height:225px;'>";
+				str +=	"</a>";
+				str +=	"</th>";
+				str +=		"<th>"+list[i].itemName +"</th>";
+				str +=		"<th>"+list[i].cartAmount +"</th>";
+				str +=		"<th>"+list[i].totalprice+"</th>";
+				str +=  "</tr>";
+				totalmo += parseInt(list[i].totalprice);
+			}
+			console.log(str);
+			$("#cartlist").html(str);
+			var total = "";
+			total += "<h1 style='text-align: right'>Total Price: "+totalmo+" 원</h1>";
+			$("#totalmoney").html(total);
+			}
+		});
+	}
+
+});	
+	
 
 
 /*
@@ -162,8 +232,57 @@ $(document).ready(function() {
 	//		console.log("email : " + email);
 		});
 		$("input[name=pro_list]").attr("value",tdArr);
-	});
- */
+	}); 
+
+	*/
+	
+</script>
+
+<script>
+
+
+var cartService = (function(){
+ 	function cartdelete(arr, callback, error){
+ 		console.log('카트 번호들' + arr[0]);
+   		$.ajax({
+ 			type:'delete',
+ 			url : '/cart/delete',
+ 			data : JSON.stringify(arr),
+ 			contentType : 'application/json; charset=utf-8',
+ 			success : function(result, status, xhr){
+ 				if(callback){
+ 					callback(result);
+ 				}
+ 			},
+ 			error : function(xhr,status,er){
+ 				if(error){
+ 					er(error);
+ 				}
+ 			}
+ 		
+ 		});
+ 	}
+ 	
+ 	function cartlist(id, callback, error){
+ 		$.getJSON("/cart/list/"+id+".json",function(data){
+ 			if(callback){
+ 				callback(data);
+ 			}
+ 		}).fail(function(xhr,status,err){ 
+ 			if(error){
+ 				error(err);
+ 			}
+ 		});
+ 		
+ 		
+ 	}
+	 	 
+ 	return {
+ 		cartdelete : cartdelete,
+ 		cartlist : cartlist
+	};
+ 	
+ })();
 </script>
 </html>
 

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <mapper namespace="com.cre8.mapper.AucNowMapper">
+	
+	<insert id="aucnowadd">
+		BEGIN
+		
+		insert into auc_nowing(aucnow_seqno,aucnow_lastprice,auc_seqno,mem_id) 
+		values (aucnow_seqno.nextVal,#{price}, #{aucseqno}, #{id});
+		
+		update auc set auc_closeprice = #{price} where auc_seqno = #{aucseqno};
+		
+		END;
+	</insert>
+	<select id="aucnowlist" resultType="com.cre8.dto.AucNowListVO">
+	<![CDATA[
+		select * from 
+		(
+			select rownum as rn, memName , aucnowDate, aucnowLastprice, memId from 
+				(
+					select m.mem_name as memName, an.aucnow_date as aucnowDate, 
+							an.aucnow_lastprice as aucnowLastprice, m.mem_id as memId 
+			        from auc_nowing an ,  mem m
+			        where m.mem_id = an.mem_id
+			        and an.auc_seqno = #{bno}
+			        order by an.aucnow_lastprice desc
+		        ) 
+	        where rownum <= #{cri.currentPage} * #{cri.rowPerPage}
+        ) 
+        WHERE rn > (#{cri.currentPage} - 1) * #{cri.rowPerPage}
+	]]>
+	</select>
+	
+	<select id="total" resultType="int">
+		select count(*) from auc_nowing where auc_seqno = #{bno}
+	</select>
+	
+	
+ </mapper>
