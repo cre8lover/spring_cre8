@@ -207,6 +207,12 @@ public class CreatorServiceImp implements CreatorService{
 	public int prodel(prodelVo seqno) {
 		return 0;
 	}
+
+	@Override
+	public int add(Creator cre) {
+
+		return mapper.add(cre);
+	}
 	
 
 }

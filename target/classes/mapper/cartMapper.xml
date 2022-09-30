@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <mapper namespace="com.cre8.mapper.cartMapper">
+	
+	<delete id="delete">
+		DELETE FROM cart WHERE cart_seqno in 
+			<foreach collection="list" item="item" open="(" close=")" separator=",">
+			 #{item}
+			</foreach>
+			
+	</delete>
+	
+	
+	<select id="list" resultType="com.cre8.dto.CartlistVO">
+		select (select item_name from item i where i.item_seqno = p.item_seqno) itemName,
+                    (select item_seqno from item i where i.item_seqno = p.item_seqno) itemseqno,
+                    (select (select (select thumb_filename 
+                                     from att_thumb at where at.att_seqno = a.att_seqno)
+                            from att a where a.item_seqno = i.item_seqno) 
+                     from item i where i.item_seqno = p.item_seqno ) itemImg,
+                     c.cart_seqno as cartseqno, c.cart_amount as cartAmount, p.pro_price as proprice,
+                     p.pro_seqno as proseqno,(p.pro_price * c.cart_amount) as totalprice 
+             from (select * from cart where mem_id = #{id} ) c, (select * from pro p) p  where c.pro_seqno = p.pro_seqno
+	</select>
+	
+	
+ </mapper>

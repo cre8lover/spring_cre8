@@ -6,6 +6,8 @@
 <html>
 <head>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/member/mypage.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 	<%@ include file="../header.jsp" %>
 	<%@ include file="../menu.jsp" %>
 <meta charset="UTF-8" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width">
@@ -31,7 +33,7 @@
 					<h3>${my.memName}님 환영합니다!</h3>
 					<button style="float:center;" onclick="newwindow('<%= request.getContextPath() %>/mem/meminfo','info')">정보수정</button>
 					<button style="float:center;" onclick="newwindow('<%= request.getContextPath() %>/mem/buyHistory','buylist')">구매내역</button>
-					<button style="float:center;" onclick="location.href='<%= request.getContextPath() %>/cre/creReg?id=${my.memId} '">작가등록</button>
+					<button id="cn4" style="float:center;" onclick="location.href='<%= request.getContextPath() %>/cre/creReg?id=${my.memId} '">작가등록</button>
 				
 				</div>
 				<table class="table-fill" style="margin-top:100px">
@@ -118,8 +120,42 @@ function plz(msg){
 		}
 	}
 }
-
 </script>
+<script type="text/javascript" src="/js/creator.js"></script>	
+	<script>
+	$(document).ready(function(){
+	//작가등록
+	$("#cn4").on("click", function(e){
+		var creCompany = '<c:out value="${Creator.creCompany}" />'; 
+		 var crePhone = '<c:out value="${Creator.crePhone}" />'; 
+		 var creName = '<c:out value="${Creator.creName}" />'; 
+		 var creAddress = '<c:out value="${Creator.creAddress}" />'; 
+		 var creRegnum = '<c:out value="${Creator.creRegnum}" />'; 
+		 var creSalenum = '<c:out value="${Creator.creSalenum}" />'; 
+		 var crePot = '<c:out value="${Creator.crePot}" />'; 
+		 var memid = '<c:out value="${Creator.memid}" />';  
+		
+		
+		var add = {creCompany : creCompany,
+					crePhone : crePhone,
+					creName : creName,
+					creAddress : creAddress,
+					creRegnum : creRegnum,
+					creSalenum : creSalenum,
+					crePot : crePot,
+					memid : id,
+					};
+		
+		 CreatorService.add(add, function(result){
+			 if(result == '등록이 완료되었습니다'){
+					//보여줄 화면
+				 } 
+		});
+	});
+	
+	
+	
+	</script>
 <%@ include file="../footer.jsp" %>
 </body>
 </html>

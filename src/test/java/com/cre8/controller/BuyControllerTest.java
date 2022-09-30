@@ -37,8 +37,6 @@ public class BuyControllerTest {
 	
 	protected MockHttpSession session;
 	
-	
-	
 	@Before
 	public void setup() {
 		session = new MockHttpSession();
@@ -68,28 +66,35 @@ public class BuyControllerTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Test
+	public void buytest() {
+		try {
+			String rs = mockMvc.perform(MockMvcRequestBuilders.get("/buyer/buy").param("seqno", "13").session(session))
+					.andReturn().getModelAndView().getViewName();
+			log.info(rs);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		
 	}
-//
+	
 //	@Test
-//	public void auctionDetailtest() {
-//		try {
-//			String rs = mockMvc.perform(MockMvcRequestBuilders.get("/buyer/buy").param("seqno", "13"))
-//					.andReturn().getModelAndView().getViewName();
-//			log.info(rs);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		
-//		
-//	}
-//	@Test
-//	public void aucnowtest() {
-//
+//	public void orderadd() {
+//		private String[] cart;
+//		private String[] orderamount;
+//		private String pay_method;
+//		private String buyer_name;
+//		private String buyer_tel;
+//		private String merchant_uid;
+//		private String amount;
+//		private String id;
 //		
 //		try {
-//			String rs = mockMvc.perform(MockMvcRequestBuilders.get("/buyer/order").param("money", "3000").param("seqno","13").session(session))
+//			String rs = mockMvc.perform(MockMvcRequestBuilders.get("/buyer/order").param("money", "3000").param("seqno","13")
+//					.session(session).)
 //					.andReturn().getModelAndView().getViewName();
 //			log.info(rs);
 //		} catch (Exception e) {
