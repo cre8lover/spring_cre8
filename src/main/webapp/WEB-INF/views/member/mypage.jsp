@@ -148,7 +148,7 @@ function plz(msg){
 		
 		 CreatorService.add(add, function(result){
 			 if(result == '등록이 완료되었습니다'){
-					//보여줄 화면
+					//보여줄 화면 
 				 } 
 		});
 	});
