@@ -193,7 +193,7 @@ public class CreatorServiceImp implements CreatorService{
 	@Override
 	public int prodel(String seqno) {
 		//Att att = creatorDao.prodel(seqno);
-
+			System.out.println("seqno값은" + seqno);
 		return mapper.prodel(seqno);
 	}
 

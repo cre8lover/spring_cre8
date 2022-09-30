@@ -26,8 +26,8 @@
 	
 	
 	<!-- pro 일반물품삭제  -->
-	<delete id = "prodel">
-			  delete FROM pro where pro_seqno = #{proSeqno}
+	<delete id ="prodel">
+			  delete from pro where pro_seqno = #{seqno}
 	</delete>  
 	
  	  
