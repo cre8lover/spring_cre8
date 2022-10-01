@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- 인터페이스 이름(com.chick.mapper.MemberMapper)과 xml의 namespace 속성값이 일치 -->
+  <mapper namespace="com.cre8.mapper.CreatorMapper">
+  
+  
+  	<insert id="Creatoradd">
+  		 insert into creator (cre_company, cre_phone, cre_name, cre_address, cre_regnum, cre_salenum, cre_pot, mem_id)
+    values (#{creCompany},#{crePhone},#{creName},#{creAddress},#{creRegnum},#{creSalenum},#{crePot},#{mem.memId})
+  	</insert>
+  	
+	
+ <!-- 마케팅 리스트조회 -->
+	<select id="getlist" resultType="com.cre8.dto.Marketing">
+	 	select mar_seqno marSeqno, mar_product marProduct, mar_img marImg, mar_price marPrice from Marketing
+	</select> 
+  	
+  	<!-- 크리에이터 정보 수정  -->
+  	<update id ="infomodify"> 
+		update Creator set CRE_COMPANY =#{creCompany}, CRE_PHONE = #{crePhone}, CRE_NAME = #{creName}, CRE_ADDRESS = #{creAddress},
+                           CRE_REGNUM = #{creRegnum}, CRE_SALENUM = #{creSalenum}, CRE_POT = #{crePot} where MEM_ID = #{memid}
+	</update>
+	
+	
+	<!-- pro 일반물품삭제  -->
+	<delete id = "prodel">
+			  delete FROM pro where pro_seqno = #{proSeqno}
+	</delete>  
+	
+ 	  
+  </mapper>

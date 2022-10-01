@@ -29,6 +29,7 @@ import com.cre8.dto.Marketing;
 import com.cre8.dto.Mem;
 import com.cre8.dto.Pro;
 import com.cre8.dto.Thumbnail;
+import com.cre8.dto.prodelVo;
 
 import oracle.jdbc.OracleType;
 import oracle.jdbc.OracleTypes;
@@ -393,13 +394,17 @@ public class CreatorDaoImp implements CreatorDao{
 		while(rs.next()) {
 			Pro p = new Pro();
 			Item i = new Item();
-
+			Att a = new Att();
+			
+			a.setArtSeqno(rs.getString("att_seqno"));
+			i.setItemName(rs.getString("item_seqno"));
 			i.setItemDetail(rs.getString("item_detail"));
 			p.setProAmount(rs.getInt("pro_amount"));
 			p.setProSaleprice(rs.getInt("pro_saleprice"));
 			p.setProSeqno(rs.getInt("pro_seqno"));
 			i.setItemImg(rs.getString("thumb_filename"));
 			p.setItem(i);
+			p.setAtt_file(a);
 			prolist.add(p);
 		}
 		cstmt.close();
@@ -490,7 +495,7 @@ public class CreatorDaoImp implements CreatorDao{
 				
 	            cre.setMem(mem);
 	            
-	         stmt.close();
+	         cstmt.close();
 	      } catch (SQLException e) {
 	         e.printStackTrace();
 	      }finally {///////////////////
@@ -1441,6 +1446,20 @@ public String totalmoney(String id) {
 				e.printStackTrace();
 			}
 			
+		}
+
+
+		@Override
+		public Att prodel(prodelVo seqno) {
+			
+			return null;
+		}
+
+
+		@Override
+		public Creator infomodify(Creator c) {
+			// TODO Auto-generated method stub
+			return null;
 		}	
 }	
 

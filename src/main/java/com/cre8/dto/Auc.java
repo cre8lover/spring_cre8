@@ -30,6 +30,7 @@ public class Auc implements Serializable {
 	private Thumbnail thumb;
 	private String id;
 	
+<<<<<<< HEAD
 	public String getId() {
 		return id;
 	}
@@ -120,6 +121,19 @@ public class Auc implements Serializable {
 	public void setCartSet(Cart cartSet) {
 		this.cartSet = cartSet;
 	}
+=======
+	
+	
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+>>>>>>> branch 'master' of https://github.com/cre8lover/spring_cre8.git
 	public Att getAtt_file() {
 		return att_file;
 	}

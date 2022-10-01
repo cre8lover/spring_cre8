@@ -20,6 +20,8 @@ import com.cre8.dto.Creator;
 import com.cre8.dto.Item;
 import com.cre8.dto.Marketing;
 import com.cre8.dto.Pro;
+import com.cre8.dto.prodelVo;
+import com.cre8.mapper.CreatorMapper;
 
 
 
@@ -33,6 +35,9 @@ public class CreatorServiceImp implements CreatorService{
 	CreatorDao creatorDao;
 	@Autowired
 	FileService fileService;
+	@Autowired
+	CreatorMapper mapper;
+	
 	
 	@Override
 	public void Creatoradd(HttpServletRequest request, String id) {
@@ -77,8 +82,8 @@ public class CreatorServiceImp implements CreatorService{
 
 	
 	@Override
-	   public Creator infomodify(String id) {
-	      return creatorDao.infomodify(id);
+	   public int infomodify(Creator c) {
+		return mapper.infomodify(c);
 	}
 	@Override
 	public String totalmoney(String id) {
@@ -132,7 +137,26 @@ public class CreatorServiceImp implements CreatorService{
 		
     }
 	
-	
+	public String aucadd(MultipartFile filename, Auc auc) {
+		FileService fileService = new FileServiceImp();
+		Att attachfile=null;
+
+		try {
+			if(filename != null) {
+			attachfile = fileService.fileUpload(filename);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		auc.setAtt_file(attachfile);
+
+	    if (auc.getAucSeqno() != null) {
+	    	return creatorDao.aucmodify(auc);
+	    }else {
+	    	return creatorDao.aucadd(auc, auc.getId());
+	    }
+	}
 	
     @Override
     public Auc aucdetail(String seqno) {
@@ -167,10 +191,27 @@ public class CreatorServiceImp implements CreatorService{
 	      return creatorDao.cremodifyreg(req);
 	   }
 	@Override
-	public void prodel(String seqno) {
-		Att att = creatorDao.prodel(seqno);
+	public int prodel(String seqno) {
+		//Att att = creatorDao.prodel(seqno);
 
-		fileService.delete(seqno,att.getSavefilename(),att.getAttPath(),att.getAttThumb().getFileName());
+		return mapper.prodel(seqno);
+	}
+
+	@Override
+	public List<Marketing> getList() {
+
+		return mapper.getlist();
+	}
+
+	@Override
+	public int prodel(prodelVo seqno) {
+		return 0;
+	}
+
+	@Override
+	public int add(Creator cre) {
+
+		return mapper.add(cre);
 	}
 	
 

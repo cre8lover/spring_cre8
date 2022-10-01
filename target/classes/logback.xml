@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 	<include resource="ofg/springframework/boot/logging/logback/base.xml"/>
@@ -8,4 +9,16 @@
 	<logger name="jdbc.resultsettable"	lever="ERROR"/>
 	<logger name="jdbc.connection"	lever="INFO"/>
 	
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<include resource="ofg/springframework/boot/logging/logback/base.xml"/>
+	<logger name="jdbc.sqlonly"	lever="DEBUG"/>
+	<logger name="jdbc.sqltiming"	lever="INFO"/>
+	<logger name="jdbc.audit"	lever="WARN"/>
+	<logger name="jdbc.resultset"	lever="ERROR"/>
+	<logger name="jdbc.resultsettable"	lever="ERROR"/>
+	<logger name="jdbc.connection"	lever="INFO"/>
+	
+>>>>>>> branch 'master' of https://github.com/cre8lover/spring_cre8.git
 </configuration>

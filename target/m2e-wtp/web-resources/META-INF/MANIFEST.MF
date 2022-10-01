@@ -1,5 +1,10 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Built-By: banbbee
 Build-Jdk: 11.0.15
+=======
+Built-By: user
+Build-Jdk: 11.0.12
+>>>>>>> branch 'master' of https://github.com/cre8lover/spring_cre8.git
 Created-By: Maven Integration for Eclipse
 

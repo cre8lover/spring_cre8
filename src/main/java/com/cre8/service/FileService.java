@@ -12,6 +12,7 @@ import com.cre8.dto.Auc;
 import com.cre8.dto.Item;
 import com.cre8.dto.Pro;
 import com.cre8.dto.Thumbnail;
+import com.cre8.dto.prodelVo;
 
 
 public interface FileService {
@@ -26,5 +27,5 @@ public interface FileService {
 	
 	public Auc getFormParameter2(FileItem item, Auc pro, Item proitem) throws ParseException;
 
-	int delete(String no, String savefilename, String filepath, String thumb_filename);
+	int delete(String attseqno, String savefilename, String filepath, String thumb_filename);
 }

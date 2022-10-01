@@ -16,6 +16,15 @@ public class Creator implements Serializable {
 	private Mem mem;
 	private Artdetail artdetailSet;
 	private Att attSet;
+	private String memid;
+	
+	public String getMemid() {
+		return memid;
+	}
+
+	public void setMemid(String memid) {
+		this.memid = memid;
+	}
 
 	public Creator() {
 

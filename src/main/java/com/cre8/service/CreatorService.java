@@ -7,10 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cre8.dto.Att;
 import com.cre8.dto.Auc;
 import com.cre8.dto.Creator;
 import com.cre8.dto.Marketing;
 import com.cre8.dto.Pro;
+import com.cre8.dto.prodelVo;
 
 
 public interface CreatorService {
@@ -33,7 +35,7 @@ public interface CreatorService {
 	
 	List<Auc> Auclist(String seqno, String id);
 	
-	public Creator infomodify(String id);
+	public int infomodify(Creator c);
 
 	String totalmoney(String id);
 	
@@ -47,7 +49,16 @@ public interface CreatorService {
 
 	Map<String, String> cremodifyreg(HttpServletRequest req);
 
-	public void prodel(String seqno);
+	String aucadd(MultipartFile filename, Auc auc);
+
+	int prodel(prodelVo seqno);
+
+	List<Marketing> getList();
+
+	int prodel(String seqno);
+
+	int add(Creator cre);
+
 	
 	String aucadd(MultipartFile filename, Auc auc);
 }

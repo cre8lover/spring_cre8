@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- 인터페이스 이름(com.chick.mapper.MemberMapper)과 xml의 namespace 속성값이 일치 -->
+  <mapper namespace="com.cre8.mapper.AdminMapper">
+ <!--  
+  	<select id="longinProc" resultType="com.cre8.dto.Mem">
+  		select m.mem_id as memId, m.mem_pw as memPw, m.mem_name as memName
+  		  from mem m, mem_auth a
+  		  where m.mem_id = a.mem_id 
+   		  and (a.auth_name = 'A' or a.auth_name = 'M') 
+          and m.mem_id = #{memId}
+  	</select>
+  -->	
+  
+  <!-- 조회 -->
+  	<select id="marketingList" resultType="com.cre8.dto.MarketingVo">
+  		<![CDATA[
+  			select rownum, a.*
+			from(
+				 select m.mar_seqno as marSeqno, m.mar_product as marProduct, 
+				 		m.mar_company as marCompany, m.mar_ceo as marCeo,
+						m.mar_phone as marPhone, m.mar_regnum as marRegnum, 
+						m.mar_opendate as marOpendate, rownum as rn
+				 from marketing m
+				 where rownum <= #{adkey.currentPage} * #{adkey.rowPerPage}
+				 order by m.mar_opendate desc) a
+			where rn > (#{adkey.currentPage}-1) * #{adkey.rowPerPage}
+			]]>	 
+			<if test='"999".equals(adkey.classification)'>
+				and marProduct like #{adkey.keyword} or marCompany like #{adkey.keyword}  or marCeo like #{adkey.keyword} or marPhone like #{adkey.keyword} or marRegnum like #{adkey.keyword} 
+			</if>
+			<if test='"mar_product".equals(adkey.classification)'>
+				and marProduct like #{adkey.keyword}
+	  		</if>
+			<if test='"mar_company".equals(adkey.classification)'>
+				and marCompany like #{adkey.keyword} 
+	  		</if>
+			<if test='"mar_ceo".equals(adkey.classification)'>
+				and marCeo like #{adkey.keyword}  
+	  		</if>
+			<if test='"mar_phone".equals(adkey.classification)'>
+				and marPhone like #{adkey.keyword} 
+	  		</if>
+			<if test='"mar_regnum".equals(adkey.classification)'>
+				and marRegnum like #{adkey.keyword} 
+	  		</if>
+  	</select>
+ 
+ <!-- 등록(marSeqno == null) / 수정 --> 	
+  	<insert id="marketReg">
+	  	<choose>
+	  		<when test='marSeqno == null'>
+	  		insert into marketing (mar_seqno, mar_cate, mar_product, mar_price, mar_company, 
+									mar_opendate, mar_closedate, mar_detail, mar_ceo, mar_phone, mar_regnum)
+	            	values (mar_seqno.nextval, #{marCategory }, #{marProduct}, #{marPrice}, #{marCompany }, #{marOpendate},
+	                   		 #{marClosedate}, #{marDetail }, #{marCeo }, #{marPhone }, #{marRegnum})
+ <!--	
+	        INSERT INTO att (att_seqno, att_name, att_savename, att_size, att_type, att_path, mem_id)
+	            		VALUES (att_seqno.nextval, #{attName }, #{attSaveName }, #{attSize }, #{attType }, #{attPath }, #{mem.memId })
+	
+                
+	    	insert INTO att_thumb (thumb_seqno, thumb_filename, thumb_filesize, thumb_filepath, att_seqno) 
+	             		   VALUES (thumb_seqno.nextval, #{attThumb.fileName }, #{attThumb.filePath }, #{attThumb.fileSize }, #{attThumb.thumbSeqNo })           
+ -->
+			</when>
+			<otherwise>
+			update marketing set mar_cate =#{marCategory }, mar_product=#{ marProduct}, mar_price=#{ marPrice}, mar_company=#{marCompany }, 
+						mar_opendate=#{ marOpendate}, mar_closedate=#{ marClosedate}, mar_detail=#{marDetail }, mar_ceo=#{marCeo }, mar_phone=#{marPhone }, mar_regnum=#{ marRegnum}
+						where mar_seqno =#{ marSeqno, jdbcType=INTEGER}
+ <!--	
+	        INSERT INTO att (att_seqno, att_name, att_savename, att_size, att_type, att_path, mem_id)
+	            		VALUES (att_seqno.nextval, #{attName }, #{attSaveName }, #{attSize }, #{attType }, #{attPath }, #{mem.memId })
+	
+                
+	    	insert INTO att_thumb (thumb_seqno, thumb_filename, thumb_filesize, thumb_filepath, att_seqno) 
+	             		   VALUES (thumb_seqno.nextval, #{attThumb.fileName }, #{attThumb.filePath }, #{attThumb.fileSize }, #{attThumb.thumbSeqNo })           
+ -->
+			</otherwise>
+		</choose>
+  	</insert>
+  	
+  	<select id="getCountMarketing" resultType="int">
+			SELECT count(*) FROM marketing 		
+  	</select>
+
+	<delete id="remove">
+  			DELETE FROM marketing WHERE mar_seqno = #{marSeqno}
+  	</delete>
+  	
+  </mapper>

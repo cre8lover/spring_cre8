@@ -41,8 +41,8 @@ public class MemberControllerTest {
 	public void test() {
 		
 		try {
-			String rs = mockMvc.perform(MockMvcRequestBuilders.post("/login")
-					.param("id","joy").param("password","80888"))
+			String rs = mockMvc.perform(MockMvcRequestBuilders.post("/mem/login")
+					.param("memId","bbb").param("memPw","1234"))
 					.andReturn().getModelAndView().getViewName();
 			log.info(rs);
 		} catch (Exception e) {

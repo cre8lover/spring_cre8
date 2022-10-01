@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
 <!DOCTYPE html>
 <head>
   <link href='https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
@@ -14,6 +13,7 @@
   <script src='//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/bootstrap-datepicker.min.js' type='text/javascript'></script>
   <script src='//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/1.8/js/bootstrap-switch.min.js' type='text/javascript'></script>
   <script src='https://davidstutz.github.io/bootstrap-multiselect/js/bootstrap-multiselect.js' type='text/javascript'></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
 </head>
 <body>
   <div class='container'>
@@ -22,13 +22,13 @@
         <h4>광고상품수정</h4>
       </div>
 	  <c:set value="${market}" var="modify" />
+	  <input type="hidden" id="marSeqno" value="${modify.marSeqno }">
       <div class='panel-body'>
-        <form method="post" class='form-horizontal' enctype="multipart/form-data" id="insert" role='form' action="<%= request.getContextPath() %>/master/adupdate">
+        <div  class='form-horizontal'  >
           <div class='form-group'>
             <label class='control-label col-md-2 col-md-offset-2' for='id_accomodation'>카테고리</label>
             <div class='col-md-2'>
-           <input type="hidden" name="seqno" value="${modify.marSeqno }">
-              <select class='form-control' name ="marcate" id='id_accomodation'>
+              <select class='form-control' name ="marCategory" id='marCategory'>
                 <option value="포털마케팅" ${modify.marCategory == '포털마케팅' ? 'selected': '' }>포털마케팅</option>
                 <option value="SNS마케팅" ${modify.marCategory == 'SNS마케팅' ? 'selected': '' }>SNS마케팅</option>
                 <option value="바이럴마케팅" ${modify.marCategory == '바이럴마케팅' ? 'selected': '' }>바이럴마케팅</option>
@@ -42,7 +42,7 @@
             <div class='col-md-8'>
               <div class='col-md-6 indent-small'>
                 <div class='form-group internal'>
-                  <input class='form-control' id='id_first_name' name="name" value="${modify.marProduct }" placeholder='상품명' type='text'>
+                  <input class='form-control' id='marProduct' name="marProduct" value="${modify.marProduct }" placeholder='상품명' type='text'>
                 </div>
               </div>
             </div>
@@ -52,7 +52,7 @@
             <div class='col-md-8'>
               <div class='col-md-6 indent-small'>
                 <div class='form-group internal'>
-                  <input class='form-control' id='id_children' name = "price" value="${modify.marPrice }" placeholder='최종판매가격' type='number'>
+                  <input class='form-control' id='marPrice' name = "marPrice" value="${modify.marPrice }" placeholder='최종판매가격' type='number'>
                 </div>
               </div>
             </div>
@@ -62,7 +62,7 @@
             <div class='col-md-6'>
               <div class='form-group'>
                 <div class='col-md-11'>
-                  <input class='form-control' name="company" value="${modify.marCompany }" type='text'>
+                  <input class='form-control' id="marCompany" name="marCompany" value="${modify.marCompany }" type='text'>
                 </div>
             </div>
           </div>
@@ -71,7 +71,7 @@
             <div class='col-md-6'>
               <div class='form-group'>
                 <div class='col-md-11'>
-                  <input class='form-control' name="ceo" value="${modify.marCeo }" type='text'>
+                  <input class='form-control' id="marCeo" name="marCeo" value="${modify.marCeo }" type='text'>
                 </div>
               </div>        
             </div>
@@ -81,7 +81,7 @@
             <div class='col-md-6'>
               <div class='form-group'>
                 <div class='col-md-11'>
-                  <input class='form-control' name="phone" value="${modify.marPhone }" type='text'>
+                  <input class='form-control' id ="marPhone" name="marPhone" value="${modify.marPhone }" type='text'>
                 </div>
               </div>        
             </div>
@@ -90,7 +90,7 @@
             <div class='col-md-6'>
               <div class='form-group'>
                 <div class='col-md-11'>
-                  <input class='form-control' name="regnum" value="${modify.marRegnum }" type='text'>
+                  <input class='form-control' id ="marRegnum" name="marRegnum" value="${modify.marRegnum }" type='text'>
                 </div>
               </div>        
             </div>
@@ -100,7 +100,7 @@
             <div class='col-md-8'>
               <div class='col-md-3'>
                 <div class='form-group internal input-group'>
-                  <input class='form-control datepicker' type="date" value="${modify.marOpendate }" name = "start"id='id_checkin'>
+                  <input class='form-control datepicker' type="date" value="${modify.marOpendate }" name = "marOpendate"id='marOpendate'>
                   <span class='input-group-addon'>
                     <i class='glyphicon glyphicon-calendar'></i>
                   </span>
@@ -109,7 +109,7 @@
               <label class='control-label col-md-2' >판매종료일</label>
               <div class='col-md-3'>
                 <div class='form-group internal input-group'>
-                  <input class='form-control datepicker' type="date" value="${modify.marClosedate }" name = "finish" id='id_checkout'>
+                  <input class='form-control datepicker' type="date" value="${modify.marClosedate }" name = "marClosedate" id='marClosedate'>
                   <span class='input-group-addon'>
                     <i class='glyphicon glyphicon-calendar'></i>
                   </span>
@@ -143,19 +143,19 @@
           <div class='form-group'>
             <label class='control-label col-md-2 col-md-offset-2' for='id_comments'>제품 상세</label>
             <div class='col-md-6'>
-              <textarea class='form-control' id='id_comments' name = "comment" placeholder='Additional comments' rows='3'>${modify.marDetail }</textarea>
+              <input type='text' class='form-control' id='marDetail' name = "marDetail" placeholder='Additional comments' value="${modify.marDetail}">
             </div>
           </div>
           <div class='form-group'>
             <div class='col-md-offset-4 col-md-3'>
-              <input class='btn-lg btn-primary' id="reg" type='submit' value="상품등록">
+              <button class='btn-lg btn-primary' id="reg" >상품등록</button>
             </div>
             <div class='col-md-3'>
               <button class='btn-lg btn-danger' style='float:right' onclick="window.close()">취소</button>
             </div>
           </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>
@@ -231,18 +231,32 @@ label.control-label {
 }
 
 </style>
-
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/creAd.js"></script>
 <script>
-
-    $("#reg").click( function() {
-
-    	var ans = confirm("광고상품이 수정되었습니다.");
-            if (ans){
-         $('#insert').submit();
-            }
-      });
-
-
+$(document).ready(function(){
+	$("#reg").on("click", function(e){
+		console.log("등록하시나요?");
+		var marketing = {
+						marSeqno : $("#marSeqno").val(), 
+						marCategory : $("#marCategory").val(),
+						marPrice : $("#marPrice").val(),
+						marProduct : $("#marProduct").val(),
+						marCompany : $("#marCompany").val(),
+						marCeo : $("#marCeo").val(),
+						marPhone : $("#marPhone").val(),
+						marRegnum : $("#marRegnum").val(),
+						marOpendate : $("#marOpendate").val(),
+						marClosedate : $("#marClosedate").val(),
+						marDetail : $("#marDetail").val()
+						
+						};
+		
+		marketingService.update(marketing, function(result){
+			alert(result);
+		});
+			alert("성공하셨습니다");
+	});
+});	
 </script>
 <script>
 function fileDel(attSeqNo,saveFileName,filePath,thumb_file){

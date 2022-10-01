@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/creater/creReg2.css">
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/cre8.css">
 <title>회원가입</title>
@@ -156,7 +157,7 @@
              </tr>
            </tbody>
          </table>
-         <input type="submit" id="khm_memreg" value="정보 수정">
+         <input class= "cn3" type="submit" id="khm_memreg" value="정보 수정">
 
       </div>
       
@@ -167,6 +168,50 @@
 </div>         
    <div class="jmh_project">
 </div>
+      
+      
+ <script type="text/javascript" src="/js/creator.js"></script>	
+	<script>
+	/* var rno = '<c:out value="${list.proSeqno}" />'; */
+
+
+	$(document).ready(function(){
+	
+		
+	//크리에이터 정보 수정
+		$(".cn3").on("click", function(e){
+			 var creCompany = '<c:out value="${Creator.creCompany}" />'; 
+			 var crePhone = '<c:out value="${Creator.crePhone}" />'; 
+			 var creName = '<c:out value="${Creator.creName}" />'; 
+			 var creAddress = '<c:out value="${Creator.creAddress}" />'; 
+			 var creRegnum = '<c:out value="${Creator.creRegnum}" />'; 
+			 var creSalenum = '<c:out value="${Creator.creSalenum}" />'; 
+			 var crePot = '<c:out value="${Creator.crePot}" />'; 
+			 var memid = '<c:out value="${Creator.memid}" />'; 
+		
+		 var ccc ={creCompany : creCompany,
+					crePhone : crePhone,
+					creName : creName,
+					creAddress : creAddress,
+					creRegnum : creRegnum,
+					creSalenum : creSalenum,
+					crePot : crePot,
+					memid : id,
+					};
+		
+		 CreatorService.update(ccc, function(result){
+			
+			 if(result == '크리에이터 수정완료'){
+				 window.close();
+				 }
+				
+			 });
+		});
+	});
+	</script> 
+		     
+      
+      
       
  </body>
 </html>

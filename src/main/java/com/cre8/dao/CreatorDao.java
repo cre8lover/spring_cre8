@@ -11,6 +11,7 @@ import com.cre8.dto.Creator;
 import com.cre8.dto.Marketing;
 import com.cre8.dto.Mem;
 import com.cre8.dto.Pro;
+import com.cre8.dto.prodelVo;
 
 public interface CreatorDao {
 
@@ -34,7 +35,7 @@ public interface CreatorDao {
 	
 	public List<Auc> Auclist(String seqno, String id);
 	
-	public Creator infomodify(String id);
+	public Creator infomodify(Creator c);
 	
 	public String totalmoney(String id);
 	
@@ -50,7 +51,7 @@ public interface CreatorDao {
 	
 	public String productadd(Pro pro, String id);
 	
-	public Att prodel(String seqno);
+	public Att prodel(prodelVo seqno);
 	
 }
 
