@@ -158,7 +158,7 @@ public class MemberDaoImp implements MemberDao{
 				 
 				 att.setAttSeqno(rs.getInt("att_seqno"));
 				 att.setAttName(rs.getString("att_name"));
-				 att.savefilename(rs.getString("att_savename"));
+				 att.setSavefilename(rs.getString("att_savename"));
 				 att.setAttSize(rs.getString("att_size"));
 				 att.setAttType(rs.getString("att_type"));
 				 att.setAttPath(rs.getString("att_path"));
@@ -242,7 +242,7 @@ public class MemberDaoImp implements MemberDao{
 				 
 				 att.setAttSeqno(rs.getInt("att_seqno"));
 				 att.setAttName(rs.getString("att_name"));
-				 att.savefilename(rs.getString("att_savename"));
+				 att.setSavefilename(rs.getString("att_savename"));
 				 att.setAttSize(rs.getString("att_size"));
 				 att.setAttType(rs.getString("att_type"));
 				 att.setAttPath(rs.getString("att_path"));

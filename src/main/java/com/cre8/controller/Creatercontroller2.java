@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cre8.dto.Auc;
 import com.cre8.dto.Creator;
 import com.cre8.dto.Marketing;
 import com.cre8.dto.prodelVo;
@@ -75,7 +76,7 @@ public class Creatercontroller2 {
 	// 일반물풀 삭제
 	//RestService로 바꿈
 	@DeleteMapping(value="remove", produces ="text/plain; charset=utf-8", consumes="application/json")
-	public ResponseEntity<String> remove(@RequestBody String seqno){
+	public ResponseEntity<String> proremove(@RequestBody String seqno){
 	log.info("delete : " + seqno);
 	
 	return cs.prodel(seqno) == 1 ? new ResponseEntity<String>("삭제되었습니다 ",HttpStatus.OK) :
@@ -83,7 +84,17 @@ public class Creatercontroller2 {
 	 
 	}
 	
+	@DeleteMapping(value="delete", produces ="text/plain; charset=utf-8", consumes="application/json")
+	public ResponseEntity<String> aucdelete(@RequestBody Auc auc){
+//	log.info("delete : " + auc.getItemSeqno());
+//	log.info("delete : " + auc.getAucSeqno());
+//	log.info("delete after"+cs.aucdel(auc));
 	
+	
+	return cs.aucdel(auc) == -1 ? new ResponseEntity<String>("삭제되었습니다",HttpStatus.OK) :
+									new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	 
+	}
 
 }
 

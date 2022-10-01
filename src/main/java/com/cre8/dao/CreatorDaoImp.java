@@ -443,6 +443,7 @@ public class CreatorDaoImp implements CreatorDao{
 	         a.setAucStat(rs.getString("auc_stat"));
 	         a.setAucSeqno(rs.getInt("auc_seqno"));
 			 i.setItemImg(rs.getString("thumb_filename"));
+			 i.setItemSeqno(rs.getInt("item_seqno"));
 			 a.setItem(i);
 	         auclist.add(a);
 	      }

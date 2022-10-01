@@ -29,6 +29,22 @@
 	<delete id ="prodel">
 			  delete from pro where pro_seqno = #{seqno}
 	</delete>  
-	
+	<!-- auc 물품 삭제 -->
+		<delete id ="aucdel">
+	BEGIN
+		<if test='attseqno != null'>
+			delete from att_thumb where att_seqno = #{attseqno};
+	 		delete from att where att_seqno = #{attseqno};
+	 	</if>	
+		delete from auc where auc_seqno = #{aucSeqno};
+		delete from item where item_seqno = #{itemSeqno};	  
+	END;
+	</delete>  
+	<!-- auc 물품 삭제 -->
+	<select id ="aucfiledel" resultType="com.cre8.dto.filedelVO">
+		select att_savename as attSaveName, att_path as attPath,a.att_seqno as att_seqno, 
+		thumb_filename as fileName from att a, att_thumb at 
+		where a.att_seqno = at.att_seqno and a.item_seqno = #{itemSeqno}
+	</select>
  	  
   </mapper>

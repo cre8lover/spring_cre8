@@ -70,7 +70,7 @@ public class FileServiceImp implements FileService {
 			
 			attachfile.setAttName(fileName);
 			attachfile.setAttPath(fileUploadPath);
-			attachfile.savefilename(saveFileName);
+			attachfile.setSavefilename(saveFileName);
 			attachfile.setAttSize(String.valueOf(fileSize));
 			attachfile.setAttType(item.getContentType());
 			
@@ -128,7 +128,7 @@ public class FileServiceImp implements FileService {
 			
 			attachfile.setAttName(fileName);
 			attachfile.setAttPath(fileUploadPath);
-			attachfile.savefilename(saveFileName);
+			attachfile.setSavefilename(saveFileName);
 			attachfile.setAttSize(String.valueOf(fileSize));
 			attachfile.setAttType(item.getContentType());
 			

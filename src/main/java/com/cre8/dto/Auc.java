@@ -6,12 +6,14 @@ import java.util.List;
 public class Auc implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	private int attseqno;
 	private Integer aucSeqno;
 	private String aucDetail;
 	private Integer aucCloseprice;
 	private String aucShortdetail;
 	private String aucImg;
+	private String itemSeqno;
 	private Item item;
 	private String aucStart;
 	private String aucFinish;
@@ -27,6 +29,21 @@ public class Auc implements Serializable {
 	
 	
 	
+	
+	
+	
+	public int getAttseqno() {
+		return attseqno;
+	}
+	public void setAttseqno(int attseqno) {
+		this.attseqno = attseqno;
+	}
+	public String getItemSeqno() {
+		return itemSeqno;
+	}
+	public void setItemSeqno(String itemSeqno) {
+		this.itemSeqno = itemSeqno;
+	}
 	public Integer getAucSeqno() {
 		return aucSeqno;
 	}

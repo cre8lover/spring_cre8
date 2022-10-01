@@ -132,8 +132,6 @@ $(document).ready(function(){
 	
 	$("#amdown").on("click", function(e){
 		console.log("화긴");
-		
-		
 	});
 const arr = [];
 	
