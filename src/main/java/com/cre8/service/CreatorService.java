@@ -59,6 +59,4 @@ public interface CreatorService {
 
 	int add(Creator cre);
 
-	
-	String aucadd(MultipartFile filename, Auc auc);
 }

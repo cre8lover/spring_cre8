@@ -3,11 +3,6 @@ package com.cre8.dto;
 import java.io.Serializable;
 import java.util.List;
 
-import lombok.Data;
-
-
-
-
 public class Auc implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -30,13 +25,8 @@ public class Auc implements Serializable {
 	private Thumbnail thumb;
 	private String id;
 	
-<<<<<<< HEAD
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
+	
+	
 	public Integer getAucSeqno() {
 		return aucSeqno;
 	}
@@ -121,19 +111,6 @@ public class Auc implements Serializable {
 	public void setCartSet(Cart cartSet) {
 		this.cartSet = cartSet;
 	}
-=======
-	
-	
-	
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
->>>>>>> branch 'master' of https://github.com/cre8lover/spring_cre8.git
 	public Att getAtt_file() {
 		return att_file;
 	}
@@ -146,7 +123,13 @@ public class Auc implements Serializable {
 	public void setThumb(Thumbnail thumb) {
 		this.thumb = thumb;
 	}
-
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	
+
 	
 }
