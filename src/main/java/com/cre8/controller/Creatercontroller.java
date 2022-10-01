@@ -186,35 +186,6 @@ public class Creatercontroller {
 		  return "redirect:/cre/product_registration";	
 	}
 	
-<<<<<<< HEAD
-	
-	@RequestMapping(value="auction_registration", method= {RequestMethod.POST, RequestMethod.GET})
-	public String aucmodi(@ModelAttribute("seqno") String seqno, Model model) {
-		if(seqno != null) {
-			Auc auc = cs.aucdetail(seqno);
-			model.addAttribute("auc", auc);
-		}
-		return "creater/auction_registration?seqno =" + seqno;
-	}
-	@RequestMapping(value="auction_modify", method= {RequestMethod.POST, RequestMethod.GET})
-	public String auc_modi(MultipartFile filename, Auc auc, Item item,
-							HttpSession sess,
-							Model model) {
-		auc.setId((String)sess.getAttribute("sess_id"));
-		auc.setItem(item);
-		
-		String seqno = cs.aucadd(filename, auc);
-		model.addAttribute("seqno", seqno);
-		return "redirect:/cre/auction_reg";
-	}
-	//옥션수정등록
-	@RequestMapping(value="auction_reg", method= {RequestMethod.POST, RequestMethod.GET})
-	public String acumodi(@ModelAttribute("seqno") String seqno, Model model) {
-		if(seqno.length() != 0) {
-			Auc auc = cs.aucdetail(seqno);
-			model.addAttribute("auc", auc);
-		}
-=======
 	 // 게시물 삭제
 	  
 //	  @RequestMapping("prodel") public String prodel(@RequestParam("proseqno")
@@ -265,7 +236,6 @@ public class Creatercontroller {
 			model.addAttribute("auc", auc);
 		}
 
->>>>>>> branch 'master' of https://github.com/cre8lover/spring_cre8.git
 		return "creater/auction_registration";
 	}
 }
