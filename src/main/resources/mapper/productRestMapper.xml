@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  <mapper namespace="com.cre8.mapper.productRestMapper">
+	
+	<insert id="cartadd" >
+		insert into cart(cart_seqno, cart_amount,mem_id,pro_seqno) values(cart_seqno.nextval, #{proAmount}, #{id}, #{proSeqno})
+	</insert>
+	
+ </mapper>

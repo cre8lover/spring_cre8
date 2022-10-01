@@ -33,7 +33,7 @@
 					<a href="<%= request.getContextPath() %>/product/productDetail?seqno=${list.proSeqno}">
 							
 						<div class="product-image" style = " width: 338.68px; height: 338.68px; object-fit: cover; background-color:#e6f2ff;">
-							${item.itemImg}
+							<img src="/upload/thumbnail/${item.itemImg}" alt="My Image">
 						</div>
 						<div class="product-content">
 							<div class="product-info">

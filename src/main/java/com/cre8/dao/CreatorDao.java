@@ -53,7 +53,6 @@ public interface CreatorDao {
 	
 	public Att prodel(prodelVo seqno);
 	
-	
 }
 
 

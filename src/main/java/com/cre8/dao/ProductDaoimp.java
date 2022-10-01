@@ -1,5 +1,6 @@
 package com.cre8.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cre8.common.OracleConn;
+import com.cre8.dto.Cart;
 import com.cre8.dto.Cat;
 import com.cre8.dto.Item;
 import com.cre8.dto.Mem;
@@ -37,7 +39,8 @@ public class ProductDaoimp implements ProductDao{
 	
 	String sql = "select *"
 			+ " from ("
-			+ "    select i.item_img as item_img, i.item_name as item_name, p.pro_price as pro_price, p.pro_hits as pro_hits, p.cat_seqno, p.pro_seqno as pro_seqno"
+			+ "    select (select (select thumb_filename from att_thumb at where at.att_seqno = a.att_seqno) from att a where a.item_seqno = i.item_seqno) as item_img, "
+			+ "		i.item_name as item_name, p.pro_price as pro_price, p.pro_hits as pro_hits, p.cat_seqno, p.pro_seqno as pro_seqno"
 			+ "    from item i, pro p "
 			+ "    where i.item_seqno = p.item_seqno and p.cat_seqno = 1) "
 			+ "    order by pro_hits desc" ;
@@ -250,14 +253,15 @@ public class ProductDaoimp implements ProductDao{
 	public Pro detailList(String seqno) {
 		PreparedStatement stmt = null;
 		Connection conn = null;
-		
+		System.out.println("seqno = "+seqno);
 		Pro pro = new Pro();
 		String sql = " select (SELECT c.cre_company FROM creator c where c.mem_id = p.mem_id) as companyname,"
-				+ "        i.item_img, i.item_name, p.pro_price, p.pro_detail, p.pro_saleprice,"
+				+ "        (select att_savename from att where item_seqno = i.item_seqno) as item_img, "
+				+ "			i.item_name, p.pro_price, p.pro_detail, p.pro_saleprice,p.pro_amount,p.pro_seqno, "
 				+ "        (p.pro_price - P.pro_saleprice) discount ,"
 				+ "        (select count(*) from review r where p.pro_seqno = r.pro_seqno) as reviewcount "
 				+ " from pro p, item i"
-				+ " where p.item_seqno = i.item_seqno and p.item_seqno = ?" ;
+				+ " where p.item_seqno = i.item_seqno and p.pro_seqno = ?" ;
 				
 				
 				    
@@ -272,6 +276,8 @@ public class ProductDaoimp implements ProductDao{
 				Item item = new Item();
 				item.setItemImg(rs.getString("item_img"));
 				item.setItemName(rs.getString("item_name"));
+				pro.setProSeqno(rs.getInt("pro_seqno"));
+				pro.setProAmount(rs.getInt("pro_amount"));
 				pro.setCompanyname(rs.getString("companyname"));
 				pro.setProPrice(rs.getInt("pro_price"));
 				pro.setProSaleprice(rs.getInt("pro_saleprice"));
@@ -338,6 +344,64 @@ public class ProductDaoimp implements ProductDao{
 			e.printStackTrace();
 		}
 		return pro;
+	}
+
+	public List<Cart> nowbuy(String seqno, String amount) {
+		PreparedStatement stmt = null;
+		Connection conn = null;
+		
+		List<Cart> cartlist = new ArrayList<Cart>();
+		Cart cart = null;
+		Pro pro = null;
+		Item item = null;
+		try {
+			conn = ds.getConnection();
+			String sql = "select (select item_name from item i where i.item_seqno = p.item_seqno) item_name, "
+					+ "                    (select item_seqno from item i where i.item_seqno = p.item_seqno) item_seqno, "
+					+ "                    (select (select (select thumb_filename "
+					+ "                                     from att_thumb at where at.att_seqno = a.att_seqno) "
+					+ "                            from att a where a.item_seqno = i.item_seqno) "
+					+ "                     from item i where i.item_seqno = p.item_seqno ) item_img, "
+					+ "                     p.pro_price as pro_price, "
+					+ "                     p.pro_seqno as pro_seqno,(p.pro_price * ?) as totalprice "
+					+ "              from (select * from pro p "
+					+ " where pro_seqno = ?) p ";
+			
+			stmt = conn.prepareStatement(sql);
+			
+			stmt.setInt(1, Integer.parseInt(amount));
+			stmt.setString(2, seqno);
+			ResultSet rs = stmt.executeQuery();
+			
+			if (rs.next()) {
+				
+				cart = new Cart();
+				pro = new Pro();
+				item = new Item();
+	
+				item.setItemName(rs.getString("item_name"));
+				pro.setProPrice(rs.getInt("pro_price"));
+				pro.setProSeqno(rs.getInt("pro_seqno"));
+				cart.setCartAmount(Integer.parseInt(amount));
+				cart.setTotalprice(rs.getInt("totalprice"));
+				item.setItemImg(rs.getString("item_img"));
+				
+				pro.setItem(item);
+				cart.setPro(pro);
+				cartlist.add(cart);
+				
+			}
+			
+			conn.close();
+			stmt.close();
+			
+			
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return cartlist;
 	}
 }
 
