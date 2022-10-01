@@ -261,8 +261,6 @@ public class AucDaoimp implements AucDao{
             }else {
             	auc.setAucCloseprice(rs.getInt("aucCloseprice"));
             }
-            System.out.println(auc.getAucCloseprice());
-            
             auc.setAucHits(rs.getInt("auc_count"));
             auc.setAucDetail(rs.getString("mem_id"));
             item.setItemImg(rs.getString("item_img"));

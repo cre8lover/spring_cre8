@@ -54,11 +54,11 @@ var CreatorService = (function() {
 	
 	
 	// 물품삭제
-	function remove(callback, error) {
+	function remove(no,callback, error) {
 		$.ajax({
 			type : 'delete',
 			url : "/cre2/remove",
-			//data : JSON.stringify(no), // 객체 하나만을 넘길때는 이렇게 넘김!
+			data : JSON.stringify(no), 
 			contentType : 'application/json; charset=utf-8',
 			success : function(result, status, xhr) {
 				if (callback) {

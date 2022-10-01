@@ -67,7 +67,7 @@ public class Creatercontroller2 {
 					value = "ccc",
 					produces = "text/plain; charset=utf-8")
 	public ResponseEntity<String> modify(@RequestBody Creator c){
-
+		log.info("ㅁㄹㅇㅁㄴㄹㄴㅇㄹ : " + c.getCreCompany());
 	return cs.infomodify(c) == 1 ? new ResponseEntity<>("크리에이터 수정완료",HttpStatus.OK) :
 									   new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -78,8 +78,8 @@ public class Creatercontroller2 {
 	public ResponseEntity<String> remove(@RequestBody String seqno){
 	log.info("delete : " + seqno);
 	
-	return cs.prodel(seqno) == 1 ? new ResponseEntity<>("삭제되었습니다 ",HttpStatus.OK) :
-								   new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	return cs.prodel(seqno) == 1 ? new ResponseEntity<String>("삭제되었습니다 ",HttpStatus.OK) :
+								   new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	 
 	}
 	

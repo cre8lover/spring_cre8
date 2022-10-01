@@ -129,8 +129,8 @@
                        <img src="/img.png" alt="사진영역"  style="width:126px; height:165px;">
                    	</div>
 				    <input class="upload-name"id="filedummy" value="첨부파일" placeholder="첨부파일">
-				    <label for="file">파일찾기</label> 
 				    <input type="file" id="file" name="filename">
+				    <label for="file">파일찾기</label> 
 				</c:if>
 				
 				<div id = "fileSector">
