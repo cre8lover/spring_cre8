@@ -231,7 +231,7 @@ public class Creatercontroller {
 	@RequestMapping(value="auction_reg", method= {RequestMethod.POST, RequestMethod.GET})
 	public String acumodi(@ModelAttribute("seqno") String seqno, Model model) {
 
-		if(seqno != null) {
+		if(seqno.length() != 0) {
 			Auc auc = cs.aucdetail(seqno);
 			model.addAttribute("auc", auc);
 		}

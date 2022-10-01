@@ -46,9 +46,9 @@
                         <p>총 판매금액 : ${list.proSaleprice }
                     </p>
                     <div style="text-align: center;">
-                      <button class="custom-btn btn-1 cn1" onclick = "newwindow('<%= request.getContextPath() %>/cre/product_registration?seqno=${list.proSeqno}','modify');">수정</button>
+                      <button class="custom-btn btn-1 cn1"  onclick = "newwindow('<%= request.getContextPath() %>/cre/product_registration?seqno=${list.proSeqno}','modify');" >수정</button>
                   <%-- <button class="custom-btn btn-1" id="cn2" onclick = "prodelete('${list.proSeqno}')">삭제</button> --%>
-                  <button class="custom-btn btn-1 cn2"  <%-- onclick = "prodelete('${list.proSeqno}')" --%>>삭제</button>
+                  <button data-no = "${list.proSeqno}" class="custom-btn btn-1 cn2"  <%-- onclick = "prodelete('${list.proSeqno}')" --%>>삭제</button>
                   </div>
                 </div>
             </c:forEach>
@@ -69,7 +69,6 @@
                <button class="custom-btn btn-2" onclick = "newwindow('<%= request.getContextPath() %>/cre/salesHistory','sale');">판매현황</button>
             </div>
          </div>
-      
       
    </div>
   </div>
@@ -107,6 +106,9 @@
                          <button class="custom-btn btn-1" onclick = "newwindow('<%= request.getContextPath() %>/cre/auction_reg?seqno=${list.aucSeqno}','modify');">수정</button>
                      <button class="custom-btn btn-1" href = "#">삭제</button>
                      </c:if>
+                     <c:if test="${list.aucStat eq 'AUC_ING'}">
+                     <button class="custom-btn btn-1" onclick = "location.href='<%= request.getContextPath() %>/auc/auctionDetail?seqno=${list.aucSeqno}'">진행중</button>
+                     </c:if>
                   </div>
                 </div>
             </c:forEach>
@@ -140,7 +142,7 @@
 	<script>
 
 	$(document).ready(function(){
-	//크리에이터 정보 수정
+	/* //크리에이터 정보 수정
 		$(".cn3").on("click", function(e){
 			 var creCompany = '<c:out value="${Creator.creCompany}" />'; 
 			 var crePhone = '<c:out value="${Creator.crePhone}" />'; 
@@ -158,7 +160,7 @@
 					creRegnum : creRegnum,
 					creSalenum : creSalenum,
 					crePot : crePot,
-					memid : id,
+					memid : id
 					};
 		
 		 CreatorService.update(ccc, function(result){
@@ -168,24 +170,16 @@
 				 }
 				
 			 });
-		});
+		}); */
 		
 	//일반물품 삭제버튼 클릭시
 	
 		$(".cn2").on("click", function(e) {
-				var ino = '<c:out value = "${item.itemSeqno}" />';
-				var ano = '<c:out value = "${att.attSeqno}" />';
-				var pno = '<c:out value = "${pro.proSeqno}" />';
-				console.log("아이탬 시퀀" + ino);
-				console.log("어테치 시퀀" + ino);
-				console.log("프로  시퀀" + ino);
-
-				var no = {
-					itemSeqno : ino,
-					attSeqno : ano,
-					proSeqno : pno
-				};
-				CreatorService.remove(no, function(result) {
+				
+				var pro = $(this).data("no");
+				console.log("삭제" + pro);
+			
+				CreatorService.remove(pro, function(result) {
 					alert(result);
 				});
 			});

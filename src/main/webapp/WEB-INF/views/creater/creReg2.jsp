@@ -19,7 +19,7 @@
    <div class="body" style="height:100%">
        <div class="leftSideBar"></div>
       <div class="content" style="width:100%;"> 
-      <form action="<%= request.getContextPath() %>/cre/cremodifyreg" method="post" >
+      <%-- <form action="<%= request.getContextPath() %>/cre/cremodifyreg" method="post" > --%>
       <div class="khm_box">
          <h2>기본정보</h2>
          <hr>
@@ -161,7 +161,7 @@
 
       </div>
       
-      </form>
+      <!-- </form> -->
       </div>
       <div class="rightSideBar"></div> 
    </div>   
@@ -180,24 +180,27 @@
 		
 	//크리에이터 정보 수정
 		$(".cn3").on("click", function(e){
-			 var creCompany = '<c:out value="${Creator.creCompany}" />'; 
-			 var crePhone = '<c:out value="${Creator.crePhone}" />'; 
-			 var creName = '<c:out value="${Creator.creName}" />'; 
-			 var creAddress = '<c:out value="${Creator.creAddress}" />'; 
-			 var creRegnum = '<c:out value="${Creator.creRegnum}" />'; 
-			 var creSalenum = '<c:out value="${Creator.creSalenum}" />'; 
-			 var crePot = '<c:out value="${Creator.crePot}" />'; 
-			 var memid = '<c:out value="${Creator.memid}" />'; 
-		
-		 var ccc ={creCompany : creCompany,
-					crePhone : crePhone,
-					creName : creName,
-					creAddress : creAddress,
-					creRegnum : creRegnum,
-					creSalenum : creSalenum,
-					crePot : crePot,
-					memid : id,
-					};
+			 var creCompany = document.getElementsByName("cre_company")[0].value; 
+			 var crePhone = document.getElementById("mobile").value;  
+			 var creName =  document.getElementsByName("emailfirst")[0].value; 
+			 var creAddress = document.getElementById("address_kakao").value;   
+			 var creRegnum = document.getElementsByName("cre_regnum")[0].value;
+			 var creSalenum = document.getElementsByName("cre_salenum")[0].value; 
+			 var crePot = document.getElementsByName("intro")[0].value; 
+			 var memid = document.getElementById("id").value; 
+				
+			 console.log("저라ㅣ언ㄹㄴ" + memid);
+			 console.log("sdfssd" + creCompany);
+		 
+				var ccc ={creCompany : creCompany,
+							crePhone : crePhone,
+							creName : creName,
+							creAddress : creAddress,
+							creRegnum : creRegnum,
+							creSalenum : creSalenum,
+							crePot : crePot,
+							memid : memid,
+							};
 		
 		 CreatorService.update(ccc, function(result){
 			
