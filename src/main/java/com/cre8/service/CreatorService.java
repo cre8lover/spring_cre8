@@ -48,4 +48,6 @@ public interface CreatorService {
 	Map<String, String> cremodifyreg(HttpServletRequest req);
 
 	public void prodel(String seqno);
+	
+	String aucadd(MultipartFile filename, Auc auc);
 }

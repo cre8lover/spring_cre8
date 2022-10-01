@@ -19,6 +19,7 @@ public class Pro{
 	private Integer proAmount;
 	private String proStat;
 	private Integer proHits;
+	private String id;
 	private Cat cat;
 	private Mem mem;
 	private Item item;
@@ -37,6 +38,14 @@ public class Pro{
 	
 	
 	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public Thumbnail getThumb() {
 		return thumb;
 	}

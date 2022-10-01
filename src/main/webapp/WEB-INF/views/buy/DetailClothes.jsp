@@ -15,8 +15,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-	<%@ include file="/header.jsp" %>
-	<%@ include file="/menu.jsp" %>
+	<%@ include file="../header.jsp" %>
+	<%@ include file="../menu.jsp" %>
 <body background="<%= request.getContextPath() %>/img/back.jpg">
 
 	<div class="leftSideBar"></div>
@@ -32,7 +32,7 @@
 				<table class="jmh_table">
 					<tr>
 						<td rowspan='8' class="jmh_saleimg"><img class="jmh_imgsize"
-							src="${item.itemImg}" alt="My Image"></td>
+							src="/upload/${item.itemImg}" alt="My Image"></td>
 						<td colspan='2' class="jmh_star"><span style="float: right">리뷰 ${detailList.reviewcount}개 &nbsp;</span>
 						</td>
 					</tr>
@@ -60,7 +60,8 @@
 					        <input type="text" name="ct_qty" id="ct_qty" value="1" readonly="readonly">
 					
 					        <div class="plus"><button onclick="javascript:change_qty2('p')" style="width:27px; height:27px; border: none;">▲</div>
-					      </div>	
+					      </div>
+					      <div>재고수량 : ${detailList.proAmount} 개</div>	
 					    </td>
 					</tr>
 					<tr>
@@ -71,10 +72,10 @@
 					<tr>
 					<form>
 					<td>
-						<a href = "<%= request.getContextPath() %>/buyer/buylist"><input type="button" class="bton" value="바로구매"></a>
+						<%-- <a href = "<%= request.getContextPath() %>/buyer/buylist"> --%><input type="button" class="bton" id="orderBtn" value="바로구매"><!-- </a> -->
 					</td>
 					<td>
-						<a href = "<%= request.getContextPath() %>/buyer/cart"><input type="button" class="bton" value="장바구니"></a>
+						<input type="button" class="bton" id="cartBuyBtn" value="장바구니">
 					</td>	
 					</form>
 					</tr>
@@ -221,7 +222,7 @@
 				
 		</div>
 	</div>
-<%@ include file="/footer.jsp" %>
+<%@ include file="../footer.jsp" %>
 	<div class="rightSideBar"></div>
 	
 	 
@@ -252,7 +253,7 @@ function change_qty2(t){
   //var min_qty = '수량버튼'*1;
   var min_qty = 1;
   var this_qty = $("#ct_qty").val()*1;
-  var max_qty = '5'; // 현재 재고
+  var max_qty = "<c:out value='${detailList.proAmount}'/>"; // 현재 재고
   if(t=="m"){
     this_qty -= 1;
     if(this_qty<min_qty){
@@ -276,7 +277,83 @@ function change_qty2(t){
   $("#total_amount").html(show_total_amount.format());
 }
 
+$(document).ready(function(){
+	var seqno = "<c:out value='${detailList.proSeqno}'/>";
+	
+	$("#orderBtn").on("click",function(){
+		console.log("아 코딩 그렇게 하는거 아닌데");
+		location.href = "/product/nowbuy?seqno="+seqno+"&amount="+$("#ct_qty").val();
+	});
+	
+	
+	
+	
+	
+	
+	$("#cartBuyBtn").on("click",function(){
+		var amount = $("#ct_qty").val();
+		
+		var id = "<c:out value='${sess_id}'/>";
+		console.log("시퀀스"+seqno);
+		console.log("수량"+amount);
+		if(id != ""){
+		var reg = {
+				proSeqno : seqno,
+				proAmount : amount,
+				id : id
+		};
+		product.cartreg(reg, function(result){
+			var ans = confirm("장바구니에 추가되었습니다. 장바구니로 이동할까요?");
+			if (ans){
+				location.href = "/buyer/cart";
+			}else{
+				location.reload();
+			}
+			
+		})
+		
+		}else{
+			alert("로그인후이용하세요");
+		}
+		
+	});
+});
+
 </script>
+<script>
+var product = (function(){
+	
+	function cartreg(reg,callback,error){
+		console.log("cartadd.....");
+		$.ajax({
+			type :'post',
+			url : '/prductrest/cartadd',
+			contentType : 'application/json; charset=utf-8',
+			data : JSON.stringify(reg),
+			success : function(result,status,xhr){
+				if(callback){
+					callback(result);
+				}
+			},
+			error : function(xhr, status, err){
+				if(error){
+				error(err);
+				}
+			}
+		
+		});
+	};
+	return{
+		cartreg : cartreg
+	};
+	
+})();
+
+</script>
+
+
+
+
 
 </body>
 </html>

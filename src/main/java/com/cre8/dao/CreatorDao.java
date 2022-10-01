@@ -52,7 +52,6 @@ public interface CreatorDao {
 	
 	public Att prodel(String seqno);
 	
-	
 }
 
 

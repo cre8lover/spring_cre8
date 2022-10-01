@@ -14,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.cre8.dto.Cart;
 import com.cre8.dto.Pro;
 import com.cre8.service.ProService;
 import com.cre8.service.ProServiceImp;
@@ -68,5 +70,26 @@ public class Productcontroller extends HttpServlet {
        
        return "/listimg/product_cosmetics";
     }
+    
+    
+    
+    @GetMapping("productDetail")
+    public String detail(@ModelAttribute("seqno") String seqno,Model model) {
+    		
+    	Pro detailList = pro.detailList(seqno);
+    	model.addAttribute("detailList",detailList);
+    	
+    	return "/buy/DetailClothes";
+    }
+
+    @GetMapping("nowbuy")
+    public String nowbuy (@ModelAttribute("seqno") String seqno,@ModelAttribute("amount") String amount,Model model) {
+    	
+    	List<Cart> prolist = pro.nowbuy(seqno,amount);
+    	model.addAttribute("cartp", prolist);
+		return "/buy/buylist";
+    }
+    
+    
     
 }

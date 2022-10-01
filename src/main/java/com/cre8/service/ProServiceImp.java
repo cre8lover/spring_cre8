@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cre8.dao.ProductDaoimp;
+import com.cre8.dto.Cart;
 import com.cre8.dto.Pro;
 
 @Service
@@ -40,6 +41,11 @@ public class ProServiceImp implements ProService {
 
 	public Pro detailList(String seqno) {
 		return ProDao.detailList(seqno);
+	}
+
+	@Override
+	public List<Cart> nowbuy(String seqno,String amount) {
+		return ProDao.nowbuy(seqno,amount);
 	}
 
 

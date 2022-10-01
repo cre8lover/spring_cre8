@@ -2,6 +2,7 @@ package com.cre8.service;
 
 import java.util.List;
 
+import com.cre8.dto.Cart;
 import com.cre8.dto.Pro;
 
 public interface ProService {
@@ -17,6 +18,8 @@ public interface ProService {
 	List<Pro> proList_tra();
 
 	public Pro detailList(String seqno);
+
+	List<Cart> nowbuy(String seqno, String amount);
 
 
 }

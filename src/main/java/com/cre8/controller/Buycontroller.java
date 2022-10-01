@@ -61,11 +61,11 @@ public class Buycontroller extends HttpServlet {
     	
 //    	System.out.println("chk"+chklist.size());
 //    	System.out.println("or"+orderbutton);
-    	if (chklist.size() != 0) {
+//    	if (chklist.size() != 0) {
 //    	System.out.println(chklist.get(0));
-    	}
+//    	}
 			List<Cart> prolist = buy.myCart((String) sess.getAttribute("sess_id"),chklist);
-			
+//			System.out.println(prolist.get(0).getPro().getItem().getItemName());
 			if(prolist != null) {
 				model.addAttribute("cartp", prolist);
 			}

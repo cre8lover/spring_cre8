@@ -174,6 +174,28 @@ public class CreatorServiceImp implements CreatorService{
 	}
 	
 
+	public String aucadd(MultipartFile filename, Auc auc) {
+		FileService fileService = new FileServiceImp();
+		Att attachfile=null;
+
+		try {
+			if(filename != null) {
+			attachfile = fileService.fileUpload(filename);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		auc.setAtt_file(attachfile);
+
+	    if (auc.getAucSeqno() != null) {
+	    	return creatorDao.aucmodify(auc);
+	    }else {
+	    	return creatorDao.aucadd(auc, auc.getId());
+	    }
+	}
+	
+	
 }
 
 
