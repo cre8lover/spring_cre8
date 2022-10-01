@@ -75,7 +75,7 @@ function remaindTime() {
       $("#d-day-hour").html(hour);
       $("#d-day-min").html(min);
       $("#d-day-sec").html(sec);
-      tag.innerHTML = "<input type='button' class='bton' value='입찰하기'>"
+      tag.innerHTML = "<input type='button' id='Btnaucnow' class='bton Btnaucnow' value='입찰하기'>"
    } 
    /*else{ //현재시간이 종료시간보다 크면
    tag.innerHTML = "<input type='button' onclick='timeover()' class='bton' value='입찰종료'>"*/
