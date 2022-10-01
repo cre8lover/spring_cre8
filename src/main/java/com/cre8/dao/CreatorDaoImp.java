@@ -1462,14 +1462,3 @@ public String totalmoney(String id) {
 			return null;
 		}	
 }	
-
-	
-	
-	
-	
-	
-	
-
-
-	
-
