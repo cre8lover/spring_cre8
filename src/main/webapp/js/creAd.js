@@ -6,6 +6,24 @@
  var marketingService = (function(){
  console.log("marketing list.....");
  
+ 	function search(marketingSearch, callback, error){
+ 		var page = marketingSearch.page || 1;
+ 		var key = marketingSearch.key;
+ 		var value = marketingSearch.value;
+ 		
+ 		console.log("search????");
+ 		
+ 		$.getJSON("/master/search/" + page + "/" + key + "/" + value + ".json", function(data){
+ 			if(callback){
+ 				callback(data.cnt, data.list);
+ 			}	
+ 		}).fail(function(xhr, status, err){
+ 			if(err){
+ 				error();
+ 			}
+ 		});
+ 	}
+ 
  	function getList(param, callback, error){
  		var page = param.page || 1;
  		console.log("why????");
@@ -77,12 +95,13 @@
 			}
 		});
 	}
- 	
+	
  	return {
  			getList : getList,
  			update : update,
  			add : add,
- 			remove : remove
+ 			remove : remove,
+ 			search : search
  	};
  
  })();

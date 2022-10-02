@@ -36,13 +36,6 @@ public class Admincontroller {
 	
 	@Autowired
 	private AdminService admin;
-       
-
-	@GetMapping("adminlogin")
-	public String loginpage() {
-		
-		return "/admin/adminlogin";
-	}
 	
 	@PostMapping("adminMain")
 	public String adminpage(Mem mem, Model model, HttpSession sess) {
@@ -65,21 +58,21 @@ public class Admincontroller {
 			
 		case "pwfail" :
 			
-			model.addAttribute("err2", "�뜝�룞�삕艅섇뜝�떕節륁삕�뜝占� �솗�뜝�룞�삕�뜝�룞�삕 �뜝�뙇�눦�삕�뜝�룞�삕");
-			goView = "/admin/adminlogin";
+			model.addAttribute("err2", "Please check the password");
+			goView = "/index";
 			
 			break;
 			
 		case "no_member" :
 			
-			model.addAttribute("err2", "�뜝�룞�삕�솚�뜝�룞�삕 �솗�뜝�룞�삕�뜝�룞�삕�뜝�뙇�눦�삕�뜝�룞�삕");
-			goView = "/admin/adminlogin";
+			model.addAttribute("err2", "Please check the authority");
+			goView = "/index";
 			
 			break;
 			
 		default :
 			
-			goView = "/admin/adminlogin.jsp";
+			goView = "/index";
 
 		}
 		
@@ -119,7 +112,7 @@ public class Admincontroller {
 					produces="text/plain; charset=utf-8")
 	public String marketingList() {
 		
-		log.info("마케팅 컨트롤러.......................................");
+		log.info("marketing controller.......................................");
 
 		return "/admin/creAd";
 	}
@@ -129,11 +122,9 @@ public class Admincontroller {
 	public ResponseEntity<PageDTO> marketingList(AdminKeyWord adkey,
 												@PathVariable("page") int page) {
 		
-		log.info("리스트 컨트롤러.......................................");
+		log.info("marketingList controller.......................................");
 
 		adkey = new AdminKeyWord(page, 10);
-		
-//		log.info("gsgsg : "+admin.marketingList(adkey, page).getCnt());
 		
 		return new ResponseEntity<PageDTO>(admin.marketingList(adkey, page), HttpStatus.OK);
 	}
@@ -158,20 +149,11 @@ public class Admincontroller {
 					produces="text/plain; charset=utf-8")
 	public String marketReg() {
 		
-		log.info("愿묎퀬 �벑濡� �럹�씠吏� 異쒕젰");
+		log.info("marekting register controller.........");
 		
 		return "/admin/admin_adreg";
 	}
-/*	
-	@RequestMapping(value="marReg",
-					produces="text/plain; charset=utf-8")
-	public String marinsert(Marketing market, HttpSession sess, MultipartFile filename) {
-		admin.reg(market, filename, (String)sess.getAttribute("sess_id"));
-
-		log.info("愿묎퀬 �벑濡�===================================");
-		return "/admin/admin_adreg";
-	}
-*/	
+	
 	@RequestMapping(value="admodify/{mar}",
 					produces="text/plain; charset=utf-8")
 	public String marketingModify(@PathVariable("mar") String Seqno, Model model) {
@@ -181,22 +163,13 @@ public class Admincontroller {
 		model.addAttribute("market", market);
 		return "/admin/admin_adreg2";
 	}
-/*	
-	@RequestMapping(value="/modi/{marSeqno}.*",
-			produces="application/json; charset=utf-8")
-	public ResponseEntity<MarketingVo> get(@PathVariable("marSeqno") String marSeqno) {
-		
-		log.info("愿묎퀬 �닔�젙  而⑦듃濡ㅻ윭.......................................");
-		
-		return new ResponseEntity<MarketingVo>(admin.get(marSeqno), HttpStatus.OK);
-	}
-*/	
+
 	@RequestMapping(method= {RequestMethod.PUT, RequestMethod.PATCH,RequestMethod.GET, RequestMethod.POST},
 					value ="{marSeqno}", produces = "application/json; charset=utf-8")
 	public ResponseEntity<String> update(@PathVariable("marSeqno") String marSeqno,
 										@RequestBody MarketingVo vo) {
 		
-		log.info("마케팅 수정 컨트롤러==========================");
+		log.info("marketing modify controller==========================");
 		
 		return admin.update(vo) == 1 ? new ResponseEntity<>("수정되었습니다.", HttpStatus.OK) 
 				   					  : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -206,7 +179,7 @@ public class Admincontroller {
 					value ="add", consumes = "application/json", produces = "application/json; charset=utf-8")
 	public ResponseEntity<String> add(@RequestBody MarketingVo vo) {
 
-		log.info("마케팅 등록 컨트롤러===================================");
+		log.info("marketing register===================================");
 		
 		return admin.add(vo) == 1 ? new ResponseEntity<>("등록되었습니다.", HttpStatus.OK) 
 									 : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -218,6 +191,22 @@ public class Admincontroller {
 		
 		return admin.remove(marSeqno) == 1 ? new ResponseEntity<>("삭제되었습니다", HttpStatus.OK) 
 											: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		
 	}
+	
+	@RequestMapping(value="search/{page}/{key}/{value}.*",
+					produces="application/json; charset=utf-8")
+	public ResponseEntity<PageDTO> search(AdminKeyWord adkey,
+											@PathVariable("page") int page,
+											@PathVariable("key") String classification,
+											@PathVariable("value") String keyword) {
+	
+	log.info("marketing search controller.......................................");
+	
+	adkey = new AdminKeyWord(page, 10);
+	adkey.setClassification(classification);
+	adkey.setKeyword(keyword);
+	
+	return new ResponseEntity<PageDTO>(admin.marketingList(adkey, page), HttpStatus.OK);
+	}
+	
 }

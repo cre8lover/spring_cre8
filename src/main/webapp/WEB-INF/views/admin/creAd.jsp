@@ -28,7 +28,7 @@
 							</td>
 							<th>검색어</th>
 							<td>
-								<select name="classification">
+								<select name="classification" id="category">
 									<option value="999" <c:if test="${key.classification == '999'}">selected</c:if>>전체</option>
 									<option value="mar_product" ${key.classification == 'mar_product' ? 'selected': '' }>상품이름</option>
 									<option value="mar_company" ${key.classification == 'mar_company' ? 'selected': '' }>업체명</option>
@@ -41,7 +41,7 @@
 								<input type="text" name="keyword" id="search" value="${key.keyword }" />
 							</td>
 							<td class="bno">
-								<input type="submit" value="검색" >
+								<button id="button">검색</button>
 							</td>
 						</tr>
 					</tbody>
@@ -73,9 +73,6 @@
 		    </tr>
 		  </thead>
 		  <tbody id = "Listpage">
-		  <tr>
-		      	<%-- <a href="javascript:newwindow('<%= request.getContextPath() %>/master/admodify?seqno=${market.marSeqno }','modi')"> --%>
-		  </tr>
 		  </tbody>
 		</table>
 	</div>
@@ -91,6 +88,46 @@ $(document).ready(function(){
 	
 var currentPage = 1;
 showList(1);	
+
+	$(document).on("click", "#button", function(e){
+		console.log("search button click...!!");
+		
+		var marketingSearch = {
+			key : $("#category").val(), 
+			value : $("#search").val()
+		}
+		
+		console.log("카테고리 검색 : " + marketingSearch.key);
+		console.log("키워드 검색 : " + marketingSearch.value);
+		
+		marketingService.search(marketingSearch, function(Cnt, list){
+			var str= "";
+			
+			for(var i = 0, len=list.length || 0; i < len; i++){
+				console.log("0번째 : "+list[0].marSeqno);
+
+				str +=	"<tr>"
+				str +=      "<td><button class='change' name='type' value='" + list[i].marSeqno + "'> 수정 </button></td>"
+				str +=      "<td>" + list[i].no + "</td>"
+				str +=      "<td>" + list[i].marProduct + "</td>"
+				str +=      "<td>" + list[i].marCompany + "</td>"
+				str +=      "<td>" + list[i].marCeo + "</td>"
+				str +=      "<td>" + list[i].marPhone + "</td>"
+				str +=      "<td>" + list[i].marRegnum + "</td>"
+				str +=      "<td>" + list[i].marOpendate + "</td>"
+				str +=      "<td><button class='delete' name='type' value='" + list[i].marSeqno + "'>삭제</button> </td>"
+				str +=  "</tr>"
+
+			}
+			
+				$("#Listpage").html(str);
+				
+				showPage(Cnt, currentPage);
+			
+		});
+		
+	});
+			
 
 	function showList(page){
 		marketingService.getList({page:page || 1}, function(Cnt, list){
@@ -186,7 +223,7 @@ function showPage(Cnt){
 		}
 		
 		str += "</div>"
-		console.log(str);
+//		console.log(str);
 		$("#page").html(str);
 	}
 	
