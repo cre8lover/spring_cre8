@@ -37,8 +37,14 @@ public class Admincontroller {
 	@Autowired
 	private AdminService admin;
 	
-	@PostMapping("adminMain")
-	public String adminpage(Mem mem, Model model, HttpSession sess) {
+	@GetMapping("adminlogin")
+ 	public String loginpage() {
+
+ 		return "/admin/adminlogin";
+ 	}
+
+ 	@PostMapping("adminMain")
+ 	public String adminpage(Mem mem, Model model, HttpSession sess) {
 		
 		String goView = null;
 		
@@ -55,29 +61,30 @@ public class Admincontroller {
 			
 			goView = "/admin/adminMain";
 			break;
-			
-		case "pwfail" :
-			
-			model.addAttribute("err2", "Please check the password");
-			goView = "/index";
-			
-			break;
-			
-		case "no_member" :
-			
-			model.addAttribute("err2", "Please check the authority");
-			goView = "/index";
-			
-			break;
-			
-		default :
-			
-			goView = "/index";
+
+ 		case "pwfail" :
+
+ 			model.addAttribute("err2", "Please check the password");
+ 			goView = "/admin/adminlogin";
+
+ 			break;
+
+ 		case "no_member" :
+
+ 			model.addAttribute("err2", "Please check the authority");
+ 			goView = "/admin/adminlogin";
+
+ 			break;
+
+ 		default :
+
+ 			goView = "/admin/adminlogin.jsp";
 
 		}
 		
 		return goView;
-	}
+ 	}
+
 	
 	@GetMapping("logout")
 	public String logout(HttpSession sess) {
