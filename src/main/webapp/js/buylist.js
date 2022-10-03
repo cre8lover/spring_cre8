@@ -89,16 +89,23 @@ window.onload = function(){
 	const ran = Math.floor(Math.random() * 1000);
 	var cartlist = [];
 	var ordersamount = [];
+	var proSeqno = [];
+	const proseqno = document.getElementsByName("proseqno");
 	const cartnum = document.getElementsByName("cartseqno");
 	const orderamount = document.getElementsByName("orderamount");
 	for (var i=0; i<cartnum.length; i++){
 		cartlist.push(cartnum[i].value);
 		ordersamount.push(orderamount[i].value);
+		proSeqno.push(proseqno[i].value);
 	}
 	//cartnum = JSON.stringify(cartnum);
 	//alert(cartnum);
+	
+	
+	
 	var ordertime = hours + '' + minutes  + '' + seconds+''+ran;
-
+	
+	
    var IMP = window.IMP; // 생략 가능
    IMP.init("imp31724657"); // 예: imp00000000
       //IMP.request_pay(card, callback)
@@ -111,12 +118,13 @@ window.onload = function(){
           /*buyer_email: "gildong@gmail.com", 적는칸이없어서 주석*/
           buyer_name: name,
           buyer_tel: buyer_tel,
-          buyer_addr: buyer_addr,
+          buyer_addr: buyer_addr
           /*buyer_postcode: "01181" 마찬가지로 적는칸이없네요?*/
+          
       }, function (rsp) { // callback
           if (rsp.success) {
             $.ajax({
-              url: "order", // 예: https://www.myservice.com/payments/complete
+              url: "/buyer/order", // 예: https://www.myservice.com/payments/complete
               type: "POST",
               /*async: false,*/
               traditional: true,
@@ -131,20 +139,21 @@ window.onload = function(){
                buyer_tel:rsp.buyer_tel,
                buyer_addr:rsp.buyer_addr,
                cart : cartlist,
-               orderamount: ordersamount
+               orderamount: ordersamount,
+               proSeqno : proSeqno,
                /*buyer_postcode:rsp.buyer_postcode*/
                
             },
             datatype:"json",
             success:function(data){
-               location.href = "buy?seqno="+data;//성공시 보낼페이지
+               location.href = "/buyer/buy?seqno="+data;//성공시 보낼페이지
             }
               })
              
              
           } else {
-
-               location.href = "cart";//실패시 보낼 페이지
+				console.log(document.referrer);
+               location.href = document.referrer;//실패시 보낼 페이지
 
           }
       });

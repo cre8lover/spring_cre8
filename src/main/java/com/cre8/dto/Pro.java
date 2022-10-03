@@ -32,12 +32,20 @@ public class Pro{
 	private String companyname;
 	private Att att_file;
 	private Thumbnail thumb;
+	private String[] allponecheck;
 	
 	
 	
 	
 	
-	
+	public String[] getAllponecheck() {
+		return allponecheck;
+	}
+
+	public void setAllponecheck(String[] allponecheck) {
+		this.allponecheck = allponecheck;
+	}
+
 	public String getId() {
 		return id;
 	}

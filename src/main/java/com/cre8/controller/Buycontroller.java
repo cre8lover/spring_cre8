@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cre8.dto.Cart;
 import com.cre8.dto.Orders;
+import com.cre8.dto.Pro;
 import com.cre8.dto.orderadd;
 import com.cre8.service.BuyServiceimp;
 
@@ -56,15 +57,17 @@ public class Buycontroller extends HttpServlet {
 //			}
 //    }	
     @RequestMapping("cart")
-	public String cart(HttpSession sess,@ModelAttribute("allponecheck")ArrayList<String> chklist,
-						@ModelAttribute("orderbutton")String orderbutton,Model model){
+	public String cart(
+			HttpSession sess,
+						@ModelAttribute("orderbutton")String orderbutton,Model model,@ModelAttribute("allponecheck") Pro test){
     	
-//    	System.out.println("chk"+chklist.size());
-//    	System.out.println("or"+orderbutton);
-//    	if (chklist.size() != 0) {
-//    	System.out.println(chklist.get(0));
-//    	}
-			List<Cart> prolist = buy.myCart((String) sess.getAttribute("sess_id"),chklist);
+//	    	if (test.getAllponecheck() != null) {
+//	    		System.out.println(test.getAllponecheck()[0]);
+//	    		System.out.println(test.getAllponecheck()[1]);
+//	    	}
+//	    	ArrayList<String> chklist = new ArrayList<String>();
+	    	
+			List<Cart> prolist = buy.myCart((String) sess.getAttribute("sess_id"),test.getAllponecheck());
 //			System.out.println(prolist.get(0).getPro().getItem().getItemName());
 			if(prolist != null) {
 				model.addAttribute("cartp", prolist);

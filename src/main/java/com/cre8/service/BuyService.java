@@ -14,7 +14,7 @@ import com.cre8.dto.orderadd;
 
 public interface BuyService {
 	
-	public List<Cart> myCart(String logid, ArrayList<String> chklist);
+	public List<Cart> myCart(String logid, String[] chklist);
 //	public Cart buylist(String cart_seqno);
 	public List<Orders> orderlist(String logid,String o_seqno);
 	public int orderand(orderadd orderadd);

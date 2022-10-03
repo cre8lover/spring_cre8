@@ -9,7 +9,7 @@ import com.cre8.dto.orderadd;
 
 public interface BuyDao {
 	
-	public List<Cart> myCart(String logid, ArrayList<String> list);
+	public List<Cart> myCart(String logid, String[] list);
 	public List<Orders> orderlist(String logid, String o_seqno);
 	public int orderand(orderadd orderadd);
 }

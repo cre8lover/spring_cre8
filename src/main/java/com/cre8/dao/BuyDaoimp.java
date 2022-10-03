@@ -215,7 +215,7 @@ public class BuyDaoimp implements BuyDao{
 //		}
 //	}
 	
-	public List<Cart> myCart(String logid, ArrayList<String> list) {
+	public List<Cart> myCart(String logid, String[] chklist) {
 		
 		CallableStatement cstmt=null;
 		Connection conn = null;
@@ -223,7 +223,6 @@ public class BuyDaoimp implements BuyDao{
 		Cart cart = null;
 		Pro pro = null;
 		Item item = null;
-		String[] chklist = null;
 		try {
 			conn = ds.getConnection();
 			
@@ -231,11 +230,6 @@ public class BuyDaoimp implements BuyDao{
 			cstmt = conn.prepareCall(sql);
 
 			cstmt.setString(1, logid);
-			if(list.size() != 0) {
-				chklist = new String[list.size()];
-				chklist = list.toArray(chklist);
-			}
-			
 			
 			ArrayDescriptor chk_desc = ArrayDescriptor.createDescriptor("MYCART_PROSEQNOLIST",conn);
 			ARRAY chk = new ARRAY(chk_desc, conn, chklist );
@@ -537,11 +531,16 @@ public class BuyDaoimp implements BuyDao{
 		Connection conn = null;
 		String[] cart = orderadd.getCart();
 		String[] orderamount = orderadd.getOrderamount();
+		
+		
+		
 //		System.out.println(cart[0]);
 //		System.out.println(orderamount[0]);
 		int rs = 0;
-		String sql = "call p_orderadd(?,?,?,?,?,?,?,?,?)";
 		try {
+			
+			if(cart.length != 0) {
+			String sql = "call p_orderadd(?,?,?,?,?,?,?,?,?)";
 			conn = ds.getConnection();
 			cstmt = conn.prepareCall(sql);
 			cstmt.setString(1, orderadd.getPay_method());
@@ -563,6 +562,27 @@ public class BuyDaoimp implements BuyDao{
 			cstmt.registerOutParameter(9, OracleTypes.INTEGER);
 			cstmt.executeQuery();
 			rs = cstmt.getInt(9);
+			}else {
+//				System.out.println("직접구매");
+//				System.out.println(orderadd.getProSeqno());
+//				System.out.println(orderadd.getOrderamount()[0]);
+				
+				String sql = "call p_noworderadd(?,?,?,?,?,?,?,?,?)";
+				conn = ds.getConnection();
+				cstmt = conn.prepareCall(sql);
+				cstmt.setString(1, orderadd.getPay_method());
+				cstmt.setString(2, orderadd.getBuyer_name());
+				cstmt.setString(3, orderadd.getBuyer_tel());
+				cstmt.setString(4, orderadd.getMerchant_uid());
+				cstmt.setString(5, orderadd.getAmount());
+				cstmt.setString(6, orderadd.getId());
+				cstmt.setString(7, orderadd.getProSeqno());
+				cstmt.setString(8, orderadd.getOrderamount()[0]);
+				cstmt.registerOutParameter(9, OracleTypes.INTEGER);
+				cstmt.executeQuery();
+				rs = cstmt.getInt(9);
+			}
+			
 			conn.close();
 			cstmt.close();
 		} catch (SQLException e) {
