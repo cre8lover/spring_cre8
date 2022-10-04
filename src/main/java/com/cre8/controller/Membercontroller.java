@@ -3,7 +3,6 @@ package com.cre8.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +16,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cre8.dto.Address;
 import com.cre8.dto.Att;
+import com.cre8.dto.Auc_Criteria;
 import com.cre8.dto.Cart;
 import com.cre8.dto.Mem;
 import com.cre8.dto.Pro;
 import com.cre8.dto.Ship;
 import com.cre8.dto.Thumbnail;
 import com.cre8.service.MemberService;
-import com.cre8.service.MemberServiceImp;
 import com.cre8.service.ProService;
 
 @Controller
@@ -55,8 +54,9 @@ public class Membercontroller{
 			sess.setAttribute("sess_id", id);
 			sess.setAttribute("sess_name", status.get("name"));
 			sess.setAttribute("auth", status.get("auth"));
-			
-			List<Pro> prolist = pro.proList_clothes(); 
+			Auc_Criteria ac = new Auc_Criteria();
+			ac.setCategory("1");
+			List<Pro> prolist = pro.proList_clothes(ac); 
 			model.addAttribute("proList", prolist);
 			
 			viewPage = "/index";

@@ -1,6 +1,5 @@
 package com.cre8.dao;
 
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +12,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cre8.common.OracleConn;
+import com.cre8.dto.Auc_Criteria;
 import com.cre8.dto.Cart;
 import com.cre8.dto.Cat;
 import com.cre8.dto.Item;
@@ -29,7 +28,7 @@ public class ProductDaoimp implements ProductDao{
 	private DataSource ds;
 	
 	//?占쏙옙占�? cat=1
-	public List<Pro> proList_clothes() {
+	public List<Pro> proList_clothes(Auc_Criteria ac) {
 		PreparedStatement stmt = null;
 		Connection conn = null;
 		List<Pro> prolist1 = new ArrayList<Pro>(); 
@@ -42,12 +41,13 @@ public class ProductDaoimp implements ProductDao{
 			+ "    select (select (select thumb_filename from att_thumb at where at.att_seqno = a.att_seqno) from att a where a.item_seqno = i.item_seqno) as item_img, "
 			+ "		i.item_name as item_name, p.pro_price as pro_price, p.pro_hits as pro_hits, p.cat_seqno, p.pro_seqno as pro_seqno"
 			+ "    from item i, pro p "
-			+ "    where i.item_seqno = p.item_seqno and p.cat_seqno = 1) "
+			+ "    where i.item_seqno = p.item_seqno and p.cat_seqno = ?) "
 			+ "    order by pro_hits desc" ;
 	
 	try {
 		conn = ds.getConnection();
 		stmt = conn.prepareStatement(sql);
+		stmt.setString(1, ac.getCategory());
 		ResultSet rs = stmt.executeQuery();
 		
 		while (rs.next()) {
@@ -73,183 +73,7 @@ public class ProductDaoimp implements ProductDao{
 		return prolist1;
 	}
 	
-	//占�??占쏙옙&占�?占�? cat=2
-	public List<Pro> proList_furn() {
-		PreparedStatement stmt = null;
-		Connection conn = null;
-		List<Pro> prolist2 = new ArrayList<Pro>(); 
-		Pro pro = null;
-		Item item = null;
-		Cat cat = null;
-		
-		String sql = "select *"
-				+ " from ("
-				+ "    select i.item_img as item_img, i.item_name as item_name, p.pro_price as pro_price, p.pro_hits as pro_hits, p.cat_seqno, p.pro_seqno as pro_seqno"
-				+ "    from item i, pro p "
-				+ "    where i.item_seqno = p.item_seqno and p.cat_seqno = 2) "
-				+ "    order by pro_hits desc" ;
-		
-		try {
-			conn = ds.getConnection();
-			stmt = conn.prepareStatement(sql);
-			ResultSet rs = stmt.executeQuery();
-			
-			while (rs.next()) {
-				pro = new Pro();
-				item = new Item();
-				cat = new Cat();
-				item.setItemImg(rs.getString("item_img"));
-				item.setItemName(rs.getString("item_name"));
-				pro.setProPrice(rs.getInt("pro_price"));
-				pro.setProHits(rs.getInt("pro_hits"));
-				cat.setCatSeqno(rs.getInt("cat_seqno"));
-				pro.setProSeqno(rs.getInt("pro_seqno"));
-				pro.setItem(item);
-				pro.setCat(cat);
-				prolist2.add(pro);
-			}
-			
-			stmt.close();	
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return prolist2;
-	}
-	
-	//?占쏙옙?占쏙옙?占쏙옙 cat=3
-	public List<Pro> proList_cos() {
-		PreparedStatement stmt = null;
-		Connection conn = null;
-		List<Pro> prolist3 = new ArrayList<Pro>(); 
-		Pro pro = null;
-		Item item = null;
-		Cat cat = null;
-		
-		String sql = "select *"
-				+ " from ("
-				+ "    select i.item_img as item_img, i.item_name as item_name, p.pro_price as pro_price, p.pro_hits as pro_hits, p.cat_seqno, p.pro_seqno as pro_seqno"
-				+ "    from item i, pro p "
-				+ "    where i.item_seqno = p.item_seqno and p.cat_seqno = 3) "
-				+ "    order by pro_hits desc" ;
-		
-		try {
-			conn = ds.getConnection();
-			stmt = conn.prepareStatement(sql);
-			ResultSet rs = stmt.executeQuery();
-			
-			while (rs.next()) {
-				pro = new Pro();
-				item = new Item();
-				cat = new Cat();
-				item.setItemImg(rs.getString("item_img"));
-				item.setItemName(rs.getString("item_name"));
-				pro.setProPrice(rs.getInt("pro_price"));
-				pro.setProHits(rs.getInt("pro_hits"));
-				cat.setCatSeqno(rs.getInt("cat_seqno"));
-				pro.setProSeqno(rs.getInt("pro_seqno"));
-				pro.setItem(item);
-				pro.setCat(cat);
-				prolist3.add(pro);
-			}
-			
-			stmt.close();	
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return prolist3;
-	}
-	
-	//?占쏙옙?占쏙옙由ъ뼱 cat=4
-	public List<Pro> proList_interior() {
-		PreparedStatement stmt = null;
-		Connection conn = null;
-		List<Pro> prolist4 = new ArrayList<Pro>(); 
-		Pro pro = null;
-		Item item = null;
-		Cat cat = null;
-		
-		String sql = "select *"
-				+ " from ("
-				+ "    select i.item_img as item_img, i.item_name as item_name, p.pro_price as pro_price, p.pro_hits as pro_hits, p.cat_seqno, p.pro_seqno as pro_seqno"
-				+ "    from item i, pro p "
-				+ "    where i.item_seqno = p.item_seqno and p.cat_seqno = 4) "
-				+ "    order by pro_hits desc" ;
-		
-		try {
-			conn = ds.getConnection();
-			stmt = conn.prepareStatement(sql);
-			ResultSet rs = stmt.executeQuery();
-			
-			while (rs.next()) {
-				pro = new Pro();
-				item = new Item();
-				cat = new Cat();
-				item.setItemImg(rs.getString("item_img"));
-				item.setItemName(rs.getString("item_name"));
-				pro.setProPrice(rs.getInt("pro_price"));
-				pro.setProHits(rs.getInt("pro_hits"));
-				cat.setCatSeqno(rs.getInt("cat_seqno"));
-				pro.setProSeqno(rs.getInt("pro_seqno"));
-				pro.setItem(item);
-				pro.setCat(cat);
-				prolist4.add(pro);
-			}
-			
-			stmt.close();	
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return prolist4;
-	}
-	
-	//?占쏙옙?占쏙옙 cat=5
-	public List<Pro> proList_tra() {
-		PreparedStatement stmt = null;
-		Connection conn = null;
-		List<Pro> prolist5 = new ArrayList<Pro>(); 
-		Pro pro = null;
-		Item item = null;
-		Cat cat = null;
-		
-		String sql = "select *"
-				+ " from ("
-				+ "    select i.item_img as item_img, i.item_name as item_name, p.pro_price as pro_price, p.pro_hits as pro_hits, p.cat_seqno, p.pro_seqno as pro_seqno"
-				+ "    from item i, pro p "
-				+ "    where i.item_seqno = p.item_seqno and p.cat_seqno = 5) "
-				+ "    order by pro_hits desc" ;
-		
-		try {
-			conn = ds.getConnection();
-			stmt = conn.prepareStatement(sql);
-			ResultSet rs = stmt.executeQuery();
-			
-			while (rs.next()) {
-				pro = new Pro();
-				item = new Item();
-				cat = new Cat();
-				item.setItemImg(rs.getString("item_img"));
-				item.setItemName(rs.getString("item_name"));
-				pro.setProPrice(rs.getInt("pro_price"));
-				pro.setProHits(rs.getInt("pro_hits"));
-				cat.setCatSeqno(rs.getInt("cat_seqno"));
-				pro.setProSeqno(rs.getInt("pro_seqno"));
-				pro.setItem(item);
-				pro.setCat(cat);
-				prolist5.add(pro);
-			}
-			
-			stmt.close();	
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return prolist5;
-	}
-	
-	
 	public Pro detailList(String seqno) {
 		PreparedStatement stmt = null;
 		Connection conn = null;

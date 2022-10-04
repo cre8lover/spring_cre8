@@ -222,13 +222,11 @@ $(document).ready(function(){
 	showList(1);
 		function showList(page){
 			aucnowingService.getList({bno:seqno.value, page:page}, function(replyCnt,list){
-			/* 댓글이 없는 경우 */
 			if(list == null || list.length == 0){
 				$("#auc_price").html("");
 				return;
 			}
 			
-			/* 댓글이 있는 경우 */
 			var str="";
 			for(var i = 0, len=list.length || 0; i < len; i++){
 				str += "<tr>";
@@ -245,14 +243,11 @@ $(document).ready(function(){
 			}
 			console.log(str);
 			$("#auc_price").html(str);
-//			console.log(replyCnt)
 			showReplyPage(replyCnt);
 		});
 	}
 		
-	/* 댓글 페이지 리스트 출력 */
 	function showReplyPage(replyCnt){
-//		var currentPage = 1;
 		
 		var endPage = Math.ceil(currentPage/5.0)*5;
 		var startPage = endPage - 4;
