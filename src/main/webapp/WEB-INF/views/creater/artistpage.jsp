@@ -104,7 +104,7 @@
                     <div style="text-align: center;">
                        <c:if test="${list.aucStat eq 'WAIT'}">
                          <button class="custom-btn btn-1" onclick = "newwindow('<%= request.getContextPath() %>/cre/auction_reg?seqno=${list.aucSeqno}','modify');">수정</button>
-                     <button class="custom-btn btn-1" href = "#">삭제</button>
+                     <button data-aucseqno="${list.aucSeqno}" data-itemseqno="${list.item.itemSeqno }" class="custom-btn btn-1 aucdelBtn">삭제</button>
                      </c:if>
                      <c:if test="${list.aucStat eq 'AUC_ING'}">
                      <button class="custom-btn btn-1" onclick = "location.href='<%= request.getContextPath() %>/auc/auctionDetail?seqno=${list.aucSeqno}'">진행중</button>
@@ -142,6 +142,35 @@
 	<script>
 
 	$(document).ready(function(){
+		$(".aucdelBtn").on("click",function(e){
+			var aucseqno = $(this).data("aucseqno");
+			var itemseqno = $(this).data("itemseqno");
+			var arr = {
+					aucSeqno:aucseqno,
+					itemSeqno:itemseqno
+			}
+	   		$.ajax({
+	 			type:'delete',
+	 			url : '/cre2/delete',
+	 			data : JSON.stringify(arr),
+	 			contentType : 'application/json; charset=utf-8',
+	 			success : function(result, status, xhr){
+	 					alert(result);
+	 			},
+	 			error : function(xhr,status,er){
+	 				if(error){
+	 					er(error);
+	 				}
+	 			}
+	 		
+	 		});
+			
+			
+			
+			
+		})
+		
+		
 	/* //크리에이터 정보 수정
 		$(".cn3").on("click", function(e){
 			 var creCompany = '<c:out value="${Creator.creCompany}" />'; 

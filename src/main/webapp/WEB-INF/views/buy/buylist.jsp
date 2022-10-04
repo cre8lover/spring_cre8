@@ -137,6 +137,7 @@
 						</tr>
 						<input type="hidden" name="orderamount" value="${cartp.cartAmount}">
 						<input type="hidden" name="cartseqno" value="${cartp.cartSeqno }">
+						<input type="hidden" name="proseqno" value="${pro.proSeqno }">
 						<c:set var= "total" value="${total + (pro.proPrice * cartp.cartAmount)}"/>
 						</c:forEach>
 						

@@ -132,8 +132,6 @@ $(document).ready(function(){
 	
 	$("#amdown").on("click", function(e){
 		console.log("화긴");
-		
-		
 	});
 const arr = [];
 	
@@ -169,9 +167,9 @@ const arr = [];
 			var totalmo = 0;
 			for(var i = 0, len=list.length || 0; i < len; i++){
 				str +=  "<tr>";
-				str +=	"<th id='checkfind'><input data-seqno='"+list[i].cartseqno+"' class='checkseqno' type='checkbox' name='allponecheck' value='"+list[i].proseqno+"'></th>";
+				str +=	"<th id='checkfind'><input data-seqno='"+list[i].cartseqno+"' class='checkseqno' type='checkbox' name='allponecheck' value='"+list[i].proSeqno+"'></th>";
 				str +=	"<th>";
-				str +=	"<a href='"+path+"/product/productDetail?seqno="+list[i].proseqno+"'>";
+				str +=	"<a href='"+path+"/product/productDetail?seqno="+list[i].proSeqno+"'>";
 				str +=		"<img src='/upload/thumbnail/"+list[i].itemImg +"' style='height:225px;'>";
 				str +=	"</a>";
 				str +=	"</th>";

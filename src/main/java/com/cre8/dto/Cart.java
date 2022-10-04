@@ -15,9 +15,18 @@ public class Cart implements Serializable {
 	private Auc auc;
 	private int totalprice;
 	private Orders ordersSet;
-
+	private String proSeqno;
+	
+	
 	public Cart() {
 
+	}
+	
+	public String getProSeqno() {
+		return proSeqno;
+	}
+	public void setProSeqno(String proSeqno) {
+		this.proSeqno = proSeqno;
 	}
 
 	public Integer getCartSeqno() {

@@ -9,10 +9,17 @@ public class orderadd {
 	private String merchant_uid;
 	private String amount;
 	private String id;
+	private String proSeqno;
 	
 	
 	
 	
+	public String getProSeqno() {
+		return proSeqno;
+	}
+	public void setProSeqno(String proSeqno) {
+		this.proSeqno = proSeqno;
+	}
 	public String getId() {
 		return id;
 	}

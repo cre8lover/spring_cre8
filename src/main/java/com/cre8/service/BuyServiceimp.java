@@ -17,7 +17,7 @@ public class BuyServiceimp implements BuyService{
 	BuyDao Dao;
 	
 	@Override
-	public List<Cart> myCart(String logid, ArrayList<String> chklist) {
+	public List<Cart> myCart(String logid, String[] chklist) {
 		
 		return Dao.myCart(logid, chklist);
 	}

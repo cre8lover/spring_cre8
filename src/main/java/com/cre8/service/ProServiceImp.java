@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cre8.dao.ProductDaoimp;
+import com.cre8.dto.Auc_Criteria;
 import com.cre8.dto.Cart;
 import com.cre8.dto.Pro;
 
@@ -15,28 +16,8 @@ public class ProServiceImp implements ProService {
 	ProductDaoimp ProDao;
 
 	@Override
-	public List<Pro> proList_clothes() {
-		return ProDao.proList_clothes();
-	}
-
-	@Override
-	public List<Pro> proList_furn() {
-		return ProDao.proList_furn();
-	}
-
-	@Override
-	public List<Pro> proList_cos() {
-		return ProDao.proList_cos();
-	}
-
-	@Override
-	public List<Pro> proList_interior() {
-		return ProDao.proList_interior();
-	}
-
-	@Override
-	public List<Pro> proList_tra() {
-		return ProDao.proList_tra();
+	public List<Pro> proList_clothes(Auc_Criteria ac) {
+		return ProDao.proList_clothes(ac);
 	}
 
 	public Pro detailList(String seqno) {

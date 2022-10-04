@@ -20,6 +20,7 @@ import com.cre8.dto.Creator;
 import com.cre8.dto.Item;
 import com.cre8.dto.Marketing;
 import com.cre8.dto.Pro;
+import com.cre8.dto.filedelVO;
 import com.cre8.dto.prodelVo;
 import com.cre8.mapper.CreatorMapper;
 
@@ -212,6 +213,16 @@ public class CreatorServiceImp implements CreatorService{
 	public int add(Creator cre) {
 
 		return mapper.add(cre);
+	}
+
+	@Override
+	public int aucdel(Auc auc) {
+		filedelVO fd = mapper.aucfiledel(auc);
+		auc.setAttseqno(fd.getAtt_seqno());
+		
+		fileService.delete(null, fd.getAttSaveName(), fd.getAttPath(), fd.getFileName());
+		
+		return mapper.aucdel(auc);
 	}
 	
 

@@ -59,4 +59,6 @@ public interface CreatorService {
 
 	int add(Creator cre);
 
+	int aucdel(Auc auc);
+
 }
