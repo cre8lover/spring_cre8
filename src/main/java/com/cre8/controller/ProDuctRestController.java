@@ -28,7 +28,7 @@ public class ProDuctRestController {
 		log.info("cart add........... .............");
 			log.info("proseqno:" + pro.getProSeqno());
 			
-		return prs.cartadd(pro) >= 1 ? new ResponseEntity<String>("장바구니에 등록 되었습니다. 장바구니로 이동하시겠습니까?", HttpStatus.OK) :
+		return prs.cartadd(pro) < 0 ? new ResponseEntity<String>("장바구니에 등록 되었습니다. 장바구니로 이동하시겠습니까?", HttpStatus.OK) :
 											new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 

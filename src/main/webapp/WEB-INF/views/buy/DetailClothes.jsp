@@ -281,7 +281,6 @@ $(document).ready(function(){
 	var seqno = "<c:out value='${detailList.proSeqno}'/>";
 	
 	$("#orderBtn").on("click",function(){
-		console.log("아 코딩 그렇게 하는거 아닌데");
 		location.href = "/product/nowbuy?seqno="+seqno+"&amount="+$("#ct_qty").val();
 	});
 	

@@ -6,7 +6,18 @@
   <mapper namespace="com.cre8.mapper.productRestMapper">
 	
 	<insert id="cartadd" >
-		insert into cart(cart_seqno, cart_amount,mem_id,pro_seqno) values(cart_seqno.nextval, #{proAmount}, #{id}, #{proSeqno})
+		DECLARE
+			v_number number;
+		BEGIN
+		
+			select count(*) into v_number from cart where pro_seqno = #{proSeqno};
+		
+			if v_number > 0 then
+				update cart set cart_amount = cart_amount + #{proAmount} where pro_seqno = #{proSeqno};
+			else
+				insert into cart(cart_seqno, cart_amount,mem_id,pro_seqno) values(cart_seqno.nextval, #{proAmount}, #{id}, #{proSeqno});
+			end if;				
+		END;
 	</insert>
 	
  </mapper>

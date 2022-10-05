@@ -156,6 +156,7 @@
 	 			contentType : 'application/json; charset=utf-8',
 	 			success : function(result, status, xhr){
 	 					alert(result);
+	 					location.reload();
 	 			},
 	 			error : function(xhr,status,er){
 	 				if(error){
@@ -210,6 +211,7 @@
 			
 				CreatorService.remove(pro, function(result) {
 					alert(result);
+					location.reload();
 				});
 			});
 		});
