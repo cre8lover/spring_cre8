@@ -33,7 +33,10 @@
 					<h3>${my.memName}님 환영합니다!</h3>
 					<button style="float:center;" onclick="newwindow('<%= request.getContextPath() %>/mem/meminfo','info')">정보수정</button>
 					<button style="float:center;" onclick="newwindow('<%= request.getContextPath() %>/mem/buyHistory','buylist')">구매내역</button>
-					<button id="cn4" style="float:center;" onclick="location.href='<%= request.getContextPath() %>/cre/creReg?id=${my.memId} '">작가등록</button>
+					<button id="cn4" style="float:center;" onclick="location.href='<%= request.getContextPath() %>/cre/creReg?id=${my.memId} '">
+					<c:if test="${auth == 'C'}">나의 판매 목록</c:if>
+					<c:if test="${auth != 'C'}">작가등록</c:if>
+					</button>
 				
 				</div>
 				<table class="table-fill" style="margin-top:100px">

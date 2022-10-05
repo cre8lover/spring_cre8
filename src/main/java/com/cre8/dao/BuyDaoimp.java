@@ -253,6 +253,7 @@ public class BuyDaoimp implements BuyDao{
 					item.setItemName(rs.getString("item_name"));
 					pro.setProPrice(rs.getInt("pro_price"));
 					pro.setProSeqno(rs.getInt("pro_seqno"));
+					pro.setProAmount(rs.getInt("pro_amount"));
 					cart.setCartSeqno(rs.getInt("cart_seqno"));
 					cart.setCartAmount(rs.getInt("cart_amount"));
 					cart.setTotalprice(rs.getInt("totalprice"));

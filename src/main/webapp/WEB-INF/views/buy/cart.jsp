@@ -19,14 +19,13 @@
 	<%@ include file="../header.jsp"%>
 	<%@ include file="../menu.jsp"%>
 	<div class="body">
-		<div class="leftSideBar"></div>
+	 	<div class="leftSideBar"></div>
 		<div class="content">
 			<div class="mypage">
 				<form style="color: #263343; font-size: 20px;">
 					<br> <br> &nbsp;&nbsp;<i class="fa-solid fa-cart-shopping"> &nbsp;</i><b>장바구니</b>
 					<hr>
 				</form>
-				
 				<center>
 					<img class="kcmimg" src="<%= request.getContextPath() %>/img/cart_ing1.png" style="width: 70%;">
 				</center>
@@ -71,10 +70,27 @@
 								</a>
 							</th>
 								<th>${item.itemName }</th>
-								<th>${cartp.cartAmount }</th>
+								<th >
+								<%-- <a>▼<br></a>
+								<input type="text" name="ct_qty" id="ct_qty" value="${cartp.cartAmount }" readonly="readonly" style="font-size: 20px; border: none;text-align: center;width: 24px;">
+								<a><br>▲</a> --%>
+										<div class="qty" style="display:flex;justify-content: space-between;">					
+									        <div>
+									        	<a class="minus"  style="width:27px; height:27px; border: none;">▼</a>
+									        </div>
+									
+									        <input type="text" name="ct_qty" id="ct_qty" value="${cartp.cartAmount }" readonly="readonly" style="font-size: 20px; border: none;text-align: center;width: 24px;">
+											<input type="hidden" name="proamount" value="${pro.proAmount }" >
+									        <div>
+									        	<a class="plus" style="width:27px; height:27px; border: none;">▲</a>
+									        </div>
+								     	 </div>
+								</th>
+								
 								<th>${cartp.totalprice }</th>
 						</tr>
 							<c:set var= "total" value="${total + cartp.totalprice}"/>
+							
 						</c:forEach>
 
 					</tbody>
@@ -111,6 +127,8 @@
 
 
 <script>
+
+
 $(document).ready(function() {
 	$("input[name=allcheck]").click(function() {
 		if($("input[name=allcheck]").is(":checked")) $("input[name=allponecheck]").prop("checked", true);
@@ -127,6 +145,30 @@ $(document).ready(function() {
 });
 
 $(document).ready(function(){
+	
+	
+	$(".minus").on("click",function(){
+		var p = $(this).parent("div").siblings("input").val()*1;
+		p -= 1;
+		console.log(p);
+		if (p < 1){
+			alert("1보다 작아질수 없습니다.");
+		}else{
+			$(this).parent("div").siblings("input[name='ct_qty']").val(p);
+		}
+	});
+	
+	$(".plus").on("click",function(){
+		var p = $(this).parent("div").siblings("input[name='ct_qty']").val()*1;
+		var proamount = $(this).parent("div").siblings("input[name='proamount']").val()*1;
+		console.log(proamount);
+		p += 1;
+		if (p > proamount){
+			alert("재고가없습니다.");
+		}else{
+			$(this).parent("div").siblings("input[name='ct_qty']").val(p);
+		}
+	});
 	
 	
 	
