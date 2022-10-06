@@ -30,14 +30,69 @@
 			<td colspan = 2><h1 class="jmh_title">${item.itemName}</h1>
 			</td>
 		</tr>
-		<tr>
-			<td class="jmh_saleprice" >
-				<span style="font-size:20px;"><strike>시작가 :${detail.aucPrice }원</strike></span>
-			</td>
-			<td class="jmh_saleprice">  <span style="font-size:25px;"><b> 현재가 :${detail.aucCloseprice }원 </b></span></td>
-		</tr>
 
 		<tr>
+			<td class="jmh_saleprice" >
+				<span style="font-size:20px;"><strike>시작가 : &nbsp; ${detail.aucPrice }원</strike></span>
+			</td>
+			<td class="jmh_saleprice">  <span style="font-size:20px;"><b> 현재가 : &nbsp; ${detail.aucCloseprice }원 </b></span></td>
+		</tr>
+
+
+
+			<tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			</tr>
+			<tr>
+			<td colspan="2">
+				
+			<div class="slidecontainer">
+		 	 <input type="range" min="${detail.aucCloseprice + 1000}" max="${detail.aucCloseprice *10}" value="${detail.aucCloseprice }"step="1000" class="slider" id="myRange">
+		 	 
+			</div>
+			</td>
+			</tr>
+		
+			
+			<tr>
+				<td class="jmh_price" colspan='2'>
+				<!-- <span style="font-size:35px; margin:0;"><p>희망입찰가 &nbsp;&nbsp;<span id="demo"> </span>원</p></span> -->
+				<span style="font-size:25px; margin:0;"><p>희망입찰가<input type="text" name="dlqckfrk" id="demo" value="" 
+				style="border: none;text-align:right; font-size:35px; width: 35%;" onchange="equalsmoney('${detail.aucCloseprice }')">원</p></span>
+				</td>
+				
+			</tr>
+			<tr>
+			<td colspan="2"  style="color:#D2001A; text-align: end;" >
+			<b>
+				  <a class="runTimeCon">종료일시: ${detail.aucFinish}</a>
+				  <div class="time"> 남은시간:
+				    <span id="d-day-hour">00</span>
+				    <span class="col">:</span>
+				    <span id="d-day-min">00</span>
+				    <span class="col">:</span>
+				    <span id="d-day-sec">00</span>
+				  </div>
+			</b>	
+			</td>
+			</tr>
+		
+			<tr>
+			<td colspan='2'>
+				<%-- <form action="<%= request.getContextPath() %>/auc/aucnow" method="post" id="aucnow" onsubmit="return moneyCheck('${sess_id}')"> --%>
+					<input type="hidden" name="money" id="money" value="">
+					<input type="hidden" name="seqno" id="seqno" value="${detail.aucSeqno}">
+					<div id="timeover">
+					<!-- <a href = "<%= request.getContextPath() %>/buy/auctionDetail.jsp"><input type="button" class="bton" value="입찰하기"></a> -->
+					<input type='button' onclick='timeover()' class='bton' value='지금은 입찰 할 수 없습니다.'>
+					
+					</div>
+				<!-- </form> -->
+			</td>
+			</tr>
+			
+			<tr>
 			<td colspan='2'>
 				<div class="tabs">
 				    <input id="all" type="radio" name="tab_item" checked>
@@ -58,75 +113,52 @@
 					</div>
 				</div>
 			</td>
-		</tr>
-		<tr>
-			<td class="jmh_sailprice3">현재 입찰수
-			</td>
-			<td class="jmh_sailprice2">${detail.aucHits }명
-			</td>
-		</tr>
-		<tr>
-			<td class="jmh_buyprice">
-			</td>
-			<td class="jmh_buyprice2" style="color:red">
-				<div class="sec7-text-box">
-				  <p>종료날짜</p>
-				  <p class="runTimeCon">${detail.aucFinish}</p>
-				  <hr/>
-				  <div class="time">
-				    <span id="d-day-hour">00</span>
-				    <span class="col">:</span>
-				    <span id="d-day-min">00</span>
-				    <span class="col">:</span>
-				    <span id="d-day-sec">00</span>
-				  </div>
-				</div>
-			</td>
-		</tr>
-<tr>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-		<tr>
-		<td colspan="2">
-			
-		<div class="slidecontainer">
-	 	 <input type="range" min="${detail.aucCloseprice + 1000}" max="${detail.aucCloseprice *10}" value="${detail.aucCloseprice }"step="1000" class="slider" id="myRange">
-	 	 
-		</div>
-		</td>
-		</tr>
-		
-			
-			<tr>
-				<td class="jmh_price" colspan='2'>
-				<!-- <span style="font-size:35px; margin:0;"><p>희망입찰가 &nbsp;&nbsp;<span id="demo"> </span>원</p></span> -->
-				<span style="font-size:35px; margin:0;"><p>희망입찰가<input type="text" name="dlqckfrk" id="demo" value="" 
-				style="border: none;text-align:right; font-size:35px; width: 35%;" onchange="equalsmoney('${detail.aucCloseprice }')">원</p></span>
-				</td>
-				
 			</tr>
-			
-		
-		<tr>
-		
-		<td colspan='2'>
-			<%-- <form action="<%= request.getContextPath() %>/auc/aucnow" method="post" id="aucnow" onsubmit="return moneyCheck('${sess_id}')"> --%>
-				<input type="hidden" name="money" id="money" value="">
-				<input type="hidden" name="seqno" id="seqno" value="${detail.aucSeqno}">
-				<div id="timeover">
-				<!-- <a href = "<%= request.getContextPath() %>/buy/auctionDetail.jsp"><input type="button" class="bton" value="입찰하기"></a> -->
-				<input type='button' onclick='timeover()' class='bton' value='지금은 입찰 할 수 없습니다.'>
-				
-				</div>
-			<!-- </form> -->
-		</td>
-		
-		</tr>
+
 	</table>
 	<input type="hidden" id="finish" value="${detail.aucFinish}">
 </div>
-<center>
+<hr>
+<div class="memberlist">
+	<h3>입찰참여자(${detail.aucHits }명)</h3>
+
+<section class="memberlist_users">
+	<div class="memberlist_users_container">
+	
+	<br>
+	
+	<div class="memberlist-item">
+		<div class="memberlist-item_avatar">
+			<div class="memberlist-item_memberavatar">
+				<span>
+					<span>
+					<img src="https://cdn-icons-png.flaticon.com/512/4526/4526838.png"/>
+					</span>
+				</span>
+			</div>
+		</div>
+		<div id="auc_price">
+		<div class="memberlist-item_username">
+			<p class="memberlist-item_username-username">ID: ${aucnow.mem.memName }</p>
+		</div>
+		<div class="memberlist-item_userinfo">
+			<div class="memberlist-item_userinfo-item">
+				<span><h4>입찰일시</h4></span>
+				<span>${aucnow.aucnowDate }</span>
+			</div>
+			<span class="memberlist-item_userinfo-sep"></span>
+			<div class="memberlist-item_userinfo-item">
+				<span><h4>입찰가격</h4></span>
+				<span>${aucnow.aucnowLastprice }</span>
+			</div>
+		</div> 
+		</div>
+	</div>
+	</div>
+</section>
+
+</div>
+<%-- <center>
 	<div style="padding-top:2%; padding-bottom:0;">
 		<table style="border:1px solid; width:70%;">
 			<tr>
@@ -141,7 +173,7 @@
 				</td>
 			</tr>
 		</table>
-	</div>
+	</div> --%>
  <c:set value="${detail.aucNowingSet}" var="aucn"/>
 <c:forEach items="${aucn}" var="aucnow" varStatus="i">
 
@@ -164,15 +196,17 @@
 			</tr>
  --%>
 
-	<div style="padding:2%; padding-top:0;">
+<%-- 	<div style="padding:2%; padding-top:0;">
 		<table style="border:1px solid; width:70%;" id = "auc_price">
 		
 		</table>
 	</div>
+</center> --%>
+
 	<div id="pagelink" style="width:20vW;">
 	
 	</div>
-</center>
+
 
 <script src="https://kit.fontawesome.com/236f0b5985.js" crossorigin="anonymous"></script>
 <script src="<%= request.getContextPath() %>/js/atDetail.js"></script>
@@ -229,7 +263,7 @@ $(document).ready(function(){
 			
 			var str="";
 			for(var i = 0, len=list.length || 0; i < len; i++){
-				str += "<tr>";
+/* 				str += "<tr>";
 				str += "	<td>";
 				str += 			list[i].memName
 				str += "	</td>";
@@ -239,7 +273,22 @@ $(document).ready(function(){
 				str += "	<td>";
 				str += 			""+list[i].aucnowLastprice+"원"
 				str += "	</td>";
-				str += "</tr>";
+				str += "</tr>"; */
+				
+					str += "<div class='memberlist-item_username'>";
+					str += "<p class='memberlist-item_username-username'>+list[i].memName+</p>";
+					str += "</div>";
+					str += "<div class='memberlist-item_userinfo'>";
+					str +=	"<div class='memberlist-item_userinfo-item'>";
+					str +=	"	<span> <h4>입찰일시</h4> </span>";
+					str +=	"	<span> +list[i].aucnowDate+ </span>";
+					str +=	"</div>";
+					str +=	"<span class='memberlist-item_userinfo-sep'></span>";
+					str +=	"<div class='memberlist-item_userinfo-item'>";
+					str +=	"	<span><h4>입찰가격</h4></span>";
+					str +=		"<span>+list[i].aucnowLastprice+"원"</span>";
+					str +=	"</div>";
+					
 			}
 			console.log(str);
 			$("#auc_price").html(str);

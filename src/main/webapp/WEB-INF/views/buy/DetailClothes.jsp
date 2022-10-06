@@ -177,42 +177,68 @@
     
     <section id="panel-3">
       <main>
-        <h2>★리뷰★</h2>
-        <table class="khm_table">
-        
-        	<thead>
-        		<tr>
-        			<td>
-						번호
-        			</td>
-        			<td colspan='2'>
-						리뷰내용
-        			</td>
-        			<td>
-						작성자
-        			</td>
-        		
-        		</tr>
-        	</thead>
-        	<tbody>
-        		<c:forEach items="${detailList.getReviewSet()}" var="review">
-        		<tr>
-        			<td>
-						${review.reviewSeqno}
-        			</td>
-        			<td colspan='2'>
-						${review.reviewContent}
-        			</td>
-        			<td>
-						${review.mem.memId}
-        			</td>
-        		
-        		</tr>
-        		
-        		</c:forEach>
-        	
-        	</tbody>
-        </table>
+        <h2>Review</h2>
+        <!-- 리뷰등록 -->
+       <div class="comments-app" ng-app="commentsApp" ng-controller="CommentsController as cmntCtrl">
+
+  <!-- From -->
+  <div class="comment-form">
+    <!-- Comment Avatar -->
+    <div class="comment-avatar">
+      <img src="https://cdn-icons-png.flaticon.com/512/456/456212.png">
+    </div>
+
+    <form class="form" name="form" ng-submit="form.$valid && cmntCtrl.addComment()" novalidate>
+      <div class="form-row">
+        <textarea
+                  class="input"
+                  ng-model="cmntCtrl.comment.text"
+                  placeholder="리뷰를 입력하세요"
+                  required></textarea>
+      </div>
+
+
+
+      <div class="form-row">
+        <input type="submit" id="addReplyBtn" value="리뷰등록">
+      </div>
+    </form>
+  </div>
+
+  <!-- Comments List -->
+  <c:forEach items="${detailList.getReviewSet()}" var="review">
+    <!-- Comment -->
+  <div class="comments">
+    <div class="comment" ng-repeat="comment in cmntCtrl.comments | orderBy: '-date'">
+      <!-- Comment Avatar -->
+	      <div class="comment-avatar">
+	        <img src="https://cdn-icons-png.flaticon.com/512/456/456212.png">
+	      </div>
+
+      <!-- Comment Box -->
+	      <div class="comment-box">
+	        <div class="comment-text" >${review.reviewContent}</div>
+	        <div class="comment-footer">
+	          <div class="comment-info">
+	            <span class="comment-author" style = "float:left;">
+	              <em ng-if="comment.anonymous">작성자 : </em>
+	              <a ng-if="!comment.anonymous" >${review.mem.memId}</a>
+	            </span>
+
+	          </div>
+
+	          <div class="comment-actions">
+	            <button id="replyModifyBtn" style="border: none; background-color: transparent;">수정</button> |
+				<button id="replyDeleteBtn" style="border: none; background-color: transparent;">삭제</button>
+	          </div>
+	        </div>
+	      </div>
+    </div>
+  </div>
+</c:forEach>
+
+</div>
+
       </main>
     </section>
    
