@@ -139,7 +139,7 @@
         <button id='addReplyBtn'>댓글등록</button>
         <button id='modi'>수정</button>
         <button id='del'>삭제</button>
-        <table class="khm_table">
+        <table class="khm_table" id="qnatable">
         	<thead>
         		<tr>
         			<td>
@@ -382,7 +382,7 @@ showList(1);
 			 for(var i=0, len=list.length || 0; i <len; i++){
 //				console.log("시퀀스 : " + list[i].qnaSeqno);
 				str +=	"<tr>"
-				str +=		"<td class='qna_seqno' value='"+ list[i].qnaSeqno +"'>"+ list[i].qnaSeqno +"</td>"
+				str +=		"<td class='qna_seqno' id='qna' name='seqno' value='"+ list[i].qnaSeqno +"'>"+ list[i].qnaSeqno +"</td>"
 				str +=		"<td colspan='2'>"+ list[i].qnaContent +"</td>"
 				str +=		"<td>"+ list[i].memId +"</td>"
 				str +=		"<td>"+ list[i].qnaDate +"</td>"
@@ -414,14 +414,29 @@ showList(1);
 	
 	var QnaNo;
 	$("#QnAList").on("click", "td",function(e){
-		QnaNo = e.target.value;
+
+		var table = document.getElementById('qnatable');
+		var rowList = table.rows;
+		
+		for(i=1; i<rowList.length; i++){
+			var row = rowList[i];
+			
+			row.onclick = function(){
+				return function(){
+					QnaNo = this.cells[0].innerHTML;
+				};
+			}(row);
+		}
+		
 		console.log("QnaNo : " + QnaNo);
-/*		
-		detailQnA.get(QnaNo, function(data){
-			document.getElementById("comment").value = data.content
-		});
-*/	
-	});
+		
+		detailQnA.get(QnaNo, function(data){ 
+			console.log(data.qnaContent);
+			document.getElementById("comment").value = data.qnaContent  
+			showList(1);
+		}); 
+
+});
 	
 	$("#modi").on("click",function(e){
 		var QnaVo = {
@@ -430,13 +445,23 @@ showList(1);
 				qnaContent : comment
 		} 
 	
-		detailQnA.add(QnaVo, function(result){ 
+		detailQnA.update(QnaVo, function(result){ 
 			alert(result);
-			document.getElementById("comment").value = "222"
+			document.getElementById("comment").value = ""
 			showList(1);
 		});
 	});
 
+	
+	$("#del").on("click", function(e){
+		console.log("댓글 삭제 번호 : " + QnaNo);
+		
+		replyService.remove(QnaNo, function(result){
+			alert(result);
+			showList(1);
+		});
+		
+	});
 });
 
 
