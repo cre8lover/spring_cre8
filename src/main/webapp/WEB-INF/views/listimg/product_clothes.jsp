@@ -105,7 +105,7 @@ $(document).ready(function(){
 			str += "<div class='grid-column'>";
 			str +=		"<a href='"+ path +"/product/productDetail?seqno="+list[i].pro_seqno+"'>";
 			str +=			"<div class='product-image' style = ' width: 338.68px; height: 338.68px; object-fit: cover; background-color:#e6f2ff;'>";
-			str +=				"<img src='/upload/thumbnail/"+list[i].item_img+"' alt='My Image'>";
+			str +=				"<img  src='/upload/thumbnail/"+list[i].item_img+"'  style = ' width: 338.68px; height: 338.68px; object-fit: cover; alt='My Image'>";
 			str +=			"</div>";
 			str +=			"<div class='product-content'>";
 			str +=				"<div class='product-info'>";

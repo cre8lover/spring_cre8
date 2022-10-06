@@ -61,7 +61,7 @@
 					
 					        <div class="plus"><button onclick="javascript:change_qty2('p')" style="width:27px; height:27px; border: none;">▲</div>
 					      </div>
-					      <div>재고수량 : ${detailList.proAmount} 개</div>	
+					     <%--  <div>재고수량 : ${detailList.proAmount} 개</div>	 --%>
 					    </td>
 					</tr>
 					<tr>

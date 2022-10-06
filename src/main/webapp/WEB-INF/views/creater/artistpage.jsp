@@ -33,7 +33,7 @@
                 <div class="product span3">
          <a href="<%= request.getContextPath() %>/product/productDetail?seqno=${list.proSeqno}">
                     <div class="pro-img">
-                        <img class="" src="/upload/thumbnail/${list.item.itemImg}" >
+                        <img class="" src="/upload/thumbnail/${list.item.itemImg}" style="  width: 250px; height: 250px;" >
                     </div>
          </a>
                     <h3 class="product-name">
@@ -85,7 +85,7 @@
                 <div class="product span3">
                 <a href="<%= request.getContextPath() %>/auc/auctionDetail?seqno=${list.aucSeqno}">
                     <div class="pro-img">
-                        <img class="" src="/upload/thumbnail/${list.item.itemImg}" >
+                        <img class="" src="/upload/thumbnail/${list.item.itemImg}"   style="  width: 250px; height: 250px;" >
                     </div>
 
                   </a>

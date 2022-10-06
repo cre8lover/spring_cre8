@@ -4,13 +4,13 @@ p {
 	margin:0;
 }
 
-/*   table{
+/*    table{
 	border:1px solid;
 }
 
 tr td {
 	border:1px solid;
-}  */
+}   */
  
 .jmh_table {
 	margin:auto;
@@ -20,9 +20,9 @@ tr td {
   }
 
 .jmh_saleimg {
-    border-right: 4px solid #444444;
-    width: 50%;
-    height: 500px;
+    border-right: 2px solid #444444;
+    width: 50%
+    border-radius: 15px;
 }
 .jmh_imgsize {
 	width: 100%;
@@ -33,7 +33,7 @@ tr td {
 .jmh_star{
   height:20px;
   width:5vw;
-  text-align: end;
+ 
   }
 .jmh_star2{
   height:20px;
@@ -64,7 +64,7 @@ tr td {
 .jmh_info{
 	text-align: center;
 	background-color:#8080803d;
-	font-size: 20px;
+	font-size: 15px;
 	height: 23vh;
 	line-height:5vh;
 }
@@ -98,7 +98,7 @@ width: 25vw;
 
 /* 탭 전체 스타일 */
 .tabs {
-  padding-bottom: 40px;
+  
   margin: 0 auto;
  }
 

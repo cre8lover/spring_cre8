@@ -25,7 +25,7 @@ public class Homecontroller{
 	@GetMapping("/")
 	public String home(Model model) {
 		Auc_Criteria ac = new Auc_Criteria();
-		ac.setCategory("1");
+		ac.setCategory("6");
 		List<Pro> prolist = pro.proList_clothes(ac); 
 		model.addAttribute("proList", prolist);
 		

@@ -247,7 +247,7 @@ tr td {
 
 .jmh_saleimg {
 	border-right: 5px solid #444444;
-	width: 20vw;
+	width: 50%;
 	height: 500px;
 	/*   background-image: url('image/우투리.png');
   background-size : cover; */
@@ -270,17 +270,18 @@ tr td {
 	width: 20vw;
 }
 
-.jmh_title {
+/* .jmh_title {
 	text-align: center;
 	margin: 0;
 	padding: 0;
 	color: #071E3D;
-}
+} */
 
 .jmh_title2 {
 	margin: 0;
 	padding: 0;
 	color: #071E3D;
+	text-align: center;
 }
 
 .jmh_price {
@@ -319,7 +320,7 @@ tr td {
 
 .jmh_buyprice {
 	text-align: center;
-	font-size: 20px;
+	font-size: 15px;
 }
 
 .jmh_buyprice2 {
@@ -423,6 +424,6 @@ width: fit-content;
 #ct_qty{
     width: 24px;
     text-align: center;
-    font-size: 20px;
+    font-size: 17px;
     border: none;
 }

@@ -19,8 +19,8 @@
 	<%@ include file="banner/banner.jsp" %>
 
 
-	<h2 style="text-align:center;">기러기 역삼역 별똥별 </h2>
-
+<!-- 	<h2 style="text-align:center;">기러기 역삼역 별똥별 </h2>
+ -->
 
 	<main>
 		<div class="responsive-container">
@@ -33,7 +33,7 @@
 					<a href="<%= request.getContextPath() %>/product/productDetail?seqno=${list.proSeqno}">
 							
 						<div class="product-image" style = " width: 338.68px; height: 338.68px; object-fit: cover; background-color:#e6f2ff;">
-							<img src="/upload/thumbnail/${item.itemImg}" alt="My Image">
+							<img src="/upload/thumbnail/${item.itemImg}" alt="My Image" style="  width: 338px; height: 338px;">
 						</div>
 						<div class="product-content">
 							<div class="product-info">

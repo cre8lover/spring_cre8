@@ -17,9 +17,9 @@
 	 	<c:set value="${detail.item}" var="item"/>
 	<table class="jmh_table">
 		<tr>
-			<td rowspan='11' class="jmh_saleimg">
+			<td rowspan='8' class="jmh_saleimg">
 			<%-- <img class="jmh_imgsize" src="<%= request.getContextPath() %>/img/우투리.png" alt="My Image"> --%>
-			<div> <img  style="width:100%;" class="" src="/upload/${item.itemImg}"></div>
+			<div> <img  style="width:96%;" class="jmh_saleimg " src="/upload/${item.itemImg}"></div>
 			</td>
 			<td class="jmh_star" colspan = 2>
 			<h4> &nbsp;&nbsp; <i class="fa-solid fa-house-user"> &nbsp; </i>${detail.aucDetail }</h4>
@@ -93,7 +93,7 @@
 			</tr>
 			
 			<tr>
-			<td colspan='2'>
+			<td colspan='3'>
 				<div class="tabs">
 				    <input id="all" type="radio" name="tab_item" checked>
 				    <label class="tab_item" for="all">상세 정보</label>
