@@ -16,15 +16,18 @@
   	<insert id="register">
 		insert into qna(qna_seqno, qna_content, mem_id, pro_seqno) values (qna_seqno.nextval, #{qnaContent}, #{memId}, #{seqno})
   	</insert>
-<!--  
   	
-  	<select id="getCountMarketing" resultType="int">
-			SELECT count(*) FROM marketing 		
+  	<select id="get" resultType="com.cre8.dto.QnaVo">
+  		select q.qna_seqno as qnaSeqno, q.qna_content as qnaContent
+  		from qna q where q.qna_seqno = #{seqno}
   	</select>
+  	
+  	<update id="update">
+  		update qna set qna_content = #{qnaContent} where qna_seqno = #{seqno}
+  	</update>
 
 	<delete id="remove">
-  			DELETE FROM marketing WHERE mar_seqno = #{marSeqno}
+  		DELETE FROM qna WHERE qna_seqno = #{seqno}
   	</delete> 
--->
   	
   </mapper>

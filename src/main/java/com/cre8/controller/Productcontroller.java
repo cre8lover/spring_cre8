@@ -12,12 +12,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.cre8.dto.Auc_Criteria;
 import com.cre8.dto.Cart;
@@ -87,5 +89,35 @@ public class Productcontroller extends HttpServlet {
     					: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
     
+    @GetMapping(value="{QnaNo}.*",
+			produces = "application/json")
+    public ResponseEntity<QnaVo> get(@PathVariable("QnaNo") String seqno){
+	
+    	log.info("get reply......." + seqno);
+	
+    	return new ResponseEntity<>(pro.get(seqno), HttpStatus.OK);
+    }
     
+	@RequestMapping(method= {RequestMethod.PUT, RequestMethod.PATCH},
+			value ="update/{seqno}", produces = "text/plain; charset=utf-8")
+	public ResponseEntity<String> modify(@PathVariable("seqno") String seqno,
+									 	@RequestBody QnaVo QnaVo){
+	
+		log.info("dddd : " + QnaVo.getQnaContent());
+		log.info("seqno : " + QnaVo.getSeqno());
+		log.info("qnaseqno : " + QnaVo.getQnaSeqno());
+		
+		
+		return pro.modify(QnaVo) == 1 ? new ResponseEntity<>("댓글 수정 완료", HttpStatus.OK) 
+										: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@DeleteMapping(value="{QnaNo}", produces="text/plain; charset=utf-8")
+	public ResponseEntity<String> remove(@PathVariable("QnaNo") String seqno){
+		log.info("delete seqno : " + seqno);
+		
+		return pro.remove(seqno) == 1 ? new ResponseEntity<>("댓글 삭제 완료", HttpStatus.OK) 
+										: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		
+	}
 }

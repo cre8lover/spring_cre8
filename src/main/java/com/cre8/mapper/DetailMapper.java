@@ -10,4 +10,10 @@ public interface DetailMapper {
 
 	int register(QnaVo qnaVo);
 
+	QnaVo get(String seqno);
+
+	int update(QnaVo QnaVo);
+
+	int remove(String seqno);
+
 }
