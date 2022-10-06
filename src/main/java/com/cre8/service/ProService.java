@@ -5,6 +5,7 @@ import java.util.List;
 import com.cre8.dto.Auc_Criteria;
 import com.cre8.dto.Cart;
 import com.cre8.dto.Pro;
+import com.cre8.dto.QnaVo;
 
 public interface ProService {
 
@@ -13,6 +14,10 @@ public interface ProService {
 	public Pro detailList(String seqno);
 
 	List<Cart> nowbuy(String seqno, String amount);
+
+	List<QnaVo> qnaList(String seqno);
+
+	int register(QnaVo qnaVo);
 
 
 }
