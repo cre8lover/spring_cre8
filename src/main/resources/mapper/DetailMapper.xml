@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- 인터페이스 이름(com.chick.mapper.MemberMapper)과 xml의 namespace 속성값이 일치 -->
+  <mapper namespace="com.cre8.mapper.DetailMapper">
+
+  <!-- 조회 -->
+  	<select id="qnaList" resultType="com.cre8.dto.QnaVo">
+  		select q.qna_seqno as qnaSeqno, q.qna_content as qnaContent, q.mem_id as memId, q.qna_date as qnaDate
+		from qna q, pro p
+		where q.pro_seqno = p.pro_seqno and p.pro_seqno = #{seqno}
+  	</select>
+  	
+  	<insert id="register">
+		insert into qna(qna_seqno, qna_content, mem_id, pro_seqno) values (qna_seqno.nextval, #{qnaContent}, #{memId}, #{seqno})
+  	</insert>
+<!--  
+  	
+  	<select id="getCountMarketing" resultType="int">
+			SELECT count(*) FROM marketing 		
+  	</select>
+
+	<delete id="remove">
+  			DELETE FROM marketing WHERE mar_seqno = #{marSeqno}
+  	</delete> 
+-->
+  	
+  </mapper>

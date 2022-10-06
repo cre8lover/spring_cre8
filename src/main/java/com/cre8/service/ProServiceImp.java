@@ -9,12 +9,17 @@ import com.cre8.dao.ProductDaoimp;
 import com.cre8.dto.Auc_Criteria;
 import com.cre8.dto.Cart;
 import com.cre8.dto.Pro;
+import com.cre8.dto.Qna;
+import com.cre8.dto.QnaVo;
+import com.cre8.mapper.DetailMapper;
 
 @Service
 public class ProServiceImp implements ProService {
 	@Autowired
 	ProductDaoimp ProDao;
-
+	@Autowired
+	private DetailMapper mapper;
+	
 	@Override
 	public List<Pro> proList_clothes(Auc_Criteria ac) {
 		return ProDao.proList_clothes(ac);
@@ -27,6 +32,17 @@ public class ProServiceImp implements ProService {
 	@Override
 	public List<Cart> nowbuy(String seqno,String amount) {
 		return ProDao.nowbuy(seqno,amount);
+	}
+
+	@Override
+	public List<QnaVo> qnaList(String seqno) {
+		return mapper.qnaList(seqno);
+	}
+
+	@Override
+	public int register(QnaVo QnaVo) {
+
+		return mapper.register(QnaVo);
 	}
 
 

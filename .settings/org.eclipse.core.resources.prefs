@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/main/java/com/cre8/controller/Admincontroller.java=UTF-8
 encoding//src/main/java/com/cre8/controller/Membercontroller.java=UTF-8
+encoding//src/main/java/com/cre8/controller/Productcontroller.java=UTF-8
 encoding//src/main/java/com/cre8/dao/AdminDaoImp.java=UTF-8
 encoding//src/main/java/com/cre8/dao/CreatorDaoImp.java=UTF-8
 encoding//src/main/java/com/cre8/dao/MemberDaoImp.java=UTF-8

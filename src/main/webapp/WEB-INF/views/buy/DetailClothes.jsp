@@ -136,6 +136,9 @@
     <section id="panel-2">
        <main>
         <h2>Q&A</h2>
+        <button id='addReplyBtn'>댓글등록</button>
+        <button id='modi'>수정</button>
+        <button id='del'>삭제</button>
         <table class="khm_table">
         	<thead>
         		<tr>
@@ -153,25 +156,12 @@
         			</td>
         		</tr>
         	</thead>
-        	<tbody>
-        	<c:forEach items="${detailList.getQnaSet()}" var="qna">
-        		<tr>
-        			<td>
-						${qna.qnaSeqno}
-        			</td>
-        			<td colspan='2'>
-						${qna.qnaContent}
-        			</td>
-        			<td>
-						${qna.memid }
-        			</td>
-        			<td>
-						${qna.qnaDate}
-        			</td>
-        		</tr>
-        		</c:forEach>
+        	<tbody id="QnAList">
         	</tbody>
         </table>
+        <div id ='replyInput'>
+			<textarea id='comment' name='comment' style='width:100%; height:60px;' rows='5' cols='50' placeholder='댓글을 입력하세요'></textarea>
+		</div>
       </main>
     </section>
     
@@ -310,11 +300,6 @@ $(document).ready(function(){
 		location.href = "/product/nowbuy?seqno="+seqno+"&amount="+$("#ct_qty").val();
 	});
 	
-	
-	
-	
-	
-	
 	$("#cartBuyBtn").on("click",function(){
 		var amount = $("#ct_qty").val();
 		
@@ -346,7 +331,10 @@ $(document).ready(function(){
 
 </script>
 <script>
+
 var product = (function(){
+	
+
 	
 	function cartreg(reg,callback,error){
 		console.log("cartadd.....");
@@ -375,10 +363,84 @@ var product = (function(){
 })();
 
 </script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/detailClothes.js"></script>
+<script>
+$(document).ready(function(){
+var seqno = '<c:out value="${detailList.getProSeqno()}"/>'
+var id = '<c:out value="${detailList.mem.memId}"/>'
+
+	console.log("detail.jsp");
+	console.log("시퀀스 번호 : " + seqno);
+
+showList(1);	
+	function showList(page){
+		detailQnA.getList({seqno: seqno, page : page || 1}, function(list){
+			console.log("list where");
+			
+			var str = "";
+		
+			 for(var i=0, len=list.length || 0; i <len; i++){
+//				console.log("시퀀스 : " + list[i].qnaSeqno);
+				str +=	"<tr>"
+				str +=		"<td class='qna_seqno' value='"+ list[i].qnaSeqno +"'>"+ list[i].qnaSeqno +"</td>"
+				str +=		"<td colspan='2'>"+ list[i].qnaContent +"</td>"
+				str +=		"<td>"+ list[i].memId +"</td>"
+				str +=		"<td>"+ list[i].qnaDate +"</td>"
+				str +=	"</tr>"
+			}	 
+			
+			 $("#QnAList").html(str);
+		});
+		
+	}
+	
+	
+	$("#addReplyBtn").on("click", function(e){
+		var comment = document.getElementById("comment").value;
+		console.log("comment : " + comment);
+		
+		var QnaVo = {
+				seqno : seqno,
+				memId : id,
+				qnaContent : comment
+		}
+		
+		detailQnA.add(QnaVo, function(result){ 
+			alert(result);
+			document.getElementById("comment").value = "" 
+			showList(1);
+		}); 
+	});
+	
+	var QnaNo;
+	$("#QnAList").on("click", "td",function(e){
+		QnaNo = e.target.value;
+		console.log("QnaNo : " + QnaNo);
+/*		
+		detailQnA.get(QnaNo, function(data){
+			document.getElementById("comment").value = data.content
+		});
+*/	
+	});
+	
+	$("#modi").on("click",function(e){
+		var QnaVo = {
+				seqno : QnaNo,
+				memId : id,
+				qnaContent : comment
+		} 
+	
+		detailQnA.add(QnaVo, function(result){ 
+			alert(result);
+			document.getElementById("comment").value = "222"
+			showList(1);
+		});
+	});
+
+});
 
 
 
-
-
+</script>
 </body>
 </html>
