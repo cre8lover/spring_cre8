@@ -19,5 +19,11 @@ public interface ProService {
 
 	int register(QnaVo qnaVo);
 
+	QnaVo get(String seqno);
+
+	int modify(QnaVo vo);
+
+	int remove(String seqno);
+
 
 }

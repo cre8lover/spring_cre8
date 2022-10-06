@@ -45,6 +45,24 @@ public class ProServiceImp implements ProService {
 		return mapper.register(QnaVo);
 	}
 
+	@Override
+	public QnaVo get(String seqno) {
+		
+		return mapper.get(seqno);
+	}
+
+	@Override
+	public int modify(QnaVo QnaVo) {
+		
+		return mapper.update(QnaVo);
+	}
+
+	@Override
+	public int remove(String seqno) {
+		
+		return mapper.remove(seqno);
+	}
+
 
 
 }
