@@ -17,6 +17,8 @@
 	<%@ include file="../menu.jsp" %>
 	<div class="mypage">
 	<br>
+	
+	
 	<h2 id="maincategory"></h2>
 
 	<div>
