@@ -417,9 +417,10 @@ showList(1);
 		console.log("comment : " + comment);
 		
 		var QnaVo = {
-				seqno : QnaNo,
+				seqno : seqno,
 				memId : id,
-				qnaContent : comment
+				qnaContent : comment,
+				qnaSeqno : QnaNo
 		}
 		
 		detailQnA.add(QnaVo, function(result){ 
