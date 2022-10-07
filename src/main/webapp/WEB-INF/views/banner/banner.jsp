@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/banner/banner.css">
 	<meta charset='utf-8'>
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
-
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
 </head>
 <body>
 
@@ -73,7 +73,23 @@
 	
 </div>
 
+<script>
 
+$(document).ready(function(){
+   const gogogo = setInterval(sliderGo, 3000);
+   var i = 1;
+	  function sliderGo(){
+		 if (i > 3){
+			 i = 1;
+		 }else{
+			 i += 1;
+		 }
+		 $("input:radio[id='slide0"+i+"']").prop('checked', true); 
+	  }
+});
+
+	   
+</script>	
 </body>
 </html>
     
