@@ -14,12 +14,12 @@
   	</select>
   	
   	<insert id="register">
-  	<choose>
-	  		<when test='seqno == null'>
+  		<choose>
+	  		<when test='qnaSeqno == null'>
 	  			insert into qna(qna_seqno, qna_content, mem_id, pro_seqno) values (qna_seqno.nextval, #{qnaContent}, #{memId}, #{seqno})
 			</when>
 			<otherwise>
-				update qna set qna_content = #{qnaContent} where qna_seqno = #{seqno}
+				update qna set qna_content = #{qnaContent} where qna_seqno = #{qnaSeqno}
 			</otherwise>
 		</choose>
   	</insert>
