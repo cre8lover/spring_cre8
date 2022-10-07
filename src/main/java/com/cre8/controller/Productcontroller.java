@@ -112,7 +112,7 @@ public class Productcontroller extends HttpServlet {
 										: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@DeleteMapping(value="{QnaNo}", produces="text/plain; charset=utf-8")
+	@DeleteMapping(value="del/{QnaNo}", produces="text/plain; charset=utf-8")
 	public ResponseEntity<String> remove(@PathVariable("QnaNo") String seqno){
 		log.info("delete seqno : " + seqno);
 		

@@ -14,7 +14,14 @@
   	</select>
   	
   	<insert id="register">
-		insert into qna(qna_seqno, qna_content, mem_id, pro_seqno) values (qna_seqno.nextval, #{qnaContent}, #{memId}, #{seqno})
+  	<choose>
+	  		<when test='seqno == null'>
+	  			insert into qna(qna_seqno, qna_content, mem_id, pro_seqno) values (qna_seqno.nextval, #{qnaContent}, #{memId}, #{seqno})
+			</when>
+			<otherwise>
+				update qna set qna_content = #{qnaContent} where qna_seqno = #{seqno}
+			</otherwise>
+		</choose>
   	</insert>
   	
   	<select id="get" resultType="com.cre8.dto.QnaVo">
@@ -22,10 +29,6 @@
   		from qna q where q.qna_seqno = #{seqno}
   	</select>
   	
-  	<update id="update">
-  		update qna set qna_content = #{qnaContent} where qna_seqno = #{seqno}
-  	</update>
-
 	<delete id="remove">
   		DELETE FROM qna WHERE qna_seqno = #{seqno}
   	</delete> 
