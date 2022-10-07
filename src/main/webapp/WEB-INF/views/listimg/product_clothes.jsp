@@ -17,7 +17,7 @@
 	<%@ include file="../menu.jsp" %>
 	<div class="mypage">
 	<br>
-	<h2>Clothes</h2>
+	<h2>Products</h2>
 	<div>
 	
 	  <input type="radio" id="pop" name="new" value="pop" checked>인기순
@@ -141,7 +141,7 @@ $(document).ready(function(){
 			next = true;
 		}
 		
-		var str = "<ul class='page-nation' style='display: flex; list-style:none; justify-content: space-around;'>";
+		var str = "<ul class='page-nation' style='display: flex; list-style:none; '>";
 		
 		if(prev){
 			str += "<li class='page-link'>";
