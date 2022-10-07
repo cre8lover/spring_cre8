@@ -17,7 +17,7 @@
 	<%@ include file="../menu.jsp" %>
 	<div class="mypage">
 	<br>
-	<h2>Clothes</h2>
+	<h2>Products</h2>
 	<div>
 	
 	  <input type="radio" id="pop" name="new" value="pop" checked>인기순
