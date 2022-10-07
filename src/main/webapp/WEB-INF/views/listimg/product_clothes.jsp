@@ -17,7 +17,7 @@
 	<%@ include file="../menu.jsp" %>
 	<div class="mypage">
 	<br>
-	<h2>Clothes</h2>
+	<h2 id="maincategory"></h2>
 	<div>
 	
 	  <input type="radio" id="pop" name="new" value="pop" checked>인기순
@@ -77,7 +77,7 @@
 
 
 $(document).ready(function(){
-	
+	var maincategory;
  	var currentPage = 1;
 	var category = "<c:out value='${category}'/>";
 	showList(category);
@@ -119,15 +119,32 @@ $(document).ready(function(){
 		}
 		
 			/* console.log(str); */
+			if(category == 1){
+				maincategory = "Clothes";
+			}else if(category == 2){
+				maincategory = "Cosmetics";
+			}else if(category == 3){
+				maincategory = "Furniture";
+			}else if(category == 4){
+				maincategory = "Interior";
+			}else if(category == 5){
+				maincategory = "travel";
+			}else if(category == 6){
+				maincategory = "gita";
+			}
+				
+			
+			$("#maincategory").html(maincategory);
 			$("#grid").html(str);
+			
 			showReplyPage(replyCnt);
 		});
 	}
 
 	function showReplyPage(replyCnt){
 		
-		var endPage = Math.ceil(currentPage/5.0)*5;
-		var startPage = endPage - 4;
+		var endPage = Math.ceil(currentPage/6.0)*6;
+		var startPage = endPage - 5;
 		
 		console.log("endPage:"+endPage);
 		
@@ -150,8 +167,8 @@ $(document).ready(function(){
 		
 		for (var i=startPage; i <= endPage; i++){
 			var active = currentPage == i ? "active" : "";
-			str += "<li class='page-link " + active + "'>";
-			str += "<a href='" +i+ "'>" +i+ "</a></li>";
+			str += "<li class='page-link '>";
+			str += "<a href='" +i+ "'class =" + active + ">" +i+ "</a></li>";
 		}
 		if (next){
 			str += "<li class='page-link'>";

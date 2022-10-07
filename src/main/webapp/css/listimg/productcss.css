@@ -262,3 +262,12 @@ main {
 	  font-weight: 400;
 	  text-rendering: optimizeLegibility;
 	}
+	
+	
+.page-nation a.active {
+  background-color: #071E3D;
+  color: white;
+}
+
+.page-nation a:hover:not(.active) {background-color: #fff;}
+	
