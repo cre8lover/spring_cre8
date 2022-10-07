@@ -66,7 +66,7 @@
 								
 							<th><%-- <th><img src="<%= request.getContextPath() %>/img/b1.jpg"></th> --%>
 								<a href="<%= request.getContextPath() %>/product/productDetail?seqno=${pro.proSeqno }">
-									<img class="" src="/upload/thumbnail/${item.itemImg }" style="height:225px;">
+									<img class="" src="/upload/thumbnail/${item.itemImg }" style="height:200px; width:200px;">
 								</a>
 							</th>
 								<th>${item.itemName }</th>
