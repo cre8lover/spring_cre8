@@ -50,6 +50,11 @@
 				
 				
 			
+	             
+	   </div>
+	</main>
+	</div>
+	</div>
 	  			<div class="page-wrap">
 	                    <ul class="page-nation">
 	                        <li><a href="/board/listp=1">◀</a></li>
@@ -61,11 +66,6 @@
 	                        <li><a href="/board/listp=5">▶</a></li>
 	                    </ul>
 	             </div>
-	             
-	   </div>
-	</main>
-	</div>
-	</div>
 <%@ include file="../footer.jsp" %>
 <script>
 
@@ -141,7 +141,7 @@ $(document).ready(function(){
 			next = true;
 		}
 		
-		var str = "<ul class='page-nation' style='display: flex; list-style:none; justify-content: space-around;'>";
+		var str = "<ul class='page-nation' style='display: flex; list-style:none; '>";
 		
 		if(prev){
 			str += "<li class='page-link'>";
