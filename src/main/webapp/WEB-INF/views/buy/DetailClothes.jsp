@@ -185,6 +185,7 @@
     <form class="form" name="form" ng-submit="form.$valid && cmntCtrl.addComment()" novalidate>
       <div class="form-row">
         <textarea
+        		  id = "reviewcomment"
                   class="input"
                   ng-model="cmntCtrl.comment.text"
                   placeholder="리뷰를 입력하세요"
@@ -194,43 +195,13 @@
 
 
       <div class="form-row">
-        <input type="submit" id="addReplyBtn" value="리뷰등록">
+        <input type="button" id="ReviewAddReplyBtn" value="리뷰등록">
       </div>
     </form>
   </div>
-
-  <!-- Comments List -->
-  <c:forEach items="${detailList.getReviewSet()}" var="review">
-    <!-- Comment -->
-  <div class="comments">
-    <div class="comment" ng-repeat="comment in cmntCtrl.comments | orderBy: '-date'">
-      <!-- Comment Avatar -->
-	      <div class="comment-avatar">
-	        <img src="https://cdn-icons-png.flaticon.com/512/456/456212.png">
-	      </div>
-
-      <!-- Comment Box -->
-	      <div class="comment-box">
-	        <div class="comment-text" >${review.reviewContent}</div>
-	        <div class="comment-footer">
-	          <div class="comment-info">
-	            <span class="comment-author" style = "float:left;">
-	              <em ng-if="comment.anonymous">작성자 : </em>
-	              <a ng-if="!comment.anonymous" >${review.mem.memId}</a>
-	            </span>
-
-	          </div>
-
-	          <div class="comment-actions">
-	            <button id="replyModifyBtn" style="border: none; background-color: transparent;">수정</button> |
-				<button id="replyDeleteBtn" style="border: none; background-color: transparent;">삭제</button>
-	          </div>
-	        </div>
-	      </div>
-    </div>
-  </div>
-</c:forEach>
-
+	<div id="reviewList">
+	
+	</div>
 </div>
 
       </main>
@@ -417,9 +388,10 @@ showList(1);
 		console.log("comment : " + comment);
 		
 		var QnaVo = {
-				seqno : QnaNo,
+				seqno : seqno,
 				memId : id,
-				qnaContent : comment
+				qnaContent : comment,
+				qnaSeqno : QnaNo
 		}
 		
 		detailQnA.add(QnaVo, function(result){ 
@@ -437,6 +409,101 @@ showList(1);
 		detailQnA.remove(QnaNo, function(result){
 			alert(result);
 			showList(1);
+		});
+		
+	});
+});
+
+
+
+</script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/review.js"></script>
+<script>
+$(document).ready(function(){
+var seqno = '<c:out value="${detailList.getProSeqno()}"/>'
+var id = '<c:out value="${detailList.mem.memId}"/>'
+
+	console.log("review 시퀀스 번호 : " + seqno);
+
+	reviewList(1);	
+	function reviewList(page){
+		detailReview.reviewList({seqno: seqno, page : page || 1}, function(list){
+			console.log("review list");
+			
+			var str = "";
+		
+			 for(var i=0, len=list.length || 0; i <len; i++){
+//				console.log("시퀀스 : " + list[i].qnaSeqno);
+str +=				 "<div class='comments'>"
+str +=				    "<div class='comment' ng-repeat='comment in cmntCtrl.comments | orderBy: '-date'>"
+str +=					     "<div class='comment-avatar'>"
+str +=					        "<img src='https://cdn-icons-png.flaticon.com/512/456/456212.png'>"
+str +=					      "</div>"
+str +=					      "<div class='comment-box'>"
+str +=					        "<div class='comment-text' >" + list[i].reviewContent +"</div>"
+str +=					        "<div class='comment-footer'>"
+str +=					          "<div class='comment-info'>"
+str +=					            "<span class='comment-author' style = 'float:left;'>"
+str +=					              "<em ng-if='comment.anonymous'>작성자 : </em>"
+str +=					              "<a ng-if='!comment.anonymous' >" + list[i].memId + "</a>"
+str +=					            "</span>"
+str +=					          "</div>"
+str +=					          "<div class='comment-actions'>"
+str +=					            "<button id='replyModifyBtn' style='border: none; background-color: transparent;' value='"+ list[i].reviewSeqno +"'>수정</button> |"
+str +=								"<button id='replyDeleteBtn' style='border: none; background-color: transparent;' value='"+ list[i].reviewSeqno +"'>삭제</button>"
+str +=					          "</div>"
+str +=					        "</div>"
+str +=					      "</div>"
+str +=				    "</div>"
+str +=				  "</div>"
+			}	 
+			
+			 $("#reviewList").html(str);
+		});
+		
+	}
+	
+	/* 수정 */
+	var reviewNo;
+	$(document).on("click", "#replyModifyBtn", function(e){
+		reviewNo = e.target.value;
+		console.log("button click : " + reviewNo);
+		
+		detailReview.reviewget(reviewNo, function(data){ 
+			console.log(data.reviewContent);
+			document.getElementById("reviewcomment").value = data.reviewContent  
+		}); 
+	
+	});
+	
+	/* 등록 */
+	$("#ReviewAddReplyBtn").on("click", function(e){
+		var comment = document.getElementById("reviewcomment").value;
+		console.log("reviewcomment : " + comment);
+		
+		var ReviewVo = {
+				seqno : seqno,
+				memId : id,
+				reviewContent : comment,
+				reviewSeqno : reviewNo
+		}
+		
+		detailReview.reviewadd(ReviewVo, function(result){ 
+			alert(result);
+			document.getElementById("reviewcomment").value = "" 
+			reviewList(1);
+		}); 
+		
+	});
+	
+	
+	$(document).on("click", "#replyDeleteBtn", function(e){
+		reviewSeqno = e.target.value;
+		console.log("댓글 삭제 번호 : " + reviewSeqno);
+		
+		detailReview.reviewremove(reviewSeqno, function(result){
+			alert(result);
+			reviewList(1);
 		});
 		
 	});

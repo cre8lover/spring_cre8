@@ -81,10 +81,10 @@ public class Productcontroller extends HttpServlet {
 			 consumes = "application/json",
 			 produces = "text/plain; charset=utf-8")
     public ResponseEntity<String> create(@RequestBody QnaVo QnaVo) {
-    	log.info(" called..");
+    	log.info("add ddddddddddddddddddddddddddd called..");
 	
     	int rs = pro.register(QnaVo);
-	
+    	System.out.println("ddddddddddddddddddddddddddddddddddddddddddd"+rs);
     	return rs == 1 ? new ResponseEntity<>("등록되었습니다.", HttpStatus.OK) 
     					: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }

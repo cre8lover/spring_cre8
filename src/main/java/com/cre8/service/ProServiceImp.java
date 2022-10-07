@@ -11,6 +11,7 @@ import com.cre8.dto.Cart;
 import com.cre8.dto.Pro;
 import com.cre8.dto.Qna;
 import com.cre8.dto.QnaVo;
+import com.cre8.dto.ReviewVo;
 import com.cre8.mapper.DetailMapper;
 
 @Service
@@ -61,6 +62,30 @@ public class ProServiceImp implements ProService {
 	public int remove(String seqno) {
 		
 		return mapper.remove(seqno);
+	}
+
+	@Override
+	public List<ReviewVo> ReviewList(String seqno) {
+		
+		return mapper.ReviewList(seqno);
+	}
+
+	@Override
+	public int Reviewregister(ReviewVo reviewVo) {
+
+		return mapper.Reviewregister(reviewVo);
+	}
+
+	@Override
+	public ReviewVo reviewget(String reviewSeqno) {
+
+		return mapper.ReviewGet(reviewSeqno);
+	}
+
+	@Override
+	public int reivewremove(String reviewNo) {
+		
+		return mapper.reviewRemove(reviewNo);
 	}
 
 

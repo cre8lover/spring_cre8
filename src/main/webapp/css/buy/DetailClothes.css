@@ -61,7 +61,7 @@
   font-size: 14px;
 }
 
-.comment-form .form input[type=submit]{
+.comment-form .form input[type=button]{
   background-color: #555f77;
   border: none;
   border-radius: 4px;

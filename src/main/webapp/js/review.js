@@ -4,13 +4,13 @@
 
  console.log("Q&A js.......");
  
- var detailQnA = (function(){
+ var detailReview = (function(){
  
- 	function getList(param, callback, error){
+ 	function reviewList(param, callback, error){
 		var seqno = param.seqno;
 		var page = param.page || 1;
 		
-		$.getJSON("/product/" + seqno + "/" + page + ".json", function(data){
+		$.getJSON("/review/" + seqno + "/" + page + ".json", function(data){
 			if(callback){
 				callback(data);
  			}
@@ -20,13 +20,13 @@
  			}		
  		});
  	}
- 	
- 	function add(QnaVo, callback){
+	
+ 	function reviewadd(QnaVo, callback){
 		console.log("QnaVo add...")		
 	
 		$.ajax({
 			type : 'post',
-			url  : '/product/add',
+			url  : '/review/reviewadd',
 			data : JSON.stringify(QnaVo),
 			contentType : "application/json; charset=utf-8", 
 			success : function(result, status, xhr){
@@ -42,8 +42,8 @@
 		});
 	} 
  	
-	function get(QnaNo, callback, error){
-		$.get("/product/" + QnaNo + ".json", function(result){
+	function reviewget(reviewNo, callback, error){
+		$.get("/review/" + reviewNo + ".json", function(result){
 			if(callback){
 				callback(result);
 			}
@@ -54,32 +54,10 @@
 		});
 	}
 	
-	function update(QnaVo, callback, error){
-		console.log("수정 댓글 : " + QnaVo.seqno);
-		$.ajax({
-			type : 'put',
-			url : "/product/update/" + QnaVo.seqno,
-			data : JSON.stringify(QnaVo),
-			contentType : "application/json; charset=utf-8",
-			
-			success : function(result, status, xhr){
-				if(callback){
-					callback(result);
-				}
-			},
-			
-			error : function(){
-				if(error){
-					error()
-				}
-			}
-		});
-	}	
-	
-	function remove(QnaNo, callback, error){
+	function reviewremove(reviewSeqno, callback, error){
 		$.ajax({
 			type : 'delete',
-			url : '/product/del/' + QnaNo,
+			url : '/review/del/' + reviewSeqno,
 			success : function(result, status, xhr){
 				if(callback){
 					callback(result);
@@ -92,13 +70,12 @@
 			}
 		});
 	}
- 
+
  	return {
- 			getList : getList,
- 			add : add,
- 			get : get,
- 			update : update,
- 			remove : remove
+ 			reviewList : reviewList,
+ 			reviewadd : reviewadd,
+ 			reviewget : reviewget,
+ 			reviewremove : reviewremove
  			};
  
  })();
