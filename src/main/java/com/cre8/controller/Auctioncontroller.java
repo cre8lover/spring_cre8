@@ -44,6 +44,7 @@ public class Auctioncontroller{
 		
     	return "/auction/auction";
     }
+    
     @RequestMapping("auctionDetail")
     public String auctionDetail (@ModelAttribute("seqno")String seqno,Model model) {
 		

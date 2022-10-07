@@ -222,9 +222,6 @@ $(document).on("click",".Btnaucnow" ,function(){
 });
 
 $(document).ready(function(){
-
-	var click;
-	
 	var currentPage = 1;
 	showList(1);
 		function showList(page){
@@ -272,6 +269,7 @@ $(document).ready(function(){
 			}
 			/* console.log(str); */
 			$("#auc_price").html(str);
+			
 			showReplyPage(replyCnt);
 		});
 	}
@@ -302,8 +300,8 @@ $(document).ready(function(){
 		
 		for (var i=startPage; i <= endPage; i++){
 			var active = currentPage == i ? "active" : "";
-			str += "<li class='page-link " + active + "'>";
-			str += "<a href='" +i+ "'>" +i+ "</a></li>";
+			str += "<li class='page-link '>";
+			str += "<a href='" +i+ "'class= '" + active + "'>" +i+ "</a></li>";
 		}
 		if (next){
 			str += "<li class='page-link'>";
@@ -313,6 +311,7 @@ $(document).ready(function(){
 		str += "</ul>";
 		/* console.log(str); */
 		$("#pagelink").html(str);
+		
 		
 	}
 	
@@ -324,7 +323,6 @@ $(document).ready(function(){
 		console.log("currentPage : " + clickPage);
 		currentPage = clickPage;
 		showList(currentPage);
-		click = $(this).toggleClass('active');
 	});
 	
 });
