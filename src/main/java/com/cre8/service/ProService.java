@@ -6,6 +6,7 @@ import com.cre8.dto.Auc_Criteria;
 import com.cre8.dto.Cart;
 import com.cre8.dto.Pro;
 import com.cre8.dto.QnaVo;
+import com.cre8.dto.ReviewVo;
 
 public interface ProService {
 
@@ -24,6 +25,14 @@ public interface ProService {
 	int modify(QnaVo vo);
 
 	int remove(String seqno);
+
+	List<ReviewVo> ReviewList(String seqno);
+
+	int Reviewregister(ReviewVo reviewVo);
+
+	ReviewVo reviewget(String reviewSeqno);
+
+	int reivewremove(String reviewNo);
 
 
 }
