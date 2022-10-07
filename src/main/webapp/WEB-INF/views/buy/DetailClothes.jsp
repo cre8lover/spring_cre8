@@ -137,8 +137,6 @@
        <main>
         <h2>Q&A</h2>
         <button id='addReplyBtn'>댓글등록</button>
-        <button id='modi'>수정</button>
-        <button id='del'>삭제</button>
         <table class="khm_table" id="qnatable">
         	<thead>
         		<tr>
@@ -153,6 +151,12 @@
         			</td>
         			<td>
 						작성일자
+        			</td>
+        			<td>
+						수정
+        			</td>
+        			<td>
+						삭제
         			</td>
         		</tr>
         	</thead>
@@ -386,6 +390,8 @@ showList(1);
 				str +=		"<td colspan='2'>"+ list[i].qnaContent +"</td>"
 				str +=		"<td>"+ list[i].memId +"</td>"
 				str +=		"<td>"+ list[i].qnaDate +"</td>"
+				str +=      "<td><button class='change' name='type' value='" + list[i].qnaSeqno + "'>수정</button> </td>"
+				str +=      "<td><button class='delete' name='type' value='" + list[i].qnaSeqno + "'>삭제</button> </td>"
 				str +=	"</tr>"
 			}	 
 			
@@ -395,12 +401,23 @@ showList(1);
 	}
 	
 	
+	var QnaNo;
+	$(document).on("click", ".change", function(e){
+		QnaNo = e.target.value;
+		console.log("button click : " + QnaNo);
+		
+		detailQnA.get(QnaNo, function(data){ 
+			console.log(data.qnaContent);
+			document.getElementById("comment").value = data.qnaContent  
+		}); 
+	});
+	
 	$("#addReplyBtn").on("click", function(e){
 		var comment = document.getElementById("comment").value;
 		console.log("comment : " + comment);
 		
 		var QnaVo = {
-				seqno : seqno,
+				seqno : QnaNo,
 				memId : id,
 				qnaContent : comment
 		}
@@ -412,51 +429,12 @@ showList(1);
 		}); 
 	});
 	
-	var QnaNo;
-	$("#QnAList").on("click", "td",function(e){
-
-		var table = document.getElementById('qnatable');
-		var rowList = table.rows;
-		
-		for(i=1; i<rowList.length; i++){
-			var row = rowList[i];
-			
-			row.onclick = function(){
-				return function(){
-					QnaNo = this.cells[0].innerHTML;
-				};
-			}(row);
-		}
-		
-		console.log("QnaNo : " + QnaNo);
-		
-		detailQnA.get(QnaNo, function(data){ 
-			console.log(data.qnaContent);
-			document.getElementById("comment").value = data.qnaContent  
-			showList(1);
-		}); 
-
-});
 	
-	$("#modi").on("click",function(e){
-		var QnaVo = {
-				seqno : QnaNo,
-				memId : id,
-				qnaContent : comment
-		} 
-	
-		detailQnA.update(QnaVo, function(result){ 
-			alert(result);
-			document.getElementById("comment").value = ""
-			showList(1);
-		});
-	});
-
-	
-	$("#del").on("click", function(e){
+	$(document).on("click", ".delete", function(e){
+		QnaNo = e.target.value;
 		console.log("댓글 삭제 번호 : " + QnaNo);
 		
-		replyService.remove(QnaNo, function(result){
+		detailQnA.remove(QnaNo, function(result){
 			alert(result);
 			showList(1);
 		});

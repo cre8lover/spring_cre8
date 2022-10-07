@@ -29,9 +29,9 @@
 	<!-- db컨넥션 풀 bean 설정 -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
  		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-		<property name="url" value="jdbc:oracle:thin:@192.168.219.109:1521:xe"/>
-	<!-- 	<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
 		<property name="url" value="jdbc:oracle:thin:@192.168.10.135:1521:cre8"/> 
+	<!-- 	<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+		<property name="url" value="jdbc:oracle:thin:@192.168.219.109:1521:xe"/>
 	
  		<property name="url" value="jdbc:log4jdbc:oracle:thin:@192.168.10.135:1521/cre8"/>
  		<property name="url" value="jdbc:log4jdbc:oracle:thin:@192.168.219.109:1521:xe"/>
