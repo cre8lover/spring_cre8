@@ -496,7 +496,7 @@ str +=				  "</div>"
 		
 	});
 	
-	
+	/* 삭제 */
 	$(document).on("click", "#replyDeleteBtn", function(e){
 		reviewSeqno = e.target.value;
 		console.log("댓글 삭제 번호 : " + reviewSeqno);
