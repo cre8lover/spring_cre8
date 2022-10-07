@@ -33,4 +33,32 @@
   		DELETE FROM qna WHERE qna_seqno = #{seqno}
   	</delete> 
   	
+  	<!--  리뷰   -->
+  	
+  	 <!-- 조회 -->
+  	<select id="ReviewList" resultType="com.cre8.dto.ReviewVo">
+  		select r.review_seqno as reviewSeqno, r.review_content as reviewContent, r.mem_id as memId, r.pro_seqno as proSeqno
+        from review r, pro p
+        where p.pro_seqno = r.pro_seqno and p.pro_seqno = #{seqno}
+  	</select>
+  	
+  	 <insert id="Reviewregister">
+  		<choose>
+	  		<when test='reviewSeqno == null'>
+	  			insert into review(review_seqno, review_content, mem_id, pro_seqno) values (review_seqno.nextval, #{reviewContent}, #{memId}, #{seqno})
+			</when>
+			<otherwise>
+				update review set review_content = #{reviewContent} where review_seqno = #{reviewSeqno}
+			</otherwise>
+		</choose>
+  	</insert>
+  	
+  	<select id="ReviewGet" resultType="com.cre8.dto.ReviewVo">
+  		select r.review_seqno as reviewSeqno, r.review_content as reviewContent
+  		from review r where r.review_seqno = #{reviewSeqno}
+  	</select>
+  	
+	<delete id="reviewRemove">
+  		DELETE FROM review WHERE review_seqno = #{reviewSeqno}
+  	</delete> 
   </mapper>
