@@ -17,11 +17,8 @@
 	<%@ include file="../menu.jsp" %>
 	<div class="mypage">
 	<br>
-<<<<<<< HEAD
 	<h2 id="maincategory"></h2>
-=======
-	<h2>Products</h2>
->>>>>>> branch 'master' of https://github.com/cre8lover/spring_cre8.git
+
 	<div>
 	
 	  <input type="radio" id="pop" name="new" value="pop" checked>인기순
