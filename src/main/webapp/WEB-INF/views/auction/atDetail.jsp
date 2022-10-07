@@ -119,61 +119,55 @@
 	<input type="hidden" id="finish" value="${detail.aucFinish}">
 </div>
 <hr>
+<center>
 <div class="memberlist">
 	<h3>입찰참여자(${detail.aucHits }명)</h3>
-
-<section class="memberlist_users">
-	<div class="memberlist_users_container">
-	
-	<br>
-	
-	<div class="memberlist-item">
-		<div class="memberlist-item_avatar">
-			<div class="memberlist-item_memberavatar">
-				<span>
+	<section class="memberlist_users">
+		<div class="memberlist_users_container">
+		<div class="listform">
+		
+		<br>
+<div id="auc_price">
+		<div class="memberlist-item">
+			<div class="memberlist-item_avatar">
+				<div class="memberlist-item_memberavatar">
 					<span>
-					<img src="https://cdn-icons-png.flaticon.com/512/4526/4526838.png"/>
+						<span>
+						<img src="https://cdn-icons-png.flaticon.com/512/4526/4526838.png"/>
+						</span>
 					</span>
-				</span>
+				</div>
 			</div>
-		</div>
-		<div id="auc_price">
-		<div class="memberlist-item_username">
-			<p class="memberlist-item_username-username">ID: ${aucnow.mem.memName }</p>
-		</div>
-		<div class="memberlist-item_userinfo">
-			<div class="memberlist-item_userinfo-item">
-				<span><h4>입찰일시</h4></span>
-				<span>${aucnow.aucnowDate }</span>
+			<div class="memberlist-item_username">
+				<p class="memberlist-item_username-username">ID: ${aucnow.mem.memName }</p>
 			</div>
-			<span class="memberlist-item_userinfo-sep"></span>
-			<div class="memberlist-item_userinfo-item">
-				<span><h4>입찰가격</h4></span>
-				<span>${aucnow.aucnowLastprice }</span>
-			</div>
-		</div> 
+			<div class="memberlist-item_userinfo">
+				<div class="memberlist-item_userinfo-item">
+					<span><h4>입찰일시</h4></span>
+					<span>${aucnow.aucnowDate }</span>
+				</div>
+				<span class="memberlist-item_userinfo-sep"></span>
+				<div class="memberlist-item_userinfo-item">
+					<span><h4>입찰가격</h4></span>
+					<span>${aucnow.aucnowLastprice }</span>
+				</div>
+			</div> 
 		</div>
-	</div>
-	</div>
-</section>
+</div>
 
 </div>
-<%-- <center>
-	<div style="padding-top:2%; padding-bottom:0;">
-		<table style="border:1px solid; width:70%;">
-			<tr>
-				<td>
-					입찰 참여자
-				</td>
-				<td>
-					입찰 일자
-				</td>
-				<td>
-					입찰 가격
-				</td>
-			</tr>
-		</table>
-	</div> --%>
+
+
+	</div>
+	
+	</section>
+</center>
+<center>
+	<div id="pagelink" style="width:20vW;"></div>
+</center>
+
+</div>
+
  <c:set value="${detail.aucNowingSet}" var="aucn"/>
 <c:forEach items="${aucn}" var="aucnow" varStatus="i">
 
@@ -182,30 +176,9 @@
 </c:if>
 
 </c:forEach>
-<%--			
-			<tr>
-				<td>
-					${aucnow.mem.memName }
-				</td>
-				<td>
-					${aucnow.aucnowDate }
-				</td>
-				<td>
-					${aucnow.aucnowLastprice }원
-				</td>
-			</tr>
- --%>
 
-<%-- 	<div style="padding:2%; padding-top:0;">
-		<table style="border:1px solid; width:70%;" id = "auc_price">
-		
-		</table>
-	</div>
-</center> --%>
 
-	<div id="pagelink" style="width:20vW;">
-	
-	</div>
+
 
 
 <script src="https://kit.fontawesome.com/236f0b5985.js" crossorigin="anonymous"></script>
@@ -250,7 +223,7 @@ $(document).on("click",".Btnaucnow" ,function(){
 
 $(document).ready(function(){
 
-
+	var click;
 	
 	var currentPage = 1;
 	showList(1);
@@ -263,34 +236,41 @@ $(document).ready(function(){
 			
 			var str="";
 			for(var i = 0, len=list.length || 0; i < len; i++){
-/* 				str += "<tr>";
-				str += "	<td>";
-				str += 			list[i].memName
-				str += "	</td>";
-				str += "	<td>";
-				str += 			list[i].aucnowDate
-				str += "	</td>";
-				str += "	<td>";
-				str += 			""+list[i].aucnowLastprice+"원"
-				str += "	</td>";
-				str += "</tr>"; */
-				
+		/* 			str +=	"<div class='memberlist'>"
+					str +=	"<section class='memberlist_users'>";
+					str +=	"<div class='memberlist_users_container'>";
+					str +=	"<br>"; */
+					str +=	"<div class='memberlist-item'>";
+					str +=	"<div class='memberlist-item_avatar'>";
+					str +=	"	<div class='memberlist-item_memberavatar'>";
+					str +=	"		<span>";
+					str +=	"			<span>";
+					str +=	"			<img src='https://cdn-icons-png.flaticon.com/512/4526/4526838.png'/>";
+					str +=	"			</span>";
+					str +=	"		</span>";
+					str +=	"	</div>";
+					str +=	"</div>";
 					str += "<div class='memberlist-item_username'>";
-					str += "<p class='memberlist-item_username-username'>+list[i].memName+</p>";
+					str += "<p class='memberlist-item_username-username'>"+list[i].memName+"</p>";
 					str += "</div>";
 					str += "<div class='memberlist-item_userinfo'>";
 					str +=	"<div class='memberlist-item_userinfo-item'>";
 					str +=	"	<span> <h4>입찰일시</h4> </span>";
-					str +=	"	<span> +list[i].aucnowDate+ </span>";
+					str +=	"	<span> "+list[i].aucnowDate+" </span>";
 					str +=	"</div>";
 					str +=	"<span class='memberlist-item_userinfo-sep'></span>";
 					str +=	"<div class='memberlist-item_userinfo-item'>";
 					str +=	"	<span><h4>입찰가격</h4></span>";
-					str +=		"<span>+list[i].aucnowLastprice+"원"</span>";
+					str +=		"<span>"+list[i].aucnowLastprice+"원</span>";
 					str +=	"</div>";
+					str +=	"		</div>";
+					str +=	"		</div>";
+/* 					str +=	"	</div>";
+					str +=	"	</section>";
+					str +=	"</div>"; */
 					
 			}
-			console.log(str);
+			/* console.log(str); */
 			$("#auc_price").html(str);
 			showReplyPage(replyCnt);
 		});
@@ -317,7 +297,7 @@ $(document).ready(function(){
 		
 		if(prev){
 			str += "<li class='page-link'>";
-			str += "<a href='"+(startPage-1)+"'> 이전페이지</a></li>";
+			str += "<a href='"+(startPage-1)+"'> ◀</a></li>";
 		}
 		
 		for (var i=startPage; i <= endPage; i++){
@@ -327,11 +307,11 @@ $(document).ready(function(){
 		}
 		if (next){
 			str += "<li class='page-link'>";
-			str += "<a href='" +(endPage+1)+ "'>다음페이지</a></li>";
+			str += "<a href='" +(endPage+1)+ "'> ▶ </a></li>";
 		}
 		
 		str += "</ul>";
-		console.log(str);
+		/* console.log(str); */
 		$("#pagelink").html(str);
 		
 	}
@@ -344,8 +324,9 @@ $(document).ready(function(){
 		console.log("currentPage : " + clickPage);
 		currentPage = clickPage;
 		showList(currentPage);
-		
+		click = $(this).toggleClass('active');
 	});
+	
 });
 
 </script>
