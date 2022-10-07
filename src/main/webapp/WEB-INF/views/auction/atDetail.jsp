@@ -222,6 +222,11 @@ $(document).on("click",".Btnaucnow" ,function(){
 });
 
 $(document).ready(function(){
+<<<<<<< HEAD
+=======
+
+	var click;
+>>>>>>> branch 'master' of https://github.com/cre8lover/spring_cre8.git
 	
 	var currentPage = 1;
 	showList(1);
@@ -324,6 +329,10 @@ $(document).ready(function(){
 		console.log("currentPage : " + clickPage);
 		currentPage = clickPage;
 		showList(currentPage);
+<<<<<<< HEAD
+=======
+		click = $(this).toggleClass('active');
+>>>>>>> branch 'master' of https://github.com/cre8lover/spring_cre8.git
 	});
 	
 });
