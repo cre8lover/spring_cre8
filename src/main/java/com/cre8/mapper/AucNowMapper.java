@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import com.cre8.dto.AucNowListVO;
 import com.cre8.dto.AucNowVO;
 import com.cre8.dto.Auc_Criteria;
+import com.cre8.dto.orderadd;
 
 public interface AucNowMapper {
 
@@ -17,5 +18,5 @@ public interface AucNowMapper {
 	public List<AucNowListVO> aucnowlist(@Param("cri") Auc_Criteria cri, @Param("bno") long bno);
 
 	public int total(long bno);
-	
+
 }

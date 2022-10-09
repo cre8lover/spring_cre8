@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cre8.common.OracleConn;
+import com.cre8.dto.Auc;
 import com.cre8.dto.Cart;
 import com.cre8.dto.Item;
 import com.cre8.dto.Orders;
@@ -363,7 +364,6 @@ public class BuyDaoimp implements BuyDao{
 		Orders orders = null;
 		Pro pro = null;
 		Item item = null;
-		
 		String sql = "call p_orders_list(?,?)";
 		try {
 			conn = ds.getConnection();
@@ -381,6 +381,7 @@ public class BuyDaoimp implements BuyDao{
 				orders = new Orders();
 				
 				item.setItemName(rs.getString("item_name"));
+				
 				pro.setProPrice(rs.getInt("pro_price"));
 				orders.setOrderAmount(rs.getInt("amount"));
 				item.setItemImg(rs.getString("item_img"));

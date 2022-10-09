@@ -10,6 +10,10 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+
 </head>
 <body>
 <div>
@@ -170,13 +174,71 @@
 
  <c:set value="${detail.aucNowingSet}" var="aucn"/>
 <c:forEach items="${aucn}" var="aucnow" varStatus="i">
-
 <c:if test="${i.first}">
 	<input type="hidden" id="bestmoney" value="${aucnow.mem.memId }">
 </c:if>
-
 </c:forEach>
+	<input type="hidden" id="logingid" value="${sess_id }">
+	<input type="hidden" id="logingname" value="${sess_name}">
+	<input type="hidden" id="aucAmount" value="${detail.aucAmount}">
+	<input type="hidden" id="aucprice" value="${detail.aucCloseprice }">
+	
 
+<div class="auctionbuymain">
+	<div class="auctionbuy">
+		<button class="closeBtn"style="float:right;">닫기</button>
+		<h3> 배송지를 작성해주세요.</h3>
+			<hr>
+			<div class="buyer">
+				<form style="width:76%"> 
+					<h2>구매자 정보</h2>
+					<div class="buy">
+						<a style="padding-right: 16px;"> 구매자 </a>
+						<input type="text" id="name" value="강홍묵"> 
+					</div>
+					<div class = "address">
+						<a style="padding-right: 32px;"> 주소 </a>
+						<input type="text" class="address" id="address_kakao" name="address" readonly placeholder="기본 주소" />
+					    <input type="text" class="address" id="address_kakao_back"name="address_detail" placeholder="상세 주소 및 상세 건물명"/>
+					</div>
+					<div>
+						<a> 전화번호 </a>
+						<input type="hidden" id="phonnumber">
+							<select name="ssecession"  onchange="goSearch();" style="width: 6%; height: 31px;" >
+								<option value="010">010</option>
+								<option value="011">011</option>
+								<option value="016">016</option>
+							</select>
+						<input type="text" id="phon_front" placeholder="휴대폰 앞자리">
+						<input type="text" id="phon_back" placeholder="휴대폰 뒷자리">
+					</div>
+					<div>
+						<a>요청사항</a>
+						<select name="choice"  onchange="" style="width: 35%; height: 31px;">
+							<option value="">배송시 요청사항</option>	
+							<option value="문 앞에 놓아주세요">문 앞에 놓아주세요</option>
+							<option value="경비실에 맡겨주세요">경비실에 맡겨주세요</option>
+							<option value="배송 전 휴대폰으로 연락주세요">배송 전 휴대폰으로 연락주세요</option>							
+							<option value="파손위험이 있는 상품이니 조심히 다뤄주세">파손위험이 있는 상품이니 조심히 다뤄주세</option>							
+							<option value="">직접입력</option>							
+						</select>
+					</div>
+					<input type='button' class="bton aucbuyBtn" value="구매하기">
+				</form>
+			</div>
+	</div>
+</div>
+
+<style>
+.auctionbuymain {
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 60%;
+}
+</style>
 
 
 
@@ -185,12 +247,27 @@
 <script src="<%= request.getContextPath() %>/js/atDetail.js"></script>
 
 <script>
+window.onload = function(){
+    document.getElementById("address_kakao").addEventListener("click", function(){ //주소입력칸을 클릭하면
+        //카카오 지도 발생
+        new daum.Postcode({
+            oncomplete: function(data) { //선택시 입력값 세팅
+                document.getElementById("address_kakao").value = data.address; // 주소 넣기
+                document.querySelector("input[name=address_detail]").focus(); //상세입력 포커싱
+            }
+        }).open();
+    });
+}
+
+
+
+
 $(document).on("click",".Btnaucnow" ,function(){ 
 	
 		var seqno = '<c:out value="${detail.aucSeqno}"/>'
-		var id = "<c:out value='${sess_id}'/>"
 		var bestid = document.getElementById("bestmoney");
-		
+		var id = "<c:out value='${sess_id}'/>"
+
 		console.log(money.value);
 		console.log(seqno);
 		console.log(bestid);
@@ -222,6 +299,8 @@ $(document).on("click",".Btnaucnow" ,function(){
 });
 
 $(document).ready(function(){
+	$(".auctionbuymain").hide();
+	
 	var currentPage = 1;
 	showList(1);
 		function showList(page){
