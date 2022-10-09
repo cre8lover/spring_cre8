@@ -74,6 +74,8 @@
 					<input name="check" id="check" type="checkbox" value="Y">개인정보 처리방침 동의 
 				</div>
 				
+				<%@ include file="check.jsp" %>
+				
                 <!-- 회원가입 -->
                 <div>
 					<input type="submit" id="khm_memreg" placeholder="회원가입">
@@ -85,6 +87,7 @@
 
         </div> 
 		</div>
+		
 		
 		<div class="rightSideBar"></div>
 	</div>

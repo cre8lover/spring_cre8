@@ -36,6 +36,8 @@ public class ReviewVo implements Serializable {
 	}
 
 
+	
+
 	public int getSeqno() {
 		return seqno;
 	}

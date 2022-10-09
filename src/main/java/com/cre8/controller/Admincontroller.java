@@ -133,7 +133,7 @@ public class Admincontroller {
 
 		adkey = new AdminKeyWord(page, 10);
 		
-//		log.info("gsgsg : "+admin.marketingList(adkey, page).getCnt());
+		log.info("gsgsg : "+admin.marketingList(adkey, page).getCnt());
 		
 		return new ResponseEntity<PageDTO>(admin.marketingList(adkey, page), HttpStatus.OK);
 	}
