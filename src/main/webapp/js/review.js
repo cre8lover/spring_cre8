@@ -1,8 +1,8 @@
 /**
- * 	디테일 Q&A 조회,등록,수정,삭제
+ * 	디테일 Review 조회,등록,수정,삭제
  */
 
- console.log("Q&A js.......");
+ console.log("Review js.......");
  
  var detailReview = (function(){
  
@@ -12,8 +12,8 @@
 		
 		$.getJSON("/review/" + seqno + "/" + page + ".json", function(data){
 			if(callback){
-				callback(data);
- 			}
+				callback(data.cnt, data.list);
+ 	 		}
  		}).fail(function(xhr, status, err){
  			if(err){
  				error();

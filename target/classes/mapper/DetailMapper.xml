@@ -37,9 +37,16 @@
   	
   	 <!-- 조회 -->
   	<select id="ReviewList" resultType="com.cre8.dto.ReviewVo">
-  		select r.review_seqno as reviewSeqno, r.review_content as reviewContent, r.mem_id as memId, r.pro_seqno as proSeqno
-        from review r, pro p
-        where p.pro_seqno = r.pro_seqno and p.pro_seqno = #{seqno}
+  	<![CDATA[
+  		select rownum, a.*
+		from(  	
+	  		select rownum as rn, r.review_seqno as reviewSeqno, r.review_content as reviewContent, r.mem_id as memId, r.pro_seqno as proSeqno
+	        from review r, pro p
+	        where p.pro_seqno = r.pro_seqno and p.pro_seqno = #{seqno}
+	        and rownum <= #{adkey.currentPage} * #{adkey.rowPerPage}
+	        order by r.review_seqno desc) a
+		where rn > (#{adkey.currentPage}-1) * #{adkey.rowPerPage} 
+	]]>	       
   	</select>
   	
   	 <insert id="Reviewregister">
@@ -61,4 +68,8 @@
 	<delete id="reviewRemove">
   		DELETE FROM review WHERE review_seqno = #{reviewSeqno}
   	</delete> 
+  	
+  	<select id="getCountReview" resultType="int">
+		SELECT count(*) FROM review r, pro p WHERE r.pro_seqno = p.pro_seqno  and p.pro_seqno= #{seqno} 		
+  	</select>
   </mapper>

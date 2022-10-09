@@ -203,7 +203,9 @@
 	
 	</div>
 </div>
-
+	<div id="page" style="text-align: center;">
+	
+	</div>
       </main>
     </section>
    
@@ -424,12 +426,15 @@ var seqno = '<c:out value="${detailList.getProSeqno()}"/>'
 var id = '<c:out value="${detailList.mem.memId}"/>'
 
 	console.log("review 시퀀스 번호 : " + seqno);
+	
 
 	reviewList(1);	
+	
+	var currentPage = 1;
 	function reviewList(page){
-		detailReview.reviewList({seqno: seqno, page : page || 1}, function(list){
+		detailReview.reviewList({seqno: seqno, page : page || 1}, function(cnt, list){
 			console.log("review list");
-			
+			console.log("cnt : " + cnt)
 			var str = "";
 		
 			 for(var i=0, len=list.length || 0; i <len; i++){
@@ -459,15 +464,69 @@ str +=				  "</div>"
 			}	 
 			
 			 $("#reviewList").html(str);
+			 
+			 showReplyPage(cnt, currentPage);
 		});
 		
 	}
+	
+	/* 댓글 페이지 리스트 출력 */
+	function showReplyPage(cnt){
+		
+//		var currentPage = 1;
+		
+		var endPage = Math.ceil(currentPage/5.0)*5;
+		var startPage = endPage - 4;
+		console.log("endNum : " + endPage);
+		
+		var prev = startPage != 1;
+		var next = false;
+		
+		if(endPage*5 >= cnt){
+			endPage = Math.ceil(cnt/5.0);
+		}
+		if(endPage*5 < cnt){
+			next = true;
+		}
+		
+		var str = "<ul class='pageUL'>"
+		if(prev){
+			str += "<li class='page-link'>";
+			str += "<a href='" + (startPage - 1) + "'> 이전페이지 </a></li>";
+		}
+		
+		for(var i=startPage; i <= endPage; i++){
+			var active = currentPage == i ? "active" : "";
+			str += "<li class = 'page-link " + active + "'>"; //띄어쓰기 주의
+			str += "<a href='" + i + "'>" + i + "</a></li>";
+		}
+		
+		if(next){
+			str += "<li class='page-link'>";
+			str += "<a href='" + (endPage+1) + "'> 다음페이지 </a></li>";
+		}
+		
+		str += "</ul>"
+		console.log(str);
+		$("#page").html(str);
+	}
+	
+	$("#page").on("click","a", function(e){
+		console.log("page click...!!!!");
+		e.preventDefault();
+		
+		var clickPage = $(this).attr("href")
+		console.log("currentPage : " + clickPage);
+		currentPage = clickPage;
+		reviewList(currentPage);
+	});
 	
 	/* 수정 */
 	var reviewNo;
 	$(document).on("click", "#replyModifyBtn", function(e){
 		reviewNo = e.target.value;
 		console.log("button click : " + reviewNo);
+		
 		
 		detailReview.reviewget(reviewNo, function(data){ 
 			console.log(data.reviewContent);
@@ -491,19 +550,19 @@ str +=				  "</div>"
 		detailReview.reviewadd(ReviewVo, function(result){ 
 			alert(result);
 			document.getElementById("reviewcomment").value = "" 
-			reviewList(1);
+			reviewList(currentPage);
 		}); 
 		
 	});
 	
-	
+	/* 삭제 */
 	$(document).on("click", "#replyDeleteBtn", function(e){
 		reviewSeqno = e.target.value;
 		console.log("댓글 삭제 번호 : " + reviewSeqno);
 		
 		detailReview.reviewremove(reviewSeqno, function(result){
 			alert(result);
-			reviewList(1);
+			reviewList(currentPage);
 		});
 		
 	});

@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cre8.dao.ProductDaoimp;
+import com.cre8.dto.AdminKeyWord;
 import com.cre8.dto.Auc_Criteria;
 import com.cre8.dto.Cart;
 import com.cre8.dto.Pro;
 import com.cre8.dto.Qna;
 import com.cre8.dto.QnaVo;
+import com.cre8.dto.ReviewDTO;
 import com.cre8.dto.ReviewVo;
 import com.cre8.mapper.DetailMapper;
 
@@ -65,9 +67,10 @@ public class ProServiceImp implements ProService {
 	}
 
 	@Override
-	public List<ReviewVo> ReviewList(String seqno) {
+	public ReviewDTO ReviewList(AdminKeyWord adkey, int seqno) {
 		
-		return mapper.ReviewList(seqno);
+		return new ReviewDTO(mapper.ReviewList(adkey, seqno),
+								mapper.getCountReview(seqno));
 	}
 
 	@Override
