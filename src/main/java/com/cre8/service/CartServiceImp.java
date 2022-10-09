@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cre8.dto.Cart;
 import com.cre8.dto.CartlistVO;
 import com.cre8.mapper.cartMapper;
 
@@ -22,6 +23,11 @@ public class CartServiceImp implements CartService {
 	@Override
 	public List<CartlistVO> getList(String id) {
 		return mapper.list(id);
+	}
+
+	@Override
+	public int amountmodify(Cart cart) {
+		return mapper.modify(cart);
 	}
 
 }

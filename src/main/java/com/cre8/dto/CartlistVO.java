@@ -11,10 +11,19 @@ public class CartlistVO {
 	private String totalprice;
 	private String itemseqno;
 	private String proprice;
+	private String proAmount;
 	
 	
 	
 	
+	
+	
+	public String getProamount() {
+		return proAmount;
+	}
+	public void setProamount(String proAmount) {
+		this.proAmount = proAmount;
+	}
 	public String getItemseqno() {
 		return itemseqno;
 	}

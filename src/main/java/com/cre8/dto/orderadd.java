@@ -10,10 +10,28 @@ public class orderadd {
 	private String amount;
 	private String id;
 	private String proSeqno;
+	private String aucSeqno;
+	private String aucprice;
 	
 	
 	
 	
+	
+	
+	
+	
+	public String getAucprice() {
+		return aucprice;
+	}
+	public void setAucprice(String aucprice) {
+		this.aucprice = aucprice;
+	}
+	public String getAucSeqno() {
+		return aucSeqno;
+	}
+	public void setAucSeqno(String aucSeqno) {
+		this.aucSeqno = aucSeqno;
+	}
 	public String getProSeqno() {
 		return proSeqno;
 	}

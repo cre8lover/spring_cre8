@@ -152,8 +152,8 @@ window.onload = function(){
              
              
           } else {
-				console.log(document.referrer);
-               location.href = document.referrer;//실패시 보낼 페이지
+				/*console.log(document.referrer);*/
+/*               location.href = document.referrer;//실패시 보낼 페이지*/
 
           }
       });
