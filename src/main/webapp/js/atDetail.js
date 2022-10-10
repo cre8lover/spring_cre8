@@ -30,22 +30,49 @@ function dlqckf(){
 var slider = document.getElementById("myRange");
 var output = document.getElementById("demo");
 var money = document.getElementById("money");
+var numberformat = slider.value;
+numberformat = Number(numberformat.replaceAll(',', ''));
+output.value = numberformat.toLocaleString('ko-KR');
 
-output.value = slider.value;
 money.value = slider.value;
 
-slider.oninput = function() {
+slider.oninput = function(e) {
   output.value = this.value;
   money.value = this.value;
+  
+  var value = e.target.value;
+  value = Number(value.replaceAll(',', ''));
+  if(isNaN(value)) {
+    input.value = 0;
+  }else {
+    const formatValue = value.toLocaleString('ko-KR');
+    input.value = formatValue;
+  }
 }
 
+const input = document.querySelector('#demo');
+input.addEventListener('keyup', function(e) {
+	var value = e.target.value;
+	value = Number(value.replaceAll(',', ''));
+	if(isNaN(value)) {
+		input.value = 0;
+	}else {
+		const formatValue = value.toLocaleString('ko-KR');
+		input.value = formatValue;
+	}
+})
+
 function equalsmoney(best){
-	if(output.value > best){
-	money.value = output.value;
+	var number = Number(output.value.replaceAll(',', ''));
+	if(number > best){
+	money.value = number;
+	/*money.value = output.value;*/
 	}else{
 		alert("가격을 다시 책정해 주세요");
 	}
 }
+
+
 
 
 var bestid = document.getElementById("bestmoney");
@@ -170,10 +197,10 @@ function requestPay(){
 		var aucAmount = $("#aucAmount").val();
 		var aucname = $(".jmh_title").text();
 		var finishmoney = $("#aucprice").val();
-		console.log(finishmoney);
+/*		console.log(finishmoney);
 		console.log(aucseqno);
 		console.log(name);
-		console.log(aucname);
+		console.log(aucname);*/
 		
 	   var phonnumber = $("select[name=ssecession]").val();
 	   
