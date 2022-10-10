@@ -13,6 +13,8 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 </head>
 <body>
@@ -52,7 +54,9 @@
 			<td colspan="2">
 				
 			<div class="slidecontainer">
-		 	 <input type="range" min="${detail.aucCloseprice + 1000}" max="${detail.aucCloseprice *10}" value="${detail.aucCloseprice }"step="1000" class="slider" id="myRange">
+			
+		 	 <input type="range" min="${detail.aucCloseprice + 1000}" max="${detail.aucCloseprice *10}" value="${detail.aucCloseprice }" step="1000" class="slider" id="myRange">
+<%-- 		 	 <input type="range" min="${detail.aucCloseprice + 1000}" max="${detail.aucCloseprice *10}" value="${detail.aucCloseprice }" step="1000" class="slider" id="myRange"> --%>
 		 	 
 			</div>
 			</td>
@@ -62,7 +66,7 @@
 			<tr>
 				<td class="jmh_price" colspan='2'>
 				<!-- <span style="font-size:35px; margin:0;"><p>희망입찰가 &nbsp;&nbsp;<span id="demo"> </span>원</p></span> -->
-				<span style="font-size:25px; margin:0;"><p>희망입찰가<input type="text" name="dlqckfrk" id="demo" value="" 
+				<span style="font-size:25px; margin:0;"><p>희망입찰가<input type="text" name="dlqckfrk" id="demo" value="${min}" 
 				style="border: none;text-align:right; font-size:35px; width: 35%;" onchange="equalsmoney('${detail.aucCloseprice }')">원</p></span>
 				</td>
 				
@@ -247,6 +251,9 @@
 <script src="<%= request.getContextPath() %>/js/atDetail.js"></script>
 
 <script>
+
+
+
 window.onload = function(){
     document.getElementById("address_kakao").addEventListener("click", function(){ //주소입력칸을 클릭하면
         //카카오 지도 발생
@@ -261,6 +268,9 @@ window.onload = function(){
 
 
 
+	
+
+	
 
 $(document).on("click",".Btnaucnow" ,function(){ 
 	
@@ -268,10 +278,10 @@ $(document).on("click",".Btnaucnow" ,function(){
 		var bestid = document.getElementById("bestmoney");
 		var id = "<c:out value='${sess_id}'/>"
 
-		console.log(money.value);
+		/* console.log(money.value);
 		console.log(seqno);
 		console.log(bestid);
-		console.log(id);
+		console.log(id); */
 		
 		if(id == ""){
 			alert('로그인후 이용하세요');
@@ -312,6 +322,9 @@ $(document).ready(function(){
 			
 			var str="";
 			for(var i = 0, len=list.length || 0; i < len; i++){
+				var listnumber = list[i].aucnowLastprice;
+				listnumber = Number(listnumber.replaceAll(',', ''));
+				listnumber = listnumber.toLocaleString('ko-KR');
 		/* 			str +=	"<div class='memberlist'>"
 					str +=	"<section class='memberlist_users'>";
 					str +=	"<div class='memberlist_users_container'>";
@@ -337,7 +350,8 @@ $(document).ready(function(){
 					str +=	"<span class='memberlist-item_userinfo-sep'></span>";
 					str +=	"<div class='memberlist-item_userinfo-item'>";
 					str +=	"	<span><h4>입찰가격</h4></span>";
-					str +=		"<span>"+list[i].aucnowLastprice+"원</span>";
+					str +=		"<span>"+listnumber+"원</span>";
+/* 					str +=		"<span>"+list[i].aucnowLastprice+"원</span>"; */
 					str +=	"</div>";
 					str +=	"		</div>";
 					str +=	"		</div>";

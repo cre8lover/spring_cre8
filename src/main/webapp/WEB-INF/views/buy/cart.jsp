@@ -143,7 +143,7 @@ function whaehlfk(modify){
 	
 	console.log(th.text());
 	if(modify.value*1 > maxamount.value*1){
-		alert("재고가 부족합니다.");
+		alert(maxamount.value+"개 있습니다.");
 		modify.value = 1;
 	}else if (modify.value < 1){
 		alert("최소 1개는 주문하셔야 합니다.")
@@ -185,7 +185,11 @@ $(document).ready(function() {
 
 $(document).ready(function(){
 	
-
+	$('input[type="text"]').keydown(function() {
+	  if (event.keyCode === 13) {
+	    event.preventDefault();
+	  };
+	});
 	
 	/* $(".minus").on("click",function(){
 		var promoney = $(this).parent("div").siblings("input[name='proPrice']").val()*1;
@@ -279,9 +283,9 @@ const arr = [];
 			var totalmo = 0;
 			for(var i = 0, len=list.length || 0; i < len; i++){
 				str +=  "<tr>";
-				str +=	"<th id='checkfind'><input data-seqno='"+list[i].cartseqno+"' class='checkseqno' type='checkbox' name='allponecheck' value='"+list[i].proSeqno+"'></th>";
+				str +=	"<th id='checkfind'><input data-seqno='"+list[i].cartseqno+"' class='checkseqno' type='checkbox' name='allponecheck' value='"+list[i].proseqno+"'></th>";
 				str +=	"<th>";
-				str +=	"<a href='"+path+"/product/productDetail?seqno="+list[i].proSeqno+"'>";
+				str +=	"<a href='"+path+"/product/productDetail?seqno="+list[i].proseqno+"'>";
 				str +=		"<img src='/upload/thumbnail/"+list[i].itemImg +"' style='height:225px;'>";
 				str +=	"</a>";
 				str +=	"</th>";
