@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.cre8.dto.AdminKeyWord;
+import com.cre8.dto.AnswerVo;
 import com.cre8.dto.QnaVo;
 import com.cre8.dto.ReviewDTO;
 import com.cre8.dto.ReviewVo;
@@ -30,5 +31,7 @@ public interface DetailMapper {
 	int reviewRemove(String reviewNo);
 	
 	public int getCountReview(int seqno);
+
+	int qnaAnswer(AnswerVo answerVo);
 
 }

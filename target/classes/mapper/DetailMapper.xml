@@ -8,9 +8,12 @@
 
   <!-- 조회 -->
   	<select id="qnaList" resultType="com.cre8.dto.QnaVo">
-  		select q.qna_seqno as qnaSeqno, q.qna_content as qnaContent, q.mem_id as memId, q.qna_date as qnaDate
-		from qna q, pro p
-		where q.pro_seqno = p.pro_seqno and p.pro_seqno = #{seqno}
+  	<![CDATA[
+  		select q.qna_seqno as qnaSeqno, q.qna_content as qnaContent, q.mem_id as memId, q.qna_date as qnaDate,
+    			a.answer_seqno as answerSeqno, a.answer_content as answerContent, a.mem_id as answermemId, a.answer_date as answerDate
+		from qna q, pro p, qna_answer a
+		where q.pro_seqno = p.pro_seqno and p.pro_seqno = #{seqno} and a.qna_seqno(+) = q.qna_seqno
+	]]>	
   	</select>
   	
   	<insert id="register">
@@ -72,4 +75,8 @@
   	<select id="getCountReview" resultType="int">
 		SELECT count(*) FROM review r, pro p WHERE r.pro_seqno = p.pro_seqno  and p.pro_seqno= #{seqno} 		
   	</select>
+  	
+  	<insert id="qnaAnswer">
+  		insert into qna_answer(answer_seqno, answer_content, qna_seqno, mem_id) values (answer_seqno.nextval, #{answerContent}, #{qnaSeqno}, #{memId})
+  	</insert>
   </mapper>
