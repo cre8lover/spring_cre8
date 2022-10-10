@@ -39,9 +39,10 @@
 
 		<tr>
 			<td class="jmh_saleprice" >
-				<span style="font-size:20px;"><strike>시작가 : &nbsp; ${detail.aucPrice }원</strike></span>
+				<span style="font-size:20px;"><strike>시작가 : &nbsp; <fmt:formatNumber value="${detail.aucPrice }" pattern="#,###"/>원</strike></span>
 			</td>
-			<td class="jmh_saleprice">  <span style="font-size:20px;"><b> 현재가 : &nbsp; ${detail.aucCloseprice }원 </b></span></td>
+			  
+			<td class="jmh_saleprice">  <span style="font-size:20px;"><b> 현재가 : &nbsp; <fmt:formatNumber value="${detail.aucCloseprice }" pattern="#,###"/>원 </b></span></td>
 		</tr>
 
 
@@ -66,7 +67,7 @@
 			<tr>
 				<td class="jmh_price" colspan='2'>
 				<!-- <span style="font-size:35px; margin:0;"><p>희망입찰가 &nbsp;&nbsp;<span id="demo"> </span>원</p></span> -->
-				<span style="font-size:25px; margin:0;"><p>희망입찰가<input type="text" name="dlqckfrk" id="demo" value="${min}" 
+				<span style="font-size:25px; margin:0;"><p>희망입찰가<input type="text" name="dlqckfrk" id="demo" value="" 
 				style="border: none;text-align:right; font-size:35px; width: 35%;" onchange="equalsmoney('${detail.aucCloseprice }')">원</p></span>
 				</td>
 				
