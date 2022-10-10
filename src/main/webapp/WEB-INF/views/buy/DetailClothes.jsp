@@ -158,6 +158,9 @@
         			<td>
 						삭제
         			</td>
+        			<td>
+						답변
+        			</td>
         		</tr>
         	</thead>
         	<tbody id="QnAList">
@@ -345,10 +348,10 @@ var product = (function(){
 $(document).ready(function(){
 var seqno = '<c:out value="${detailList.getProSeqno()}"/>'
 var id = '<c:out value="${detailList.mem.memId}"/>'
+var QnaNo;
 
 	console.log("detail.jsp");
 	console.log("시퀀스 번호 : " + seqno);
-
 showList(1);	
 	function showList(page){
 		detailQnA.getList({seqno: seqno, page : page || 1}, function(list){
@@ -358,23 +361,67 @@ showList(1);
 		
 			 for(var i=0, len=list.length || 0; i <len; i++){
 //				console.log("시퀀스 : " + list[i].qnaSeqno);
-				str +=	"<tr>"
-				str +=		"<td class='qna_seqno' id='qna' name='seqno' value='"+ list[i].qnaSeqno +"'>"+ list[i].qnaSeqno +"</td>"
+				str +=	"<tr class='qna' id='"+i+"'>"
+				str +=		"<td class='qna_seqno' value='"+ list[i].qnaSeqno +"'>"+ list[i].qnaSeqno +"</td>"
 				str +=		"<td colspan='2'>"+ list[i].qnaContent +"</td>"
 				str +=		"<td>"+ list[i].memId +"</td>"
 				str +=		"<td>"+ list[i].qnaDate +"</td>"
 				str +=      "<td><button class='change' name='type' value='" + list[i].qnaSeqno + "'>수정</button> </td>"
 				str +=      "<td><button class='delete' name='type' value='" + list[i].qnaSeqno + "'>삭제</button> </td>"
+				str +=      "<td><button class='enswer' name='type' id='"+i+"'>답변</button> </td>"
 				str +=	"</tr>"
+				if(list[i].answerSeqno != null){
+					str += "<tr>"
+					str +=		"<td> → </td>"
+					str +=		"<td colspan='2'>"+ list[i].answerContent +"</td>"
+					str +=		"<td>"+ list[i].answermemId +"</td>"
+					str +=		"<td>"+ list[i].answerDate +"</td>"
+					str +=      "<td><button class='answerchange' name='type' value='" + list[i].answerSeqno + "'>수정</button> </td>"
+					str +=      "<td><button class='answerdelete' name='type' value='" + list[i].answerSeqno + "'>삭제</button> </td>"
+					str += "</tr>"
+				}
+				str +=	"<tr name='what' class='panel"+i+"' style='display:none'>"
+				str +=  	"<td colspan='7'> <textarea id='answer' name='answer' style='width:100%; height:60px;' rows='5' cols='50' placeholder='답변을 입력하세요'></textarea>"
+				str += 		"<button class='qna_enswer' value='" + list[i].qnaSeqno + "'>등록</button> </td>"
+				str +=	"</tr>"
+				
 			}	 
 			
 			 $("#QnAList").html(str);
 		});
 		
 	}
+
 	
+	$(document).on("click", ".enswer", function(e){
+		
+		console.log(QnaNo);
+//		console.log($(this).attr('id'));
+		e.preventDefault();
+        $('.panel'+$(this).attr('id')).toggle();
+    });
 	
-	var QnaNo;
+	$(document).on("click", ".qna_enswer", function(e){
+		var answer = $(this).siblings("textarea[name='answer']").val();
+		console.log(answer);
+		QnaNo = e.target.value;
+//		console.log("ㅇㅇㅇ"+QnaNo);
+//		var answer = document.getElementById("answer").value;
+//		var answer = $("textarea[name='answer']").val();
+		
+		var AnswerVo = {
+				memId : id,
+				answerContent : answer,
+				qnaSeqno : QnaNo
+		}
+		
+		detailQnA.answer(AnswerVo, function(data){
+			document.getElementById("answer").value = ""
+			showList(1);
+		});
+	});
+	
+
 	$(document).on("click", ".change", function(e){
 		QnaNo = e.target.value;
 		console.log("button click : " + QnaNo);

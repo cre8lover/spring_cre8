@@ -3,6 +3,7 @@ package com.cre8.service;
 import java.util.List;
 
 import com.cre8.dto.AdminKeyWord;
+import com.cre8.dto.AnswerVo;
 import com.cre8.dto.Auc_Criteria;
 import com.cre8.dto.Cart;
 import com.cre8.dto.Pro;
@@ -35,6 +36,8 @@ public interface ProService {
 	ReviewVo reviewget(String reviewSeqno);
 
 	int reivewremove(String reviewNo);
+
+	int answer(AnswerVo answerVo);
 
 
 
