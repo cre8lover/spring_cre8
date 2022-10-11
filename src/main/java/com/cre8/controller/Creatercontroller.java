@@ -87,12 +87,15 @@ public class Creatercontroller {
 
 	// 크리에이터 등록페이지
 	@PostMapping("artistpage")
-	public String Creatorpage(HttpServletRequest request, HttpSession sess, Model model) {
+	public String Creatorpage(Creator cre, HttpSession sess, Model model) {
 
 		String id = (String) sess.getAttribute("sess_id");
 
-		model.addAttribute("id", id);
-		return "/cre/creReg";
+//		model.addAttribute("id", id);
+		cre.setMemid(id);
+		cs.Creatoradd(cre);
+		
+		return "/creater/artistpage";
 	}
 
 	// 수정페이지

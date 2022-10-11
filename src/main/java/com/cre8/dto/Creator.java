@@ -13,6 +13,7 @@ public class Creator implements Serializable {
 	private String creRegnum;
 	private String creSalenum;
 	private String crePot;
+	private String creDetail;
 	private Mem mem;
 	private Artdetail artdetailSet;
 	private Att attSet;
@@ -28,6 +29,14 @@ public class Creator implements Serializable {
 
 	public Creator() {
 
+	}
+
+	public String getCreDetail() {
+		return creDetail;
+	}
+
+	public void setCreDetail(String creDetail) {
+		this.creDetail = creDetail;
 	}
 
 	public String getCreCompany() {
