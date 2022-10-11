@@ -8,6 +8,8 @@
 <title>Insert title here</title>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 </head>
 <body>
 <%@ include file="../header.jsp" %>
@@ -52,11 +54,12 @@
                   <div><img class="auc_img" src="/upload/thumbnail/${item.itemImg}" ></div>
                </div>
                <div class="_column product-info">
-                  <h4 class="product-name"><b>${item.itemName}</b> <span class="khm_startprice">시작가 ₩${list.aucPrice}~</span> </h4>
+                  <h4 class="product-name"><b>${item.itemName}</b></h4>
                   <p class="product-desc"> ${item.itemDetail }
                   <div style="padding-top:1rem">
+                  <a class="khm_startprice" style="margin-left: 156px;" >시작가 ₩ <fmt:formatNumber value="${list.aucPrice}" pattern="#,###"/> ~</a> 
                      <div> 날짜 : ${list.aucStart } ~ ${list.aucFinish } <br><span style="color:#B40404;">남은시간 ${list.aucAmount }일</span></div>
-                     <div class="price product-single-price">₩ ${list.aucCloseprice }</div>
+                     <div class="price product-single-price">₩<fmt:formatNumber value="${list.aucCloseprice }" pattern="#,###"/></div>
                   </div>
                </div>
             </li>

@@ -2,17 +2,11 @@ package com.cre8.dto;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-public class QnaVo implements Serializable {
+public class ReviewVo implements Serializable {
 
-	private Integer qnaSeqno;
-	private String qnaContent;
-	private Pro pro;
-	private String memid;
-	private Date qnaDate;
+	private Integer reviewSeqno;
+	private String reviewContent;
 	private int seqno;
 	private String memId;
 	private String memPw;
@@ -36,77 +30,27 @@ public class QnaVo implements Serializable {
 	private Review reviewSet;
 	private String check;
 	private Att att;
-	private String answerSeqno;
-	private String answerContent;
-	private String answermemId;
-	private String answerDate;
-	
-	public QnaVo() {
 
+
+	public ReviewVo() {
 	}
+
 
 	
-	
-	public String getAnswerSeqno() {
-		return answerSeqno;
-	}
-
-
-
-	public void setAnswerSeqno(String answerSeqno) {
-		this.answerSeqno = answerSeqno;
-	}
-
-
-
-	public String getAnswerContent() {
-		return answerContent;
-	}
-
-
-
-	public void setAnswerContent(String answerContent) {
-		this.answerContent = answerContent;
-	}
-
-
-
-	public String getAnswermemId() {
-		return answermemId;
-	}
-
-
-
-	public void setAnswermemId(String answermemId) {
-		this.answermemId = answermemId;
-	}
-
-
-
-	public String getAnswerDate() {
-		return answerDate;
-	}
-
-
-
-	public void setAnswerDate(String answerDate) {
-		this.answerDate = answerDate;
-	}
-
-
 
 	public int getSeqno() {
 		return seqno;
 	}
 
+
 	public void setSeqno(int seqno) {
 		this.seqno = seqno;
 	}
 
+
 	public String getMemId() {
 		return memId;
 	}
-
 
 
 	public void setMemId(String memId) {
@@ -114,11 +58,9 @@ public class QnaVo implements Serializable {
 	}
 
 
-
 	public String getMemPw() {
 		return memPw;
 	}
-
 
 
 	public void setMemPw(String memPw) {
@@ -126,11 +68,9 @@ public class QnaVo implements Serializable {
 	}
 
 
-
 	public Date getMemWdate() {
 		return memWdate;
 	}
-
 
 
 	public void setMemWdate(Date memWdate) {
@@ -138,11 +78,9 @@ public class QnaVo implements Serializable {
 	}
 
 
-
 	public String getMemTel() {
 		return memTel;
 	}
-
 
 
 	public void setMemTel(String memTel) {
@@ -150,11 +88,9 @@ public class QnaVo implements Serializable {
 	}
 
 
-
 	public String getMemEmail() {
 		return memEmail;
 	}
-
 
 
 	public void setMemEmail(String memEmail) {
@@ -162,11 +98,9 @@ public class QnaVo implements Serializable {
 	}
 
 
-
 	public String getMemBirth() {
 		return memBirth;
 	}
-
 
 
 	public void setMemBirth(String memBirth) {
@@ -174,11 +108,9 @@ public class QnaVo implements Serializable {
 	}
 
 
-
 	public String getMemSnsinfo() {
 		return memSnsinfo;
 	}
-
 
 
 	public void setMemSnsinfo(String memSnsinfo) {
@@ -186,11 +118,9 @@ public class QnaVo implements Serializable {
 	}
 
 
-
 	public String getMemImg() {
 		return memImg;
 	}
-
 
 
 	public void setMemImg(String memImg) {
@@ -198,11 +128,9 @@ public class QnaVo implements Serializable {
 	}
 
 
-
 	public String getMemName() {
 		return memName;
 	}
-
 
 
 	public void setMemName(String memName) {
@@ -210,11 +138,9 @@ public class QnaVo implements Serializable {
 	}
 
 
-
 	public Address getAddressSet() {
 		return addressSet;
 	}
-
 
 
 	public void setAddressSet(Address addressSet) {
@@ -222,11 +148,9 @@ public class QnaVo implements Serializable {
 	}
 
 
-
 	public AucNowing getAucNowingSet() {
 		return aucNowingSet;
 	}
-
 
 
 	public void setAucNowingSet(AucNowing aucNowingSet) {
@@ -234,11 +158,9 @@ public class QnaVo implements Serializable {
 	}
 
 
-
 	public Cart getCartSet() {
 		return cartSet;
 	}
-
 
 
 	public void setCartSet(Cart cartSet) {
@@ -246,11 +168,9 @@ public class QnaVo implements Serializable {
 	}
 
 
-
 	public Creator getCreatorSet() {
 		return creatorSet;
 	}
-
 
 
 	public void setCreatorSet(Creator creatorSet) {
@@ -258,11 +178,9 @@ public class QnaVo implements Serializable {
 	}
 
 
-
 	public Item getItemSet() {
 		return itemSet;
 	}
-
 
 
 	public void setItemSet(Item itemSet) {
@@ -270,11 +188,9 @@ public class QnaVo implements Serializable {
 	}
 
 
-
 	public MemAuth getMemAuthSet() {
 		return memAuthSet;
 	}
-
 
 
 	public void setMemAuthSet(MemAuth memAuthSet) {
@@ -282,11 +198,9 @@ public class QnaVo implements Serializable {
 	}
 
 
-
 	public Orders getOrdersSet() {
 		return ordersSet;
 	}
-
 
 
 	public void setOrdersSet(Orders ordersSet) {
@@ -294,11 +208,9 @@ public class QnaVo implements Serializable {
 	}
 
 
-
 	public Pro getProSet() {
 		return proSet;
 	}
-
 
 
 	public void setProSet(Pro proSet) {
@@ -306,11 +218,9 @@ public class QnaVo implements Serializable {
 	}
 
 
-
 	public Qna getQnaSet() {
 		return qnaSet;
 	}
-
 
 
 	public void setQnaSet(Qna qnaSet) {
@@ -318,11 +228,19 @@ public class QnaVo implements Serializable {
 	}
 
 
+	public Reply getReplySet() {
+		return replySet;
+	}
+
+
+	public void setReplySet(Reply replySet) {
+		this.replySet = replySet;
+	}
+
 
 	public Review getReviewSet() {
 		return reviewSet;
 	}
-
 
 
 	public void setReviewSet(Review reviewSet) {
@@ -330,11 +248,9 @@ public class QnaVo implements Serializable {
 	}
 
 
-
 	public String getCheck() {
 		return check;
 	}
-
 
 
 	public void setCheck(String check) {
@@ -342,11 +258,9 @@ public class QnaVo implements Serializable {
 	}
 
 
-
 	public Att getAtt() {
 		return att;
 	}
-
 
 
 	public void setAtt(Att att) {
@@ -354,55 +268,24 @@ public class QnaVo implements Serializable {
 	}
 
 
-
-	public Integer getQnaSeqno() {
-		return qnaSeqno;
-	}
-
-	public void setQnaSeqno(Integer qnaSeqno) {
-		this.qnaSeqno = qnaSeqno;
-	}
-
-	public String getQnaContent() {
-		return qnaContent;
-	}
-
-	public void setQnaContent(String qnaContent) {
-		this.qnaContent = qnaContent;
-	}
-
-	public Pro getPro() {
-		return pro;
-	}
-
-	public void setPro(Pro pro) {
-		this.pro = pro;
+	public Integer getReviewSeqno() {
+		return reviewSeqno;
 	}
 
 
-
-	public String getMemid() {
-		return memid;
+	public void setReviewSeqno(Integer reviewSeqno) {
+		this.reviewSeqno = reviewSeqno;
 	}
 
-	public void setMemid(String memid) {
-		this.memid = memid;
+
+	public String getReviewContent() {
+		return reviewContent;
 	}
 
-	public Date getQnaDate() {
-		return qnaDate;
+
+	public void setReviewContent(String reviewContent) {
+		this.reviewContent = reviewContent;
 	}
 
-	public void setQnaDate(Date qnaDate) {
-		this.qnaDate = qnaDate;
-	}
-
-	public Reply getReplySet() {
-		return replySet;
-	}
-
-	public void setReplySet(Reply reply_arr) {
-		this.replySet = reply_arr;
-	}
 
 }

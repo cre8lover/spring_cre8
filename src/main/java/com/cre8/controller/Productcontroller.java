@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.cre8.dto.AnswerVo;
 import com.cre8.dto.Auc_Criteria;
 import com.cre8.dto.Cart;
 import com.cre8.dto.Mem;
@@ -81,10 +82,10 @@ public class Productcontroller extends HttpServlet {
 			 consumes = "application/json",
 			 produces = "text/plain; charset=utf-8")
     public ResponseEntity<String> create(@RequestBody QnaVo QnaVo) {
-    	log.info(" called..");
+    	log.info("add ddddddddddddddddddddddddddd called..");
 	
     	int rs = pro.register(QnaVo);
-	
+    	System.out.println("ddddddddddddddddddddddddddddddddddddddddddd"+rs);
     	return rs == 1 ? new ResponseEntity<>("등록되었습니다.", HttpStatus.OK) 
     					: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -120,4 +121,15 @@ public class Productcontroller extends HttpServlet {
 										: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		
 	}
+	
+    @PostMapping(value="answer", 
+    			consumes = "application/json",
+    			produces = "text/plain; charset=utf-8")
+    public ResponseEntity<String> answer(@RequestBody AnswerVo AnswerVo) {
+    	log.info("add called++++++++++++++++++");
+	
+    	int rs = pro.answer(AnswerVo);
+    	return rs == 1 ? new ResponseEntity<>("등록되었습니다.", HttpStatus.OK) 
+    					: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

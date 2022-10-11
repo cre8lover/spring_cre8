@@ -21,8 +21,13 @@ import com.cre8.dto.AucNowing;
 import com.cre8.dto.Auc_Criteria;
 import com.cre8.dto.Item;
 import com.cre8.dto.Mem;
+import com.cre8.dto.Orders;
+import com.cre8.dto.Pro;
+import com.cre8.dto.orderadd;
 
 import oracle.jdbc.OracleTypes;
+import oracle.sql.ARRAY;
+import oracle.sql.ArrayDescriptor;
 @Repository
 public class AucDaoimp implements AucDao{
    @Autowired
@@ -256,6 +261,7 @@ public class AucDaoimp implements AucDao{
             auc.setAucShortdetail(rs.getString("auc_shortdetail"));
             auc.setAucPrice(rs.getInt("auc_price"));
             auc.setAucFinish(rs.getString("auc_finish"));
+            auc.setAucAmount(rs.getInt("auc_amount"));
             if(rs.getInt("aucCloseprice") == 0) {
             	auc.setAucCloseprice(rs.getInt("auc_price"));
             }else {
@@ -421,5 +427,85 @@ public class AucDaoimp implements AucDao{
       
       
    }
+
+	@Override
+	public int aucadd(orderadd orderadd) {
+		CallableStatement cstmt=null;
+		Connection conn = null;
+		
+		
+		
+		int rs = 0;
+		try {
+			
+			String sql = "call p_orderaucadd(?,?,?,?,?,?,?,?,?)";
+			conn = ds.getConnection();
+			cstmt = conn.prepareCall(sql);
+			cstmt.setString(1, orderadd.getPay_method());
+			cstmt.setString(2, orderadd.getBuyer_name());
+			cstmt.setString(3, orderadd.getBuyer_tel());
+			cstmt.setString(4, orderadd.getMerchant_uid());
+			cstmt.setString(5, orderadd.getAucprice());
+			cstmt.setString(6, orderadd.getId());
+			cstmt.setString(7, orderadd.getAmount());
+			cstmt.setString(8, orderadd.getAucSeqno());
+			cstmt.registerOutParameter(9, OracleTypes.INTEGER);
+			cstmt.executeQuery();
+			rs = cstmt.getInt(9);
+			
+			conn.close();
+			cstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rs;
+	}
+
+	@Override
+	public List<Orders> aucorderlist(String o_seqno) {
+		CallableStatement cstmt=null;
+		Connection conn = null;
+		List<Orders> orderlistp = new ArrayList<Orders>();
+		Orders orders = null;
+		Pro pro = null;
+		Item item = null;
+		String sql = "call p_orders_auc_list(?,?)";
+		try {
+			conn = ds.getConnection();
+			cstmt = conn.prepareCall(sql);
+			cstmt.setInt(1, Integer.parseInt(o_seqno));
+			
+			cstmt.registerOutParameter(2, OracleTypes.CURSOR);
+			cstmt.executeQuery();
+			
+			ResultSet rs = (ResultSet)cstmt.getObject(2);
+			while(rs.next()) {
+				
+				item = new Item();
+				pro = new Pro();
+				orders = new Orders();
+				
+				item.setItemName(rs.getString("item_name"));
+				
+				pro.setProPrice(rs.getInt("pro_price"));
+				orders.setOrderAmount(rs.getInt("amount"));
+				item.setItemImg(rs.getString("item_img"));
+				
+				pro.setItem(item);
+				orders.setPro(pro);
+				orderlistp.add(orders);
+				
+			}
+			conn.close();
+			cstmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		return orderlistp;
+	}
+
 
 }

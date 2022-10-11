@@ -10,7 +10,7 @@
 			v_number number;
 		BEGIN
 		
-			select count(*) into v_number from cart where pro_seqno = #{proSeqno};
+			select count(*) into v_number from cart where pro_seqno = #{proSeqno} and mem_id = #{id};
 		
 			if v_number > 0 then
 				update cart set cart_amount = cart_amount + #{proAmount} where pro_seqno = #{proSeqno};

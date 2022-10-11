@@ -158,6 +158,9 @@
         			<td>
 						삭제
         			</td>
+        			<td>
+						답변
+        			</td>
         		</tr>
         	</thead>
         	<tbody id="QnAList">
@@ -185,6 +188,7 @@
     <form class="form" name="form" ng-submit="form.$valid && cmntCtrl.addComment()" novalidate>
       <div class="form-row">
         <textarea
+        		  id = "reviewcomment"
                   class="input"
                   ng-model="cmntCtrl.comment.text"
                   placeholder="리뷰를 입력하세요"
@@ -194,45 +198,17 @@
 
 
       <div class="form-row">
-        <input type="submit" id="addReplyBtn" value="리뷰등록">
+        <input type="button" id="ReviewAddReplyBtn" value="리뷰등록">
       </div>
     </form>
   </div>
-
-  <!-- Comments List -->
-  <c:forEach items="${detailList.getReviewSet()}" var="review">
-    <!-- Comment -->
-  <div class="comments">
-    <div class="comment" ng-repeat="comment in cmntCtrl.comments | orderBy: '-date'">
-      <!-- Comment Avatar -->
-	      <div class="comment-avatar">
-	        <img src="https://cdn-icons-png.flaticon.com/512/456/456212.png">
-	      </div>
-
-      <!-- Comment Box -->
-	      <div class="comment-box">
-	        <div class="comment-text" >${review.reviewContent}</div>
-	        <div class="comment-footer">
-	          <div class="comment-info">
-	            <span class="comment-author" style = "float:left;">
-	              <em ng-if="comment.anonymous">작성자 : </em>
-	              <a ng-if="!comment.anonymous" >${review.mem.memId}</a>
-	            </span>
-
-	          </div>
-
-	          <div class="comment-actions">
-	            <button id="replyModifyBtn" style="border: none; background-color: transparent;">수정</button> |
-				<button id="replyDeleteBtn" style="border: none; background-color: transparent;">삭제</button>
-	          </div>
-	        </div>
-	      </div>
-    </div>
-  </div>
-</c:forEach>
-
+	<div id="reviewList">
+	
+	</div>
 </div>
-
+	<div id="page" style="text-align: center;">
+	
+	</div>
       </main>
     </section>
    
@@ -372,10 +348,10 @@ var product = (function(){
 $(document).ready(function(){
 var seqno = '<c:out value="${detailList.getProSeqno()}"/>'
 var id = '<c:out value="${detailList.mem.memId}"/>'
+var QnaNo;
 
 	console.log("detail.jsp");
 	console.log("시퀀스 번호 : " + seqno);
-
 showList(1);	
 	function showList(page){
 		detailQnA.getList({seqno: seqno, page : page || 1}, function(list){
@@ -385,23 +361,67 @@ showList(1);
 		
 			 for(var i=0, len=list.length || 0; i <len; i++){
 //				console.log("시퀀스 : " + list[i].qnaSeqno);
-				str +=	"<tr>"
-				str +=		"<td class='qna_seqno' id='qna' name='seqno' value='"+ list[i].qnaSeqno +"'>"+ list[i].qnaSeqno +"</td>"
+				str +=	"<tr class='qna' id='"+i+"'>"
+				str +=		"<td class='qna_seqno' value='"+ list[i].qnaSeqno +"'>"+ list[i].qnaSeqno +"</td>"
 				str +=		"<td colspan='2'>"+ list[i].qnaContent +"</td>"
 				str +=		"<td>"+ list[i].memId +"</td>"
 				str +=		"<td>"+ list[i].qnaDate +"</td>"
 				str +=      "<td><button class='change' name='type' value='" + list[i].qnaSeqno + "'>수정</button> </td>"
 				str +=      "<td><button class='delete' name='type' value='" + list[i].qnaSeqno + "'>삭제</button> </td>"
+				str +=      "<td><button class='enswer' name='type' id='"+i+"'>답변</button> </td>"
 				str +=	"</tr>"
+				if(list[i].answerSeqno != null){
+					str += "<tr>"
+					str +=		"<td> → </td>"
+					str +=		"<td colspan='2'>"+ list[i].answerContent +"</td>"
+					str +=		"<td>"+ list[i].answermemId +"</td>"
+					str +=		"<td>"+ list[i].answerDate +"</td>"
+					str +=      "<td><button class='answerchange' name='type' value='" + list[i].answerSeqno + "'>수정</button> </td>"
+					str +=      "<td><button class='answerdelete' name='type' value='" + list[i].answerSeqno + "'>삭제</button> </td>"
+					str += "</tr>"
+				}
+				str +=	"<tr name='what' class='panel"+i+"' style='display:none'>"
+				str +=  	"<td colspan='7'> <textarea id='answer' name='answer' style='width:100%; height:60px;' rows='5' cols='50' placeholder='답변을 입력하세요'></textarea>"
+				str += 		"<button class='qna_enswer' value='" + list[i].qnaSeqno + "'>등록</button> </td>"
+				str +=	"</tr>"
+				
 			}	 
 			
 			 $("#QnAList").html(str);
 		});
 		
 	}
+
 	
+	$(document).on("click", ".enswer", function(e){
+		
+		console.log(QnaNo);
+//		console.log($(this).attr('id'));
+		e.preventDefault();
+        $('.panel'+$(this).attr('id')).toggle();
+    });
 	
-	var QnaNo;
+	$(document).on("click", ".qna_enswer", function(e){
+		var answer = $(this).siblings("textarea[name='answer']").val();
+		console.log(answer);
+		QnaNo = e.target.value;
+//		console.log("ㅇㅇㅇ"+QnaNo);
+//		var answer = document.getElementById("answer").value;
+//		var answer = $("textarea[name='answer']").val();
+		
+		var AnswerVo = {
+				memId : id,
+				answerContent : answer,
+				qnaSeqno : QnaNo
+		}
+		
+		detailQnA.answer(AnswerVo, function(data){
+			document.getElementById("answer").value = ""
+			showList(1);
+		});
+	});
+	
+
 	$(document).on("click", ".change", function(e){
 		QnaNo = e.target.value;
 		console.log("button click : " + QnaNo);
@@ -417,9 +437,10 @@ showList(1);
 		console.log("comment : " + comment);
 		
 		var QnaVo = {
-				seqno : QnaNo,
+				seqno : seqno,
 				memId : id,
-				qnaContent : comment
+				qnaContent : comment,
+				qnaSeqno : QnaNo
 		}
 		
 		detailQnA.add(QnaVo, function(result){ 
@@ -437,6 +458,158 @@ showList(1);
 		detailQnA.remove(QnaNo, function(result){
 			alert(result);
 			showList(1);
+		});
+		
+	});
+});
+
+
+
+</script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/js/review.js"></script>
+<script>
+$(document).ready(function(){
+var seqno = '<c:out value="${detailList.getProSeqno()}"/>'
+var id = '<c:out value="${detailList.mem.memId}"/>'
+
+	console.log("review 시퀀스 번호 : " + seqno);
+	
+
+	reviewList(1);	
+	
+	var currentPage = 1;
+	function reviewList(page){
+		detailReview.reviewList({seqno: seqno, page : page || 1}, function(cnt, list){
+			console.log("review list");
+			console.log("cnt : " + cnt)
+			var str = "";
+		
+			 for(var i=0, len=list.length || 0; i <len; i++){
+//				console.log("시퀀스 : " + list[i].qnaSeqno);
+str +=				 "<div class='comments'>"
+str +=				    "<div class='comment' ng-repeat='comment in cmntCtrl.comments | orderBy: '-date'>"
+str +=					     "<div class='comment-avatar'>"
+str +=					        "<img src='https://cdn-icons-png.flaticon.com/512/456/456212.png'>"
+str +=					      "</div>"
+str +=					      "<div class='comment-box'>"
+str +=					        "<div class='comment-text' >" + list[i].reviewContent +"</div>"
+str +=					        "<div class='comment-footer'>"
+str +=					          "<div class='comment-info'>"
+str +=					            "<span class='comment-author' style = 'float:left;'>"
+str +=					              "<em ng-if='comment.anonymous'>작성자 : </em>"
+str +=					              "<a ng-if='!comment.anonymous' >" + list[i].memId + "</a>"
+str +=					            "</span>"
+str +=					          "</div>"
+str +=					          "<div class='comment-actions'>"
+str +=					            "<button id='replyModifyBtn' style='border: none; background-color: transparent;' value='"+ list[i].reviewSeqno +"'>수정</button> |"
+str +=								"<button id='replyDeleteBtn' style='border: none; background-color: transparent;' value='"+ list[i].reviewSeqno +"'>삭제</button>"
+str +=					          "</div>"
+str +=					        "</div>"
+str +=					      "</div>"
+str +=				    "</div>"
+str +=				  "</div>"
+			}	 
+			
+			 $("#reviewList").html(str);
+			 
+			 showReplyPage(cnt, currentPage);
+		});
+		
+	}
+	
+	/* 댓글 페이지 리스트 출력 */
+	function showReplyPage(cnt){
+		
+//		var currentPage = 1;
+		
+		var endPage = Math.ceil(currentPage/5.0)*5;
+		var startPage = endPage - 4;
+		console.log("endNum : " + endPage);
+		
+		var prev = startPage != 1;
+		var next = false;
+		
+		if(endPage*5 >= cnt){
+			endPage = Math.ceil(cnt/5.0);
+		}
+		if(endPage*5 < cnt){
+			next = true;
+		}
+		
+		var str = "<ul class='pageUL'>"
+		if(prev){
+			str += "<li class='page-link'>";
+			str += "<a href='" + (startPage - 1) + "'> 이전페이지 </a></li>";
+		}
+		
+		for(var i=startPage; i <= endPage; i++){
+			var active = currentPage == i ? "active" : "";
+			str += "<li class = 'page-link " + active + "'>"; //띄어쓰기 주의
+			str += "<a href='" + i + "'>" + i + "</a></li>";
+		}
+		
+		if(next){
+			str += "<li class='page-link'>";
+			str += "<a href='" + (endPage+1) + "'> 다음페이지 </a></li>";
+		}
+		
+		str += "</ul>"
+		console.log(str);
+		$("#page").html(str);
+	}
+	
+	$("#page").on("click","a", function(e){
+		console.log("page click...!!!!");
+		e.preventDefault();
+		
+		var clickPage = $(this).attr("href")
+		console.log("currentPage : " + clickPage);
+		currentPage = clickPage;
+		reviewList(currentPage);
+	});
+	
+	/* 수정 */
+	var reviewNo;
+	$(document).on("click", "#replyModifyBtn", function(e){
+		reviewNo = e.target.value;
+		console.log("button click : " + reviewNo);
+		
+		
+		detailReview.reviewget(reviewNo, function(data){ 
+			console.log(data.reviewContent);
+			document.getElementById("reviewcomment").value = data.reviewContent  
+		}); 
+	
+	});
+	
+	/* 등록 */
+	$("#ReviewAddReplyBtn").on("click", function(e){
+		var comment = document.getElementById("reviewcomment").value;
+		console.log("reviewcomment : " + comment);
+		
+		var ReviewVo = {
+				seqno : seqno,
+				memId : id,
+				reviewContent : comment,
+				reviewSeqno : reviewNo
+		}
+		
+		detailReview.reviewadd(ReviewVo, function(result){ 
+			alert(result);
+			document.getElementById("reviewcomment").value = "" 
+			reviewList(currentPage);
+		}); 
+		
+	});
+	
+	/* 삭제 */
+	$(document).on("click", "#replyDeleteBtn", function(e){
+		reviewSeqno = e.target.value;
+		console.log("댓글 삭제 번호 : " + reviewSeqno);
+		
+		detailReview.reviewremove(reviewSeqno, function(result){
+			alert(result);
+			reviewList(currentPage);
 		});
 		
 	});
