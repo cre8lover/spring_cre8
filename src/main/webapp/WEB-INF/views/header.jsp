@@ -11,7 +11,7 @@
 		</div>
 		
 		<c:set value="${sess_id}" var="login" />
-		<div class="dd">
+		<div class="dd" style="z-index: 1;">
 			<c:if test="${login == null}" >
 				<a href="<%= request.getContextPath() %>/buyer/cart">&nbsp;|&nbsp;장바구니</a>
 				<a href="<%= request.getContextPath() %>/mem/memreg">&nbsp;|&nbsp;회원가입</a>

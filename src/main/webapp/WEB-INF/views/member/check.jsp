@@ -326,7 +326,7 @@
                     <br>
                 </div>
                 
-                <input name="check" id="check" type="checkbox" value="Y">개인정보 수집 및 이용에 대한 안내
+                <input name="check" id="check2" type="checkbox" value="Y">개인정보 수집 및 이용에 대한 안내
                 <div style="height: 170px; padding: 20px; overflow-y : auto; width: 98%;box-sizing: border-box;border: 1px solid #ccc;margin: 10px; line-height: 22px;" tabindex="0">
                     <b>가. 개인정보의 수집 및 이용 목적</b>
                     <br>

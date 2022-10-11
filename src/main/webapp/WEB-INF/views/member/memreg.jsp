@@ -88,11 +88,12 @@
         </div> 
 		</div>
 		
-		
 		<div class="rightSideBar"></div>
 	</div>
 </div>
 	<div class="jmh_project">
+</div>
+<div style="height:15vh">
 </div>
 <%@ include file="../footer.jsp" %>
 </body>
