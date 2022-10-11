@@ -17,7 +17,6 @@ import com.cre8.dto.prodelVo;
 
 public interface CreatorService {
 	
-	void Creatoradd(HttpServletRequest request, String id);
 	
 	public List<Creator> Creatorpage();
 	
@@ -60,5 +59,7 @@ public interface CreatorService {
 	int add(Creator cre);
 
 	int aucdel(Auc auc);
+
+	void Creatoradd(Creator cre);
 
 }

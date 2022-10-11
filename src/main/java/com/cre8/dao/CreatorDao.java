@@ -15,7 +15,7 @@ import com.cre8.dto.prodelVo;
 
 public interface CreatorDao {
 
-	public void Creatoradd(HttpServletRequest request, String id);
+	public void Creatoradd(Creator cre);
 	
 	public Mem CreatorName(String id);
 	

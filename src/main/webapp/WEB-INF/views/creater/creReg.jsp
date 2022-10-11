@@ -40,7 +40,7 @@
 			    <tr>
 			      <th>아이디</th>
 			      <td colspan='2'>
-			      	  <input type="text" id="id" name="id" value="${sess_id }" readonly style="background:lightgray; border: 0.1px solid;">
+			      	  <input type="text" id="memid" name="memid" value="${sess_id }" readonly style="background:lightgray; border: 0.1px solid;">
 			      </td>
 			    </tr>
 			    <tr>
@@ -61,14 +61,13 @@
 			      <th rowspan='2'>연락처(택1 필수)</th>
 			      <td>휴대전화</td>
 			      <td>
-	                <input type="text" id="mobile" name="tel" maxlength="16" placeholder="010-1234-5678">
+	                <input type="text" id="crePhone" name="crePhone" maxlength="16" placeholder="010-1234-5678">
 	 			  </td>
 			    </tr>
 			    <tr>
 			      <td>이메일</td>
 			      <td>
 					<input type="text" placeholder="cre8" name="eid">@
-		      		<input type="hidden"  name="Domain">
 		      		<select name="selDomain" >
 		      			<option value="" >선택하세요</option>
 		      			<option value="naver.com" >naver.com</option>
@@ -92,42 +91,42 @@
 			      	상호명
 			      </th>
 			      <td>
-					<input type="text" placeholder="상호명을 입력하세요" name="crecompany">
+					<input type="text" placeholder="상호명을 입력하세요" name="creCompany">
 				  </td>
 			    </tr>
 			    <tr>
 			      <th>연락처</th>
 			      <td>
-				    <input type="text" id="mobile" maxlength="16" placeholder="010-1234-5678" name="cretel">
+				    <input type="text" name="creRegnum" maxlength="16" placeholder="등록번호를 입력하세요" name="cretel">
 				  </td>
 			    </tr>
 			    <tr>
 			      <th>대표자 이름</th>
 			      <td>
-					<input type="text" placeholder="대표자 이름을 입력하세요" name="crename">
+					<input type="text" placeholder="대표자 이름을 입력하세요" name="creName">
 				  </td>
 			    </tr>
 			    <tr>
 			      <th rowspan='2'>주소</th>
 			      <td>
-					<input type="text" id="address_kakao" name="address" readonly placeholder="주소를 입력하세요" name ="creadress">
+					<input type="text" id="address_kakao" name="creAddress" readonly placeholder="주소를 입력하세요" name ="creadress">
 				  </td>
 			    </tr>
 			    <tr>
 			      <td>
-			      	<input type="text" name="address_detail" placeholder="상세주소를 입력하세요" name="creadress2">
+			      	<input type="text" name="creDetail" placeholder="상세주소를 입력하세요" name="creadress2">
 			      </td>
 			    </tr>
 			    <tr>
 			      <th>사업자 등록번호</th>
 			      <td>
-					<input type="text" placeholder="사업자 등록번호를 입력하세요" name ="crenum">
+					<input type="text" placeholder="사업자 등록번호를 입력하세요" name ="creRegnum">
 				  </td>
 			    </tr>
 			    <tr>
 			      <th>통신판매 신고번호</th>
 			      <td>
-					<input type="text" placeholder="통신판매 신고번호" name="crenum2">
+					<input type="text" placeholder="통신판매 신고번호" name="creSalenum">
 				  </td>
 			    </tr>
 			  </tbody>
@@ -156,7 +155,7 @@
 			    <tr>
 			      <th>경력사항 & 포트폴리오</th>
 			      <td>
-				    <textarea name="intro" style="width:100%; height:200px;" rows="5" cols="50" placeholder="경력사항 입력"></textarea>
+				    <textarea name="crePot" style="width:100%; height:200px;" rows="5" cols="50" placeholder="경력사항 입력"></textarea>
 				  </td>
 			    </tr>
 			    <tr>

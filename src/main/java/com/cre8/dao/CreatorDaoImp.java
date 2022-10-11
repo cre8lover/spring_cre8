@@ -48,28 +48,28 @@ public class CreatorDaoImp implements CreatorDao{
 	
 	FileDaoimp filedao = new FileDaoimp();
 	
-	public void Creatoradd(HttpServletRequest request, String id){
+	public void Creatoradd(Creator cre){
 		Connection conn = null;///////////////////////
 		try {
-			String sql = "call p_creatoradd(?,?,?,?,?,?,?,?)";
+			String sql = "call p_creatoradd(?,?,?,?,?,?,?,?,?)";
 		     	  
-		    String str = (request.getParameter("creadress") + request.getParameter("creadress2"));
-		    
 		    conn = ds.getConnection();
 		    cstmt = conn.prepareCall(sql);
-		    cstmt.setString(1, request.getParameter("crecompany"));
-			cstmt.setString(2, request.getParameter("cretel"));
-			cstmt.setString(3, request.getParameter("crename"));
-			cstmt.setString(4, str);
-			cstmt.setString(5, request.getParameter("crenum"));
-			cstmt.setString(6, request.getParameter("crenum2"));
-			cstmt.setString(7, request.getParameter("intro"));
-			cstmt.setString(8, request.getParameter("mem_id"));
+		    cstmt.setString(1, cre.getCreCompany());
+			cstmt.setString(2, cre.getCrePhone());
+			cstmt.setString(3, cre.getCreName());
+			cstmt.setString(4, cre.getCreAddress());
+			cstmt.setString(5, cre.getCreDetail());
+			cstmt.setString(6, cre.getCreRegnum());
+			cstmt.setString(7, cre.getCreSalenum());
+			cstmt.setString(8, cre.getCrePot());
+			cstmt.setString(9, cre.getMemid());
 			cstmt.executeQuery();
-			
-			 sql = "update mem_auth set auth_name ='C' where auth_name='M' and mem_id = ?";
+				
+//			 sql = "update mem_auth set auth_name ='C' where auth_name='M' and mem_id = ?";
+			 sql = "update mem_auth set auth_name ='C' where auth_name='U' and mem_id = ?";
 			 cstmt = conn.prepareCall(sql);
-			 cstmt.setString(1, (String)request.getSession().getAttribute("sess_id"));
+			 cstmt.setString(1, cre.getMemid());
 			 cstmt.executeQuery();
 			
 		 }catch (SQLException e) {
