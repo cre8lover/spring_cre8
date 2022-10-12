@@ -73,12 +73,12 @@ public class CreatorMapperTest {
 //	
 	
 	
-	//일반물품삭제
-	@Test
-	public void testdelete() {
-		int rs = mapper.prodel("38");
-		log.info(Integer.toString(rs));
-	}
+//	//일반물품삭제
+//	@Test
+//	public void testdelete() {
+//		int rs = mapper.prodel("38");
+//		log.info(Integer.toString(rs));
+//	}
 	
 	
 }
