@@ -130,13 +130,8 @@
                <th>
                   SNS정보
                </th>
-               <td>
-               <input type="button" value="sns" onclick="sns()" id='facebook' name="sns">
-               <script>
-                  function sns(){
-                  document.getElementById('facebook').onclick = "<input type="text" name="wow" placeholder="sns주소 입력">"
-                  }
-               </script>
+                <td>
+                <textarea name="snsinfo" style="width:100%; height:20px;" rows="5" cols="50" placeholder="sns정보">${cre.memSnsinfo}</textarea>
               </td>
              </tr>
              <tr>

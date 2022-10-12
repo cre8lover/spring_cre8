@@ -188,8 +188,8 @@ public class CreatorServiceImp implements CreatorService{
 	   }
 	
 	@Override
-	   public Map<String, String> cremodifyreg(HttpServletRequest req) {
-	      return creatorDao.cremodifyreg(req);
+	   public Map<String, String> cremodifyreg(Creator cre) {
+	      return creatorDao.cremodifyreg(cre);
 	   }
 	@Override
 	public int prodel(String seqno) {
