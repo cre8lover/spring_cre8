@@ -66,7 +66,6 @@ public class CreatorDaoImp implements CreatorDao{
 			cstmt.setString(9, cre.getMemid());
 			cstmt.executeQuery();
 				
-//			 sql = "update mem_auth set auth_name ='C' where auth_name='M' and mem_id = ?";
 			 sql = "update mem_auth set auth_name ='C' where auth_name='U' and mem_id = ?";
 			 cstmt = conn.prepareCall(sql);
 			 cstmt.setString(1, cre.getMemid());
