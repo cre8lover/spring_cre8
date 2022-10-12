@@ -2,6 +2,7 @@ package com.cre8.controller;
 
 import javax.servlet.http.HttpServlet;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.cre8.dto.Auc;
 import com.cre8.dto.Auc_Criteria;
 import com.cre8.dto.Auc_Page;
+import com.cre8.dto.Orders;
+import com.cre8.dto.orderadd;
 import com.cre8.service.AuctionServeice;
 import com.cre8.service.AuctionServiceimp;
 
@@ -44,6 +47,7 @@ public class Auctioncontroller{
 		
     	return "/auction/auction";
     }
+    
     @RequestMapping("auctionDetail")
     public String auctionDetail (@ModelAttribute("seqno")String seqno,Model model) {
 		
@@ -66,6 +70,24 @@ public class Auctioncontroller{
 		return "redirect:/auc/auctionDetail";
     	
     }
-
-
+    
+    @RequestMapping("buy")
+    public String buy(Model model,@RequestParam("seqno")String o_seqno,
+    					HttpSession sess) {
+    	List<Orders> prolist = auc.orderlist(o_seqno);
+		if(prolist != null) {
+		model.addAttribute("cartp", prolist);
+		}
+		return "/buy/buy" ;
+    	
+    }
+    
+    @RequestMapping("order")
+    public void order(orderadd orderadd,HttpServletResponse resp,HttpSession sess) throws IOException {
+		orderadd.setId((String) sess.getAttribute("sess_id"));
+		int rs = auc.orderand(orderadd);
+        String seqno = String.valueOf(rs);
+        PrintWriter out = resp.getWriter();
+        out.print(seqno);
+	}
 }

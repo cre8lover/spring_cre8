@@ -36,9 +36,64 @@ public class QnaVo implements Serializable {
 	private Review reviewSet;
 	private String check;
 	private Att att;
+	private String answerSeqno;
+	private String answerContent;
+	private String answermemId;
+	private String answerDate;
+	
 	public QnaVo() {
 
 	}
+
+	
+	
+	public String getAnswerSeqno() {
+		return answerSeqno;
+	}
+
+
+
+	public void setAnswerSeqno(String answerSeqno) {
+		this.answerSeqno = answerSeqno;
+	}
+
+
+
+	public String getAnswerContent() {
+		return answerContent;
+	}
+
+
+
+	public void setAnswerContent(String answerContent) {
+		this.answerContent = answerContent;
+	}
+
+
+
+	public String getAnswermemId() {
+		return answermemId;
+	}
+
+
+
+	public void setAnswermemId(String answermemId) {
+		this.answermemId = answermemId;
+	}
+
+
+
+	public String getAnswerDate() {
+		return answerDate;
+	}
+
+
+
+	public void setAnswerDate(String answerDate) {
+		this.answerDate = answerDate;
+	}
+
+
 
 	public int getSeqno() {
 		return seqno;

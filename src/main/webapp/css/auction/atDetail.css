@@ -11,6 +11,10 @@ p {
 tr td {
 	border:1px solid;
 }   */
+
+a{
+cursor: pointer;
+}
  
 .jmh_table {
 	margin:auto;

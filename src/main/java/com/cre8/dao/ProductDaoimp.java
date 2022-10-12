@@ -66,7 +66,7 @@ public class ProductDaoimp implements ProductDao{
 		}
 		
 		stmt.close();	
-
+		conn.close();
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}
@@ -163,6 +163,8 @@ public class ProductDaoimp implements ProductDao{
 			
 			
 		//	qna.setReplySet(reply_arr);
+			stmt.close();
+			conn.close();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

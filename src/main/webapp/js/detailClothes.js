@@ -92,13 +92,34 @@
 			}
 		});
 	}
- 
+	
+ 	function answer(AnswerVo, callback){
+		console.log("AnswerVo add...")		
+	
+		$.ajax({
+			type : 'post',
+			url  : '/product/answer',
+			data : JSON.stringify(AnswerVo),
+			contentType : "application/json; charset=utf-8", 
+			success : function(result, status, xhr){
+				if(callback){
+					callback(result);
+				}	
+			},
+			error : function(xhr, status, er){
+				if(er){
+					error(er)
+				}
+			}
+		});
+	}  
  	return {
  			getList : getList,
  			add : add,
  			get : get,
  			update : update,
- 			remove : remove
+ 			remove : remove,
+ 			answer : answer
  			};
  
  })();

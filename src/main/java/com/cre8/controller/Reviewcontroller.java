@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.cre8.dto.AdminKeyWord;
 import com.cre8.dto.QnaVo;
+import com.cre8.dto.ReviewDTO;
 import com.cre8.dto.ReviewVo;
 import com.cre8.service.ProService;
 
@@ -31,12 +33,16 @@ public class Reviewcontroller extends HttpServlet {
 
     @RequestMapping(value="{seqno}/{page}.*",
 					produces="application/json; charset=utf-8")
-	public ResponseEntity<List<ReviewVo>> qnaList(@PathVariable("seqno") String seqno) {
+	public ResponseEntity<ReviewDTO> qnaList(@PathVariable("page") int page,
+												AdminKeyWord adkey,
+												@PathVariable("seqno") int seqno) {
 	
     	log.info(" 리스트 출력 컨트롤러.......................................");
-	
+    	adkey = new AdminKeyWord(page, 5);
+
+ //   	log.info("cnt : " + pro.ReviewList(adkey, seqno).getcnt());
     	
-		return new ResponseEntity<List<ReviewVo>>(pro.ReviewList(seqno), HttpStatus.OK);
+    	return new ResponseEntity<ReviewDTO>(pro.ReviewList(adkey, seqno), HttpStatus.OK);
 	}
     
     @PostMapping(value="reviewadd", 

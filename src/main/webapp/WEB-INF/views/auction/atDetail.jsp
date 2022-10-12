@@ -10,6 +10,12 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
 </head>
 <body>
 <div>
@@ -33,9 +39,10 @@
 
 		<tr>
 			<td class="jmh_saleprice" >
-				<span style="font-size:20px;"><strike>시작가 : &nbsp; ${detail.aucPrice }원</strike></span>
+				<span style="font-size:20px;"><strike>시작가 : &nbsp; <fmt:formatNumber value="${detail.aucPrice }" pattern="#,###"/>원</strike></span>
 			</td>
-			<td class="jmh_saleprice">  <span style="font-size:20px;"><b> 현재가 : &nbsp; ${detail.aucCloseprice }원 </b></span></td>
+			  
+			<td class="jmh_saleprice">  <span style="font-size:20px;"><b> 현재가 : &nbsp; <fmt:formatNumber value="${detail.aucCloseprice }" pattern="#,###"/>원 </b></span></td>
 		</tr>
 
 
@@ -48,7 +55,9 @@
 			<td colspan="2">
 				
 			<div class="slidecontainer">
-		 	 <input type="range" min="${detail.aucCloseprice + 1000}" max="${detail.aucCloseprice *10}" value="${detail.aucCloseprice }"step="1000" class="slider" id="myRange">
+			
+		 	 <input type="range" min="${detail.aucCloseprice + 1000}" max="${detail.aucCloseprice *10}" value="${detail.aucCloseprice }" step="1000" class="slider" id="myRange">
+<%-- 		 	 <input type="range" min="${detail.aucCloseprice + 1000}" max="${detail.aucCloseprice *10}" value="${detail.aucCloseprice }" step="1000" class="slider" id="myRange"> --%>
 		 	 
 			</div>
 			</td>
@@ -170,13 +179,71 @@
 
  <c:set value="${detail.aucNowingSet}" var="aucn"/>
 <c:forEach items="${aucn}" var="aucnow" varStatus="i">
-
 <c:if test="${i.first}">
 	<input type="hidden" id="bestmoney" value="${aucnow.mem.memId }">
 </c:if>
-
 </c:forEach>
+	<input type="hidden" id="logingid" value="${sess_id }">
+	<input type="hidden" id="logingname" value="${sess_name}">
+	<input type="hidden" id="aucAmount" value="${detail.aucAmount}">
+	<input type="hidden" id="aucprice" value="${detail.aucCloseprice }">
+	
 
+<div class="auctionbuymain">
+	<div class="auctionbuy">
+		<button class="closeBtn"style="float:right;">닫기</button>
+		<h3> 배송지를 작성해주세요.</h3>
+			<hr>
+			<div class="buyer">
+				<form style="width:76%"> 
+					<h2>구매자 정보</h2>
+					<div class="buy">
+						<a style="padding-right: 16px;"> 구매자 </a>
+						<input type="text" id="name" value="강홍묵"> 
+					</div>
+					<div class = "address">
+						<a style="padding-right: 32px;"> 주소 </a>
+						<input type="text" class="address" id="address_kakao" name="address" readonly placeholder="기본 주소" />
+					    <input type="text" class="address" id="address_kakao_back"name="address_detail" placeholder="상세 주소 및 상세 건물명"/>
+					</div>
+					<div>
+						<a> 전화번호 </a>
+						<input type="hidden" id="phonnumber">
+							<select name="ssecession"  onchange="goSearch();" style="width: 6%; height: 31px;" >
+								<option value="010">010</option>
+								<option value="011">011</option>
+								<option value="016">016</option>
+							</select>
+						<input type="text" id="phon_front" placeholder="휴대폰 앞자리">
+						<input type="text" id="phon_back" placeholder="휴대폰 뒷자리">
+					</div>
+					<div>
+						<a>요청사항</a>
+						<select name="choice"  onchange="" style="width: 35%; height: 31px;">
+							<option value="">배송시 요청사항</option>	
+							<option value="문 앞에 놓아주세요">문 앞에 놓아주세요</option>
+							<option value="경비실에 맡겨주세요">경비실에 맡겨주세요</option>
+							<option value="배송 전 휴대폰으로 연락주세요">배송 전 휴대폰으로 연락주세요</option>							
+							<option value="파손위험이 있는 상품이니 조심히 다뤄주세">파손위험이 있는 상품이니 조심히 다뤄주세</option>							
+							<option value="">직접입력</option>							
+						</select>
+					</div>
+					<input type='button' class="bton aucbuyBtn" value="구매하기">
+				</form>
+			</div>
+	</div>
+</div>
+
+<style>
+.auctionbuymain {
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 60%;
+}
+</style>
 
 
 
@@ -185,16 +252,37 @@
 <script src="<%= request.getContextPath() %>/js/atDetail.js"></script>
 
 <script>
+
+
+
+window.onload = function(){
+    document.getElementById("address_kakao").addEventListener("click", function(){ //주소입력칸을 클릭하면
+        //카카오 지도 발생
+        new daum.Postcode({
+            oncomplete: function(data) { //선택시 입력값 세팅
+                document.getElementById("address_kakao").value = data.address; // 주소 넣기
+                document.querySelector("input[name=address_detail]").focus(); //상세입력 포커싱
+            }
+        }).open();
+    });
+}
+
+
+
+	
+
+	
+
 $(document).on("click",".Btnaucnow" ,function(){ 
 	
 		var seqno = '<c:out value="${detail.aucSeqno}"/>'
-		var id = "<c:out value='${sess_id}'/>"
 		var bestid = document.getElementById("bestmoney");
-		
-		console.log(money.value);
+		var id = "<c:out value='${sess_id}'/>"
+
+		/* console.log(money.value);
 		console.log(seqno);
 		console.log(bestid);
-		console.log(id);
+		console.log(id); */
 		
 		if(id == ""){
 			alert('로그인후 이용하세요');
@@ -222,8 +310,7 @@ $(document).on("click",".Btnaucnow" ,function(){
 });
 
 $(document).ready(function(){
-
-	var click;
+	$(".auctionbuymain").hide();
 	
 	var currentPage = 1;
 	showList(1);
@@ -236,6 +323,9 @@ $(document).ready(function(){
 			
 			var str="";
 			for(var i = 0, len=list.length || 0; i < len; i++){
+				var listnumber = list[i].aucnowLastprice;
+				listnumber = Number(listnumber.replaceAll(',', ''));
+				listnumber = listnumber.toLocaleString('ko-KR');
 		/* 			str +=	"<div class='memberlist'>"
 					str +=	"<section class='memberlist_users'>";
 					str +=	"<div class='memberlist_users_container'>";
@@ -261,7 +351,8 @@ $(document).ready(function(){
 					str +=	"<span class='memberlist-item_userinfo-sep'></span>";
 					str +=	"<div class='memberlist-item_userinfo-item'>";
 					str +=	"	<span><h4>입찰가격</h4></span>";
-					str +=		"<span>"+list[i].aucnowLastprice+"원</span>";
+					str +=		"<span>"+listnumber+"원</span>";
+/* 					str +=		"<span>"+list[i].aucnowLastprice+"원</span>"; */
 					str +=	"</div>";
 					str +=	"		</div>";
 					str +=	"		</div>";
@@ -272,6 +363,7 @@ $(document).ready(function(){
 			}
 			/* console.log(str); */
 			$("#auc_price").html(str);
+			
 			showReplyPage(replyCnt);
 		});
 	}
@@ -302,8 +394,8 @@ $(document).ready(function(){
 		
 		for (var i=startPage; i <= endPage; i++){
 			var active = currentPage == i ? "active" : "";
-			str += "<li class='page-link " + active + "'>";
-			str += "<a href='" +i+ "'>" +i+ "</a></li>";
+			str += "<li class='page-link '>";
+			str += "<a href='" +i+ "'class= '" + active + "'>" +i+ "</a></li>";
 		}
 		if (next){
 			str += "<li class='page-link'>";
@@ -313,6 +405,7 @@ $(document).ready(function(){
 		str += "</ul>";
 		/* console.log(str); */
 		$("#pagelink").html(str);
+		
 		
 	}
 	
@@ -324,7 +417,6 @@ $(document).ready(function(){
 		console.log("currentPage : " + clickPage);
 		currentPage = clickPage;
 		showList(currentPage);
-		click = $(this).toggleClass('active');
 	});
 	
 });

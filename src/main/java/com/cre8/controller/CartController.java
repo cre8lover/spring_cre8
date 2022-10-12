@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cre8.dto.Cart;
 import com.cre8.dto.CartlistVO;
 import com.cre8.service.CartService;
 
@@ -43,8 +44,17 @@ public class CartController {
 						MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<List<CartlistVO>> getList(@PathVariable("id") String id){
 		log.info("getList........");
-	
 	return new ResponseEntity<>(cs.getList(id),HttpStatus.OK) ;
 }
+	
+	
+	@GetMapping(value="update/{cartSeqno}/{cartAmount}",
+			produces = {"text/plain; charset=utf-8"})
+	public ResponseEntity<String> cartamountmodify(Cart cart) {
+		log.info("cartamountmodify............");
+		return cs.amountmodify(cart) > 0 ? new ResponseEntity<String>("장바구니 수량 수정완료", HttpStatus.OK) :
+											new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		
+	}
 	
 }	

@@ -39,12 +39,15 @@
                     <h3 class="product-name">
                         <p><b>${list.item.itemDetail }</b></p>
                     </h3>
+                    
                     <p class="product-info">
-                        <p>총 판매량 : ${list.proAmount } </p>
-                    </p>        
+                        <p>재고 : ${list.proAmount } </p>
+                    </p>
+                            
                     <p class="product-price">
                         <p>총 판매금액 : ${list.proSaleprice }
                     </p>
+                    
                     <div style="text-align: center;">
                       <button class="custom-btn btn-1 cn1"  onclick = "newwindow('<%= request.getContextPath() %>/cre/product_registration?seqno=${list.proSeqno}','modify');" >수정</button>
                   <%-- <button class="custom-btn btn-1" id="cn2" onclick = "prodelete('${list.proSeqno}')">삭제</button> --%>
@@ -95,11 +98,19 @@
                     </h3>
                     <p class="product-info">
                         <p>시작 금액 : ${list.aucPrice } </p>
-                    </p>        
+                    </p>
+                    <c:if test="${list.aucStat != 'END'}">        
                     <p class="product-price">
                         <p>현재 입찰가 : ${list.aucCloseprice }
                     </p>
-
+                    </c:if>
+					 <c:if test="${list.aucStat eq 'END'}">
+                    <p class="product-price">
+                        <p>낙찰가 : ${list.aucCloseprice }
+                    </p>
+                     </c:if>
+					
+					
                     
                     <div style="text-align: center;">
                        <c:if test="${list.aucStat eq 'WAIT'}">
@@ -108,6 +119,9 @@
                      </c:if>
                      <c:if test="${list.aucStat eq 'AUC_ING'}">
                      <button class="custom-btn btn-1" onclick = "location.href='<%= request.getContextPath() %>/auc/auctionDetail?seqno=${list.aucSeqno}'">진행중</button>
+                     </c:if>
+                     <c:if test="${list.aucStat eq 'END'}">
+                     <button class="custom-btn btn-1" >종료물품</button>
                      </c:if>
                   </div>
                 </div>
@@ -142,6 +156,8 @@
 	<script>
 
 	$(document).ready(function(){
+		
+		
 		$(".aucdelBtn").on("click",function(e){
 			var aucseqno = $(this).data("aucseqno");
 			var itemseqno = $(this).data("itemseqno");

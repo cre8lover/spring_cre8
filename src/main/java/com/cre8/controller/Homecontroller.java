@@ -20,12 +20,11 @@ public class Homecontroller{
 	@Autowired 
 	ProService pro;
 	
-	
-	
 	@GetMapping("/")
 	public String home(Model model) {
 		Auc_Criteria ac = new Auc_Criteria();
-		ac.setCategory("6");
+		int random = (int) Math.floor((Math.random()*5)+1);
+		ac.setCategory(""+random);
 		List<Pro> prolist = pro.proList_clothes(ac); 
 		model.addAttribute("proList", prolist);
 		

@@ -158,6 +158,9 @@
         			<td>
 						삭제
         			</td>
+        			<td>
+						답변
+        			</td>
         		</tr>
         	</thead>
         	<tbody id="QnAList">
@@ -203,7 +206,9 @@
 	
 	</div>
 </div>
-
+	<div id="page" style="text-align: center;">
+	
+	</div>
       </main>
     </section>
    
@@ -343,10 +348,10 @@ var product = (function(){
 $(document).ready(function(){
 var seqno = '<c:out value="${detailList.getProSeqno()}"/>'
 var id = '<c:out value="${detailList.mem.memId}"/>'
+var QnaNo;
 
 	console.log("detail.jsp");
 	console.log("시퀀스 번호 : " + seqno);
-
 showList(1);	
 	function showList(page){
 		detailQnA.getList({seqno: seqno, page : page || 1}, function(list){
@@ -356,23 +361,67 @@ showList(1);
 		
 			 for(var i=0, len=list.length || 0; i <len; i++){
 //				console.log("시퀀스 : " + list[i].qnaSeqno);
-				str +=	"<tr>"
-				str +=		"<td class='qna_seqno' id='qna' name='seqno' value='"+ list[i].qnaSeqno +"'>"+ list[i].qnaSeqno +"</td>"
+				str +=	"<tr class='qna' id='"+i+"'>"
+				str +=		"<td class='qna_seqno' value='"+ list[i].qnaSeqno +"'>"+ list[i].qnaSeqno +"</td>"
 				str +=		"<td colspan='2'>"+ list[i].qnaContent +"</td>"
 				str +=		"<td>"+ list[i].memId +"</td>"
 				str +=		"<td>"+ list[i].qnaDate +"</td>"
 				str +=      "<td><button class='change' name='type' value='" + list[i].qnaSeqno + "'>수정</button> </td>"
 				str +=      "<td><button class='delete' name='type' value='" + list[i].qnaSeqno + "'>삭제</button> </td>"
+				str +=      "<td><button class='enswer' name='type' id='"+i+"'>답변</button> </td>"
 				str +=	"</tr>"
+				if(list[i].answerSeqno != null){
+					str += "<tr>"
+					str +=		"<td> → </td>"
+					str +=		"<td colspan='2'>"+ list[i].answerContent +"</td>"
+					str +=		"<td>"+ list[i].answermemId +"</td>"
+					str +=		"<td>"+ list[i].answerDate +"</td>"
+					str +=      "<td><button class='answerchange' name='type' value='" + list[i].answerSeqno + "'>수정</button> </td>"
+					str +=      "<td><button class='answerdelete' name='type' value='" + list[i].answerSeqno + "'>삭제</button> </td>"
+					str += "</tr>"
+				}
+				str +=	"<tr name='what' class='panel"+i+"' style='display:none'>"
+				str +=  	"<td colspan='7'> <textarea id='answer' name='answer' style='width:100%; height:60px;' rows='5' cols='50' placeholder='답변을 입력하세요'></textarea>"
+				str += 		"<button class='qna_enswer' value='" + list[i].qnaSeqno + "'>등록</button> </td>"
+				str +=	"</tr>"
+				
 			}	 
 			
 			 $("#QnAList").html(str);
 		});
 		
 	}
+
 	
+	$(document).on("click", ".enswer", function(e){
+		
+		console.log(QnaNo);
+//		console.log($(this).attr('id'));
+		e.preventDefault();
+        $('.panel'+$(this).attr('id')).toggle();
+    });
 	
-	var QnaNo;
+	$(document).on("click", ".qna_enswer", function(e){
+		var answer = $(this).siblings("textarea[name='answer']").val();
+		console.log(answer);
+		QnaNo = e.target.value;
+//		console.log("ㅇㅇㅇ"+QnaNo);
+//		var answer = document.getElementById("answer").value;
+//		var answer = $("textarea[name='answer']").val();
+		
+		var AnswerVo = {
+				memId : id,
+				answerContent : answer,
+				qnaSeqno : QnaNo
+		}
+		
+		detailQnA.answer(AnswerVo, function(data){
+			document.getElementById("answer").value = ""
+			showList(1);
+		});
+	});
+	
+
 	$(document).on("click", ".change", function(e){
 		QnaNo = e.target.value;
 		console.log("button click : " + QnaNo);
@@ -424,12 +473,15 @@ var seqno = '<c:out value="${detailList.getProSeqno()}"/>'
 var id = '<c:out value="${detailList.mem.memId}"/>'
 
 	console.log("review 시퀀스 번호 : " + seqno);
+	
 
 	reviewList(1);	
+	
+	var currentPage = 1;
 	function reviewList(page){
-		detailReview.reviewList({seqno: seqno, page : page || 1}, function(list){
+		detailReview.reviewList({seqno: seqno, page : page || 1}, function(cnt, list){
 			console.log("review list");
-			
+			console.log("cnt : " + cnt)
 			var str = "";
 		
 			 for(var i=0, len=list.length || 0; i <len; i++){
@@ -459,15 +511,69 @@ str +=				  "</div>"
 			}	 
 			
 			 $("#reviewList").html(str);
+			 
+			 showReplyPage(cnt, currentPage);
 		});
 		
 	}
+	
+	/* 댓글 페이지 리스트 출력 */
+	function showReplyPage(cnt){
+		
+//		var currentPage = 1;
+		
+		var endPage = Math.ceil(currentPage/5.0)*5;
+		var startPage = endPage - 4;
+		console.log("endNum : " + endPage);
+		
+		var prev = startPage != 1;
+		var next = false;
+		
+		if(endPage*5 >= cnt){
+			endPage = Math.ceil(cnt/5.0);
+		}
+		if(endPage*5 < cnt){
+			next = true;
+		}
+		
+		var str = "<ul class='pageUL'>"
+		if(prev){
+			str += "<li class='page-link'>";
+			str += "<a href='" + (startPage - 1) + "'> 이전페이지 </a></li>";
+		}
+		
+		for(var i=startPage; i <= endPage; i++){
+			var active = currentPage == i ? "active" : "";
+			str += "<li class = 'page-link " + active + "'>"; //띄어쓰기 주의
+			str += "<a href='" + i + "'>" + i + "</a></li>";
+		}
+		
+		if(next){
+			str += "<li class='page-link'>";
+			str += "<a href='" + (endPage+1) + "'> 다음페이지 </a></li>";
+		}
+		
+		str += "</ul>"
+		console.log(str);
+		$("#page").html(str);
+	}
+	
+	$("#page").on("click","a", function(e){
+		console.log("page click...!!!!");
+		e.preventDefault();
+		
+		var clickPage = $(this).attr("href")
+		console.log("currentPage : " + clickPage);
+		currentPage = clickPage;
+		reviewList(currentPage);
+	});
 	
 	/* 수정 */
 	var reviewNo;
 	$(document).on("click", "#replyModifyBtn", function(e){
 		reviewNo = e.target.value;
 		console.log("button click : " + reviewNo);
+		
 		
 		detailReview.reviewget(reviewNo, function(data){ 
 			console.log(data.reviewContent);
@@ -491,7 +597,7 @@ str +=				  "</div>"
 		detailReview.reviewadd(ReviewVo, function(result){ 
 			alert(result);
 			document.getElementById("reviewcomment").value = "" 
-			reviewList(1);
+			reviewList(currentPage);
 		}); 
 		
 	});
@@ -503,7 +609,7 @@ str +=				  "</div>"
 		
 		detailReview.reviewremove(reviewSeqno, function(result){
 			alert(result);
-			reviewList(1);
+			reviewList(currentPage);
 		});
 		
 	});
