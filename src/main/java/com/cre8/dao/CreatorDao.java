@@ -25,7 +25,7 @@ public interface CreatorDao {
 	
 	public List<Creator> Creatorpage();
 	
-	public Map<String, String> cremodifyreg(HttpServletRequest req);
+	public Map<String, String> cremodifyreg(Creator cre);
 	
 	public List<Pro> salesHistory(String id);
 	

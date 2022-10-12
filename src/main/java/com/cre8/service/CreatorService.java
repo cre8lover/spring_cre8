@@ -46,7 +46,7 @@ public interface CreatorService {
 
 	String productadd(Pro pro,MultipartFile filename, String string);
 
-	Map<String, String> cremodifyreg(HttpServletRequest req);
+	Map<String, String> cremodifyreg(Creator cre);
 
 	String aucadd(MultipartFile filename, Auc auc);
 
@@ -61,5 +61,6 @@ public interface CreatorService {
 	int aucdel(Auc auc);
 
 	void Creatoradd(Creator cre);
+
 
 }
