@@ -55,11 +55,11 @@
 						<td class="jmh_buyprice">수량</td>
 					    <td class="jmh_buyprice">
 					      <div class="qty">					
-					        <div class="minus"><button onclick="javascript:change_qty2('m')" style="width:27px; height:27px; border: none;">▼</div>
+					        <div class="minus"><button onclick="javascript:change_qty2('m')" style="text-decoration: none; width:27px; height:27px; border: none;">▼</div>
 					
 					        <input type="text" name="ct_qty" id="ct_qty" value="1" readonly="readonly">
 					
-					        <div class="plus"><button onclick="javascript:change_qty2('p')" style="width:27px; height:27px; border: none;">▲</div>
+					        <div class="plus"><button onclick="javascript:change_qty2('p')" style="text-decoration: none; width:27px; height:27px; border: none;">▲</div>
 					      </div>
 					     <%--  <div>재고수량 : ${detailList.proAmount} 개</div>	 --%>
 					    </td>
@@ -136,7 +136,7 @@
     <section id="panel-2">
        <main>
         <h2>Q&A</h2>
-        <button id='addReplyBtn'>댓글등록</button>
+
         <table class="khm_table" id="qnatable">
         	<thead>
         		<tr>
@@ -168,6 +168,7 @@
         </table>
         <div id ='replyInput'>
 			<textarea id='comment' name='comment' style='width:100%; height:60px;' rows='5' cols='50' placeholder='댓글을 입력하세요'></textarea>
+		        <button id='addReplyBtn'>댓글등록</button>
 		</div>
       </main>
     </section>
@@ -372,7 +373,7 @@ showList(1);
 				str +=	"</tr>"
 				if(list[i].answerSeqno != null){
 					str += "<tr>"
-					str +=		"<td> → </td>"
+					str +=		"<td> &nbsp;&nbsp;&nbsp;↳ </td>"
 					str +=		"<td colspan='2'>"+ list[i].answerContent +"</td>"
 					str +=		"<td>"+ list[i].answermemId +"</td>"
 					str +=		"<td>"+ list[i].answerDate +"</td>"
