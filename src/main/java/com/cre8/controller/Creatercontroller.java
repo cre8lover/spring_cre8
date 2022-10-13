@@ -90,7 +90,7 @@ public class Creatercontroller {
 	public String Creatorpage(Creator cre, HttpSession sess, Model model) {
 
 		String id = (String) sess.getAttribute("sess_id");
-
+		sess.setAttribute("auth", "C");
 //		model.addAttribute("id", id);
 		cre.setMemid(id);
 		cs.Creatoradd(cre);

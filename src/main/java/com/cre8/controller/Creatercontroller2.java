@@ -4,6 +4,8 @@ package com.cre8.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +45,8 @@ public class Creatercontroller2 {
 	@PostMapping(value = "add",
 				 consumes = "application/json",
 				 produces = "text/plain; charset=utf-8")
-	public ResponseEntity<String> create(@RequestBody Creator cre){
-		log.info("등록이 되었나요" + cre);
+	public ResponseEntity<String> create(@RequestBody Creator cre, HttpSession sess){
+		sess.setAttribute("auth", "C");
 		int rs = cs.add(cre);
 		return rs == 1 ? new ResponseEntity<>("등록이 완료되었습니다", HttpStatus.OK)
 					: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -68,7 +70,6 @@ public class Creatercontroller2 {
 					value = "ccc",
 					produces = "text/plain; charset=utf-8")
 	public ResponseEntity<String> modify(@RequestBody Creator c){
-		log.info("ㅁㄹㅇㅁㄴㄹㄴㅇㄹ : " + c.getCreCompany());
 	return cs.infomodify(c) == 1 ? new ResponseEntity<>("크리에이터 수정완료",HttpStatus.OK) :
 									   new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
