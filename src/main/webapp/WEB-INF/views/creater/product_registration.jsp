@@ -116,7 +116,7 @@
             <div class='col-md-8'>
               <div class='col-md-3'>
                 <div class='form-group internal input-group'>
-                  <input class='form-control datepicker' id='id_checkin' name="proOpendate" value="${pro.proOpendate }">
+                  <input class='form-control datepicker' id='id_checkin' type="date" name="proOpendate" value="${pro.proOpendate }">
                   <span class='input-group-addon'>
                     <i class='glyphicon glyphicon-calendar'></i>
                   </span>
@@ -125,7 +125,7 @@
               <label class='control-label col-md-2' >판매종료</label>
               <div class='col-md-3'>
                 <div class='form-group internal input-group'>
-                  <input class='form-control datepicker' id='id_checkout' name="proClosedate"value="${pro.proClosedate }">
+                  <input class='form-control datepicker' id='id_checkout' type="date" name="proClosedate"value="${pro.proClosedate }">
                   <span class='input-group-addon'>
                     <i class='glyphicon glyphicon-calendar'></i>
                   </span>

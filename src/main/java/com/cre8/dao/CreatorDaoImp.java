@@ -66,7 +66,6 @@ public class CreatorDaoImp implements CreatorDao{
 			cstmt.setString(9, cre.getMemid());
 			cstmt.executeQuery();
 				
-//			 sql = "update mem_auth set auth_name ='C' where auth_name='M' and mem_id = ?";
 			 sql = "update mem_auth set auth_name ='C' where auth_name='U' and mem_id = ?";
 			 cstmt = conn.prepareCall(sql);
 			 cstmt.setString(1, cre.getMemid());
@@ -217,53 +216,54 @@ public class CreatorDaoImp implements CreatorDao{
 		}
 		
 	
-	public Map<String, String> cremodifyreg(HttpServletRequest req) {
+	public Map<String, String> cremodifyreg(Creator cre) {
 		Connection conn = null;///////////////////////  
 		
 	      Map<String, String> cremodi = new HashMap<>();
 	      
-	      String MEM_ID = req.getParameter("id");
-	      String MEM_PW = req.getParameter("pw");
-	      String MEM_TEL = req.getParameter("mobile");
-	      String MEM_EMAIL = req.getParameter("emailfirst")+"@"+req.getParameter("selDomain");
-	      String MEM_SNSINFO = req.getParameter("sns");
-	      String CRE_COMPANY = req.getParameter("cre_company");
-	      String CRE_PHONE = req.getParameter("cre_phone");
-	      String CRE_NAME = req.getParameter("cre_name");
-	      String CRE_ADDRESS = req.getParameter("address") + req.getParameter("address_detail");
-	      String CRE_REGNUM = req.getParameter("cre_regnum");
-	      String CRE_SALENUM = req.getParameter("cre_salenum");
-	      String CRE_POT = req.getParameter("intro");
-	      
+//	      String MEM_ID = req.getParameter("id");
+//	      String MEM_PW = req.getParameter("pw");
+//	      String MEM_TEL = req.getParameter("mobile");
+//	      String MEM_EMAIL = req.getParameter("emailfirst")+"@"+req.getParameter("selDomain");
+//	      String MEM_SNSINFO = req.getParameter("sns");
+//	      String CRE_COMPANY = req.getParameter("cre_company");
+//	      String CRE_PHONE = req.getParameter("cre_phone");
+//	      String CRE_NAME = req.getParameter("cre_name");
+//	      String CRE_ADDRESS = req.getParameter("address") + req.getParameter("address_detail");
+//	      String CRE_REGNUM = req.getParameter("cre_regnum");
+//	      String CRE_SALENUM = req.getParameter("cre_salenum");
+//	      String CRE_POT = req.getParameter("intro");
+//	      
 
 	      String sql = "select mem_id,mem_pw from mem where mem_id = ?";
 	      
 	      try {
-	    	  conn = ds.getConnection();////////////////////
+	    	  conn = ds.getConnection();
+	    	  
 	         stmt = conn.prepareStatement(sql);
-	         stmt.setString(1, MEM_ID);
+	         stmt.setString(1, cre.getMemid());
 	         ResultSet rs = stmt.executeQuery();
 	         
 	         if(rs.next()) {
-	            if(MEM_PW.equals(rs.getString("mem_pw"))){
+	            if(cre.getMem().getMemPw().equals(rs.getString("mem_pw"))){
 	               
 	            	sql = "call p_cremodifyreg (?,?,?,?,?,?,?,?,?,?,?,?)";
 	               
 	               cstmt = conn.prepareCall(sql);
-	               stmt.setString(1, MEM_ID);
-	               stmt.setString(2, MEM_PW);
-	               stmt.setString(3, MEM_TEL);
-	               stmt.setString(4, MEM_EMAIL);
-	               stmt.setString(5, MEM_SNSINFO);
+	               cstmt.setString(1, cre.getMemid());
+	               cstmt.setString(2, cre.getMem().getMemPw());
+	               cstmt.setString(3, cre.getMem().getMemTel());
+	               cstmt.setString(4, cre.getMem().getMemEmail());
+	               cstmt.setString(5, cre.getMem().getMemSnsinfo());
 	               
-	               stmt.setString(6, CRE_COMPANY);
-	               stmt.setString(7, CRE_PHONE);
-	               stmt.setString(8, CRE_NAME);
-	               stmt.setString(9, CRE_ADDRESS);
-	               stmt.setString(10, CRE_REGNUM);
-	               stmt.setString(11, CRE_SALENUM);
-	               stmt.setString(12, CRE_POT);
-	               stmt.executeQuery();
+	               cstmt.setString(6, cre.getCreCompany());
+	               cstmt.setString(7, cre.getCrePhone());
+	               cstmt.setString(8, cre.getCreName());
+	               cstmt.setString(9, cre.getCreAddress());
+	               cstmt.setString(10, cre.getCreRegnum());
+	               cstmt.setString(11, cre.getCreSalenum());
+	               cstmt.setString(12, cre.getCrePot());
+	               cstmt.executeQuery();
 	               
 	               cremodi.put("msg", "ok");
 	            }else {
@@ -458,7 +458,7 @@ public class CreatorDaoImp implements CreatorDao{
 	      return auclist;
 	   }
 	
-	public Creator infomodify(String id) {
+	public Creator infomodify(Creator c) {
 		Connection conn = null;///////////////////////
 	      Mem mem = new Mem();
 	      Creator cre = new Creator();
@@ -1456,10 +1456,4 @@ public String totalmoney(String id) {
 			return null;
 		}
 
-
-		@Override
-		public Creator infomodify(Creator c) {
-			// TODO Auto-generated method stub
-			return null;
-		}	
 }	
