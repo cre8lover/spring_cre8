@@ -83,7 +83,7 @@
              <tr>
                <th>연락처</th>
                <td>
-                <input type="text" id="mobile" maxlength="16" placeholder="010-1234-5678" value="${cre.crePhone != null ? cre.crePhone : "" }" name="cre_phone">
+                <input type="text" id="crePhone" maxlength="16" placeholder="010-1234-5678" value="${cre.crePhone != null ? cre.crePhone : "" }" name="cre_phone">
               </td>
              </tr>
              <tr>
