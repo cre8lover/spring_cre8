@@ -37,7 +37,7 @@
              <tr>
                <th>비밀번호</th>
                <td colspan='2'>
-                    <input type="password" id="pw" name="pw" placeholder="비밀번호를 입력하세요">
+                    <input type="password" id="pw" name="pw" placeholder="비밀번호를 입력하세요"><a style="color:red">*회원정보와 동일한 비밀번호를 넣으세요</a>
                </td>
              </tr>
              <tr>
