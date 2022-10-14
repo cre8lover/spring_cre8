@@ -18,9 +18,18 @@ public class Creator implements Serializable {
 	private Artdetail artdetailSet;
 	private Att attSet;
 	private String memid;
+	private String savefilename;
 	
 	public String getMemid() {
 		return memid;
+	}
+
+	public String getSavefilename() {
+		return savefilename;
+	}
+
+	public void setSavefilename(String savefilename) {
+		this.savefilename = savefilename;
 	}
 
 	public void setMemid(String memid) {

@@ -59,7 +59,8 @@
          
          
          <div class="info2">
-            <img class="" src="<%= request.getContextPath() %>/img/user.png" style="height:150px; width:150px; border-radidus:50%;">
+            <%-- <img class="" src="<%= request.getContextPath() %>/img/user.png" style="height:150px; width:150px; border-radidus:50%;"> --%>
+             <img class="" src="/upload/thumbnail/${list.savefilename}" style="height:150px; width:150px; border-radidus:50%;">
             <p class= name2><b>${sess_name}&nbsp;</b>님</p>
             <div class="proreg cn4">
            		 <a href ="javascript:newwindow('<%= request.getContextPath() %>/cre/product_registration','add');">등록</a>

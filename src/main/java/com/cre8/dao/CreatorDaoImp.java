@@ -165,12 +165,15 @@ public class CreatorDaoImp implements CreatorDao{
 		Creator c = new Creator();
 		List<Creator>cre = new ArrayList<Creator>();
 		
+		
+		
+		
 		try {
 			conn = ds.getConnection();////////////////////
-			String sql = "select sum(totalPrice), saleman";
+			String sql = "select sum(totalPrice), saleman, savefilename";
 				   sql += " from";
 				   sql += " (";
-				   sql += " select sum(order_totalprice) totalPrice ,mem_id saleman";
+				   sql += " select sum(order_totalprice) totalPrice ,mem_id saleman, (select att_savename from att where mem_id = att.mem_id) savefilename ";
 				   sql += " from ";
 				   sql += " (";
 				   sql += "     select order_totalprice, p.mem_id";

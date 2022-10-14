@@ -31,7 +31,7 @@ public class Mem implements Serializable {
 	private Review reviewSet;
 	private String check;
 	private Att att;
-
+	
 	public String getCheck() {
 		return check;
 	}

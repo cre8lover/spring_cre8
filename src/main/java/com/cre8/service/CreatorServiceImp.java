@@ -47,7 +47,12 @@ public class CreatorServiceImp implements CreatorService{
 
 	@Override
 	public List<Creator> Creatorpage() {
-		return creatorDao.Creatorpage();
+		
+		List<Creator> cre = creatorDao.Creatorpage();
+		for(Creator c : cre) {
+			c.getSavefilename();
+		}
+		return cre;
 	}
 
 	@Override
