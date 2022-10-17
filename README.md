@@ -48,7 +48,7 @@
 :heavy_check_mark: 일반상품 구매, QnA, 리뷰<br>
 :heavy_check_mark: 개인정보(배송지, 비밀번호 등)수정<br>
 :heavy_check_mark: 경매상품 입찰/낙찰/구매<br>
-:high_brightness:카카오페이 API, 주소록 API 사용<br>
+:high_brightness:카카오1:1 문의, 페이 API, 주소록 API 사용<br>
 
 <h5>:sunglasses: 작가회원 :sunglasses:</h5>
 :heavy_check_mark: 광고상품(마케팅지원) 구매<br>
