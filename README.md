@@ -35,3 +35,37 @@
 <br>
 
 </div>
+<br>
+<hr>
+<br>
+<div align=center>
+<h3>:bulb: 주요기능 :bulb:</h3>
+
+<h5>:grinning: 일반회원 :grinning:</h5>
+:heavy_check_mark: 회원가입 및 로그인<br>
+:heavy_check_mark: 일반상품 구매, QnA, 리뷰<br>
+:heavy_check_mark: 개인정보(배송지, 비밀번호 등)수정<br>
+:heavy_check_mark: 경매상품 입찰/낙찰/구매<br>
+:high_brightness:카카오페이 API, 주소록 API 사용<br>
+
+<h5>:sunglasses: 작가회원 :sunglasses:</h5>
+:heavy_check_mark: 광고상품(마케팅지원) 구매<br>
+:heavy_check_mark: 일반/경매 상품 판매등록/수정/삭제<br>
+:heavy_check_mark: 판매내역, 판매정보, 월간/연간 판매정산<br>
+:heavy_check_mark: 작가정보 등록/수정<br>
+
+<h5>:alien: 관리자 :alien:</h5>
+:heavy_check_mark: 회원관리<br>
+:heavy_check_mark: 광고상품 관리<br>
+:heavy_check_mark: 메뉴관리<br>
+</div>
+<br>
+<hr>
+
+
+
+
+
+
+
+
