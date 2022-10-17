@@ -37,7 +37,7 @@ public class AucNowController {
 		log.info("delete .............");
 		log.info("delete:" + aucnow.getPrice());
 
-		return as.priceadd(aucnow) == -1 ? new ResponseEntity<String>(aucnow.getPrice() + "원 = 경매 입찰 완료", HttpStatus.OK)
+		return as.priceadd(aucnow) == -1 ? new ResponseEntity<String>(aucnow.getPrice() + "�썝 = 寃쎈ℓ �엯李� �셿猷�", HttpStatus.OK)
 				: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
@@ -50,7 +50,8 @@ public class AucNowController {
 		log.info("getList........");
 	  
 	  	Auc_Criteria cri = new Auc_Criteria(page);
-	  
+	  	System.out.println(as.getList(cri,bno).getAnlist().get(0).getSavefilename());
+	  	
 	  return new ResponseEntity<AucNowTotalVO>(as.getList(cri,bno),HttpStatus.OK) ; 
 	  }
 	 
