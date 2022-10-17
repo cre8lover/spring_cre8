@@ -15,14 +15,16 @@
 		
 		END;
 	</insert>
+	
 	<select id="aucnowlist" resultType="com.cre8.dto.AucNowListVO">
 	<![CDATA[
 		select * from 
 		(
-			select rownum as rn, memName , aucnowDate, aucnowLastprice, memId from 
+			select rownum as rn, memName , aucnowDate, aucnowLastprice,savefilename, memId from 
 				(
 					select m.mem_name as memName, an.aucnow_date as aucnowDate, 
-							an.aucnow_lastprice as aucnowLastprice, m.mem_id as memId 
+							an.aucnow_lastprice as aucnowLastprice, m.mem_id as memId,
+							(select att_savename from att where m.mem_id = att.mem_id) savefilename
 			        from auc_nowing an ,  mem m
 			        where m.mem_id = an.mem_id
 			        and an.auc_seqno = #{bno}

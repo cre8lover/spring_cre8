@@ -8,9 +8,15 @@ public class AucNowListVO {
 	private String aucnowDate;
 	private String aucnowLastprice;
 	private String memId;
+	private String savefilename;
 	
 	
-	
+	public String getSavefilename() {
+		return savefilename;
+	}
+	public void setSavefilename(String savefilename) {
+		this.savefilename = savefilename;
+	}
 	public int getRn() {
 		return rn;
 	}

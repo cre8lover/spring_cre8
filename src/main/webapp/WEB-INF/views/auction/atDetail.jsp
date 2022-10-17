@@ -335,7 +335,11 @@ $(document).ready(function(){
 					str +=	"	<div class='memberlist-item_memberavatar'>";
 					str +=	"		<span>";
 					str +=	"			<span>";
+					if(list[i].savefilename != null){
+					str +=	"			<img src='/upload/"+list[i].savefilename+"'/>";
+					}else{
 					str +=	"			<img src='https://cdn-icons-png.flaticon.com/512/4526/4526838.png'/>";
+					}
 					str +=	"			</span>";
 					str +=	"		</span>";
 					str +=	"	</div>";
