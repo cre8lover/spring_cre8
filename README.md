@@ -1,5 +1,5 @@
 <div align=center>
-<img width=1000 src="https://user-images.githubusercontent.com/104592995/196113510-41740298-155d-4efa-8340-08ce6223e923.png">
+<img width=1000 src="https://user-images.githubusercontent.com/104592995/196115496-3c6ae79d-5a5a-4292-a45d-9220cb8d74f8.png">
 <h1>✨cre8✨</h1>
 <br>
 :point_right:크리에이터 경매/거래 플랫폼
