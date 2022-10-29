@@ -36,7 +36,7 @@
 						<h2>구매자 정보</h2>
 						<div class="buy">
 							<a style="padding-right: 16px;"> 구매자 </a>
-							<input type="text" id="name" readonly value="강홍묵"> 
+							<input type="text" id="name" placeholder="강홍묵"> 
 						</div>
 						<div class = "address">
 							<a style="padding-right: 32px;"> 주소 </a>
@@ -75,7 +75,7 @@
 						<div class="buy">
 							<input type="checkbox" id="checkbuyinfo"onchange="addrequals()"> 구매자정보와 동일 <br>
 							<a style="padding-right: 16px;"> 구매자 </a>
-							<input type="text" id="name2" value="강홍묵"> 
+							<input type="text" id="name2" placeholder="강홍묵"> 
 						</div>
 						<div class = "address">
 							<a style="padding-right: 32px;"> 주소 </a>
