@@ -64,11 +64,17 @@ input.addEventListener('keyup', function(e) {
 
 function equalsmoney(best){
 	var number = Number(output.value.replaceAll(',', ''));
-	if(number > best){
-	money.value = number;
-	/*money.value = output.value;*/
+	if(number % 1000 == 0){
+		console.log("통과");
+	
+		if(number > best){
+		money.value = number;
+		/*money.value = output.value;*/
+		}else{
+			alert("가격을 다시 책정해 주세요");
+		}
 	}else{
-		alert("가격을 다시 책정해 주세요");
+		alert("1000원단위로만 작성해 주세요");
 	}
 }
 
