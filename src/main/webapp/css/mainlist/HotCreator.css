@@ -161,7 +161,7 @@ text-decoration: none;
 }
 h2 {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  color: #fff;
+  color: #000;
   margin: 20px;
   opacity: 0;
   transition: opacity 1s;

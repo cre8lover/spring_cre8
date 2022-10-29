@@ -17,13 +17,13 @@
  			</a>
  		</li>
  		<li class="jmh_list">
- 			<a href="<%= request.getContextPath() %>/index.jsp">
+ 			<a href="<%= request.getContextPath() %>/">
  				<span class="jmh_icon"><i class="fa-solid fa-house"></i></span>
  				<span class="title">홈으로</span>
  			</a>
  		</li>
  		<li class="jmh_list">
- 			<a href="<%= request.getContextPath() %>/buy/cart.jsp">
+ 			<a href="<%= request.getContextPath() %>/buyer/cart">
  				<span class="jmh_icon"><i class="fa-solid fa-cart-shopping"></i></span>
  				<span class="title">장바구니</span>
  			</a>
