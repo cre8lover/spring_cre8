@@ -61,13 +61,11 @@ public class MemberDaoImp implements MemberDao{
 			if(rs.next()) {
 				
 				if(rs.getString("mem_pw").equals(pw)) {
-					//濡쒓렇?占쏙옙 ?占쏙옙占�?
 					map.put("login", "ok");
 					map.put("name",rs.getString("mem_name"));
 					map.put("auth",rs.getString("auth_name"));
 					
 				} else {
-					//鍮꾬옙?踰덊샇 ?占쏙옙占�?
 					map.put("login", "pwfail");
 				}
 				
