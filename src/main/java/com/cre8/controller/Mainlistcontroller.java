@@ -56,7 +56,6 @@ public class Mainlistcontroller {
 		List<Creator> newlist = hot.get("new");
 		model.addAttribute("crelist", newlist);
     	
-    	
     	return "/mainlist/NewCreator";
     }	
     

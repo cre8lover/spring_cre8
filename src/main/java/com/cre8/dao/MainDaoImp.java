@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cre8.common.OracleConn;
+import com.cre8.dto.Att;
 import com.cre8.dto.Cat;
 import com.cre8.dto.Creator;
 import com.cre8.dto.Item;
@@ -86,7 +87,7 @@ public class MainDaoImp implements MainDao{
 		List<Creator> detailcrelist = new ArrayList<Creator>();
 		Mem mem = null;
 		Creator creator = null;
-		
+		Att att = null;
 		String sql = "call p_hotcrelist(?)";
 		try {
 			conn = ds.getConnection();
@@ -96,6 +97,7 @@ public class MainDaoImp implements MainDao{
 			ResultSet rs = (ResultSet)stmt.getObject(1);
 			
 			while (rs.next()) {
+				att = new Att();
 				mem = new Mem();
 				creator = new Creator();
 				mem.setMemId(rs.getString("mem_id"));
@@ -103,6 +105,9 @@ public class MainDaoImp implements MainDao{
 				mem.setMemTel(rs.getString("mem_tel"));
 				mem.setMemEmail(rs.getString("mem_email"));
 				mem.setMemSnsinfo(rs.getString("mem_snsinfo"));
+				att.setSavefilename(rs.getString("savename"));
+				att.setAttPath(rs.getString("path"));
+				mem.setAtt(att);
 				creator.setMem(mem);
 				hotcrelist.add(creator);
 			}
@@ -115,20 +120,27 @@ public class MainDaoImp implements MainDao{
 			while (rs.next()) {
 				mem = new Mem();
 				creator = new Creator();
+				att = new Att();
+				
 				mem.setMemId(rs.getString("mem_id"));
 				mem.setMemName(rs.getString("mem_name"));
 				mem.setMemTel(rs.getString("mem_tel"));
 				mem.setMemEmail(rs.getString("mem_email"));
 				mem.setMemSnsinfo(rs.getString("mem_snsinfo"));
 				
+				att.setAttName(rs.getString("savename"));
+				att.setAttPath(rs.getString("path"));
+				
 				MemAuth a = new MemAuth();
 				a.setAuthName(rs.getString("auth_name"));
 				a.setAuthName(rs.getString("auth_date"));
 				
 				mem.setMemAuthSet(a);
+				mem.setAtt(att);
 				
 				creator.setMem(mem);
 				newcrelist.add(creator);
+				
 			}
 			
 			
@@ -139,6 +151,7 @@ public class MainDaoImp implements MainDao{
 			rs = (ResultSet)stmt.getObject(1);
 
 			while (rs.next()) {
+				mem = new Mem();
 				creator = new Creator();
 				Item item = new Item();
 				mem.setMemId(rs.getString("mem_id"));
@@ -157,17 +170,22 @@ public class MainDaoImp implements MainDao{
 				detailcrelist.add(creator);
 			}
 			
+			
 			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			resourceClose(conn, stmt);
 		}
+		
 		creatormap.put("new", newcrelist);
 		creatormap.put("hot", hotcrelist);
 		creatormap.put("detail", detailcrelist);
 		
+		List<Creator> newlist = creatormap.get("new");
+		
 		return creatormap;
+		
 	}
 
 	@Override
