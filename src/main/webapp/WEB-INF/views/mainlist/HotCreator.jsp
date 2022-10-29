@@ -4,6 +4,8 @@
 <html>
 <head>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mainlist/HotCreator.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
@@ -20,7 +22,7 @@
 <div class="container">
         <c:forEach items="${crelist}" var="list">
 <a href="<%= request.getContextPath() %>/main/Detail?memid=${list.mem.memId}">
-  <div class="card card0">
+  <div class="card card0" style="background: url(/upload/${list.mem.att.savefilename}) center center no-repeat; background-size:300px;">
     <div class="border" >
        <h2>${list.mem.memName}</h2>
       <div class="icons" >
@@ -41,4 +43,17 @@
 
 
 </body>
+<script>
+$(document).ready(function(){
+	
+	$('.card0').hover(function() {
+		$(this).css("background-position","left");
+		$(this).css("background-size","500px");
+	},function(){
+		$(this).css("background-position","center");
+		$(this).css("background-size","300px");
+	});
+	
+});
+</script>
 </html>

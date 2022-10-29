@@ -19,7 +19,7 @@
 <div class="container">
         <c:forEach items="${crelist}" var="list">
 <a href="<%= request.getContextPath() %>/main/Detail?memid=${list.mem.memId}">
-  <div class="card card0" style="background: url(/upload/${list.mem.att.attName}) center center no-repeat;">
+  <div class="card card0" style="background: url(/upload/${list.mem.att.attName}) center center no-repeat;background-size:300px;">
     <div class="border" >
        <h2>${list.mem.memName}</h2>
       <div class="icons" >
@@ -44,8 +44,10 @@ $(document).ready(function(){
 	
 	$('.card0').hover(function() {
 		$(this).css("background-position","left"); 
+		$(this).css("background-size","500px"); 
 	},function(){
 		$(this).css("background-position","center");
+		$(this).css("background-size","300px");
 	});
 	
 });
